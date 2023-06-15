@@ -158,7 +158,7 @@ fun NeedItTextButton(
 
 @Preview
 @Composable
-fun NeedItOutlinedButtonPreview() {
+private fun NeedItOutlinedButtonPreview() {
     NeedItTheme {
         NeedItOutlinedButton(
             labelId = R.string.button_continue,
@@ -169,7 +169,7 @@ fun NeedItOutlinedButtonPreview() {
 
 @Preview
 @Composable
-fun NeedItButtonPreview() {
+private fun NeedItButtonPreview() {
     NeedItTheme {
         Column {
             NeedItFilledButton(
@@ -199,7 +199,7 @@ fun NeedItButtonPreview() {
 
 @Preview
 @Composable
-fun NeedItTextButtonPreview() {
+private fun NeedItTextButtonPreview() {
     NeedItTheme {
         NeedItTextButton(
             labelId = R.string.button_continue,

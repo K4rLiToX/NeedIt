@@ -23,12 +23,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.ui.design_system.theme.Icons
 import com.carlosdiestro.needit.core.ui.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.ui.design_system.theme.button
 import com.carlosdiestro.needit.core.ui.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.ui.design_system.theme.icon
 import com.carlosdiestro.needit.core.ui.design_system.theme.iconButton
+import com.carlosdiestro.needit.core.ui.design_system.theme.icons
 import com.carlosdiestro.needit.core.ui.design_system.theme.spacing
 
 private enum class IconButtonStyle {
@@ -171,10 +171,10 @@ fun NeedItOutlinedIconButton(
 
 @Preview
 @Composable
-fun NeedItFilledIconButtonPreview() {
+private fun NeedItFilledIconButtonPreview() {
     NeedItTheme {
         NeedItFilledIconButton(
-            icon = Icons.AddFriend,
+            icon = MaterialTheme.icons.AddFriend,
             onClick = {}
         )
     }
@@ -182,11 +182,11 @@ fun NeedItFilledIconButtonPreview() {
 
 @Preview
 @Composable
-fun NeedItLabeledFilledIconButtonPreview() {
+private fun NeedItLabeledFilledIconButtonPreview() {
     NeedItTheme {
         NeedItLabeledFilledIconButton(
             labelId = R.string.button_remove,
-            icon = Icons.Delete,
+            icon = MaterialTheme.icons.Delete,
             onClick = {}
         )
     }
@@ -194,10 +194,10 @@ fun NeedItLabeledFilledIconButtonPreview() {
 
 @Preview
 @Composable
-fun NeedItOutlinedIconButtonPreview() {
+private fun NeedItOutlinedIconButtonPreview() {
     NeedItTheme {
         NeedItOutlinedIconButton(
-            icon = Icons.Delete,
+            icon = MaterialTheme.icons.Delete,
             onClick = {}
         )
     }
