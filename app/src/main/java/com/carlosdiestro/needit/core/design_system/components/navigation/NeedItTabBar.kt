@@ -66,7 +66,6 @@ fun NeedItScrollableTabBar(
 @Composable
 fun NeedItFixedTabBar(
     selectedTabIndex: Int = 0,
-    tabs: List<Gifts>,
     onTabClicked: (Gifts, Int) -> Unit
 ) {
     TabRow(
@@ -75,7 +74,7 @@ fun NeedItFixedTabBar(
         modifier = Modifier
             .height(MaterialTheme.dimensions.tabBar.tabHeight)
     ) {
-        tabs.forEachIndexed { index, gift ->
+        Gifts.values().toList().forEachIndexed { index, gift ->
             NeedItTab(
                 labelId = gift.labelId,
                 isSelected = index == selectedTabIndex,
@@ -123,7 +122,6 @@ private fun NeedItScrollableTabBarPreview() {
 private fun NeedItFixedTabBarPreview() {
     NeedItTheme {
         NeedItFixedTabBar(
-            tabs = Gifts.values().toList(),
             onTabClicked = { _, _ -> }
         )
     }
