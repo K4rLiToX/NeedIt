@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.avatars.NeedItAvatar
+import com.carlosdiestro.needit.core.design_system.components.images.NeedItAvatar
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.icons

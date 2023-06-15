@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.design_system.components.avatars
+package com.carlosdiestro.needit.core.design_system.components.images
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
