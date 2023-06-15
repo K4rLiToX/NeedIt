@@ -26,6 +26,10 @@ object Dimensions {
         val extraLarge = 56.dp
         val extraExtraLarge = 80.dp
     }
+
+    object TabBar {
+        val tabHeight = 48.dp
+    }
 }
 
 val MaterialTheme.dimensions: Dimensions
@@ -38,3 +42,6 @@ val Dimensions.iconButton: Dimensions.IconButton
 
 val Dimensions.icon: Dimensions.Icon
     get() = Dimensions.Icon
+
+val Dimensions.tabBar: Dimensions.TabBar
+    get() = Dimensions.TabBar
