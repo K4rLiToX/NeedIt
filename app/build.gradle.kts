@@ -67,6 +67,9 @@ dependencies {
     // UI
     implementation("androidx.compose.material:material-icons-extended:1.4.3")
 
+    // Coil Image Loader
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
