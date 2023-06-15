@@ -18,7 +18,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.ui.design_system.theme.Icons
@@ -44,7 +44,6 @@ private fun NeedItBaseButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    val context = LocalContext.current
     when (style) {
         ButtonStyle.Filled -> {
             Button(
@@ -63,7 +62,7 @@ private fun NeedItBaseButton(
                     Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
                 }
                 Text(
-                    text = context.getString(labelId)
+                    text = stringResource(labelId)
                 )
                 if (trailingIcon != null) {
                     Spacer(modifier = Modifier.width(ButtonDefaults.IconSpacing))
@@ -88,7 +87,7 @@ private fun NeedItBaseButton(
                     .defaultMinSize(minHeight = MaterialTheme.dimensions.button.minHeight)
             ) {
                 Text(
-                    text = context.getString(labelId)
+                    text = stringResource(labelId)
                 )
             }
         }
@@ -99,7 +98,7 @@ private fun NeedItBaseButton(
                 modifier = modifier
             ) {
                 Text(
-                    text = context.getString(labelId)
+                    text = stringResource(labelId)
                 )
             }
         }
