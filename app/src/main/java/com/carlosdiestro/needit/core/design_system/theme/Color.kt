@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.theme
+package com.carlosdiestro.needit.core.design_system.theme
 
 import androidx.compose.ui.graphics.Color
 

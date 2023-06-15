@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.components.menu
+package com.carlosdiestro.needit.core.design_system.components.menu
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
@@ -25,8 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.ui.design_system.theme.icons
-import com.carlosdiestro.needit.core.ui.design_system.theme.spacing
+import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 enum class SortType(@StringRes val labelId: Int) {
     LowToHigh(labelId = R.string.sorting_dialog_lowest_to_highest),

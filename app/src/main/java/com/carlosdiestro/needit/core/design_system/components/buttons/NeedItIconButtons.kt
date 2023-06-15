@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.components.buttons
+package com.carlosdiestro.needit.core.design_system.components.buttons
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
@@ -23,13 +23,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.ui.design_system.theme.NeedItTheme
-import com.carlosdiestro.needit.core.ui.design_system.theme.button
-import com.carlosdiestro.needit.core.ui.design_system.theme.dimensions
-import com.carlosdiestro.needit.core.ui.design_system.theme.icon
-import com.carlosdiestro.needit.core.ui.design_system.theme.iconButton
-import com.carlosdiestro.needit.core.ui.design_system.theme.icons
-import com.carlosdiestro.needit.core.ui.design_system.theme.spacing
+import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
+import com.carlosdiestro.needit.core.design_system.theme.button
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.icon
+import com.carlosdiestro.needit.core.design_system.theme.iconButton
+import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 private enum class IconButtonStyle {
     Filled,

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.components.buttons
+package com.carlosdiestro.needit.core.design_system.components.buttons
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
@@ -21,10 +21,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.ui.design_system.theme.Icons
-import com.carlosdiestro.needit.core.ui.design_system.theme.NeedItTheme
-import com.carlosdiestro.needit.core.ui.design_system.theme.button
-import com.carlosdiestro.needit.core.ui.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.Icons
+import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
+import com.carlosdiestro.needit.core.design_system.theme.button
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 private enum class ButtonStyle {
     Outlined,

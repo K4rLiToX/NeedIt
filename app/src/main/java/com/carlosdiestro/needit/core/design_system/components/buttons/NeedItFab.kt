@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.components.buttons
+package com.carlosdiestro.needit.core.design_system.components.buttons
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton

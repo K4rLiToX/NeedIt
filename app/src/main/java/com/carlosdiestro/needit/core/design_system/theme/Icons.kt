@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.theme
+package com.carlosdiestro.needit.core.design_system.theme
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudUpload
@@ -72,5 +72,5 @@ object Icons {
     val Warning = Icons.Rounded.Warning
 }
 
-val MaterialTheme.icons: com.carlosdiestro.needit.core.ui.design_system.theme.Icons
-    get() = com.carlosdiestro.needit.core.ui.design_system.theme.Icons
+val MaterialTheme.icons: com.carlosdiestro.needit.core.design_system.theme.Icons
+    get() = com.carlosdiestro.needit.core.design_system.theme.Icons

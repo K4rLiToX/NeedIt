@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.components.navigation
+package com.carlosdiestro.needit.core.design_system.components.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.height
@@ -14,10 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.ui.design_system.theme.NeedItTheme
-import com.carlosdiestro.needit.core.ui.design_system.theme.dimensions
-import com.carlosdiestro.needit.core.ui.design_system.theme.spacing
-import com.carlosdiestro.needit.core.ui.design_system.theme.tabBar
+import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.spacing
+import com.carlosdiestro.needit.core.design_system.theme.tabBar
 
 enum class Category(
     @StringRes val labelId: Int

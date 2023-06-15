@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.theme
+package com.carlosdiestro.needit.core.design_system.theme
 
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.ui.design_system.components.navigation
+package com.carlosdiestro.needit.core.design_system.components.navigation
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import com.carlosdiestro.needit.core.ui.design_system.theme.icons
+import com.carlosdiestro.needit.core.design_system.theme.icons
 
 enum class TopLevelDestination(
     val icon: ImageVector,
