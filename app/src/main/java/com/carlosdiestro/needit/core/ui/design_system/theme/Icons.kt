@@ -1,7 +1,6 @@
 package com.carlosdiestro.needit.core.ui.design_system.theme
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArtTrack
 import androidx.compose.material.icons.outlined.CloudUpload
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit

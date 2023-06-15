@@ -1,7 +1,6 @@
 package com.carlosdiestro.needit.core.ui.design_system.theme
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 
 object Dimensions {
