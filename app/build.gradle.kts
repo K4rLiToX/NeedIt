@@ -62,11 +62,21 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha02")
+
+    // UI
+    implementation("androidx.compose.material:material-icons-extended:1.4.3")
+
+    // Coil Image Loader
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+
+    // Navigation
+    implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
 
     // Compose Test
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
