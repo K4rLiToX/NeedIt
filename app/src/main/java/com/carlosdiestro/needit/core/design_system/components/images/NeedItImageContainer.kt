@@ -23,15 +23,16 @@ import coil.compose.AsyncImage
 fun NeedItImageContainer(
     imageUrl: String,
     contentDescription: String = "",
-    width: Dp,
-    height: Dp,
-    onClick: () -> Unit,
-    onLongClick: () -> Unit,
-    cardContent: @Composable () -> Unit
+    width: Dp = Dp.Unspecified,
+    height: Dp = Dp.Unspecified,
+    onClick: () -> Unit = {},
+    onLongClick: () -> Unit = {},
+    cardContent: @Composable () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Box(
         contentAlignment = Alignment.BottomStart,
-        modifier = Modifier
+        modifier = modifier
             .size(width = width, height = height)
             .clip(RoundedCornerShape(24.dp))
             .combinedClickable(

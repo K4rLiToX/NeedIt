@@ -24,7 +24,6 @@ import com.carlosdiestro.needit.core.design_system.theme.icon
 import com.carlosdiestro.needit.core.design_system.theme.iconButton
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.design_system.theme.spacing
-import kotlin.math.roundToInt
 
 class WishPLO(
     val id: Long,
@@ -53,9 +52,10 @@ fun WishCard(
         height = 220.dp,
         onClick = onClick,
         onLongClick = onLongClick,
-    ) {
-        WishCardContent(wish = wish)
-    }
+        cardContent = {
+            WishCardContent(wish = wish)
+        }
+    )
 }
 
 @Composable
@@ -147,6 +147,7 @@ fun String.round(): String {
     return if (firstDecimal != "0") this
     else this.substring(0, decimalPointIndex)
 }
+
 fun String.addPrefix(prefix: String): String = "$prefix$this"
 fun String.addSuffix(suffix: String): String = "$this$suffix"
 
