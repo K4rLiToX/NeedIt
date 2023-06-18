@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 
@@ -22,6 +23,8 @@ import coil.compose.AsyncImage
 fun NeedItImageContainer(
     imageUrl: String,
     contentDescription: String = "",
+    width: Dp,
+    height: Dp,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
     cardContent: @Composable () -> Unit
@@ -29,7 +32,7 @@ fun NeedItImageContainer(
     Box(
         contentAlignment = Alignment.BottomStart,
         modifier = Modifier
-            .size(width = 172.dp, height = 220.dp)
+            .size(width = width, height = height)
             .clip(RoundedCornerShape(24.dp))
             .combinedClickable(
                 onClick = onClick,

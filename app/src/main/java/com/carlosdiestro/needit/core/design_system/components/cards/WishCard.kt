@@ -11,7 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.extensions.gradient
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItImageContainer
@@ -46,6 +49,8 @@ fun WishCard(
     NeedItImageContainer(
         imageUrl = wish.imageUrl,
         contentDescription = wish.title,
+        width = 172.dp,
+        height = 220.dp,
         onClick = onClick,
         onLongClick = onLongClick,
     ) {
@@ -118,9 +123,11 @@ private fun InformationSection(
 }
 
 @Composable
-private fun PriceText(
+fun PriceText(
     price: Double,
-    currency: Currency
+    currency: Currency,
+    textStyle: TextStyle = MaterialTheme.typography.titleLarge,
+    textColor: Color = MaterialTheme.colorScheme.onPrimary
 ) {
     val priceText = if (!currency.isRightPositioned) {
         price.toString().round().addPrefix(currency.symbol)
@@ -129,8 +136,8 @@ private fun PriceText(
     }
     Text(
         text = priceText,
-        style = MaterialTheme.typography.titleLarge,
-        color = MaterialTheme.colorScheme.onPrimary
+        style = textStyle,
+        color = textColor
     )
 }
 
