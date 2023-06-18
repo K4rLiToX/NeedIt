@@ -7,16 +7,18 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun NeedItFab(
-    icon: ImageVector,
+    icon: ImageVector?,
     contentDescription: String = "",
     onClick: () -> Unit
 ) {
-    LargeFloatingActionButton(
-        onClick = onClick
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = contentDescription
-        )
+    if (icon != null) {
+        LargeFloatingActionButton(
+            onClick = onClick
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = contentDescription
+            )
+        }
     }
 }
