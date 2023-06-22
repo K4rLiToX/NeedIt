@@ -5,9 +5,10 @@ import com.carlosdiestro.needit.core.design_system.components.cards.WishPLO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel : ViewModel() {
+class HomeViewModel @Inject constructor() : ViewModel() {
     private var _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 }

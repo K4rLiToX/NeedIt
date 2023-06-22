@@ -5,9 +5,10 @@ import com.carlosdiestro.needit.core.design_system.components.cards.WishPLO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel @Inject constructor() : ViewModel() {
     private var _state: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState())
     val state = _state.asStateFlow()
 }
