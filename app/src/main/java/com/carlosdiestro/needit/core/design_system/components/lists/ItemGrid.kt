@@ -16,8 +16,8 @@ import com.carlosdiestro.needit.core.design_system.theme.spacing
 fun NeedItWishGrid(
     state: LazyStaggeredGridState,
     wishes: List<WishPLO>,
-    onItemClick: () -> Unit,
-    onItemLongClick: () -> Unit
+    onItemClick: (Long) -> Unit,
+    onItemLongClick: (Long) -> Unit
 ) {
     LazyVerticalStaggeredGrid(
         state = state,
@@ -35,8 +35,12 @@ fun NeedItWishGrid(
         ) { item ->
             WishCard(
                 wish = item,
-                onClick = onItemClick,
-                onLongClick = onItemLongClick
+                onClick = {
+                    onItemClick(item.id)
+                },
+                onLongClick = {
+                    onItemLongClick(item.id)
+                }
             )
         }
     }

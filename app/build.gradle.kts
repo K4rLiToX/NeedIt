@@ -1,6 +1,9 @@
+
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -74,9 +77,22 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
 
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
     // Navigation
     implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
     implementation("androidx.navigation:navigation-compose:2.6.0")
+
+    // Hilt
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("com.google.dagger:hilt-android:2.44")
+    annotationProcessor("com.google.dagger:hilt-android-compiler:2.44")
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
     // Compose Test
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))

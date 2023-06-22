@@ -128,7 +128,7 @@ fun NeedItAvatarTopAppBar(
 fun NeedItTopAppBar(
     title: String? = null,
     onNavigateClick: (() -> Unit)? = null,
-    actions: @Composable () -> Unit
+    actions: @Composable () -> Unit = {}
 ) {
     NeedItBaseTopAppBar(
         title = {

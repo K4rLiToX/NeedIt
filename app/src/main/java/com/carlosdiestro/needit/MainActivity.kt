@@ -10,7 +10,9 @@ import androidx.compose.ui.Modifier
 import com.carlosdiestro.needit.core.Main
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.rememberNeedItAppState
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

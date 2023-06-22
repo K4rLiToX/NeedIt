@@ -12,6 +12,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.needit.features.friends.friendsRoute
+import com.carlosdiestro.needit.features.gifts.giftsRoute
+import com.carlosdiestro.needit.features.home.homeRoute
+import com.carlosdiestro.needit.features.profile.profileRoute
 
 enum class TopLevelDestination(
     val icon: ImageVector,
@@ -21,22 +25,22 @@ enum class TopLevelDestination(
     Home(
         icon = MaterialTheme.icons.Home,
         hasFab = true,
-        route = ""
+        route = homeRoute
     ),
     Gifts(
         icon = MaterialTheme.icons.Gifts,
         hasFab = false,
-        route = ""
+        route = giftsRoute
     ),
     Friends(
         icon = MaterialTheme.icons.Friends,
         hasFab = true,
-        route = ""
+        route = friendsRoute
     ),
     Profile(
         icon = MaterialTheme.icons.Profile,
         hasFab = false,
-        route = ""
+        route = profileRoute
     )
 }
 
