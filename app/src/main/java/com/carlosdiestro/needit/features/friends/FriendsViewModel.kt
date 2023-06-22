@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @HiltViewModel
-class FriendsViewModel: ViewModel() {
+class FriendsViewModel : ViewModel() {
     private var _state: MutableStateFlow<FriendsState> = MutableStateFlow(FriendsState())
     val state = _state.asStateFlow()
 }
