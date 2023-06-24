@@ -8,16 +8,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFab
+import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFabPainter
+import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFabVector
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItBottomBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.TopLevelDestination
 import com.carlosdiestro.needit.core.design_system.components.navigation.routes
+import com.carlosdiestro.needit.core.design_system.theme.Icons
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 
@@ -38,15 +41,23 @@ fun Main(
             }
         },
         floatingActionButton = {
-            val icon = when (currentDestinationRoute) {
-                TopLevelDestination.Home.route -> MaterialTheme.icons.Warning
-                TopLevelDestination.Friends.route -> MaterialTheme.icons.AddFriend
-                else -> null
+            when (currentDestinationRoute) {
+                TopLevelDestination.Home.route -> {
+                    NeedItFabPainter(
+                        icon = painterResource(id = Icons.NeedIt),
+                        onClick = {}
+                    )
+                }
+
+                TopLevelDestination.Friends.route -> {
+                    NeedItFabVector(
+                        icon = MaterialTheme.icons.AddFriend,
+                        onClick = {}
+                    )
+                }
+
+                else -> Unit
             }
-            NeedItFab(
-                icon = icon,
-                onClick = {}
-            )
         },
         floatingActionButtonPosition = FabPosition.End
     ) {

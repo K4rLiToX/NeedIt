@@ -41,36 +41,48 @@ class Currency(
 
 @Composable
 fun WishCard(
-    wish: WishPLO,
+    title: String,
+    imageUrl: String,
+    price: Double,
+    currency: Currency,
+    isShared: Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
     NeedItImageContainer(
-        imageUrl = wish.imageUrl,
-        contentDescription = wish.title,
+        imageUrl = imageUrl,
+        contentDescription = title,
         width = 172.dp,
         height = 220.dp,
         onClick = onClick,
         onLongClick = onLongClick,
         cardContent = {
-            WishCardContent(wish = wish)
+            WishCardContent(
+                title = title,
+                price = price,
+                currency = currency,
+                isShared = isShared
+            )
         }
     )
 }
 
 @Composable
 private fun WishCardContent(
-    wish: WishPLO
+    title: String,
+    price: Double,
+    currency: Currency,
+    isShared: Boolean
 ) {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxSize()
     ) {
-        IconSection(isShared = wish.isShared)
+        IconSection(isShared = isShared)
         InformationSection(
-            title = wish.title,
-            price = wish.price,
-            currency = wish.currency
+            title = title,
+            price = price,
+            currency = currency
         )
     }
 }
@@ -181,12 +193,20 @@ private fun WishCardPreview() {
     NeedItTheme {
         Column {
             WishCard(
-                wish = wish1,
+                title = wish1.title,
+                imageUrl = wish1.imageUrl,
+                price = wish1.price,
+                currency = wish1.currency,
+                isShared = wish1.isShared,
                 onClick = {},
                 onLongClick = {}
             )
             WishCard(
-                wish = wish2,
+                title = wish2.title,
+                imageUrl = wish2.imageUrl,
+                price = wish2.price,
+                currency = wish2.currency,
+                isShared = wish2.isShared,
                 onClick = {},
                 onLongClick = {}
             )
