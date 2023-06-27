@@ -15,12 +15,13 @@ fun NeedItScreenContainer(
     Scaffold(
         topBar = topAppBar
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
         ) {
-            screenContent()
+
         }
     }
 }

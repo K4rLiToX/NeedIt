@@ -24,6 +24,7 @@ fun NeedItNavHost(
         startDestination = startDestination
     ) {
         homeScreen(
+            coroutineScope = appState.coroutineScope,
             onItemClick = {},
             onItemLongClick = {}
         )
