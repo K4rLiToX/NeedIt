@@ -26,7 +26,7 @@ import com.carlosdiestro.needit.core.design_system.theme.iconButton
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.design_system.theme.spacing
 
-class WishPLO(
+class SimpleWishPLO(
     val id: Long,
     val imageUrl: String,
     val title: String,
@@ -176,21 +176,23 @@ private fun WishCardPreview() {
         symbol = "$",
         isRightPositioned = false
     )
-    val wish1 = WishPLO(
+    val wish1 = SimpleWishPLO(
         id = 0,
         imageUrl = "",
         title = "Chanel",
         price = 50.0,
         currency = currency1,
-        isShared = false
+        isShared = false,
+        category = WishCategory.Clothes
     )
-    val wish2 = WishPLO(
+    val wish2 = SimpleWishPLO(
         id = 1,
         imageUrl = "",
         title = "Chanel",
         price = 50.4,
         currency = currency2,
-        isShared = true
+        isShared = true,
+        WishCategory.Books
     )
     NeedItTheme {
         Column {
