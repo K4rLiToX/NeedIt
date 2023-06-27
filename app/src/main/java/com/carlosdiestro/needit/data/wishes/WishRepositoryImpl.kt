@@ -11,7 +11,7 @@ import javax.inject.Inject
 class WishRepositoryImpl @Inject constructor(
     private val localDatasource: WishLocalDatasource,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
-): WishRepository {
+) : WishRepository {
     override val wishes: Flow<List<Wish>>
         get() = localDatasource.wishes.flowOn(dispatcher)
 }

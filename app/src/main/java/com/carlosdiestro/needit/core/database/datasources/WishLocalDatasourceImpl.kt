@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class WishLocalDatasourceImpl @Inject constructor(
     private val dao: WishDao
-): WishLocalDatasource {
+) : WishLocalDatasource {
     override val wishes: Flow<List<Wish>>
         get() = dao.getAll().toDomain()
 }

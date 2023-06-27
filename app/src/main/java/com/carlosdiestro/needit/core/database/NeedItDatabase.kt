@@ -10,6 +10,6 @@ import com.carlosdiestro.needit.core.database.entities.WishEntity
     version = 1,
     exportSchema = false
 )
-abstract class NeedItDatabase: RoomDatabase() {
+abstract class NeedItDatabase : RoomDatabase() {
     abstract fun wishDao(): WishDao
 }
