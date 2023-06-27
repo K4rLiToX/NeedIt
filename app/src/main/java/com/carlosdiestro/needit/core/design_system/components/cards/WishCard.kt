@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.extensions.gradient
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItImageContainer
+import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icon
@@ -32,6 +33,7 @@ class WishPLO(
     val price: Double,
     val currency: Currency,
     val isShared: Boolean,
+    val category: WishCategory
 )
 
 class Currency(
