@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.extensions.gradient
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItImageContainer
+import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icon
@@ -25,13 +26,14 @@ import com.carlosdiestro.needit.core.design_system.theme.iconButton
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.design_system.theme.spacing
 
-class WishPLO(
+class SimpleWishPLO(
     val id: Long,
     val imageUrl: String,
     val title: String,
     val price: Double,
     val currency: Currency,
     val isShared: Boolean,
+    val category: WishCategory
 )
 
 class Currency(
@@ -125,7 +127,9 @@ private fun InformationSection(
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onPrimary
+            color = MaterialTheme.colorScheme.onPrimary,
+            maxLines = 2,
+            modifier = Modifier.fillMaxWidth(0.7f)
         )
         PriceText(
             price = price,
@@ -174,21 +178,23 @@ private fun WishCardPreview() {
         symbol = "$",
         isRightPositioned = false
     )
-    val wish1 = WishPLO(
+    val wish1 = SimpleWishPLO(
         id = 0,
         imageUrl = "",
         title = "Chanel",
         price = 50.0,
         currency = currency1,
-        isShared = false
+        isShared = false,
+        category = WishCategory.Clothes
     )
-    val wish2 = WishPLO(
+    val wish2 = SimpleWishPLO(
         id = 1,
         imageUrl = "",
         title = "Chanel",
         price = 50.4,
         currency = currency2,
-        isShared = true
+        isShared = true,
+        WishCategory.Books
     )
     NeedItTheme {
         Column {

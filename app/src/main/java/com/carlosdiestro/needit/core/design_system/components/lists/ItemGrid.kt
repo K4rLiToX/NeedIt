@@ -2,39 +2,46 @@ package com.carlosdiestro.needit.core.design_system.components.lists
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
 import com.carlosdiestro.needit.core.design_system.components.cards.WishCard
-import com.carlosdiestro.needit.core.design_system.components.cards.WishPLO
 import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 @Composable
 fun NeedItWishGrid(
-    state: LazyStaggeredGridState,
-    wishes: List<WishPLO>,
+    state: LazyGridState,
+    wishes: List<SimpleWishPLO>,
     onItemClick: (Long) -> Unit,
     onItemLongClick: (Long) -> Unit
 ) {
-    LazyVerticalStaggeredGrid(
+    LazyVerticalGrid(
         state = state,
-        columns = StaggeredGridCells.Fixed(2),
+        columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(
             horizontal = MaterialTheme.spacing.m,
             vertical = MaterialTheme.spacing.xl
         ),
-        verticalItemSpacing = MaterialTheme.spacing.l,
-        horizontalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.l),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.m),
+        modifier = Modifier.fillMaxSize()
     ) {
         items(
             items = wishes,
             key = { it.id }
         ) { item ->
             WishCard(
-                wish = item,
+                title = item.title,
+                imageUrl = item.imageUrl,
+                price = item.price,
+                currency = item.currency,
+                isShared = item.isShared,
                 onClick = {
                     onItemClick(item.id)
                 },

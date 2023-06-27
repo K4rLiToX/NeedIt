@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavDestination
@@ -23,6 +24,8 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.routes
 import com.carlosdiestro.needit.core.design_system.theme.Icons
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
+import com.carlosdiestro.needit.features.home.navigateToHome
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun Main(
@@ -41,23 +44,26 @@ fun Main(
             }
         },
         floatingActionButton = {
-            when (currentDestinationRoute) {
-                TopLevelDestination.Home.route -> {
-                    NeedItFabPainter(
-                        icon = painterResource(id = Icons.NeedIt),
-                        onClick = {}
-                    )
-                }
+            if (appState.shouldShowFab) {
+                when (currentDestinationRoute) {
+                    TopLevelDestination.Home.route -> {
+                        NeedItFabPainter(
+                            icon = painterResource(id = Icons.NeedIt),
+                            onClick = {}
+                        )
+                    }
 
-                TopLevelDestination.Friends.route -> {
-                    NeedItFabVector(
-                        icon = MaterialTheme.icons.AddFriend,
-                        onClick = {}
-                    )
-                }
+                    TopLevelDestination.Friends.route -> {
+                        NeedItFabVector(
+                            icon = MaterialTheme.icons.AddFriend,
+                            onClick = {}
+                        )
+                    }
 
-                else -> Unit
+                    else -> Unit
+                }
             }
+
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
@@ -70,20 +76,24 @@ fun Main(
 
 @Composable
 fun rememberNeedItAppState(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): NeedItAppState {
     return remember(
-        navController
+        navController,
+        coroutineScope
     ) {
         NeedItAppState(
-            navController = navController
+            navController = navController,
+            coroutineScope = coroutineScope
         )
     }
 }
 
 @Stable
 class NeedItAppState(
-    val navController: NavHostController
+    val navController: NavHostController,
+    val coroutineScope: CoroutineScope
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController
@@ -113,8 +123,7 @@ class NeedItAppState(
             restoreState = true
         }
         when (topLevelDestination) {
-            TopLevelDestination.Home -> navController.navigate(
-                topLevelDestination.route,
+            TopLevelDestination.Home -> navController.navigateToHome(
                 topLevelNavOptions
             )
 
