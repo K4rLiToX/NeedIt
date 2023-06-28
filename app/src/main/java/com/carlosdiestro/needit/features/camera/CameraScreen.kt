@@ -7,6 +7,7 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -29,11 +31,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
+import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.design_system.theme.spacing
@@ -50,18 +58,26 @@ import kotlin.coroutines.suspendCoroutine
 @Composable
 fun CameraRoute(
     coroutineScope: CoroutineScope,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: CameraViewModel = hiltViewModel()
 ) {
+    val state by viewModel.state.collectAsStateWithLifecycle()
     CameraScreen(
+        state = state,
         coroutineScope = coroutineScope,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onBackToPhotoClick = viewModel::onBackToPhotoClick,
+        onShutterClick = viewModel::onShutterClick
     )
 }
 
 @Composable
 private fun CameraScreen(
+    state: CameraUiState,
     coroutineScope: CoroutineScope,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onBackToPhotoClick: () -> Unit,
+    onShutterClick: (String) -> Unit
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -85,7 +101,7 @@ private fun CameraScreen(
         .requireLensFacing(CameraSelector.LENS_FACING_BACK)
         .build()
 
-    LaunchedEffect(key1 = null) {
+    LaunchedEffect(key1 = state.step == CameraStep.Photo) {
         context.getCameraProvider().apply {
             unbindAll()
             bindToLifecycle(
@@ -112,42 +128,68 @@ private fun CameraScreen(
                 .fillMaxHeight(0.85f)
                 .clip(RoundedCornerShape(24.dp))
         ) {
-            AndroidView(
-                factory = { previewView },
-                modifier = Modifier.fillMaxSize()
-            )
+            if (state.step == CameraStep.Photo) {
+                AndroidView(
+                    factory = { previewView },
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                AsyncImage(
+                    model = state.imageUri,
+                    contentDescription = "Photo",
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            }
             NeedItFilledIconButton(
                 icon = MaterialTheme.icons.Back,
                 modifier = Modifier.padding(MaterialTheme.spacing.m),
-                onClick = onBackClick
+                onClick = {
+                    if (state.step == CameraStep.Photo) {
+                        onBackClick()
+                    } else {
+                        onBackToPhotoClick()
+                    }
+                }
             )
         }
-        IconButton(
-            onClick = {
-                coroutineScope.launch {
-                    val imageUri = imageCapture
-                        .takePhoto(context.executor)
-                        .toString()
-                        .replace("/", "-")
-                }
-            },
-            modifier = Modifier
-                .padding(bottom = MaterialTheme.spacing.xs)
-                .size(80.dp)
-        ) {
-            Icon(
-                imageVector = MaterialTheme.icons.Lens,
-                contentDescription = "Take picture",
-                tint = MaterialTheme.colorScheme.primary,
+        if (state.step == CameraStep.Photo) {
+            IconButton(
+                onClick = {
+                    coroutineScope.launch {
+                        val imageUri = imageCapture
+                            .takePhoto(context.executor)
+                            .toString()
+                        onShutterClick(imageUri)
+                    }
+                },
                 modifier = Modifier
-                    .size(100.dp)
-                    .padding(1.dp)
-                    .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
-            )
+                    .padding(bottom = MaterialTheme.spacing.xs)
+                    .size(80.dp)
+            ) {
+                Icon(
+                    imageVector = MaterialTheme.icons.Lens,
+                    contentDescription = "Take picture",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .padding(1.dp)
+                        .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
+                )
+            }
+        } else {
+            NeedItFilledButton(
+                labelId = R.string.button_continue,
+                trailingIcon = MaterialTheme.icons.Continue,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+            ) {
+
+            }
         }
     }
-
-
 }
 
 suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutine { continuation ->
