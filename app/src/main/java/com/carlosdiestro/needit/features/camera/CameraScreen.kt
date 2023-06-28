@@ -243,7 +243,7 @@ private fun CategorySelector(
     AsyncImage(
         model = imageUri,
         contentDescription = "Photo",
-        contentScale = ContentScale.FillBounds,
+        contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxSize()
     )
