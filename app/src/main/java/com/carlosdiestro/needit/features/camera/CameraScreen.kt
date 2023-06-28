@@ -7,7 +7,6 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -121,74 +120,145 @@ private fun CameraScreen(
             .padding(horizontal = MaterialTheme.spacing.m)
             .padding(bottom = MaterialTheme.spacing.l)
     ) {
-        Box(
-            contentAlignment = Alignment.TopStart,
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.85f)
-                .clip(RoundedCornerShape(24.dp))
-        ) {
-            if (state.step == CameraStep.Photo) {
-                AndroidView(
-                    factory = { previewView },
-                    modifier = Modifier.fillMaxSize()
-                )
-            } else {
-                AsyncImage(
-                    model = state.imageUri,
-                    contentDescription = "Photo",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
-            }
-            NeedItFilledIconButton(
-                icon = MaterialTheme.icons.Back,
-                modifier = Modifier.padding(MaterialTheme.spacing.m),
-                onClick = {
-                    if (state.step == CameraStep.Photo) {
-                        onBackClick()
-                    } else {
-                        onBackToPhotoClick()
-                    }
-                }
+        CameraContent(
+            previewView = previewView,
+            imageUri = state.imageUri,
+            onBackClick = onBackClick,
+            onBackToPhotoClick = onBackToPhotoClick,
+            cameraStep = state.step
+        )
+        Actions(
+            coroutineScope = coroutineScope,
+            context = context,
+            imageCapture = imageCapture,
+            cameraStep = state.step,
+            onShutterClick = onShutterClick
+        )
+    }
+}
+
+@Composable
+private fun CameraContent(
+    previewView: PreviewView,
+    imageUri: String,
+    onBackClick: () -> Unit,
+    onBackToPhotoClick: () -> Unit,
+    cameraStep: CameraStep
+) {
+    Box(
+        contentAlignment = Alignment.TopStart,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.85f)
+            .clip(RoundedCornerShape(24.dp))
+    ) {
+        when (cameraStep) {
+            CameraStep.Photo -> CameraPreview(
+                previewView = previewView
+            )
+
+            CameraStep.Category -> CategorySelector(
+                imageUri = imageUri
             )
         }
-        if (state.step == CameraStep.Photo) {
-            IconButton(
-                onClick = {
-                    coroutineScope.launch {
-                        val imageUri = imageCapture
-                            .takePhoto(context.executor)
-                            .toString()
-                        onShutterClick(imageUri)
-                    }
-                },
-                modifier = Modifier
-                    .padding(bottom = MaterialTheme.spacing.xs)
-                    .size(80.dp)
-            ) {
-                Icon(
-                    imageVector = MaterialTheme.icons.Lens,
-                    contentDescription = "Take picture",
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .padding(1.dp)
-                        .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
-                )
+        NeedItFilledIconButton(
+            icon = MaterialTheme.icons.Back,
+            modifier = Modifier.padding(MaterialTheme.spacing.m),
+            onClick = {
+                when (cameraStep) {
+                    CameraStep.Photo -> onBackClick()
+                    CameraStep.Category -> onBackToPhotoClick()
+                }
             }
-        } else {
-            NeedItFilledButton(
-                labelId = R.string.button_continue,
-                trailingIcon = MaterialTheme.icons.Continue,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp)
-            ) {
+        )
+    }
+}
 
+@Composable
+private fun Actions(
+    coroutineScope: CoroutineScope,
+    context: Context,
+    imageCapture: ImageCapture,
+    cameraStep: CameraStep,
+    onShutterClick: (String) -> Unit
+) {
+    when (cameraStep) {
+        CameraStep.Photo -> CameraShutter(
+            coroutineScope = coroutineScope,
+            context = context,
+            imageCapture = imageCapture,
+            onShutterClick = onShutterClick
+        )
+
+        CameraStep.Category -> ContinueButton()
+    }
+}
+
+@Composable
+private fun CameraPreview(
+    previewView: PreviewView
+) {
+    AndroidView(
+        factory = { previewView },
+        modifier = Modifier.fillMaxSize()
+    )
+}
+
+@Composable
+private fun CameraShutter(
+    coroutineScope: CoroutineScope,
+    context: Context,
+    imageCapture: ImageCapture,
+    onShutterClick: (String) -> Unit
+) {
+    IconButton(
+        onClick = {
+            coroutineScope.launch {
+                val imageUri = imageCapture
+                    .takePhoto(context.executor)
+                    .toString()
+                onShutterClick(imageUri)
             }
-        }
+        },
+        modifier = Modifier
+            .padding(bottom = MaterialTheme.spacing.xs)
+            .size(80.dp)
+    ) {
+        Icon(
+            imageVector = MaterialTheme.icons.Lens,
+            contentDescription = "Take picture",
+            tint = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .size(100.dp)
+                .padding(1.dp)
+                .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
+        )
+    }
+}
+
+@Composable
+private fun CategorySelector(
+    imageUri: String
+) {
+    AsyncImage(
+        model = imageUri,
+        contentDescription = "Photo",
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier
+            .fillMaxSize()
+    )
+}
+
+@Composable
+private fun ContinueButton() {
+    NeedItFilledButton(
+        labelId = R.string.button_continue,
+        trailingIcon = MaterialTheme.icons.Continue,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(56.dp)
+    ) {
+
     }
 }
 
