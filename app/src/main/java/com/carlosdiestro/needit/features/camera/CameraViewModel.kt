@@ -29,6 +29,14 @@ class CameraViewModel @Inject constructor(): ViewModel() {
             )
         }
     }
+
+    fun updateCategory(wishCategory: WishCategory) {
+        _state.update {
+            it.copy(
+                category = wishCategory
+            )
+        }
+    }
 }
 
 
