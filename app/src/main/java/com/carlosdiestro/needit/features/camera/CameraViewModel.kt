@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class CameraViewModel @Inject constructor(): ViewModel() {
+class CameraViewModel @Inject constructor() : ViewModel() {
 
     private var _state: MutableStateFlow<CameraUiState> = MutableStateFlow(CameraUiState())
     val state = _state.asStateFlow()
@@ -22,6 +22,7 @@ class CameraViewModel @Inject constructor(): ViewModel() {
             )
         }
     }
+
     fun onBackToPhotoClick() {
         _state.update {
             it.copy(

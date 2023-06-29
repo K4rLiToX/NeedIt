@@ -29,7 +29,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -209,7 +208,7 @@ private fun CameraContent(
                     text = stringResource(id = WishCategory.values()[it + 1].labelId),
                     style = MaterialTheme.typography.headlineLarge,
                     color = if (it == pagerState.currentPage) MaterialTheme.colorScheme.onSurface
-                            else MaterialTheme.colorScheme.surface,
+                    else MaterialTheme.colorScheme.surface,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .pagerAnimation(pageOffset)
