@@ -139,10 +139,17 @@
     <string name="button_release">Release</string>
     <string name="button_personal_gift">Personal gift</string>
     <string name="button_leave_group">Leave group</string>
-    <string name="button_make_admin">Transfer admin</string>ç
+    <string name="button_make_admin">Transfer admin</string>
     <string name="button_mark_as_paid">Mark as paid</string>
+    <string name="button_go_to_settings">Go to settings</string>
+    <string name="button_request_again">Request again</string>
 
     <!-- Sorting Dialog options -->
     <string name="sorting_dialog_lowest_to_highest">Lowest to highest price</string>
     <string name="sorting_dialog_highest_to_lowest">Highest to lowest price</string>
+
+    <!-- Permission Dialog -->
+    <string name="camera_permission_dialog_title">Camera Permission Required</string>
+    <string name="camera_permission_dialog_description_declined">It seems your permanently declined camera permission. Go to the app settings to enable it</string>
+    <string name="camera_permission_dialog_description_not_declined">Need It needs access to your camera so that you can take photos of your wishes!</string>
 </resources>

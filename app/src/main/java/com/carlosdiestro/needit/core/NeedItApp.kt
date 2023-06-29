@@ -1,13 +1,17 @@
 package com.carlosdiestro.needit.core
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavDestination
@@ -18,6 +22,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFabPainter
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFabVector
+import com.carlosdiestro.needit.core.design_system.components.dialogs.CameraPermissionTextProvider
+import com.carlosdiestro.needit.core.design_system.components.dialogs.PermissionDialog
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItBottomBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.TopLevelDestination
 import com.carlosdiestro.needit.core.design_system.components.navigation.routes
@@ -29,7 +35,10 @@ import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun Main(
-    appState: NeedItAppState
+    appState: NeedItAppState,
+    launchCameraPermissionLauncher: () -> Unit,
+    isCameraPermissionPermanentlyDeclined: Boolean,
+    onGoToAppSettingsClick: () -> Unit
 ) {
     val currentDestinationRoute = appState.currentDestinationRoute
 
@@ -49,14 +58,22 @@ fun Main(
                     TopLevelDestination.Home.route -> {
                         NeedItFabPainter(
                             icon = painterResource(id = Icons.NeedIt),
-                            onClick = {}
+                            onClick = {
+                                if (currentDestinationRoute == TopLevelDestination.Home.route) {
+                                    launchCameraPermissionLauncher()
+                                }
+                            }
                         )
                     }
 
                     TopLevelDestination.Friends.route -> {
                         NeedItFabVector(
                             icon = MaterialTheme.icons.AddFriend,
-                            onClick = {}
+                            onClick = {
+                                if (currentDestinationRoute == TopLevelDestination.Home.route) {
+                                    launchCameraPermissionLauncher()
+                                }
+                            }
                         )
                     }
 
@@ -70,6 +87,23 @@ fun Main(
         NeedItNavHost(
             appState = appState,
             modifier = Modifier.padding(it)
+        )
+    }
+
+    if (appState.shouldShowCameraPermissionDialog) {
+        PermissionDialog(
+            permissionTextProvider = CameraPermissionTextProvider(),
+            isPermanentlyDeclined = isCameraPermissionPermanentlyDeclined,
+            onDismiss = { appState.setShowCameraPermissionDialog(false) },
+            onRequestClick = {
+                launchCameraPermissionLauncher()
+                appState.setShowCameraPermissionDialog(false)
+            },
+            onGoToAppSettingsClick = {
+                onGoToAppSettingsClick()
+                appState.setShowCameraPermissionDialog(false)
+            },
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -114,6 +148,9 @@ class NeedItAppState(
     val shouldShowBottomBar: Boolean
         @Composable get() = isTopLevelDestination()
 
+    var shouldShowCameraPermissionDialog by mutableStateOf(false)
+        private set
+
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
@@ -142,6 +179,10 @@ class NeedItAppState(
                 topLevelNavOptions
             )
         }
+    }
+
+    fun setShowCameraPermissionDialog(shouldShow: Boolean) {
+        shouldShowCameraPermissionDialog = shouldShow
     }
 
     @Composable

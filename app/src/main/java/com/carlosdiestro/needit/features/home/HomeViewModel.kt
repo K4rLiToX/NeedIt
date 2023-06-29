@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
     private val getMyWishes: GetMyWishesUseCase,
     private val sortWishes: SortWishesUseCase
 ) : ViewModel() {
-    
+
     private var _state: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
     val state = _state.asStateFlow()
     private lateinit var wishes: List<Wish>

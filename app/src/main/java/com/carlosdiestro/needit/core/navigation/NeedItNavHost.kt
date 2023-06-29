@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.carlosdiestro.needit.core.NeedItAppState
+import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.friends.friendsScreen
 import com.carlosdiestro.needit.features.gifts.giftsScreen
 import com.carlosdiestro.needit.features.home.homeRoute
@@ -37,6 +38,11 @@ fun NeedItNavHost(
         profileScreen(
             onItemClick = {},
             onItemLongClick = {}
+        )
+
+        cameraRoute(
+            coroutineScope = appState.coroutineScope,
+            onBackClick = navController::popBackStack
         )
     }
 }
