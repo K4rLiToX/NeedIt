@@ -6,6 +6,7 @@ import com.carlosdiestro.needit.domain.wishes.WishRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class WishRepositoryImpl @Inject constructor(
@@ -14,4 +15,8 @@ class WishRepositoryImpl @Inject constructor(
 ) : WishRepository {
     override val wishes: Flow<List<Wish>>
         get() = localDatasource.wishes.flowOn(dispatcher)
+
+    override suspend fun getWish(id: Long): Wish = withContext(dispatcher) {
+        localDatasource.getWish(id)
+    }
 }

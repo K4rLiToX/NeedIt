@@ -12,4 +12,6 @@ class WishLocalDatasourceImpl @Inject constructor(
 ) : WishLocalDatasource {
     override val wishes: Flow<List<Wish>>
         get() = dao.getAll().toDomain()
+
+    override suspend fun getWish(id: Long): Wish = dao.getWish(id).toDomain()
 }

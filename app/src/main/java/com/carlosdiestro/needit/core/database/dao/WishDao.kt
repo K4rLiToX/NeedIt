@@ -9,4 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface WishDao {
     @Query("SELECT * FROM wish_table")
     fun getAll(): Flow<List<WishEntity>>
+
+    @Query("SELECT * FROM wish_table WHERE id = :id")
+    suspend fun getWish(id: Long): WishEntity
 }
