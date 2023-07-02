@@ -1,6 +1,5 @@
 package com.carlosdiestro.needit.features.home
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -68,10 +67,6 @@ private fun HomeScreen(
 ) {
     val bottomSheetState = rememberModalBottomSheetState()
     var openSortingBottomSheet by rememberSaveable { mutableStateOf(false) }
-
-    state.wishes.forEach {
-        Log.d("HomeScreen", "Wish: ${it.price}")
-    }
 
     Scaffold(
         topBar = {
