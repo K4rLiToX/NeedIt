@@ -1,5 +1,9 @@
 package com.carlosdiestro.needit.features.upsert_item
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,19 +13,26 @@ import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear
 import com.carlosdiestro.needit.domain.wishes.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.Other
+import com.carlosdiestro.needit.domain.wishes.Validators
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
+    private val validators: Validators,
     savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
 
     private val imageUrl: String = savedStateHandle[argImageUrl] ?: ""
     private val category: WishCategory = (savedStateHandle[argCategory] ?: -1).toWishCategory()
@@ -31,6 +42,67 @@ class UpsertViewModel @Inject constructor(
         UpsertUiState(imageUrl, category)
     )
     val state = _state.asStateFlow()
+
+    var title by mutableStateOf("")
+        private set
+
+    val titleHasError: StateFlow<Boolean> =
+        snapshotFlow { title }
+            .mapLatest { validators.emptyValidator(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = true
+            )
+
+    var subtitle by mutableStateOf("")
+        private set
+
+    val subtitleHasError: StateFlow<Boolean> =
+        snapshotFlow { subtitle }
+            .mapLatest { validators.emptyValidator(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = true
+            )
+
+    var price by mutableStateOf("")
+        private set
+
+    val priceHasError: StateFlow<Boolean> =
+        snapshotFlow { price }
+            .mapLatest { validators.priceValidator(it.toString()) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = true
+            )
+
+    var description by mutableStateOf("")
+        private set
+
+    var webUrl by mutableStateOf("")
+        private set
+
+    val webUrlHasError: StateFlow<Boolean> =
+        snapshotFlow { webUrl }
+            .mapLatest { validators.webValidator(it) }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = false
+            )
+
+    var size by mutableStateOf("")
+        private set
+
+    var color by mutableStateOf("")
+        private set
+
+    var isbn by mutableStateOf("")
+        private set
+
 
     init {
         if (wishId != -1L) {
@@ -44,43 +116,68 @@ class UpsertViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     imageUrl = wish.imageUrl,
-                    category = wish.category,
-                    title = wish.title,
-                    subtitle = wish.subtitle,
-                    price = wish.price,
-                    description = wish.description,
-                    webUrl = wish.webUrl
+                    category = wish.category
                 )
             }
-            _state.update {
-                when (wish) {
-                    is Clothes -> it.copy(
-                        size = wish.size,
-                        color = wish.color
-                    )
-                    is Footwear -> it.copy(
-                        size = wish.size.toString(),
-                        color = wish.color
-                    )
-                    is Book -> it.copy(
-                        isbn = wish.isbn
-                    )
-                    else -> it
+            updateTitle(wish.title)
+            updateSubtitle(wish.subtitle)
+            updatePrice(wish.price.toString())
+            updateWebUrl(wish.webUrl)
+            updateDescription(wish.description)
+            when (wish) {
+                is Clothes -> {
+                    updateSize(wish.size)
+                    updateColor(wish.color)
                 }
+
+                is Footwear -> {
+                    updateSize(wish.size.toString())
+                    updateColor(wish.color)
+                }
+
+                is Book -> {
+                    updateIsbn(wish.isbn)
+                }
+
+                else -> Unit
             }
         }
+    }
+
+    fun updateTitle(value: String) {
+        title = value
+    }
+
+    fun updateSubtitle(value: String) {
+        subtitle = value
+    }
+
+    fun updatePrice(value: String) {
+        price = value
+    }
+
+    fun updateWebUrl(value: String) {
+        webUrl = value
+    }
+
+    fun updateDescription(value: String) {
+        description = value
+    }
+
+    fun updateSize(value: String) {
+        size = value
+    }
+
+    fun updateColor(value: String) {
+        color = value
+    }
+
+    fun updateIsbn(value: String) {
+        isbn = value
     }
 }
 
 data class UpsertUiState(
     val imageUrl: String,
     val category: WishCategory,
-    val title: String = "",
-    val subtitle: String = "",
-    val price: Double = 0.0,
-    val webUrl: String = "",
-    val description: String = "",
-    val size: String? = null,
-    val color: String? = null,
-    val isbn: String? = null
 )
