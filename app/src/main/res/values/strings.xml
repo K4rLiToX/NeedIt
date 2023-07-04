@@ -99,7 +99,7 @@
     <string name="upsert_isbn_hint">ISBN</string>
     <string name="upsert_website_link_hint">Website Url</string>
     <string name="upsert_description_link">Description</string>
-    <string name="upsert_mandatory_field_message">This field is mandatory!</string>
+    <string name="upsert_mandatory_field_message">Mandatory field!</string>
 
     <!-- Item Categories -->
     <string name="item_category_all">All</string>
@@ -152,4 +152,5 @@
     <string name="camera_permission_dialog_title">Camera Permission Required</string>
     <string name="camera_permission_dialog_description_declined">It seems your permanently declined camera permission. Go to the app settings to enable it</string>
     <string name="camera_permission_dialog_description_not_declined">Need It needs access to your camera so that you can take photos of your wishes!</string>
+    <string name="upsert_fields_not_filled">There are mandatory fields still empty</string>
 </resources>

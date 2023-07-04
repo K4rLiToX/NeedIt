@@ -37,10 +37,6 @@ fun UpsertRoute(
     viewModel: UpsertViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val titleHasError by viewModel.titleHasError.collectAsStateWithLifecycle()
-    val subtitleHasError by viewModel.subtitleHasError.collectAsStateWithLifecycle()
-    val priceHasError by viewModel.priceHasError.collectAsStateWithLifecycle()
-    val webUrlHasError by viewModel.webUrlHasError.collectAsStateWithLifecycle()
     val title = viewModel.title
     val subtitle = viewModel.subtitle
     val price = viewModel.price
@@ -51,10 +47,6 @@ fun UpsertRoute(
     val isbn = viewModel.isbn
     UpsertScreen(
         state = state,
-        titleHasError = titleHasError,
-        subtitleHasError = subtitleHasError,
-        priceHasError = priceHasError,
-        webUrlHasError = webUrlHasError,
         title = title,
         subtitle = subtitle,
         price = price,
@@ -63,8 +55,9 @@ fun UpsertRoute(
         size = size,
         color = color,
         isbn = isbn,
+        showSaveButton = viewModel.isFormFilledInCorrectly(),
         onBackClick = onBackClick,
-        onSaveClick = {},
+        onSaveClick = viewModel::save,
         updateTitle = viewModel::updateTitle,
         updateSubtitle = viewModel::updateSubtitle,
         updatePrice = viewModel::updatePrice,
@@ -72,17 +65,13 @@ fun UpsertRoute(
         updateDescription = viewModel::updateDescription,
         updateSize = viewModel::updateSize,
         updateColor = viewModel::updateColor,
-        updateIsbn = viewModel::updateIsbn
+        updateIsbn = viewModel::updateIsbn,
     )
 }
 
 @Composable
 private fun UpsertScreen(
     state: UpsertUiState,
-    titleHasError: Boolean,
-    subtitleHasError: Boolean,
-    priceHasError: Boolean,
-    webUrlHasError: Boolean,
     title: String,
     subtitle: String,
     price: String,
@@ -91,6 +80,7 @@ private fun UpsertScreen(
     size: String,
     color: String,
     isbn: String,
+    showSaveButton: Boolean,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     updateTitle: (String) -> Unit,
@@ -107,10 +97,12 @@ private fun UpsertScreen(
             NeedItTopAppBar(
                 onNavigateClick = onBackClick,
                 actions = {
-                    NeedItTextButton(
-                        labelId = R.string.button_save,
-                        onClick = onSaveClick
-                    )
+                    if (showSaveButton) {
+                        NeedItTextButton(
+                            labelId = R.string.button_save,
+                            onClick = onSaveClick,
+                        )
+                    }
                 }
             )
         }
@@ -118,10 +110,6 @@ private fun UpsertScreen(
         UpsertContent(
             imageUrl = state.imageUrl,
             category = state.category,
-            titleHasError = titleHasError,
-            subtitleHasError = subtitleHasError,
-            priceHasError = priceHasError,
-            webUrlHasError = webUrlHasError,
             title = title,
             subtitle = subtitle,
             price = price,
@@ -149,10 +137,6 @@ private fun UpsertScreen(
 private fun UpsertContent(
     imageUrl: String,
     category: WishCategory,
-    titleHasError: Boolean,
-    subtitleHasError: Boolean,
-    priceHasError: Boolean,
-    webUrlHasError: Boolean,
     title: String,
     subtitle: String,
     price: String,
@@ -181,11 +165,8 @@ private fun UpsertContent(
         BasicInformationSection(
             category = category,
             title = title,
-            titleHasError = titleHasError,
             subtitle = subtitle,
-            subtitleHasError = subtitleHasError,
             price = price,
-            priceHasError = priceHasError,
             updateTitle = updateTitle,
             updateSubtitle = updateSubtitle,
             updatePrice = updatePrice
@@ -205,7 +186,6 @@ private fun UpsertContent(
         }
         AdditionalInformationSection(
             webUrl = webUrl,
-            webUrlHasError = webUrlHasError,
             description = description,
             updateWebUrl = updateWebUrl,
             updateDescription = updateDescription
@@ -218,7 +198,7 @@ private fun ImageSection(
     imageUrl: String
 ) {
     AsyncImage(
-        model = imageUrl,
+        model = imageUrl.replace("-", "/"),
         contentDescription = "Photo",
         contentScale = ContentScale.Crop,
         modifier = Modifier
@@ -232,11 +212,8 @@ private fun ImageSection(
 private fun BasicInformationSection(
     category: WishCategory,
     title: String,
-    titleHasError: Boolean,
     subtitle: String,
-    subtitleHasError: Boolean,
     price: String,
-    priceHasError: Boolean,
     updateTitle: (String) -> Unit,
     updateSubtitle: (String) -> Unit,
     updatePrice: (String) -> Unit
@@ -258,10 +235,11 @@ private fun BasicInformationSection(
             OutlinedTextField(
                 value = title,
                 onValueChange = updateTitle,
-                isError = titleHasError,
                 label = {
                     Text(text = label)
-                }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
             )
         }
         Row(
@@ -277,7 +255,6 @@ private fun BasicInformationSection(
             OutlinedTextField(
                 value = subtitle,
                 onValueChange = updateSubtitle,
-                isError = subtitleHasError,
                 label = {
                     Text(text = label)
                 },
@@ -287,7 +264,6 @@ private fun BasicInformationSection(
             OutlinedTextField(
                 value = price,
                 onValueChange = updatePrice,
-                isError = priceHasError,
                 label = {
                     Text(text = stringResource(id = R.string.upsert_price_hint))
                 },
@@ -334,7 +310,7 @@ private fun SpecificInformationSection(
                         Text(text = stringResource(id = R.string.upsert_size_hint))
                     },
                     modifier = Modifier
-                        .fillMaxWidth(0.5f)
+                        .fillMaxWidth(0.48f)
                 )
                 OutlinedTextField(
                     value = color,
@@ -353,7 +329,6 @@ private fun SpecificInformationSection(
 @Composable
 private fun AdditionalInformationSection(
     webUrl: String,
-    webUrlHasError: Boolean,
     description: String,
     updateWebUrl: (String) -> Unit,
     updateDescription: (String) -> Unit
@@ -367,13 +342,14 @@ private fun AdditionalInformationSection(
         OutlinedTextField(
             value = webUrl,
             onValueChange = updateWebUrl,
-            isError = webUrlHasError,
             label = {
                 Text(text = stringResource(id = R.string.upsert_website_link_hint))
             },
             prefix = {
                 Text(text = "https://")
-            }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
         )
         OutlinedTextField(
             value = description,
@@ -384,7 +360,9 @@ private fun AdditionalInformationSection(
                         id = R.string.upsert_description_link
                     )
                 )
-            }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
         )
     }
 }

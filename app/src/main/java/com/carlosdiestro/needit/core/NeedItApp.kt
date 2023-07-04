@@ -111,7 +111,7 @@ fun Main(
 @Composable
 fun rememberNeedItAppState(
     navController: NavHostController = rememberNavController(),
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ): NeedItAppState {
     return remember(
         navController,

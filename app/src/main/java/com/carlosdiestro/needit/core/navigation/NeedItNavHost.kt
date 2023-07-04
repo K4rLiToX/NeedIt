@@ -10,6 +10,8 @@ import com.carlosdiestro.needit.features.gifts.giftsScreen
 import com.carlosdiestro.needit.features.home.homeRoute
 import com.carlosdiestro.needit.features.home.homeScreen
 import com.carlosdiestro.needit.features.profile.profileScreen
+import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
+import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 
 @Composable
 fun NeedItNavHost(
@@ -42,6 +44,11 @@ fun NeedItNavHost(
 
         cameraRoute(
             coroutineScope = appState.coroutineScope,
+            onBackClick = navController::popBackStack,
+            onContinueClick = navController::navigateToUpsert
+        )
+
+        upsertRoute(
             onBackClick = navController::popBackStack
         )
     }

@@ -3,7 +3,6 @@ package com.carlosdiestro.needit.features.upsert_item
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,24 +12,16 @@ import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear
 import com.carlosdiestro.needit.domain.wishes.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.Validators
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
-    private val validators: Validators,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -46,53 +37,17 @@ class UpsertViewModel @Inject constructor(
     var title by mutableStateOf("")
         private set
 
-    val titleHasError: StateFlow<Boolean> =
-        snapshotFlow { title }
-            .mapLatest { validators.emptyValidator(it) }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = true
-            )
-
     var subtitle by mutableStateOf("")
         private set
 
-    val subtitleHasError: StateFlow<Boolean> =
-        snapshotFlow { subtitle }
-            .mapLatest { validators.emptyValidator(it) }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = true
-            )
-
     var price by mutableStateOf("")
         private set
-
-    val priceHasError: StateFlow<Boolean> =
-        snapshotFlow { price }
-            .mapLatest { validators.priceValidator(it.toString()) }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = true
-            )
 
     var description by mutableStateOf("")
         private set
 
     var webUrl by mutableStateOf("")
         private set
-
-    val webUrlHasError: StateFlow<Boolean> =
-        snapshotFlow { webUrl }
-            .mapLatest { validators.webValidator(it) }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = false
-            )
 
     var size by mutableStateOf("")
         private set
@@ -175,6 +130,12 @@ class UpsertViewModel @Inject constructor(
     fun updateIsbn(value: String) {
         isbn = value
     }
+
+    fun save() {
+
+    }
+
+    fun isFormFilledInCorrectly(): Boolean = title.trim().isEmpty()
 }
 
 data class UpsertUiState(

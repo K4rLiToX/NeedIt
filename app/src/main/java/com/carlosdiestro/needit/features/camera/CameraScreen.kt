@@ -57,6 +57,7 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
+import com.carlosdiestro.needit.core.design_system.components.navigation.toIntValue
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.design_system.theme.spacing
 import kotlinx.coroutines.CoroutineScope
@@ -74,6 +75,7 @@ import kotlin.math.absoluteValue
 fun CameraRoute(
     coroutineScope: CoroutineScope,
     onBackClick: () -> Unit,
+    onContinueClick: (String, Int, Long) -> Unit,
     viewModel: CameraViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -81,6 +83,13 @@ fun CameraRoute(
         state = state,
         coroutineScope = coroutineScope,
         onBackClick = onBackClick,
+        onContinueClick = {
+            onContinueClick(
+                state.imageUri.replace("/", "-"),
+                state.category.toIntValue(),
+                -1
+            )
+        },
         onBackToPhotoClick = viewModel::onBackToPhotoClick,
         onShutterClick = viewModel::onShutterClick,
         updateCategory = viewModel::updateCategory
@@ -92,6 +101,7 @@ private fun CameraScreen(
     state: CameraUiState,
     coroutineScope: CoroutineScope,
     onBackClick: () -> Unit,
+    onContinueClick: () -> Unit,
     onBackToPhotoClick: () -> Unit,
     onShutterClick: (String) -> Unit,
     updateCategory: (WishCategory) -> Unit
@@ -151,7 +161,8 @@ private fun CameraScreen(
             context = context,
             imageCapture = imageCapture,
             cameraStep = state.step,
-            onShutterClick = onShutterClick
+            onShutterClick = onShutterClick,
+            onContinueClick = onContinueClick
         )
     }
 }
@@ -244,7 +255,8 @@ private fun Actions(
     context: Context,
     imageCapture: ImageCapture,
     cameraStep: CameraStep,
-    onShutterClick: (String) -> Unit
+    onShutterClick: (String) -> Unit,
+    onContinueClick: () -> Unit,
 ) {
     when (cameraStep) {
         CameraStep.Photo -> CameraShutter(
@@ -254,7 +266,9 @@ private fun Actions(
             onShutterClick = onShutterClick
         )
 
-        CameraStep.Category -> ContinueButton()
+        CameraStep.Category -> ContinueButton(
+            onContinueClick = onContinueClick
+        )
     }
 }
 
@@ -340,16 +354,17 @@ fun Modifier.pagerAnimation(pageOffset: Float): Modifier =
     }
 
 @Composable
-private fun ContinueButton() {
+private fun ContinueButton(
+    onContinueClick: () -> Unit
+) {
     NeedItFilledButton(
         labelId = R.string.button_continue,
         trailingIcon = MaterialTheme.icons.Continue,
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
-    ) {
-
-    }
+            .height(56.dp),
+        onClick = onContinueClick
+    )
 }
 
 suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutine { continuation ->

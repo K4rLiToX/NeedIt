@@ -26,18 +26,20 @@ fun NavController.navigateToUpsert(
     wishId: Long = -1L
 ) {
     navigate(
-        "$upsertBaseRoute/{$imageUrl}/{$category}/{$wishId}"
+        "$upsertBaseRoute/$imageUrl/$category/$wishId"
     )
 }
 
-fun NavGraphBuilder.upsert(
-
+fun NavGraphBuilder.upsertRoute(
+    onBackClick: () -> Unit,
 ) {
     composable(
         route = upsertRoute,
         arguments = upsertArgs
     ) {
-        UpsertRoute()
+        UpsertRoute(
+            onBackClick = onBackClick
+        )
     }
 }
 
