@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.data.wishes
 
+import com.carlosdiestro.needit.core.di.ApplicationScope
 import com.carlosdiestro.needit.core.di.IoDispatcher
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.WishRepository
@@ -11,12 +12,19 @@ import javax.inject.Inject
 
 class WishRepositoryImpl @Inject constructor(
     private val localDatasource: WishLocalDatasource,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    @ApplicationScope private val appDispatcher: CoroutineDispatcher
 ) : WishRepository {
     override val wishes: Flow<List<Wish>>
-        get() = localDatasource.wishes.flowOn(dispatcher)
+        get() = localDatasource.wishes.flowOn(ioDispatcher)
 
-    override suspend fun getWish(id: Long): Wish = withContext(dispatcher) {
+    override suspend fun getWish(id: Long): Wish = withContext(ioDispatcher) {
         localDatasource.getWish(id)
+    }
+
+    override suspend fun insertWish(wish: Wish) = withContext(appDispatcher) {
+        withContext(ioDispatcher) {
+            localDatasource.insertWish(wish)
+        }
     }
 }

@@ -12,6 +12,7 @@ import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear
 import com.carlosdiestro.needit.domain.wishes.GetWishUseCase
+import com.carlosdiestro.needit.domain.wishes.InsertWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,6 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
+    private val insertWish: InsertWishUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -132,7 +134,20 @@ class UpsertViewModel @Inject constructor(
     }
 
     fun save() {
-
+        viewModelScope.launch {
+            insertWish(
+                imageUrl = imageUrl,
+                title = title,
+                subtitle = subtitle,
+                price = price,
+                webUrl = webUrl,
+                description = description,
+                category = category,
+                size = size,
+                color = color,
+                isbn = isbn
+            )
+        }
     }
 
     fun isFormFilledInCorrectly(): Boolean = title.trim().isEmpty()

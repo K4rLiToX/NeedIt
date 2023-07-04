@@ -4,6 +4,7 @@ import com.carlosdiestro.needit.core.database.entities.WishEntity
 import com.carlosdiestro.needit.core.design_system.components.cards.Currency
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
+import com.carlosdiestro.needit.core.design_system.components.navigation.toIntValue
 import com.carlosdiestro.needit.core.design_system.components.navigation.toWishCategory
 import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.BookParams
@@ -76,3 +77,32 @@ fun Wish.toPLO(): SimpleWishPLO = SimpleWishPLO(
 )
 
 fun List<Wish>.toPLO(): List<SimpleWishPLO> = this.map { it.toPLO() }
+
+fun Wish.toEntity(): WishEntity = WishEntity(
+    id = if (this.id == -1L) null else this.id,
+    imageUrl = this.imageUrl,
+    title = this.title,
+    subtitle = this.subtitle,
+    price = this.price,
+    category = this.category.toIntValue(),
+    isShared = this.isShared,
+    description = this.description,
+    webUrl = this.webUrl,
+    size = getSize(this),
+    color = getColor(this),
+    isbn = getIsbn(this)
+)
+
+private fun getSize(wish: Wish): String? = when (wish) {
+    is Clothes -> wish.size
+    is Footwear -> wish.size.toString()
+    else -> null
+}
+
+private fun getColor(wish: Wish): String? = when (wish) {
+    is Clothes -> wish.color
+    is Footwear -> wish.color
+    else -> null
+}
+
+private fun getIsbn(wish: Wish): String? = if (wish is Book) wish.isbn else null

@@ -2,6 +2,7 @@ package com.carlosdiestro.needit.core.database.datasources
 
 import com.carlosdiestro.needit.core.database.dao.WishDao
 import com.carlosdiestro.needit.core.mappers.toDomain
+import com.carlosdiestro.needit.core.mappers.toEntity
 import com.carlosdiestro.needit.data.wishes.WishLocalDatasource
 import com.carlosdiestro.needit.domain.wishes.Wish
 import kotlinx.coroutines.flow.Flow
@@ -14,4 +15,5 @@ class WishLocalDatasourceImpl @Inject constructor(
         get() = dao.getAll().toDomain()
 
     override suspend fun getWish(id: Long): Wish = dao.getWish(id).toDomain()
+    override suspend fun insertWish(wish: Wish) = dao.insert(wish.toEntity())
 }
