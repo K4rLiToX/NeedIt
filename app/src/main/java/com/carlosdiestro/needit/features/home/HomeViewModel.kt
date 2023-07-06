@@ -56,7 +56,8 @@ class HomeViewModel @Inject constructor(
             .plus(
                 wishes
                     .map { it.category }
-                    .sortedBy { it }
+                    .toSet()
+                    .sortedBy { it.ordinal }
             )
     }
 }
