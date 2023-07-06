@@ -150,7 +150,7 @@ class UpsertViewModel @Inject constructor(
         }
     }
 
-    fun isFormFilledInCorrectly(): Boolean = title.trim().isEmpty()
+    fun isFormFilledInCorrectly(): Boolean = title.trim().isNotEmpty()
 }
 
 data class UpsertUiState(
