@@ -198,7 +198,7 @@ private fun ImageSection(
     imageUrl: String
 ) {
     AsyncImage(
-        model = imageUrl.replace("-", "/"),
+        model = imageUrl,
         contentDescription = "Photo",
         contentScale = ContentScale.Crop,
         modifier = Modifier

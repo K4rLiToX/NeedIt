@@ -27,7 +27,7 @@ class UpsertViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val imageUrl: String = savedStateHandle[argImageUrl] ?: ""
+    private val imageUrl: String = (savedStateHandle[argImageUrl] ?: "").replace("-", "/")
     private val category: WishCategory = (savedStateHandle[argCategory] ?: -1).toWishCategory()
     private val wishId: Long = savedStateHandle[argWishId] ?: -1L
 
