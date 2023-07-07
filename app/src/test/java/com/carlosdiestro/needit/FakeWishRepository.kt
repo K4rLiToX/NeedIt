@@ -10,9 +10,14 @@ import kotlinx.coroutines.flow.flowOf
 
 class FakeWishRepository : WishRepository {
     override val wishes: Flow<List<Wish>> = flowOf(list)
+    override suspend fun getWish(id: Long): Wish = list.find { it.id == id }!!
+
+    override suspend fun insertWish(wish: Wish) {
+        list.add(wish)
+    }
 }
 
-val list = listOf(
+val list = mutableListOf(
     Clothes(
         id = 0,
         imageUrl = "https://img01.ztat" +
