@@ -2,7 +2,6 @@ package com.carlosdiestro.needit.features.home
 
 import androidx.lifecycle.ViewModel
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
-import com.carlosdiestro.needit.core.design_system.components.menu.SortType
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.extensions.launchCollect
 import com.carlosdiestro.needit.core.mappers.toPLO
