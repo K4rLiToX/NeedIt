@@ -16,6 +16,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -119,13 +120,11 @@ private fun HomeSuccessState(
         pageCount = tabs::size
     )
     val gridState = rememberLazyGridState()
-    val pagerWishlist by remember(wishes) {
+    val pagerWishlist by remember(pagerState.currentPage, pagerState.currentPage != 0) {
         mutableStateOf(
-            if (pagerState.currentPage == 0) wishes
-            else
-                wishes.filter {
-                    it.category == tabs[pagerState.currentPage]
-                }
+            wishes.filter {
+                it.category == tabs[pagerState.currentPage]
+            }
         )
     }
     Column(
@@ -147,7 +146,7 @@ private fun HomeSuccessState(
         ) {
             NeedItWishGrid(
                 state = gridState,
-                wishes = pagerWishlist,
+                wishes = if (pagerState.currentPage == 0) wishes else pagerWishlist,
                 onItemClick = onItemClick,
                 onItemLongClick = onItemLongClick
             )
