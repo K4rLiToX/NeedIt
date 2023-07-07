@@ -147,14 +147,14 @@ private fun HomeSuccessState(
         pageCount = tabs::size
     )
     val gridState = rememberLazyGridState()
-    val pagerWishList by remember {
-        derivedStateOf {
+    val pagerWishlist by remember(wishes) {
+        mutableStateOf(
             if (pagerState.currentPage == 0) wishes
             else
                 wishes.filter {
                     it.category == tabs[pagerState.currentPage]
                 }
-        }
+        )
     }
     Column(
         modifier = modifier
@@ -175,7 +175,7 @@ private fun HomeSuccessState(
         ) {
             NeedItWishGrid(
                 state = gridState,
-                wishes = pagerWishList,
+                wishes = pagerWishlist,
                 onItemClick = onItemClick,
                 onItemLongClick = onItemLongClick
             )
