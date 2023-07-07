@@ -51,8 +51,7 @@ fun HomeRoute(
         state = state,
         coroutineScope = coroutineScope,
         onItemClick = onItemClick,
-        onItemLongClick = onItemLongClick,
-        onUpdateSortType = viewModel::updateSortType
+        onItemLongClick = onItemLongClick
     )
 }
 
@@ -62,22 +61,12 @@ private fun HomeScreen(
     state: HomeUiState,
     coroutineScope: CoroutineScope,
     onItemClick: (Long) -> Unit,
-    onItemLongClick: (Long) -> Unit,
-    onUpdateSortType: (SortType) -> Unit
+    onItemLongClick: (Long) -> Unit
 ) {
-    val bottomSheetState = rememberModalBottomSheetState()
-    var openSortingBottomSheet by rememberSaveable { mutableStateOf(false) }
-
     Scaffold(
         topBar = {
             NeedItTopAppBar(
                 title = stringResource(id = R.string.home_title),
-                actions = {
-                    NeedItFilledIconButton(
-                        icon = MaterialTheme.icons.Sort,
-                        onClick = { openSortingBottomSheet = true }
-                    )
-                }
             )
         }
     ) {
@@ -93,23 +82,6 @@ private fun HomeScreen(
             onItemLongClick = onItemLongClick,
             modifier = baseModifier
         )
-    }
-
-    if (openSortingBottomSheet) {
-        NeedItSortingMenu(
-            sheetState = bottomSheetState,
-            optionSelected = state.sortOptionSelected,
-            onDismiss = {
-                coroutineScope.launch { bottomSheetState.hide() }.invokeOnCompletion {
-                    if (!bottomSheetState.isVisible) openSortingBottomSheet = false
-                }
-            }
-        ) { newSortType ->
-            onUpdateSortType(newSortType)
-            coroutineScope.launch { bottomSheetState.hide() }.invokeOnCompletion {
-                if (!bottomSheetState.isVisible) openSortingBottomSheet = false
-            }
-        }
     }
 }
 

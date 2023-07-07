@@ -28,25 +28,16 @@ import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 class SimpleWishPLO(
     val id: Long,
-    val imageUrl: String,
     val title: String,
-    val price: Double,
-    val currency: Currency,
+    val imageUrl: String,
     val isShared: Boolean,
     val category: WishCategory
-)
-
-class Currency(
-    val symbol: String,
-    val isRightPositioned: Boolean
 )
 
 @Composable
 fun WishCard(
     title: String,
     imageUrl: String,
-    price: Double,
-    currency: Currency,
     isShared: Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit
@@ -60,9 +51,6 @@ fun WishCard(
         onLongClick = onLongClick,
         cardContent = {
             WishCardContent(
-                title = title,
-                price = price,
-                currency = currency,
                 isShared = isShared
             )
         }
@@ -71,9 +59,6 @@ fun WishCard(
 
 @Composable
 private fun WishCardContent(
-    title: String,
-    price: Double,
-    currency: Currency,
     isShared: Boolean
 ) {
     Column(
@@ -81,11 +66,6 @@ private fun WishCardContent(
         modifier = Modifier.fillMaxSize()
     ) {
         IconSection(isShared = isShared)
-        InformationSection(
-            title = title,
-            price = price,
-            currency = currency
-        )
     }
 }
 
@@ -110,80 +90,13 @@ private fun IconSection(
     }
 }
 
-@Composable
-private fun InformationSection(
-    title: String,
-    price: Double,
-    currency: Currency
-) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .gradient(MaterialTheme.colorScheme.onSurface)
-            .padding(MaterialTheme.spacing.s)
-    ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onPrimary,
-            maxLines = 2,
-            modifier = Modifier.fillMaxWidth(0.7f)
-        )
-        PriceText(
-            price = price,
-            currency = currency
-        )
-    }
-}
-
-@Composable
-fun PriceText(
-    price: Double,
-    currency: Currency,
-    textStyle: TextStyle = MaterialTheme.typography.titleLarge,
-    textColor: Color = MaterialTheme.colorScheme.onPrimary
-) {
-    val priceText = if (!currency.isRightPositioned) {
-        price.toString().round().addPrefix(currency.symbol)
-    } else {
-        price.toString().round().addSuffix(currency.symbol)
-    }
-    Text(
-        text = priceText,
-        style = textStyle,
-        color = textColor
-    )
-}
-
-fun String.round(): String {
-    val decimalPointIndex = indexOf(".")
-    val firstDecimal = this[decimalPointIndex + 1].toString()
-    return if (firstDecimal != "0") this
-    else this.substring(0, decimalPointIndex)
-}
-
-fun String.addPrefix(prefix: String): String = "$prefix$this"
-fun String.addSuffix(suffix: String): String = "$this$suffix"
-
 @Preview
 @Composable
 private fun WishCardPreview() {
-    val currency1 = Currency(
-        symbol = "€",
-        isRightPositioned = true
-    )
-    val currency2 = Currency(
-        symbol = "$",
-        isRightPositioned = false
-    )
     val wish1 = SimpleWishPLO(
         id = 0,
         imageUrl = "",
         title = "Chanel",
-        price = 50.0,
-        currency = currency1,
         isShared = false,
         category = WishCategory.Clothes
     )
@@ -191,18 +104,14 @@ private fun WishCardPreview() {
         id = 1,
         imageUrl = "",
         title = "Chanel",
-        price = 50.4,
-        currency = currency2,
         isShared = true,
-        WishCategory.Books
+        category = WishCategory.Books
     )
     NeedItTheme {
         Column {
             WishCard(
                 title = wish1.title,
                 imageUrl = wish1.imageUrl,
-                price = wish1.price,
-                currency = wish1.currency,
                 isShared = wish1.isShared,
                 onClick = {},
                 onLongClick = {}
@@ -210,8 +119,6 @@ private fun WishCardPreview() {
             WishCard(
                 title = wish2.title,
                 imageUrl = wish2.imageUrl,
-                price = wish2.price,
-                currency = wish2.currency,
                 isShared = wish2.isShared,
                 onClick = {},
                 onLongClick = {}

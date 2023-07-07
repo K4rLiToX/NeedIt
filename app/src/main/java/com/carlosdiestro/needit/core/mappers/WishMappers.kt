@@ -67,11 +67,6 @@ fun Wish.toPLO(): SimpleWishPLO = SimpleWishPLO(
     id = this.id,
     imageUrl = this.imageUrl,
     title = this.title,
-    price = this.price,
-    currency = Currency(
-        symbol = "€",
-        isRightPositioned = true
-    ),
     isShared = this.isShared,
     category = this.category
 )

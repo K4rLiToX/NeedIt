@@ -29,21 +29,12 @@ class HomeViewModel @Inject constructor(
         fetchMyWishes()
     }
 
-    fun updateSortType(sortType: SortType) {
-        _state.update { currentState ->
-            currentState.copy(
-                wishes = sortWishes(sortType, wishes).toPLO(),
-                sortOptionSelected = sortType
-            )
-        }
-    }
-
     private fun fetchMyWishes() {
         launchCollect(getMyWishes()) { list ->
             wishes = list
             _state.update { currentState ->
                 currentState.copy(
-                    wishes = sortWishes(currentState.sortOptionSelected, list).toPLO(),
+                    wishes = list.toPLO(),
                     tabs = getCategoryTabs(list.toPLO()),
                     isEmpty = list.isEmpty()
                 )
@@ -65,6 +56,5 @@ class HomeViewModel @Inject constructor(
 data class HomeUiState(
     val wishes: List<SimpleWishPLO> = emptyList(),
     val tabs: List<WishCategory> = emptyList(),
-    val sortOptionSelected: SortType = SortType.HighToLow,
     val isEmpty: Boolean = false
 )
