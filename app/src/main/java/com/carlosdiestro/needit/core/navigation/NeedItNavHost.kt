@@ -9,6 +9,7 @@ import com.carlosdiestro.needit.features.friends.friendsScreen
 import com.carlosdiestro.needit.features.gifts.giftsScreen
 import com.carlosdiestro.needit.features.home.homeRoute
 import com.carlosdiestro.needit.features.home.homeScreen
+import com.carlosdiestro.needit.features.home.navigateToHome
 import com.carlosdiestro.needit.features.profile.profileScreen
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
 import com.carlosdiestro.needit.features.upsert_item.upsertRoute
@@ -49,7 +50,8 @@ fun NeedItNavHost(
         )
 
         upsertRoute(
-            onBackClick = navController::popBackStack
+            onBackClick = navController::popBackStack,
+            navigateHome = navController::navigateToHome
         )
     }
 }

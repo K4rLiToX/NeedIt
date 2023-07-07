@@ -2,7 +2,6 @@ package com.carlosdiestro.needit.features.home
 
 import androidx.lifecycle.ViewModel
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
-import com.carlosdiestro.needit.core.design_system.components.menu.SortType
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.extensions.launchCollect
 import com.carlosdiestro.needit.core.mappers.toPLO
@@ -29,21 +28,12 @@ class HomeViewModel @Inject constructor(
         fetchMyWishes()
     }
 
-    fun updateSortType(sortType: SortType) {
-        _state.update { currentState ->
-            currentState.copy(
-                wishes = sortWishes(sortType, wishes).toPLO(),
-                sortOptionSelected = sortType
-            )
-        }
-    }
-
     private fun fetchMyWishes() {
         launchCollect(getMyWishes()) { list ->
             wishes = list
             _state.update { currentState ->
                 currentState.copy(
-                    wishes = sortWishes(currentState.sortOptionSelected, list).toPLO(),
+                    wishes = list.toPLO(),
                     tabs = getCategoryTabs(list.toPLO()),
                     isEmpty = list.isEmpty()
                 )
@@ -56,7 +46,8 @@ class HomeViewModel @Inject constructor(
             .plus(
                 wishes
                     .map { it.category }
-                    .sortedBy { it }
+                    .toSet()
+                    .sortedBy { it.ordinal }
             )
     }
 }
@@ -64,6 +55,5 @@ class HomeViewModel @Inject constructor(
 data class HomeUiState(
     val wishes: List<SimpleWishPLO> = emptyList(),
     val tabs: List<WishCategory> = emptyList(),
-    val sortOptionSelected: SortType = SortType.HighToLow,
     val isEmpty: Boolean = false
 )

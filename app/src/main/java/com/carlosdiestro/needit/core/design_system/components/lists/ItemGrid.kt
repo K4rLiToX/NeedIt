@@ -39,8 +39,6 @@ fun NeedItWishGrid(
             WishCard(
                 title = item.title,
                 imageUrl = item.imageUrl,
-                price = item.price,
-                currency = item.currency,
                 isShared = item.isShared,
                 onClick = {
                     onItemClick(item.id)

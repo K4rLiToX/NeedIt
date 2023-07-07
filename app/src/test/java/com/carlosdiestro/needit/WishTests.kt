@@ -1,6 +1,9 @@
 package com.carlosdiestro.needit
 
+import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.domain.wishes.GetMyWishesUseCase
+import com.carlosdiestro.needit.domain.wishes.GetWishUseCase
+import com.carlosdiestro.needit.domain.wishes.InsertWishUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertTrue
@@ -8,18 +11,41 @@ import org.junit.Before
 import org.junit.Test
 
 class WishTests {
-    lateinit var repository: FakeWishRepository
-    lateinit var getMyWishes: GetMyWishesUseCase
+    private lateinit var repository: FakeWishRepository
+    private lateinit var getMyWishes: GetMyWishesUseCase
+    private lateinit var getWish: GetWishUseCase
+    private lateinit var insertWish: InsertWishUseCase
 
     @Before
     fun setup() {
         repository = FakeWishRepository()
         getMyWishes = GetMyWishesUseCase(repository)
+        getWish = GetWishUseCase(repository)
+        insertWish = InsertWishUseCase(repository)
     }
 
     @Test
     fun `Getting my wishes`() = runBlocking {
         val myWishes = repository.wishes.first()
         assertTrue(myWishes.isNotEmpty())
+    }
+
+    @Test
+    fun `Insert & Get wish`() = runBlocking {
+        insertWish(
+            imageUrl = "",
+            title = "Mouse",
+            subtitle = "Logitech",
+            price = "100.0",
+            webUrl = "",
+            description = "",
+            category = WishCategory.Tech,
+            size = "",
+            color = "",
+            isbn = ""
+        )
+        val insertedWish = getWish(-1)
+        assertTrue(insertedWish.title == "Mouse")
+        assertTrue(WishCategory.Tech == insertedWish.category)
     }
 }

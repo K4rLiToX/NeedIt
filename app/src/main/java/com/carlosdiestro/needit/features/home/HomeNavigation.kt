@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 const val homeRoute = "home"
 
 fun NavController.navigateToHome(
-    navOptions: NavOptions?
+    navOptions: NavOptions? = null
 ) = navigate(homeRoute, navOptions)
 
 fun NavGraphBuilder.homeScreen(

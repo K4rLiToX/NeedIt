@@ -34,6 +34,7 @@ import com.carlosdiestro.needit.core.design_system.theme.spacing
 @Composable
 fun UpsertRoute(
     onBackClick: () -> Unit,
+    navigateHome: () -> Unit,
     viewModel: UpsertViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -57,6 +58,7 @@ fun UpsertRoute(
         isbn = isbn,
         showSaveButton = viewModel.isFormFilledInCorrectly(),
         onBackClick = onBackClick,
+        navigateHome = navigateHome,
         onSaveClick = viewModel::save,
         updateTitle = viewModel::updateTitle,
         updateSubtitle = viewModel::updateSubtitle,
@@ -82,6 +84,7 @@ private fun UpsertScreen(
     isbn: String,
     showSaveButton: Boolean,
     onBackClick: () -> Unit,
+    navigateHome: () -> Unit,
     onSaveClick: () -> Unit,
     updateTitle: (String) -> Unit,
     updateSubtitle: (String) -> Unit,
@@ -100,7 +103,10 @@ private fun UpsertScreen(
                     if (showSaveButton) {
                         NeedItTextButton(
                             labelId = R.string.button_save,
-                            onClick = onSaveClick,
+                            onClick = {
+                                onSaveClick()
+                                navigateHome()
+                            }
                         )
                     }
                 }
@@ -198,7 +204,7 @@ private fun ImageSection(
     imageUrl: String
 ) {
     AsyncImage(
-        model = imageUrl.replace("-", "/"),
+        model = imageUrl,
         contentDescription = "Photo",
         contentScale = ContentScale.Crop,
         modifier = Modifier

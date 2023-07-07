@@ -32,13 +32,15 @@ fun NavController.navigateToUpsert(
 
 fun NavGraphBuilder.upsertRoute(
     onBackClick: () -> Unit,
+    navigateHome: () -> Unit
 ) {
     composable(
         route = upsertRoute,
         arguments = upsertArgs
     ) {
         UpsertRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            navigateHome = navigateHome
         )
     }
 }
