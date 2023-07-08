@@ -13,6 +13,8 @@ import com.carlosdiestro.needit.features.home.navigateToHome
 import com.carlosdiestro.needit.features.profile.profileScreen
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
 import com.carlosdiestro.needit.features.upsert_item.upsertRoute
+import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
+import com.carlosdiestro.needit.features.wish_details.wishDetailsRoute
 
 @Composable
 fun NeedItNavHost(
@@ -29,7 +31,7 @@ fun NeedItNavHost(
     ) {
         homeScreen(
             coroutineScope = appState.coroutineScope,
-            onItemClick = {},
+            onItemClick = navController::navigateToWishDetails,
             onItemLongClick = {}
         )
         giftsScreen(
@@ -52,6 +54,10 @@ fun NeedItNavHost(
         upsertRoute(
             onBackClick = navController::popBackStack,
             navigateHome = navController::navigateToHome
+        )
+
+        wishDetailsRoute(
+            onBackClick = navController::popBackStack
         )
     }
 }

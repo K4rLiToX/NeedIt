@@ -33,7 +33,7 @@ fun NeedItItemDetailCard(
     imageUrl: String,
     title: String,
     subtitle: String,
-    price: Double,
+    price: String,
     currency: Currency,
     description: String,
     size: String? = null,
@@ -45,7 +45,7 @@ fun NeedItItemDetailCard(
         modifier = Modifier
             .fillMaxSize(),
         cardContent = {
-            if (!size.isNullOrEmpty() && !color.isNullOrEmpty()) {
+            if (!size.isNullOrEmpty() || !color.isNullOrEmpty()) {
                 NeedItFashionInfoCard(
                     title = title,
                     subtitle = subtitle,
@@ -57,7 +57,7 @@ fun NeedItItemDetailCard(
                 )
                 return@NeedItImageContainer
             }
-            if (!isbn.isNullOrEmpty()) {
+            if (isbn != null) {
                 NeedItBookInfoCard(
                     title = title,
                     subtitle = subtitle,
@@ -83,7 +83,7 @@ fun NeedItItemDetailCard(
 private fun NeedItBaseItemInfoCard(
     title: String,
     subtitle: String,
-    price: Double,
+    price: String,
     currency: Currency,
     description: String,
     size: String? = null,
@@ -116,7 +116,7 @@ private fun NeedItBaseItemInfoCard(
             textAlign = TextAlign.Start,
             modifier = Modifier.fillMaxWidth()
         )
-        if (!size.isNullOrEmpty() && !color.isNullOrEmpty()) ItemSizeAndColor(
+        if (!size.isNullOrEmpty() || !color.isNullOrEmpty()) ItemSizeAndColor(
             size = size,
             color = color
         )
@@ -128,11 +128,11 @@ private fun NeedItBaseItemInfoCard(
 private fun NeedItFashionInfoCard(
     title: String,
     subtitle: String,
-    price: Double,
+    price: String,
     currency: Currency,
     description: String,
-    size: String,
-    color: String
+    size: String?,
+    color: String?
 ) {
     NeedItBaseItemInfoCard(
         title = title,
@@ -149,7 +149,7 @@ private fun NeedItFashionInfoCard(
 private fun NeedItBookInfoCard(
     title: String,
     subtitle: String,
-    price: Double,
+    price: String,
     currency: Currency,
     description: String,
     isbn: String
@@ -168,7 +168,7 @@ private fun NeedItBookInfoCard(
 private fun NeedItOtherInfoCard(
     title: String,
     subtitle: String,
-    price: Double,
+    price: String,
     currency: Currency,
     description: String,
 ) {
@@ -185,18 +185,18 @@ private fun NeedItOtherInfoCard(
 private fun ItemHeader(
     title: String,
     subtitle: String,
-    price: Double,
+    price: String,
     currency: Currency
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Top,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xxs),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.fillMaxWidth(0.65f)
+            modifier = Modifier.fillMaxWidth(0.60f)
         ) {
             Text(
                 text = title,
@@ -204,26 +204,29 @@ private fun ItemHeader(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.titleMedium,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
+            if (subtitle.isNotEmpty()) {
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.titleMedium,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
         PriceText(
             price = price,
             currency = currency,
             textStyle = MaterialTheme.typography.headlineMedium,
-            textColor = MaterialTheme.colorScheme.onSurface
+            textColor = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
 
 @Composable
 private fun ItemSizeAndColor(
-    size: String,
-    color: String
+    size: String?,
+    color: String?
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -231,14 +234,18 @@ private fun ItemSizeAndColor(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Pill(
-            label = stringResource(id = R.string.item_details_size),
-            value = size,
-        )
-        Pill(
-            label = stringResource(id = R.string.item_details_color),
-            value = color,
-        )
+        if (!size.isNullOrEmpty()) {
+            Pill(
+                label = stringResource(id = R.string.item_details_size),
+                value = size,
+            )
+        }
+        if (!color.isNullOrEmpty()) {
+            Pill(
+                label = stringResource(id = R.string.item_details_color),
+                value = color,
+            )
+        }
     }
 }
 
@@ -282,7 +289,7 @@ private fun Pill(
                 horizontal = MaterialTheme.spacing.m,
                 vertical = MaterialTheme.spacing.xs
             )
-            .defaultMinSize(minWidth = 127.dp)
+            .defaultMinSize(minWidth = 100.dp)
     ) {
         Text(text = label, style = MaterialTheme.typography.bodyLarge)
         Text(
@@ -303,20 +310,23 @@ class Currency(
 
 @Composable
 fun PriceText(
-    price: Double,
+    price: String,
     currency: Currency,
     textStyle: TextStyle = MaterialTheme.typography.titleLarge,
-    textColor: Color = MaterialTheme.colorScheme.onPrimary
+    textColor: Color = MaterialTheme.colorScheme.onPrimary,
+    modifier: Modifier = Modifier
 ) {
     val priceText = if (!currency.isRightPositioned) {
-        price.toString().round().addPrefix(currency.symbol)
+        price.round().addPrefix(currency.symbol)
     } else {
-        price.toString().round().addSuffix(currency.symbol)
+        price.round().addSuffix(currency.symbol)
     }
     Text(
         text = priceText,
         style = textStyle,
-        color = textColor
+        color = textColor,
+        textAlign = TextAlign.End,
+        modifier = modifier
     )
 }
 
@@ -336,8 +346,8 @@ private fun NeedItFashionCardPreview() {
     NeedItTheme {
         NeedItFashionInfoCard(
             title = "Scarf",
-            subtitle = "Adidas",
-            price = 35.0,
+            subtitle = "",
+            price = "35.0",
             currency = Currency(symbol = "€", isRightPositioned = true),
             description = "",
             size = "XL",
@@ -353,7 +363,7 @@ private fun NeedItBookCardPreview() {
         NeedItBookInfoCard(
             title = "The Way of the Kings",
             subtitle = "Brandon Sanderson",
-            price = 35.0,
+            price = "35.0",
             currency = Currency(symbol = "€", isRightPositioned = true),
             description = "",
             isbn = "56987645689876"
@@ -369,7 +379,7 @@ private fun NeedItItemDetailCardPreview() {
             imageUrl = "",
             title = "Switch",
             subtitle = "Nintendo",
-            price = 200.0,
+            price = "200.0",
             currency = Currency(symbol = "€", isRightPositioned = true),
             description = "The blue one, not the red one"
         )
