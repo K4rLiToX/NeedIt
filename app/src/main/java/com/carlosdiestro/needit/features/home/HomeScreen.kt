@@ -173,7 +173,8 @@ private fun HomeSuccessState(
         }
     }
     if (openActionBottomSheet) {
-        val labelId = if (selectedWishIsShared) R.string.button_keep_private else R.string.button_share
+        val labelId =
+            if (selectedWishIsShared) R.string.button_keep_private else R.string.button_share
         val icon = if (selectedWishIsShared) MaterialTheme.icons.Lock else MaterialTheme.icons.Share
         NeedItItemActionMenu(
             sheetState = wishActionsBottomSheetState,
