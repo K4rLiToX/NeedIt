@@ -213,13 +213,15 @@ private fun ItemHeader(
                 )
             }
         }
-        PriceText(
-            price = price,
-            currency = currency,
-            textStyle = MaterialTheme.typography.headlineMedium,
-            textColor = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.fillMaxWidth()
-        )
+        if (price != "0.0") {
+            PriceText(
+                price = price,
+                currency = currency,
+                textStyle = MaterialTheme.typography.headlineMedium,
+                textColor = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 
