@@ -15,6 +15,18 @@ class FakeWishRepository : WishRepository {
     override suspend fun insertWish(wish: Wish) {
         list.add(wish)
     }
+
+    override suspend fun removeWish(id: Long) {
+        list.removeIf { it.id == id }
+    }
+
+    override suspend fun shareWish(id: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun lockWish(id: Long) {
+        TODO("Not yet implemented")
+    }
 }
 
 val list = mutableListOf(
