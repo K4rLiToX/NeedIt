@@ -16,4 +16,13 @@ interface WishDao {
 
     @Insert
     suspend fun insert(entity: WishEntity)
+
+    @Query("DELETE FROM wish_table WHERE id = :id")
+    suspend fun remove(id: Long)
+
+    @Query("UPDATE wish_table SET is_shared = 1 WHERE id = :id")
+    suspend fun share(id: Long)
+
+    @Query("UPDATE wish_table SET is_shared = 0 WHERE id = :id")
+    suspend fun lock(id: Long)
 }

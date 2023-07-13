@@ -51,7 +51,7 @@ fun HomeRoute(
         onItemLongClick = viewModel::onSelectedWish,
         onDeleteClick = viewModel::deleteWish,
         onUpdateClick = { onUpdateClick(" ", 0, viewModel.selectedWishId!!) },
-        onShareClick = viewModel::shareWish,
+        onShareClick = viewModel::uploadWish,
         onPrivateClick = viewModel::privateWish
     )
 }

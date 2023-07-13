@@ -84,7 +84,7 @@ class BookParams(
 ) : WishParams()
 
 class OtherParams(
-    val category: WishCategory
+    val category: WishCategory?
 ) : WishParams()
 
 object WishFactory {
@@ -166,7 +166,7 @@ object WishFactory {
             description = description,
             webUrl = webUrl,
             isShared = isShared,
-            category = params.category,
+            category = params.category!!,
             title = title,
             subtitle = subtitle
         )

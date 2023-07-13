@@ -45,7 +45,6 @@ enum class Gifts(
     Groups(labelId = R.string.gifts_tab_groups)
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NeedItScrollableTabBar(
     selectedTabIndex: Int = 0,
