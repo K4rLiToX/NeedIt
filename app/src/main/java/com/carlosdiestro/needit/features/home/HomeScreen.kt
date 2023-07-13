@@ -8,24 +8,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItLabeledFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
 import com.carlosdiestro.needit.core.design_system.components.lists.NeedItWishGrid
+import com.carlosdiestro.needit.core.design_system.components.menu.NeedItItemActionMenu
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItScrollableTabBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
+import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.design_system.theme.spacing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -34,7 +40,7 @@ import kotlinx.coroutines.launch
 fun HomeRoute(
     coroutineScope: CoroutineScope,
     onItemClick: (Long) -> Unit,
-    onItemLongClick: (Long) -> Unit,
+    onUpdateClick: (String, Int, Long) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -42,7 +48,11 @@ fun HomeRoute(
         state = state,
         coroutineScope = coroutineScope,
         onItemClick = onItemClick,
-        onItemLongClick = onItemLongClick
+        onItemLongClick = viewModel::onSelectedWish,
+        onDeleteClick = viewModel::deleteWish,
+        onUpdateClick = { onUpdateClick(" ", 0, viewModel.selectedWishId!!) },
+        onShareClick = viewModel::shareWish,
+        onPrivateClick = viewModel::privateWish
     )
 }
 
@@ -51,7 +61,11 @@ private fun HomeScreen(
     state: HomeUiState,
     coroutineScope: CoroutineScope,
     onItemClick: (Long) -> Unit,
-    onItemLongClick: (Long) -> Unit
+    onItemLongClick: (Long) -> Unit,
+    onDeleteClick: () -> Unit,
+    onUpdateClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onPrivateClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -67,9 +81,14 @@ private fun HomeScreen(
         else HomeSuccessState(
             wishes = state.wishes,
             tabs = state.tabs,
+            selectedWishIsShared = state.wishIsShared,
             coroutineScope = coroutineScope,
             onItemClick = onItemClick,
             onItemLongClick = onItemLongClick,
+            onDeleteClick = onDeleteClick,
+            onUpdateClick = onUpdateClick,
+            onShareClick = onShareClick,
+            onPrivateClick = onPrivateClick,
             modifier = baseModifier
         )
     }
@@ -94,16 +113,25 @@ private fun HomeEmptyState(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeSuccessState(
     wishes: List<SimpleWishPLO>,
     tabs: List<WishCategory>,
+    selectedWishIsShared: Boolean,
     coroutineScope: CoroutineScope,
     onItemClick: (Long) -> Unit,
     onItemLongClick: (Long) -> Unit,
+    onDeleteClick: () -> Unit,
+    onUpdateClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onPrivateClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val wishActionsBottomSheetState = rememberModalBottomSheetState()
+    var openActionBottomSheet by remember {
+        mutableStateOf(false)
+    }
     val pagerState = rememberPagerState(
         initialPage = 0,
         pageCount = tabs::size
@@ -137,9 +165,47 @@ private fun HomeSuccessState(
                 state = gridState,
                 wishes = if (pagerState.currentPage == 0) wishes else pagerWishlist,
                 onItemClick = onItemClick,
-                onItemLongClick = onItemLongClick
+                onItemLongClick = { id ->
+                    openActionBottomSheet = true
+                    onItemLongClick(id)
+                }
             )
         }
+    }
+    if (openActionBottomSheet) {
+        val labelId = if (selectedWishIsShared) R.string.button_keep_private else R.string.button_share
+        val icon = if (selectedWishIsShared) MaterialTheme.icons.Lock else MaterialTheme.icons.Share
+        NeedItItemActionMenu(
+            sheetState = wishActionsBottomSheetState,
+            onDismiss = { openActionBottomSheet = false },
+            actions = {
+                NeedItLabeledFilledIconButton(
+                    labelId = R.string.button_remove,
+                    icon = MaterialTheme.icons.Delete,
+                    onClick = {
+                        onDeleteClick()
+                        openActionBottomSheet = false
+                    }
+                )
+                NeedItLabeledFilledIconButton(
+                    labelId = R.string.button_update,
+                    icon = MaterialTheme.icons.Edit,
+                    onClick = {
+                        onUpdateClick()
+                        openActionBottomSheet = false
+                    }
+                )
+                NeedItLabeledFilledIconButton(
+                    labelId = labelId,
+                    icon = icon,
+                    onClick = {
+                        if (selectedWishIsShared) onPrivateClick()
+                        else onShareClick()
+                        openActionBottomSheet = false
+                    }
+                )
+            }
+        )
     }
 }
 

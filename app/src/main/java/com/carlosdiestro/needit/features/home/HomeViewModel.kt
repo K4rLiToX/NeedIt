@@ -23,6 +23,8 @@ class HomeViewModel @Inject constructor(
     private var _state: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
     val state = _state.asStateFlow()
     private lateinit var wishes: List<Wish>
+    var selectedWishId: Long? = null
+        private set
 
     init {
         fetchMyWishes()
@@ -50,10 +52,33 @@ class HomeViewModel @Inject constructor(
                     .sortedBy { it.ordinal }
             )
     }
+
+    fun onSelectedWish(id: Long) {
+        selectedWishId = id
+        _state.update {
+            it.copy(
+                wishIsShared = wishes.find { wish -> wish.id == id }!!.isShared
+            )
+        }
+    }
+
+    fun shareWish() {
+
+    }
+
+    fun privateWish() {
+
+    }
+
+    fun deleteWish() {
+
+    }
+
 }
 
 data class HomeUiState(
     val wishes: List<SimpleWishPLO> = emptyList(),
     val tabs: List<WishCategory> = emptyList(),
-    val isEmpty: Boolean = false
+    val isEmpty: Boolean = false,
+    val wishIsShared: Boolean = false
 )
