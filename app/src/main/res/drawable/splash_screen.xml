@@ -6,6 +6,8 @@
     </item>
 
     <item
+        android:width="90dp"
+        android:height="90dp"
         android:drawable="@drawable/ic_needit_splash"
         android:gravity="center" />
 
