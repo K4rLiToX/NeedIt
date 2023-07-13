@@ -6,7 +6,6 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.WishCat
 import com.carlosdiestro.needit.core.extensions.launchCollect
 import com.carlosdiestro.needit.core.mappers.toPLO
 import com.carlosdiestro.needit.domain.wishes.GetMyWishesUseCase
-import com.carlosdiestro.needit.domain.wishes.SortWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getMyWishes: GetMyWishesUseCase,
-    private val sortWishes: SortWishesUseCase
 ) : ViewModel() {
 
     private var _state: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
