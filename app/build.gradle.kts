@@ -109,6 +109,9 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:$cameraVersion")
     implementation("androidx.camera:camera-view:$cameraVersion")
 
+    // Splashscreen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
     // Compose Test
     androidTestImplementation(platform("androidx.compose:compose-bom:2022.10.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
