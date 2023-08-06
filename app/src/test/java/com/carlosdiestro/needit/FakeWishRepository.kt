@@ -13,7 +13,12 @@ class FakeWishRepository : WishRepository {
     override suspend fun getWish(id: Long): Wish = list.find { it.id == id }!!
 
     override suspend fun upsertWish(wish: Wish) {
-        list.add(wish)
+        if (wish.id != -1L) {
+            list.removeIf { it.id == wish.id}
+            list.add(wish)
+        } else {
+            list.add(wish)
+        }
     }
 
     override suspend fun removeWish(id: Long) {

@@ -16,7 +16,7 @@ class WishTests {
     private lateinit var repository: FakeWishRepository
     private lateinit var getMyWishes: GetMyWishesUseCase
     private lateinit var getWish: GetWishUseCase
-    private lateinit var insertWish: UpsertWishUseCase
+    private lateinit var upsertWish: UpsertWishUseCase
     private lateinit var removeWish: RemoveWishUseCase
 
     @Before
@@ -24,7 +24,7 @@ class WishTests {
         repository = FakeWishRepository()
         getMyWishes = GetMyWishesUseCase(repository)
         getWish = GetWishUseCase(repository)
-        insertWish = UpsertWishUseCase(repository)
+        upsertWish = UpsertWishUseCase(repository)
         removeWish = RemoveWishUseCase(repository)
     }
 
@@ -36,7 +36,8 @@ class WishTests {
 
     @Test
     fun `Insert & Get wish`() = runBlocking {
-        insertWish(
+        upsertWish(
+            id = -1,
             imageUrl = "",
             title = "Mouse",
             subtitle = "Logitech",
@@ -61,5 +62,25 @@ class WishTests {
                 getWish(0)
             }
         }
+    }
+
+    @Test
+    fun `Update wish`() = runBlocking {
+        val wish = getWish(0)
+        upsertWish(
+            id = wish.id,
+            imageUrl = wish.imageUrl,
+            title = "Change Title",
+            subtitle = wish.subtitle,
+            price = wish.price.toString(),
+            webUrl = wish.webUrl,
+            description = wish.description,
+            category = wish.category,
+            size = "",
+            color = "",
+            isbn = ""
+        )
+        val updatedWish = getWish(0)
+        assertTrue(updatedWish.title == "Change Title")
     }
 }
