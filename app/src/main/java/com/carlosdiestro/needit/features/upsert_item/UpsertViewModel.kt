@@ -12,7 +12,7 @@ import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear
 import com.carlosdiestro.needit.domain.wishes.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.InsertWishUseCase
+import com.carlosdiestro.needit.domain.wishes.UpsertWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,12 +23,12 @@ import javax.inject.Inject
 @HiltViewModel
 class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
-    private val insertWish: InsertWishUseCase,
+    private val upsertWish: UpsertWishUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val imageUrl: String = (savedStateHandle[argImageUrl] ?: "").replace("-", "/")
-    private val category: WishCategory = (savedStateHandle[argCategory] ?: -1).toWishCategory()
+    private var category: WishCategory = (savedStateHandle[argCategory] ?: -1).toWishCategory()
     private val wishId: Long = savedStateHandle[argWishId] ?: -1L
 
     private var _state: MutableStateFlow<UpsertUiState> = MutableStateFlow(
@@ -70,6 +70,7 @@ class UpsertViewModel @Inject constructor(
     private fun fetchWish() {
         viewModelScope.launch {
             val wish = getWish(wishId)
+            category = wish.category
             _state.update {
                 it.copy(
                     imageUrl = wish.imageUrl,
@@ -135,7 +136,8 @@ class UpsertViewModel @Inject constructor(
 
     fun save() {
         viewModelScope.launch {
-            insertWish(
+            upsertWish(
+                id = wishId,
                 imageUrl = imageUrl,
                 title = title,
                 subtitle = subtitle,

@@ -32,7 +32,7 @@ fun NeedItNavHost(
         homeScreen(
             coroutineScope = appState.coroutineScope,
             onItemClick = navController::navigateToWishDetails,
-            onItemLongClick = {}
+            onUpdateClick = navController::navigateToUpsert
         )
         giftsScreen(
 

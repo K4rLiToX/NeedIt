@@ -24,9 +24,21 @@ class WishRepositoryImpl @Inject constructor(
         localDatasource.getWish(id)
     }
 
-    override suspend fun insertWish(wish: Wish) {
+    override suspend fun upsertWish(wish: Wish) {
         appDispatcher.launch {
-            localDatasource.insertWish(wish)
+            localDatasource.upsertWish(wish)
         }
+    }
+
+    override suspend fun removeWish(id: Long) = withContext(ioDispatcher) {
+        localDatasource.removeWish(id)
+    }
+
+    override suspend fun shareWish(id: Long) = withContext(ioDispatcher) {
+        localDatasource.shareWish(id)
+    }
+
+    override suspend fun lockWish(id: Long) = withContext(ioDispatcher) {
+        localDatasource.lockWish(id)
     }
 }
