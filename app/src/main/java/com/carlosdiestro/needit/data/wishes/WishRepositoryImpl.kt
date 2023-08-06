@@ -24,9 +24,9 @@ class WishRepositoryImpl @Inject constructor(
         localDatasource.getWish(id)
     }
 
-    override suspend fun insertWish(wish: Wish) {
+    override suspend fun upsertWish(wish: Wish) {
         appDispatcher.launch {
-            localDatasource.insertWish(wish)
+            localDatasource.upsertWish(wish)
         }
     }
 

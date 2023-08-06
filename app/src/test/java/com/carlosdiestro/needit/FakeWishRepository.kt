@@ -12,7 +12,7 @@ class FakeWishRepository : WishRepository {
     override val wishes: Flow<List<Wish>> = flowOf(list)
     override suspend fun getWish(id: Long): Wish = list.find { it.id == id }!!
 
-    override suspend fun insertWish(wish: Wish) {
+    override suspend fun upsertWish(wish: Wish) {
         list.add(wish)
     }
 

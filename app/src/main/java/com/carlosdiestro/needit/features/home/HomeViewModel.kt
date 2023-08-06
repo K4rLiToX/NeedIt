@@ -73,6 +73,7 @@ class HomeViewModel @Inject constructor(
             selectedWishId?.let {
                 shareWish(it)
             }
+            selectedWishId = null
         }
     }
 
@@ -81,6 +82,7 @@ class HomeViewModel @Inject constructor(
             selectedWishId?.let {
                 lockWish(it)
             }
+            selectedWishId = null
         }
     }
 

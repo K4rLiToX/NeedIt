@@ -3,10 +3,11 @@ package com.carlosdiestro.needit.domain.wishes
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import javax.inject.Inject
 
-class InsertWishUseCase @Inject constructor(
+class UpsertWishUseCase @Inject constructor(
     private val repository: WishRepository
 ) {
     suspend operator fun invoke(
+        id: Long,
         imageUrl: String,
         title: String,
         subtitle: String,
@@ -19,6 +20,7 @@ class InsertWishUseCase @Inject constructor(
         isbn: String
     ) {
         val wishFactory = WishFactory.initialize(
+            id = id,
             imageUrl = imageUrl,
             title = title,
             subtitle = subtitle,
@@ -49,6 +51,6 @@ class InsertWishUseCase @Inject constructor(
                 OtherParams(category = category)
             )
         }
-        repository.insertWish(wish)
+        repository.upsertWish(wish)
     }
 }

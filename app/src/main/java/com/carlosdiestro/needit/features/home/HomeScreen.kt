@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -129,7 +130,11 @@ private fun HomeSuccessState(
     modifier: Modifier = Modifier
 ) {
     val wishActionsBottomSheetState = rememberModalBottomSheetState()
-    var openActionBottomSheet by remember {
+    var openActionBottomSheet by rememberSaveable {
+        mutableStateOf(false)
+    }
+    val deleteWishBottomSheetState = rememberModalBottomSheetState()
+    var openRemoveWishBottomSheet by rememberSaveable {
         mutableStateOf(false)
     }
     val pagerState = rememberPagerState(
@@ -184,8 +189,8 @@ private fun HomeSuccessState(
                     labelId = R.string.button_remove,
                     icon = MaterialTheme.icons.Delete,
                     onClick = {
-                        onDeleteClick()
                         openActionBottomSheet = false
+                        openRemoveWishBottomSheet = true
                     }
                 )
                 NeedItLabeledFilledIconButton(
@@ -207,6 +212,10 @@ private fun HomeSuccessState(
                 )
             }
         )
+    }
+
+    if (openRemoveWishBottomSheet) {
+
     }
 }
 

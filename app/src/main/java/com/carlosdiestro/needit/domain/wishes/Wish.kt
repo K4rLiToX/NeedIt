@@ -98,7 +98,7 @@ object WishFactory {
     lateinit var subtitle: String
 
     fun initialize(
-        id: Long = -1,
+        id: Long,
         imageUrl: String,
         price: Double,
         description: String,
