@@ -137,7 +137,9 @@ fun NeedItItemActionMenu(
             verticalAlignment = Alignment.Top,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(MaterialTheme.spacing.m)
+                .padding(horizontal = MaterialTheme.spacing.l)
+                .padding(top = MaterialTheme.spacing.l)
+                .padding(bottom = MaterialTheme.spacing.xl)
         ) {
             actions()
         }

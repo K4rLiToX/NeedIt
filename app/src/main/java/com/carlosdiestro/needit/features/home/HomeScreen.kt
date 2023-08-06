@@ -27,6 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItLabeledFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
+import com.carlosdiestro.needit.core.design_system.components.dialogs.NeedItDialog
 import com.carlosdiestro.needit.core.design_system.components.lists.NeedItWishGrid
 import com.carlosdiestro.needit.core.design_system.components.menu.NeedItItemActionMenu
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItScrollableTabBar
@@ -215,7 +216,16 @@ private fun HomeSuccessState(
     }
 
     if (openRemoveWishBottomSheet) {
-
+        NeedItDialog(
+            titleId = R.string.delete_dialog_title,
+            bodyId = R.string.delete_dialog_body,
+            sheetState = deleteWishBottomSheetState,
+            onDismiss = { openRemoveWishBottomSheet = false },
+            onAccept = {
+                onDeleteClick()
+                openRemoveWishBottomSheet = false
+            }
+        )
     }
 }
 

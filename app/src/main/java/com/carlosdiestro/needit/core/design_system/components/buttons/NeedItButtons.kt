@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +42,7 @@ private fun NeedItBaseButton(
     trailingIconContentDescription: String = "",
     isEnabled: Boolean = true,
     style: ButtonStyle = ButtonStyle.Filled,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -49,6 +51,7 @@ private fun NeedItBaseButton(
             Button(
                 onClick = onClick,
                 enabled = isEnabled,
+                colors = colors,
                 modifier = modifier
                     .defaultMinSize(minHeight = MaterialTheme.dimensions.button.minHeight)
             ) {
@@ -127,6 +130,7 @@ fun NeedItFilledButton(
     trailingIcon: ImageVector? = null,
     trailingIconContentDescription: String = "",
     isEnabled: Boolean = true,
+    colors: ButtonColors = ButtonDefaults.buttonColors(),
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
@@ -137,6 +141,7 @@ fun NeedItFilledButton(
         trailingIcon = trailingIcon,
         trailingIconContentDescription = trailingIconContentDescription,
         isEnabled = isEnabled,
+        colors = colors,
         modifier = modifier,
         onClick = onClick
     )
