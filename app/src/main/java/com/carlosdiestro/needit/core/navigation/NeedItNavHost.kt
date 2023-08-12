@@ -11,6 +11,8 @@ import com.carlosdiestro.needit.features.home.homeRoute
 import com.carlosdiestro.needit.features.home.homeScreen
 import com.carlosdiestro.needit.features.home.navigateToHome
 import com.carlosdiestro.needit.features.profile.profileScreen
+import com.carlosdiestro.needit.features.sign_in.signInRoute
+import com.carlosdiestro.needit.features.sign_in.signInScreen
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
 import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
@@ -20,7 +22,7 @@ import com.carlosdiestro.needit.features.wish_details.wishDetailsRoute
 fun NeedItNavHost(
     appState: NeedItAppState,
     modifier: Modifier = Modifier,
-    startDestination: String = homeRoute
+    startDestination: String = signInRoute
 ) {
     val navController = appState.navController
 
@@ -29,6 +31,7 @@ fun NeedItNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
+        signInScreen()
         homeScreen(
             coroutineScope = appState.coroutineScope,
             onItemClick = navController::navigateToWishDetails,
