@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">NeedIt</string>
+    <string name="web_client_id">
+        126482328030-lfe2ht8f0fhovq25asbrh3162gthngdf.apps.googleusercontent.com
+    </string>
 
     <!-- Home -->
     <string name="home_title">My Wishes</string>
