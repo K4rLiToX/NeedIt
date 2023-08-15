@@ -10,6 +10,7 @@ import com.carlosdiestro.needit.features.gifts.giftsScreen
 import com.carlosdiestro.needit.features.home.homeRoute
 import com.carlosdiestro.needit.features.home.homeScreen
 import com.carlosdiestro.needit.features.home.navigateToHome
+import com.carlosdiestro.needit.features.home.navigateToHomeCleaningBackStack
 import com.carlosdiestro.needit.features.profile.profileScreen
 import com.carlosdiestro.needit.features.sign_in.signInRoute
 import com.carlosdiestro.needit.features.sign_in.signInScreen
@@ -31,7 +32,9 @@ fun NeedItNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        signInScreen()
+        signInScreen(
+            onSignInSuccessful = navController::navigateToHomeCleaningBackStack
+        )
         homeScreen(
             coroutineScope = appState.coroutineScope,
             onItemClick = navController::navigateToWishDetails,
