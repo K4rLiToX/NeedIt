@@ -14,7 +14,7 @@ class FakeWishRepository : WishRepository {
 
     override suspend fun upsertWish(wish: Wish) {
         if (wish.id != -1L) {
-            list.removeIf { it.id == wish.id}
+            list.removeIf { it.id == wish.id }
             list.add(wish)
         } else {
             list.add(wish)

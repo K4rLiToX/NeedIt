@@ -32,7 +32,7 @@ fun SignInRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val googleAuthUiClient = viewModel.googleAuthUiClient
-    
+
     LaunchedEffect(key1 = Unit) {
         if (googleAuthUiClient.getSignedInUser() != null) onSignInSuccessful()
     }
