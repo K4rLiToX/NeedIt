@@ -16,7 +16,7 @@ interface WishDataModule {
 
     @Singleton
     @Binds
-    fun bindWishLocalDataSource(impl: WishLocalDatasourceImpl): WishLocalDatasource
+    fun bindWishLocalDatasource(impl: WishLocalDatasourceImpl): WishLocalDatasource
 
     @Singleton
     @Binds
