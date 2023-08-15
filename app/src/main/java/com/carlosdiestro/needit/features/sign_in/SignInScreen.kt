@@ -5,12 +5,17 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -22,14 +27,17 @@ import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
+import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItOutlinedButton
 import com.carlosdiestro.needit.core.design_system.theme.button
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.spacing
 import kotlinx.coroutines.launch
 
 @Composable
 fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel(),
     onSignInSuccessful: () -> Unit,
+    onContinueAsGuestClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val googleAuthUiClient = viewModel.googleAuthUiClient
@@ -44,7 +52,8 @@ fun SignInRoute(
         onSignInResult = viewModel::onSignInResult,
         resetState = viewModel::resetState,
         onSignInSuccessful = onSignInSuccessful,
-        signIn = viewModel::signIn
+        signIn = viewModel::signIn,
+        onContinueAsGuestClick = onContinueAsGuestClick
     )
 }
 
@@ -55,7 +64,8 @@ private fun SignInScreen(
     onSignInResult: (SignInResult) -> Unit,
     resetState: () -> Unit,
     onSignInSuccessful: () -> Unit,
-    signIn: (UserAuth) -> Unit
+    signIn: (UserAuth) -> Unit,
+    onContinueAsGuestClick: () -> Unit
 ) {
     val context = LocalContext.current
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
@@ -91,20 +101,40 @@ private fun SignInScreen(
         }
     }
 
-    NeedItFilledButton(
-        labelId = R.string.button_login,
-        onClick = {
-            lifecycleScope.launch {
-                val signInIntentSender = googleAuthUiClient.signIn()
-                launcher.launch(
-                    IntentSenderRequest.Builder(
-                        intentSender = signInIntentSender ?: return@launch
-                    ).build()
-                )
-            }
-        },
+    Column(
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxWidth()
-            .height(MaterialTheme.dimensions.button.largeHeight)
-    )
+            .fillMaxSize()
+            .padding(horizontal = MaterialTheme.spacing.m)
+            .padding(top = MaterialTheme.spacing.m, bottom = MaterialTheme.spacing.xxl)
+    ) {
+        NeedItFilledButton(
+            labelId = R.string.button_login,
+            onClick = {
+                lifecycleScope.launch {
+                    val signInIntentSender = googleAuthUiClient.signIn()
+                    launcher.launch(
+                        IntentSenderRequest.Builder(
+                            intentSender = signInIntentSender ?: return@launch
+                        ).build()
+                    )
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(MaterialTheme.dimensions.button.largeHeight)
+        )
+
+        NeedItOutlinedButton(
+            labelId = R.string.button_continue_as_guest,
+            onClick = onContinueAsGuestClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = MaterialTheme.spacing.m)
+                .height(MaterialTheme.dimensions.button.largeHeight)
+        )
+    }
+
+
 }

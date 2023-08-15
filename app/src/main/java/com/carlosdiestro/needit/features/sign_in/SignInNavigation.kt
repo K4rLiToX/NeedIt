@@ -9,11 +9,13 @@ const val signInRoute = "sign_in"
 fun NavController.navigateToSignIn() = navigate(signInRoute)
 
 fun NavGraphBuilder.signInScreen(
-    onSignInSuccessful: () -> Unit
+    onSignInSuccessful: () -> Unit,
+    onContinueAsGuestClick: () -> Unit
 ) {
     composable(route = signInRoute) {
         SignInRoute(
-            onSignInSuccessful = onSignInSuccessful
+            onSignInSuccessful = onSignInSuccessful,
+            onContinueAsGuestClick = onContinueAsGuestClick
         )
     }
 }

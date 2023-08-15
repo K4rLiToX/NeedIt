@@ -32,7 +32,8 @@ fun NeedItNavHost(
         startDestination = startDestination
     ) {
         signInScreen(
-            onSignInSuccessful = navController::navigateToHomeCleaningBackStack
+            onSignInSuccessful = navController::navigateToHomeCleaningBackStack,
+            onContinueAsGuestClick = navController::navigateToHome
         )
         homeScreen(
             coroutineScope = appState.coroutineScope,
