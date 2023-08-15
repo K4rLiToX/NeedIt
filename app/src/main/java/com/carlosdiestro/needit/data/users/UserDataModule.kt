@@ -1,5 +1,7 @@
 package com.carlosdiestro.needit.data.users
 
+import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasource
+import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasourceImpl
 import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
 import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasourceImpl
 import com.carlosdiestro.needit.data.users.repository.UserRepository
@@ -16,6 +18,10 @@ interface UserDataModule {
     @Singleton
     @Binds
     fun bindUserRemoteDatasource(impl: UserRemoteDatasourceImpl): UserRemoteDatasource
+
+    @Singleton
+    @Binds
+    fun bindUserLocalDatasource(impl: UserLocalDatasourceImpl): UserLocalDatasource
 
     @Singleton
     @Binds
