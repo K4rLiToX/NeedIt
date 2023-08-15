@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.core.mappers
 
-import com.carlosdiestro.needit.core.database.entities.WishEntity
+import com.carlosdiestro.needit.database.entities.WishEntity
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.design_system.components.navigation.toIntValue

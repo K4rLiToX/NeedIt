@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.core.di
 
-import com.carlosdiestro.needit.core.database.datasources.WishLocalDatasourceImpl
+import com.carlosdiestro.needit.database.datasources.WishLocalDatasourceImpl
 import com.carlosdiestro.needit.data.wishes.WishLocalDatasource
 import com.carlosdiestro.needit.data.wishes.WishRepositoryImpl
 import com.carlosdiestro.needit.domain.wishes.WishRepository

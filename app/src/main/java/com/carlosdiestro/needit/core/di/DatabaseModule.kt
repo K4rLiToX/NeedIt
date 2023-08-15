@@ -2,8 +2,8 @@ package com.carlosdiestro.needit.core.di
 
 import android.content.Context
 import androidx.room.Room
-import com.carlosdiestro.needit.core.database.NeedItDatabase
-import com.carlosdiestro.needit.core.database.dao.WishDao
+import com.carlosdiestro.needit.database.NeedItDatabase
+import com.carlosdiestro.needit.database.dao.WishDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

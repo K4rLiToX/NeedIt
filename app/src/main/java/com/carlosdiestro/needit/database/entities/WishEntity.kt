@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.database.entities
+package com.carlosdiestro.needit.database.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
