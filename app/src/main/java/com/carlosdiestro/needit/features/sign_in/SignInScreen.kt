@@ -20,7 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
-import com.carlosdiestro.needit.auth.UserData
+import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.theme.button
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
@@ -55,7 +55,7 @@ private fun SignInScreen(
     onSignInResult: (SignInResult) -> Unit,
     resetState: () -> Unit,
     onSignInSuccessful: () -> Unit,
-    signIn: (UserData) -> Unit
+    signIn: (UserAuth) -> Unit
 ) {
     val context = LocalContext.current
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
@@ -83,9 +83,9 @@ private fun SignInScreen(
         }
     }
 
-    LaunchedEffect(key1 = state.userData) {
-        if (state.userData != null) {
-            signIn(state.userData)
+    LaunchedEffect(key1 = state.userAuth) {
+        if (state.userAuth != null) {
+            signIn(state.userAuth)
             onSignInSuccessful()
             resetState()
         }

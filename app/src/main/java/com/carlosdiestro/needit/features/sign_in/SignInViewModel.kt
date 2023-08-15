@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
-import com.carlosdiestro.needit.auth.UserData
+import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.core.mappers.toDomain
 import com.carlosdiestro.needit.domain.users.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,15 +26,15 @@ class SignInViewModel @Inject constructor(
     fun onSignInResult(result: SignInResult) {
         _state.update {
             it.copy(
-                userData = result.data,
+                userAuth = result.data,
                 signInError = result.errorMessage
             )
         }
     }
 
-    fun signIn(userData: UserData) {
+    fun signIn(userAuth: UserAuth) {
         viewModelScope.launch {
-            signIn(userData.toDomain())
+            signIn(userAuth.toDomain())
         }
     }
 
@@ -44,6 +44,6 @@ class SignInViewModel @Inject constructor(
 }
 
 data class SignInUiState(
-    val userData: UserData? = null,
+    val userAuth: UserAuth? = null,
     val signInError: String? = null
 )

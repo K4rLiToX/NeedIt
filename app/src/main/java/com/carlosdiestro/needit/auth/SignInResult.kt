@@ -1,11 +1,11 @@
 package com.carlosdiestro.needit.auth
 
 data class SignInResult(
-    val data: UserData?,
+    val data: UserAuth?,
     val errorMessage: String?
 )
 
-data class UserData(
+data class UserAuth(
     val userId: String,
     val username: String,
     val email: String,

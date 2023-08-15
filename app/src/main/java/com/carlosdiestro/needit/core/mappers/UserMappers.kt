@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.core.mappers
 
-import com.carlosdiestro.needit.auth.UserData
+import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.domain.users.User
 import com.carlosdiestro.needit.network.dtos.UserDto
 
@@ -11,7 +11,7 @@ fun User.toDto(): UserDto = UserDto(
     profilePictureUrl = profilePictureUrl
 )
 
-fun UserData.toDomain(): User = User(
+fun UserAuth.toDomain(): User = User(
     id = userId,
     username = username,
     email = email,

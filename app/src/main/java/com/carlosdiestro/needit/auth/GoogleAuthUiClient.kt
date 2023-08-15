@@ -42,8 +42,8 @@ class GoogleAuthUiClient(
         }
     }
 
-    fun getSignedInUser(): UserData? = auth.currentUser?.run {
-        UserData(
+    fun getSignedInUser(): UserAuth? = auth.currentUser?.run {
+        UserAuth(
             userId = uid,
             username = displayName ?: "User",
             email = email ?: "",
@@ -60,7 +60,7 @@ class GoogleAuthUiClient(
             val user = auth.signInWithCredential(googleCredentials).await().user
             SignInResult(
                 data = user?.run {
-                    UserData(
+                    UserAuth(
                         userId = uid,
                         username = displayName ?: "User",
                         email = email ?: "",
