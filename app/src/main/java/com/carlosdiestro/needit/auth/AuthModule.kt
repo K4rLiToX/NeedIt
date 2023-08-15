@@ -1,7 +1,6 @@
 package com.carlosdiestro.needit.auth
 
 import android.content.Context
-import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.google.android.gms.auth.api.identity.Identity
 import dagger.Module
 import dagger.Provides
