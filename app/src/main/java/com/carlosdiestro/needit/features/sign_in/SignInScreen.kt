@@ -20,6 +20,7 @@ import androidx.lifecycle.lifecycleScope
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
+import com.carlosdiestro.needit.auth.UserData
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.theme.button
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel(),
-    onSignInSuccessful: () -> Unit
+    onSignInSuccessful: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val googleAuthUiClient = viewModel.googleAuthUiClient
@@ -42,7 +43,8 @@ fun SignInRoute(
         googleAuthUiClient = viewModel.googleAuthUiClient,
         onSignInResult = viewModel::onSignInResult,
         resetState = viewModel::resetState,
-        onSignInSuccessful = onSignInSuccessful
+        onSignInSuccessful = onSignInSuccessful,
+        signIn = viewModel::signIn
     )
 }
 
@@ -52,7 +54,8 @@ private fun SignInScreen(
     googleAuthUiClient: GoogleAuthUiClient,
     onSignInResult: (SignInResult) -> Unit,
     resetState: () -> Unit,
-    onSignInSuccessful: () -> Unit
+    onSignInSuccessful: () -> Unit,
+    signIn: (UserData) -> Unit
 ) {
     val context = LocalContext.current
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
@@ -80,8 +83,9 @@ private fun SignInScreen(
         }
     }
 
-    LaunchedEffect(key1 = state.isSignInSuccessful) {
-        if (state.isSignInSuccessful) {
+    LaunchedEffect(key1 = state.userData) {
+        if (state.userData != null) {
+            signIn(state.userData)
             onSignInSuccessful()
             resetState()
         }

@@ -1,5 +1,9 @@
 package com.carlosdiestro.needit.core.di
 
+import com.carlosdiestro.needit.data.users.UserRemoteDatasource
+import com.carlosdiestro.needit.data.users.UserRemoteDatasourceImpl
+import com.carlosdiestro.needit.data.users.UserRepository
+import com.carlosdiestro.needit.data.users.UserRepositoryImpl
 import com.carlosdiestro.needit.database.datasources.WishLocalDatasourceImpl
 import com.carlosdiestro.needit.data.wishes.WishLocalDatasource
 import com.carlosdiestro.needit.data.wishes.WishRepositoryImpl
@@ -12,13 +16,22 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class DataModule {
+interface DataModule {
 
     @Singleton
     @Binds
-    abstract fun bindWishLocalDataSource(impl: WishLocalDatasourceImpl): WishLocalDatasource
+    fun bindWishLocalDataSource(impl: WishLocalDatasourceImpl): WishLocalDatasource
 
     @Singleton
     @Binds
-    abstract fun bindWishRepository(impl: WishRepositoryImpl): WishRepository
+    fun bindWishRepository(impl: WishRepositoryImpl): WishRepository
+
+    @Singleton
+    @Binds
+    fun bindUserRemoteDatasource(impl: UserRemoteDatasourceImpl): UserRemoteDatasource
+
+    @Singleton
+    @Binds
+    fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
+
 }

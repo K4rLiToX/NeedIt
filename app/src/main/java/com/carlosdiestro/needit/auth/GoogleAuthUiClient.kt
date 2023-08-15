@@ -46,6 +46,7 @@ class GoogleAuthUiClient(
         UserData(
             userId = uid,
             username = displayName ?: "User",
+            email = email ?: "",
             profilePictureUrl = photoUrl.toString()
         )
     }
@@ -62,6 +63,7 @@ class GoogleAuthUiClient(
                     UserData(
                         userId = uid,
                         username = displayName ?: "User",
+                        email = email ?: "",
                         profilePictureUrl = photoUrl.toString()
                     )
                 },
