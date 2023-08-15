@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.di
+package com.carlosdiestro.needit.auth
 
 import android.content.Context
 import com.carlosdiestro.needit.auth.GoogleAuthUiClient

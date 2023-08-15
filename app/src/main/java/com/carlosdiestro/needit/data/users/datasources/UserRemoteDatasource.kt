@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.data.users
+package com.carlosdiestro.needit.data.users.datasources
 
 import com.carlosdiestro.needit.network.dtos.UserDto
 

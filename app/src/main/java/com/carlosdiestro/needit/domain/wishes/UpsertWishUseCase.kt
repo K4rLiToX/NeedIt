@@ -1,6 +1,7 @@
 package com.carlosdiestro.needit.domain.wishes
 
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
+import com.carlosdiestro.needit.data.wishes.repository.WishRepository
 import javax.inject.Inject
 
 class UpsertWishUseCase @Inject constructor(

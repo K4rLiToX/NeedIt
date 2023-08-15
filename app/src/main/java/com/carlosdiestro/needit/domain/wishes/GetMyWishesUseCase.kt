@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.domain.wishes
 
+import com.carlosdiestro.needit.data.wishes.repository.WishRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

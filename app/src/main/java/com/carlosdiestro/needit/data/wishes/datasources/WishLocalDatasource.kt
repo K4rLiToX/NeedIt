@@ -1,8 +1,9 @@
-package com.carlosdiestro.needit.domain.wishes
+package com.carlosdiestro.needit.data.wishes.datasources
 
+import com.carlosdiestro.needit.domain.wishes.Wish
 import kotlinx.coroutines.flow.Flow
 
-interface WishRepository {
+interface WishLocalDatasource {
     val wishes: Flow<List<Wish>>
     suspend fun getWish(id: Long): Wish
     suspend fun upsertWish(wish: Wish)

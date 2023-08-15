@@ -1,7 +1,8 @@
-package com.carlosdiestro.needit.data.users
+package com.carlosdiestro.needit.data.users.repository
 
 import com.carlosdiestro.needit.core.di.IoDispatcher
 import com.carlosdiestro.needit.core.mappers.toDto
+import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
 import com.carlosdiestro.needit.domain.users.User
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

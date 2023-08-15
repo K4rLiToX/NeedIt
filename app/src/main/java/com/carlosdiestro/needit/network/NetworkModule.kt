@@ -1,7 +1,7 @@
-package com.carlosdiestro.needit.core.di
+package com.carlosdiestro.needit.network
 
 import com.carlosdiestro.needit.network.CollectionsPath
-import com.carlosdiestro.needit.network.UsersCollection
+import com.carlosdiestro.needit.network.collections.UsersCollection
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

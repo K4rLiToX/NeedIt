@@ -1,6 +1,6 @@
-package com.carlosdiestro.needit.data.users
+package com.carlosdiestro.needit.data.users.datasources
 
-import com.carlosdiestro.needit.network.UsersCollection
+import com.carlosdiestro.needit.network.collections.UsersCollection
 import com.carlosdiestro.needit.network.dtos.UserDto
 import javax.inject.Inject
 

@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.domain.users
 
-import com.carlosdiestro.needit.data.users.UserRepository
+import com.carlosdiestro.needit.data.users.repository.UserRepository
 import javax.inject.Inject
 
 class SignInUseCase @Inject constructor(

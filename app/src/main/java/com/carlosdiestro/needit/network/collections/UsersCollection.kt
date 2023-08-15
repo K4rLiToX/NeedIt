@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.network
+package com.carlosdiestro.needit.network.collections
 
 import com.carlosdiestro.needit.network.dtos.UserDto
 import com.google.firebase.firestore.CollectionReference

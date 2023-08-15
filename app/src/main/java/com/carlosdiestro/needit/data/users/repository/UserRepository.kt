@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.data.users
+package com.carlosdiestro.needit.data.users.repository
 
 import com.carlosdiestro.needit.domain.users.User
 
