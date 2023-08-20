@@ -8,165 +8,129 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.components.texts.LabelLarge
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
-import com.carlosdiestro.needit.core.design_system.theme.button
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
-import com.carlosdiestro.needit.core.design_system.theme.icon
-import com.carlosdiestro.needit.core.design_system.theme.iconButton
 import com.carlosdiestro.needit.core.design_system.theme.icons
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 
-private enum class IconButtonStyle {
-    Filled,
-    Outlined,
-    Labeled
-}
+@Immutable
+object IconButtonSpecs {
+    val StrokeWidth = 1.dp
 
-@Composable
-private fun NeedItBaseIconButton(
-    @StringRes labelId: Int = -1,
-    icon: ImageVector,
-    contentDescription: String = "",
-    containerColor: Color = MaterialTheme.colorScheme.background,
-    containerSize: Dp = MaterialTheme.dimensions.iconButton.large,
-    iconTint: Color = MaterialTheme.colorScheme.onBackground,
-    iconSize: Dp = MaterialTheme.dimensions.icon.small,
-    style: IconButtonStyle = IconButtonStyle.Filled,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
-    val context = LocalContext.current
-    when (style) {
-        IconButtonStyle.Filled -> {
-            IconButton(
-                onClick = onClick,
-                colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = containerColor,
-                    contentColor = iconTint
-                ),
-                modifier = modifier
-                    .clip(CircleShape)
-                    .size(containerSize)
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = contentDescription,
-                    modifier = Modifier
-                        .size(iconSize)
-                )
-            }
-        }
+    val containerSmall = 32.dp
+    val containerMedium = 40.dp
+    val containerLarge = 48.dp
+    val containerExtraLarge = 56.dp
 
-        IconButtonStyle.Outlined -> {
-            OutlinedIconButton(
-                onClick = onClick,
-                border = BorderStroke(
-                    width = MaterialTheme.dimensions.button.outlinedButtonStrokeWidth,
-                    color = MaterialTheme.colorScheme.primaryContainer
-                ),
-                modifier = modifier
-                    .size(MaterialTheme.dimensions.icon.extraLarge)
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = contentDescription,
-                    tint = MaterialTheme.colorScheme.onBackground
-                )
-            }
-        }
+    val iconExtraExtraSmall = 16.dp
+    val iconExtraSmall = 20.dp
+    val iconSmall = 24.dp
+    val iconMedium = 40.dp
+    val iconLarge = 48.dp
+    val iconExtraLarge = 56.dp
+    val iconExtraExtraLarge = 80.dp
 
-        IconButtonStyle.Labeled -> {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                NeedItFilledIconButton(
-                    icon = icon,
-                    contentDescription = contentDescription,
-                    modifier = modifier,
-                    onClick = onClick
-                )
-                Text(
-                    text = context.getString(labelId),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center
-                )
-            }
-        }
+    @Composable
+    fun defaultColors(): IconButtonColors {
+        return IconButtonDefaults.filledIconButtonColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground
+        )
+    }
+
+    @Composable
+    fun borderStroke(): BorderStroke {
+        return BorderStroke(
+            width = StrokeWidth,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
 @Composable
 fun NeedItFilledIconButton(
     icon: ImageVector,
-    contentDescription: String = "",
-    containerColor: Color = MaterialTheme.colorScheme.background,
-    containerSize: Dp = MaterialTheme.dimensions.iconButton.large,
-    iconTint: Color = MaterialTheme.colorScheme.onBackground,
-    iconSize: Dp = MaterialTheme.dimensions.icon.small,
+    colors: IconButtonColors = IconButtonSpecs.defaultColors(),
+    containerSize: Dp = IconButtonSpecs.containerLarge,
+    iconSize: Dp = IconButtonSpecs.iconSmall,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    NeedItBaseIconButton(
-        icon = icon,
-        contentDescription = contentDescription,
-        containerColor = containerColor,
-        containerSize = containerSize,
-        iconTint = iconTint,
-        iconSize = iconSize,
-        modifier = modifier,
-        onClick = onClick
-    )
-}
-
-@Composable
-fun NeedItLabeledFilledIconButton(
-    @StringRes labelId: Int,
-    icon: ImageVector,
-    contentDescription: String = "",
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit
-) {
-    NeedItBaseIconButton(
-        labelId = labelId,
-        icon = icon,
-        contentDescription = contentDescription,
-        modifier = modifier,
-        style = IconButtonStyle.Labeled,
-        onClick = onClick
-    )
+    IconButton(
+        onClick = onClick,
+        colors = colors,
+        modifier = modifier
+            .clip(CircleShape)
+            .size(containerSize)
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = "",
+            modifier = Modifier
+                .size(iconSize)
+        )
+    }
 }
 
 @Composable
 fun NeedItOutlinedIconButton(
     icon: ImageVector,
-    contentDescription: String = "",
+    containerSize: Dp = IconButtonSpecs.containerLarge,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    NeedItBaseIconButton(
-        icon = icon,
-        contentDescription = contentDescription,
-        modifier = modifier,
-        style = IconButtonStyle.Outlined,
-        onClick = onClick
-    )
+    OutlinedIconButton(
+        onClick = onClick,
+        border = IconButtonSpecs.borderStroke(),
+        modifier = modifier
+            .size(containerSize)
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = "",
+            tint = MaterialTheme.colorScheme.onBackground
+        )
+    }
+}
+
+@Composable
+fun NeedItLabeledIconButton(
+    icon: ImageVector,
+    @StringRes labelId: Int,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXS),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        NeedItFilledIconButton(
+            icon = icon,
+            modifier = modifier,
+            onClick = onClick
+        )
+        LabelLarge(
+            labelId = labelId,
+            color = MaterialTheme.colorScheme.onSurface,
+            textAlign = TextAlign.Center
+        )
+    }
+
 }
 
 @Preview
@@ -184,7 +148,7 @@ private fun NeedItFilledIconButtonPreview() {
 @Composable
 private fun NeedItLabeledFilledIconButtonPreview() {
     NeedItTheme {
-        NeedItLabeledFilledIconButton(
+        NeedItLabeledIconButton(
             labelId = R.string.button_remove,
             icon = MaterialTheme.icons.Delete,
             onClick = {}

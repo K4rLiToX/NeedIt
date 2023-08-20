@@ -7,6 +7,7 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,11 +27,10 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
+import com.carlosdiestro.needit.core.design_system.components.buttons.ButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItOutlinedButton
-import com.carlosdiestro.needit.core.design_system.theme.button
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 import kotlinx.coroutines.launch
 
 @Composable
@@ -106,8 +106,11 @@ private fun SignInScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = MaterialTheme.spacing.m)
-            .padding(top = MaterialTheme.spacing.m, bottom = MaterialTheme.spacing.xxl)
+            .padding(horizontal = MaterialTheme.dimensions.spacingM)
+            .padding(
+                top = MaterialTheme.dimensions.spacingM,
+                bottom = MaterialTheme.dimensions.spacingXXL
+            )
     ) {
         NeedItFilledButton(
             labelId = R.string.button_login,
@@ -121,20 +124,17 @@ private fun SignInScreen(
                     )
                 }
             },
+            size = ButtonSpecs.LargeHeight,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(MaterialTheme.dimensions.button.largeHeight)
         )
-
+        Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingM))
         NeedItOutlinedButton(
             labelId = R.string.button_continue_as_guest,
             onClick = onContinueAsGuestClick,
+            size = ButtonSpecs.LargeHeight,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = MaterialTheme.spacing.m)
-                .height(MaterialTheme.dimensions.button.largeHeight)
         )
     }
-
-
 }

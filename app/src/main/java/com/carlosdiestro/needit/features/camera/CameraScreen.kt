@@ -58,8 +58,8 @@ import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFill
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.design_system.components.navigation.toIntValue
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -145,8 +145,8 @@ private fun CameraScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = MaterialTheme.spacing.m)
-            .padding(bottom = MaterialTheme.spacing.l)
+            .padding(horizontal = MaterialTheme.dimensions.spacingM)
+            .padding(bottom = MaterialTheme.dimensions.spacingL)
     ) {
         CameraContent(
             previewView = previewView,
@@ -209,7 +209,7 @@ private fun CameraContent(
                 pageSize = PageSize.Fixed(90.dp),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(MaterialTheme.spacing.m)
+                    .padding(MaterialTheme.dimensions.spacingM)
             ) {
                 val pageOffset = (
                         (pagerState.currentPage - it) + pagerState
@@ -231,14 +231,14 @@ private fun CameraContent(
                                 Modifier.background(Color.Transparent)
                             }
                         )
-                        .padding(MaterialTheme.spacing.m)
+                        .padding(MaterialTheme.dimensions.spacingM)
                         .fillMaxWidth()
                 )
             }
         }
         NeedItFilledIconButton(
             icon = MaterialTheme.icons.Back,
-            modifier = Modifier.padding(MaterialTheme.spacing.m),
+            modifier = Modifier.padding(MaterialTheme.dimensions.spacingM),
             onClick = {
                 when (cameraStep) {
                     CameraStep.Photo -> onBackClick()
@@ -299,7 +299,7 @@ private fun CameraShutter(
             }
         },
         modifier = Modifier
-            .padding(bottom = MaterialTheme.spacing.xs)
+            .padding(bottom = MaterialTheme.dimensions.spacingXS)
             .size(80.dp)
     ) {
         Icon(

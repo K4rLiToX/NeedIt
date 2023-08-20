@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -19,9 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItAvatar
+import com.carlosdiestro.needit.core.design_system.components.texts.BodyLarge
+import com.carlosdiestro.needit.core.design_system.components.texts.HeadlineMedium
+import com.carlosdiestro.needit.core.design_system.components.texts.TitleSmall
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 private enum class TopAppBarSize {
     Default,
@@ -84,9 +86,8 @@ fun NeedItCenteredTopAppBar(
 ) {
     NeedItBaseTopAppBar(
         title = {
-            Text(
+            TitleSmall(
                 text = title,
-                style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -103,7 +104,7 @@ fun NeedItLargeTopAppBar(
 ) {
     NeedItBaseTopAppBar(
         title = {
-            Text(text = title)
+            HeadlineMedium(text = title)
         },
         onNavigateClick = onNavigateClick,
         topAppBarSize = TopAppBarSize.Large
@@ -132,7 +133,7 @@ fun NeedItTopAppBar(
 ) {
     NeedItBaseTopAppBar(
         title = {
-            if (title != null) Text(text = title)
+            if (title != null) BodyLarge(text = title)
         },
         onNavigateClick = onNavigateClick,
         actions = actions
@@ -146,10 +147,10 @@ private fun AvatarAndTitle(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs)
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXS)
     ) {
         NeedItAvatar(imageUrl = avatarUrl)
-        Text(text = title, style = MaterialTheme.typography.titleSmall)
+        TitleSmall(text = title)
     }
 }
 

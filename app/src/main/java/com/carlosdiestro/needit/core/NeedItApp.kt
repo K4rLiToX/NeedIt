@@ -20,8 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFabPainter
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFabVector
+import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFab
 import com.carlosdiestro.needit.core.design_system.components.dialogs.CameraPermissionTextProvider
 import com.carlosdiestro.needit.core.design_system.components.dialogs.PermissionDialog
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItBottomBar
@@ -56,7 +55,7 @@ fun Main(
             if (appState.shouldShowFab) {
                 when (currentDestinationRoute) {
                     TopLevelDestination.Home.route -> {
-                        NeedItFabPainter(
+                        NeedItFab(
                             icon = painterResource(id = Icons.NeedIt),
                             onClick = {
                                 if (currentDestinationRoute == TopLevelDestination.Home.route) {
@@ -67,7 +66,7 @@ fun Main(
                     }
 
                     TopLevelDestination.Friends.route -> {
-                        NeedItFabVector(
+                        NeedItFab(
                             icon = MaterialTheme.icons.AddFriend,
                             onClick = {
                                 if (currentDestinationRoute == TopLevelDestination.Home.route) {

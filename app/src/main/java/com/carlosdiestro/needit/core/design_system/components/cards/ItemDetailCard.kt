@@ -25,8 +25,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItImageContainer
+import com.carlosdiestro.needit.core.design_system.components.texts.BodyMedium
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
-import com.carlosdiestro.needit.core.design_system.theme.spacing
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
 fun NeedItItemDetailCard(
@@ -91,17 +92,17 @@ private fun NeedItBaseItemInfoCard(
     isbn: String? = null
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.m),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(MaterialTheme.spacing.m)
+            .padding(MaterialTheme.dimensions.spacingM)
             .background(
                 color = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(24.dp)
             )
             .padding(
-                horizontal = MaterialTheme.spacing.m,
-                vertical = MaterialTheme.spacing.l
+                horizontal = MaterialTheme.dimensions.spacingM,
+                vertical = MaterialTheme.dimensions.spacingL
             )
     ) {
         ItemHeader(
@@ -110,16 +111,16 @@ private fun NeedItBaseItemInfoCard(
             price = price,
             currency = currency
         )
-        if (description.isNotEmpty()) Text(
-            text = description,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.fillMaxWidth()
-        )
-        if (!size.isNullOrEmpty() || !color.isNullOrEmpty()) ItemSizeAndColor(
-            size = size,
-            color = color
-        )
+        if (description.isNotEmpty())
+            BodyMedium(
+                text = description,
+                modifier = Modifier.fillMaxWidth()
+            )
+        if (!size.isNullOrEmpty() || !color.isNullOrEmpty())
+            ItemSizeAndColor(
+                size = size,
+                color = color
+            )
         if (!isbn.isNullOrEmpty()) ItemIsbn(isbn = isbn)
     }
 }
@@ -194,7 +195,7 @@ private fun ItemHeader(
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xxs),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXXS),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier.fillMaxWidth(0.60f)
         ) {
@@ -277,7 +278,7 @@ private fun Pill(
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(
-            MaterialTheme.spacing.m,
+            MaterialTheme.dimensions.spacingM,
             Alignment.CenterHorizontally
         ),
         verticalAlignment = Alignment.CenterVertically,
@@ -288,8 +289,8 @@ private fun Pill(
                 shape = RoundedCornerShape(100)
             )
             .padding(
-                horizontal = MaterialTheme.spacing.m,
-                vertical = MaterialTheme.spacing.xs
+                horizontal = MaterialTheme.dimensions.spacingM,
+                vertical = MaterialTheme.dimensions.spacingXXS
             )
             .defaultMinSize(minWidth = 100.dp)
     ) {
@@ -300,7 +301,7 @@ private fun Pill(
             modifier = Modifier
                 .clip(RoundedCornerShape(100))
                 .background(MaterialTheme.colorScheme.background)
-                .padding(MaterialTheme.spacing.s)
+                .padding(MaterialTheme.dimensions.spacingS)
         )
     }
 }
