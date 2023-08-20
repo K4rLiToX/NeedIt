@@ -1,8 +1,8 @@
-package com.carlosdiestro.needit.data.wishes
+package com.carlosdiestro.needit.data
 
-import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
-import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasourceImpl
-import com.carlosdiestro.needit.data.wishes.repository.WishRepository
+import com.carlosdiestro.needit.domain.users.repository.UserRepository
+import com.carlosdiestro.needit.data.users.repository.UserRepositoryImpl
+import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import com.carlosdiestro.needit.data.wishes.repository.WishRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -12,14 +12,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface WishDataModule {
+interface DataModule {
 
     @Singleton
     @Binds
-    fun bindWishLocalDatasource(impl: WishLocalDatasourceImpl): WishLocalDatasource
+    fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 
     @Singleton
     @Binds
     fun bindWishRepository(impl: WishRepositoryImpl): WishRepository
-
 }

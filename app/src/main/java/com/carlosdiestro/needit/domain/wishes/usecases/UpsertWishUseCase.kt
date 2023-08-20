@@ -1,7 +1,16 @@
-package com.carlosdiestro.needit.domain.wishes
+package com.carlosdiestro.needit.domain.wishes.usecases
 
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
-import com.carlosdiestro.needit.data.wishes.repository.WishRepository
+import com.carlosdiestro.needit.domain.wishes.Book
+import com.carlosdiestro.needit.domain.wishes.BookParams
+import com.carlosdiestro.needit.domain.wishes.Clothes
+import com.carlosdiestro.needit.domain.wishes.ClothesParams
+import com.carlosdiestro.needit.domain.wishes.Footwear
+import com.carlosdiestro.needit.domain.wishes.FootwearParams
+import com.carlosdiestro.needit.domain.wishes.Other
+import com.carlosdiestro.needit.domain.wishes.OtherParams
+import com.carlosdiestro.needit.domain.wishes.WishFactory
+import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import javax.inject.Inject
 
 class UpsertWishUseCase @Inject constructor(
@@ -30,25 +39,25 @@ class UpsertWishUseCase @Inject constructor(
             description = description
         )
         val wish = when (category) {
-            WishCategory.Clothes -> wishFactory.create<Clothes>(
+            WishCategory.Clothes -> WishFactory.create<Clothes>(
                 ClothesParams(
                     size = size,
                     color = color
                 )
             )
 
-            WishCategory.Footwear -> wishFactory.create<Footwear>(
+            WishCategory.Footwear -> WishFactory.create<Footwear>(
                 FootwearParams(
                     size = if (size.isEmpty()) 0 else size.toInt(),
                     color = color
                 )
             )
 
-            WishCategory.Books -> wishFactory.create<Book>(
+            WishCategory.Books -> WishFactory.create<Book>(
                 BookParams(isbn = isbn)
             )
 
-            else -> wishFactory.create<Other>(
+            else -> WishFactory.create<Other>(
                 OtherParams(category = category)
             )
         }

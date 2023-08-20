@@ -1,5 +1,6 @@
-package com.carlosdiestro.needit.data.users.datasources
+package com.carlosdiestro.needit.database.datasources
 
+import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasource
 import com.carlosdiestro.needit.preferences.NeedItPreferences
 import com.carlosdiestro.needit.preferences.UserInfo
 import kotlinx.coroutines.flow.Flow

@@ -26,5 +26,5 @@ object DatabaseModule {
 
     @Singleton
     @Provides
-    fun provideWishDao(db: NeedItDatabase): WishDao = db.wishDao()
+    fun provideWishDao(db: NeedItDatabase): WishDao = db.wishDao
 }

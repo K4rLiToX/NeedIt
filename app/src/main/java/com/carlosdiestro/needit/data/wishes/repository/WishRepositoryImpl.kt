@@ -4,6 +4,7 @@ import com.carlosdiestro.needit.core.di.ApplicationScope
 import com.carlosdiestro.needit.core.di.IoDispatcher
 import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

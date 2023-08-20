@@ -1,6 +1,6 @@
-package com.carlosdiestro.needit.domain.wishes
+package com.carlosdiestro.needit.domain.wishes.usecases
 
-import com.carlosdiestro.needit.data.wishes.repository.WishRepository
+import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import javax.inject.Inject
 
 class RemoveWishUseCase @Inject constructor(

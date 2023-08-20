@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.data.wishes.repository
+package com.carlosdiestro.needit.domain.wishes.repository
 
 import com.carlosdiestro.needit.domain.wishes.Wish
 import kotlinx.coroutines.flow.Flow

@@ -4,7 +4,7 @@ import com.carlosdiestro.needit.core.design_system.components.menu.SortType
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
-import com.carlosdiestro.needit.domain.wishes.SortWishesUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.SortWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
 import org.junit.Assert.assertTrue
 import org.junit.Before

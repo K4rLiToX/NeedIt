@@ -6,7 +6,7 @@ import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.core.mappers.toDomain
-import com.carlosdiestro.needit.domain.users.SignInUseCase
+import com.carlosdiestro.needit.domain.users.usecases.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
