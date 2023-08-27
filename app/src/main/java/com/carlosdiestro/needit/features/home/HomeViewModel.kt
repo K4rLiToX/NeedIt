@@ -6,11 +6,11 @@ import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPL
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.extensions.launchCollect
 import com.carlosdiestro.needit.core.mappers.toPLO
+import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.RemoveWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
-import com.carlosdiestro.needit.domain.wishes.Wish
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

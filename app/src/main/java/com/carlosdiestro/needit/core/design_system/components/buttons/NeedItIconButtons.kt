@@ -12,18 +12,19 @@ import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedIconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.texts.LabelLarge
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
@@ -124,13 +125,12 @@ fun NeedItLabeledIconButton(
             modifier = modifier,
             onClick = onClick
         )
-        LabelLarge(
-            labelId = labelId,
+        Text(
+            text = stringResource(id = labelId),
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center
         )
     }
-
 }
 
 @Preview

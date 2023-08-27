@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.database.datasources
 
-import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasource
 import com.carlosdiestro.needit.data.preferences.NeedItPreferences
+import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasource
 import com.carlosdiestro.needit.preferences.UserPrefs
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,5 +16,6 @@ class UserLocalDatasourceImpl @Inject constructor(
 
     override val userInfo: Flow<UserPrefs> = preferences.userInfo
 
-    override suspend fun updateUserInfo(userPrefs: UserPrefs) = preferences.updateUserInfo(userPrefs)
+    override suspend fun updateUserInfo(userPrefs: UserPrefs) =
+        preferences.updateUserInfo(userPrefs)
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,7 +33,6 @@ import com.carlosdiestro.needit.core.design_system.components.menu.NeedItItemAct
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItScrollableTabBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
-import com.carlosdiestro.needit.core.design_system.components.texts.TitleLarge
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import kotlinx.coroutines.CoroutineScope
@@ -104,8 +104,9 @@ private fun HomeEmptyState(
         verticalArrangement = Arrangement.Center,
         modifier = modifier
     ) {
-        TitleLarge(
-            labelId = R.string.home_empty,
+        Text(
+            text = stringResource(id = R.string.home_empty),
+            style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(MaterialTheme.dimensions.spacingXXL)

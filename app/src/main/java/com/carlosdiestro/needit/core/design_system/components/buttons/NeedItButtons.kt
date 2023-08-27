@@ -12,16 +12,17 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.texts.LabelLarge
 import com.carlosdiestro.needit.core.design_system.theme.Icons
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 
@@ -35,7 +36,10 @@ object ButtonSpecs {
 
     @Composable
     fun primaryColors(): ButtonColors {
-        return ButtonDefaults.buttonColors()
+        return ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        )
     }
 
     @Composable
@@ -153,7 +157,7 @@ private fun ButtonContent(
         )
         Spacer(modifier = Modifier.width(ButtonSpecs.IconSpacing))
     }
-    LabelLarge(labelId = labelId)
+    Text(text = stringResource(id = labelId))
     if (trailingIcon != null) {
         Spacer(modifier = Modifier.width(ButtonSpecs.IconSpacing))
         Icon(

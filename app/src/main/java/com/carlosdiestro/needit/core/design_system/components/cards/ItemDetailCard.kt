@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItImageContainer
-import com.carlosdiestro.needit.core.design_system.components.texts.BodyMedium
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
@@ -112,8 +111,9 @@ private fun NeedItBaseItemInfoCard(
             currency = currency
         )
         if (description.isNotEmpty())
-            BodyMedium(
+            Text(
                 text = description,
+                style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.fillMaxWidth()
             )
         if (!size.isNullOrEmpty() || !color.isNullOrEmpty())
@@ -294,7 +294,10 @@ private fun Pill(
             )
             .defaultMinSize(minWidth = 100.dp)
     ) {
-        Text(text = label, style = MaterialTheme.typography.bodyLarge)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge
+        )
         Text(
             text = value,
             style = MaterialTheme.typography.titleSmall,

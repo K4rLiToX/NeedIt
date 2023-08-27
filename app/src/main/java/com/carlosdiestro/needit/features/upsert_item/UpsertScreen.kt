@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,7 +29,6 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItTextButton
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
-import com.carlosdiestro.needit.core.design_system.components.texts.BodySmall
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
@@ -241,7 +241,10 @@ private fun BasicInformationSection(
                 value = title,
                 onValueChange = updateTitle,
                 label = {
-                    BodySmall(labelId = labelId)
+                    Text(
+                        text = stringResource(id = labelId),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -259,7 +262,10 @@ private fun BasicInformationSection(
                 value = subtitle,
                 onValueChange = updateSubtitle,
                 label = {
-                    BodySmall(labelId = labelId)
+                    Text(
+                        text = stringResource(id = labelId),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
@@ -268,7 +274,10 @@ private fun BasicInformationSection(
                 value = price,
                 onValueChange = updatePrice,
                 label = {
-                    BodySmall(labelId = R.string.upsert_price_hint)
+                    Text(
+                        text = stringResource(id = labelId),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -292,7 +301,10 @@ private fun SpecificInformationSection(
                 value = isbn,
                 onValueChange = updateIsbn,
                 label = {
-                    BodySmall(labelId = R.string.upsert_isbn_hint)
+                    Text(
+                        text = stringResource(id = R.string.upsert_isbn_hint),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -310,7 +322,10 @@ private fun SpecificInformationSection(
                     value = size,
                     onValueChange = updateSize,
                     label = {
-                        BodySmall(labelId = R.string.upsert_size_hint)
+                        Text(
+                            text = stringResource(id = R.string.upsert_size_hint),
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth(0.48f)
@@ -319,7 +334,10 @@ private fun SpecificInformationSection(
                     value = color,
                     onValueChange = updateColor,
                     label = {
-                        BodySmall(labelId = R.string.upsert_color_hint)
+                        Text(
+                            text = stringResource(id = R.string.upsert_color_hint),
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -346,7 +364,10 @@ private fun AdditionalInformationSection(
             value = webUrl,
             onValueChange = updateWebUrl,
             label = {
-                BodySmall(labelId = R.string.upsert_website_link_hint)
+                Text(
+                    text = stringResource(id = R.string.upsert_website_link_hint),
+                    style = MaterialTheme.typography.bodySmall
+                )
             },
             prefix = {
                 Text(text = "https://")
@@ -358,7 +379,10 @@ private fun AdditionalInformationSection(
             value = description,
             onValueChange = updateDescription,
             label = {
-                BodySmall(labelId = R.string.upsert_description_link)
+                Text(
+                    text = stringResource(id = R.string.upsert_description_link),
+                    style = MaterialTheme.typography.bodySmall
+                )
             },
             modifier = Modifier
                 .fillMaxWidth()

@@ -10,16 +10,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.ButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
-import com.carlosdiestro.needit.core.design_system.components.texts.BodyLarge
-import com.carlosdiestro.needit.core.design_system.components.texts.TitleLarge
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,15 +42,17 @@ fun NeedItDialog(
             .fillMaxWidth()
             .padding(horizontal = MaterialTheme.dimensions.spacingM)
     ) {
-        TitleLarge(
-            labelId = titleId,
+        Text(
+            text = stringResource(id = titleId),
+            style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(MaterialTheme.dimensions.spacingL)
         )
-        BodyLarge(
-            labelId = bodyId,
+        Text(
+            text = stringResource(id = bodyId),
+            style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
@@ -62,8 +64,8 @@ fun NeedItDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = MaterialTheme.dimensions.spacingL)
-                .padding(bottom = MaterialTheme.dimensions.spacingL)
-                .padding(top = MaterialTheme.dimensions.spacingXL)
+                .padding(bottom = MaterialTheme.dimensions.spacingXL)
+                .padding(top = MaterialTheme.dimensions.spacingL)
         ) {
             NeedItFilledButton(
                 labelId = R.string.button_reject,
