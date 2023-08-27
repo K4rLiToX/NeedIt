@@ -127,6 +127,7 @@ fun NeedItLabeledIconButton(
         )
         Text(
             text = stringResource(id = labelId),
+            style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center
         )
