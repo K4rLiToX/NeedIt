@@ -19,7 +19,7 @@ class UserRepositoryImpl @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : UserRepository {
 
-    override val user: Flow<User> = userLocalDatasource.userInfo.toDomain()
+    override val user: Flow<User> = userLocalDatasource.userPrefs.toDomain()
 
     override val isUserGuest: Flow<Boolean> = userLocalDatasource.isUserGuest
     override suspend fun createUser(user: User) = withContext(dispatcher) {

@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.preferences
 
-class UserInfo(
+class UserPrefs(
     val id: String,
     val username: String,
     val email: String,

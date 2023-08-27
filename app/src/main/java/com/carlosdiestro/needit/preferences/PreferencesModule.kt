@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.preferences
 
+import com.carlosdiestro.needit.data.preferences.NeedItPreferences
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

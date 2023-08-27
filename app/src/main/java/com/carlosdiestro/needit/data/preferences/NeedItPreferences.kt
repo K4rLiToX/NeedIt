@@ -1,9 +1,9 @@
-package com.carlosdiestro.needit.data.users.datasources
+package com.carlosdiestro.needit.data.preferences
 
 import com.carlosdiestro.needit.preferences.UserPrefs
 import kotlinx.coroutines.flow.Flow
 
-interface UserLocalDatasource {
+interface NeedItPreferences {
 
     val isUserGuest: Flow<Boolean>
     suspend fun updateIsUserGuest()

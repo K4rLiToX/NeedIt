@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.carlosdiestro.needit.data.preferences.NeedItPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -35,8 +36,8 @@ class NeedItPreferencesImpl @Inject constructor(
         }
     }
 
-    override val userInfo: Flow<UserInfo> = prefsData.map { prefs ->
-        UserInfo(
+    val userPrefs: Flow<UserPrefs> = prefsData.map { prefs ->
+        UserPrefs(
             id = prefs[userIdKey].orEmpty(),
             username = prefs[usernameKey].orEmpty(),
             email = prefs[userEmailKey].orEmpty(),
@@ -44,12 +45,12 @@ class NeedItPreferencesImpl @Inject constructor(
         )
     }
 
-    override suspend fun updateUserInfo(userInfo: UserInfo) {
+    override suspend fun updateUserInfo(userPrefs: UserPrefs) {
         preferences.edit { prefs ->
-            prefs[userIdKey] = userInfo.id
-            prefs[usernameKey] = userInfo.username
-            prefs[userEmailKey] = userInfo.email
-            prefs[userProfilePictureKey] = userInfo.profilePictureUrl
+            prefs[userIdKey] = userPrefs.id
+            prefs[usernameKey] = userPrefs.username
+            prefs[userEmailKey] = userPrefs.email
+            prefs[userProfilePictureKey] = userPrefs.profilePictureUrl
         }
     }
 
