@@ -8,9 +8,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
-fun NeedItFabVector(
+fun NeedItFab(
     icon: ImageVector?,
-    contentDescription: String = "",
     onClick: () -> Unit
 ) {
     if (icon != null) {
@@ -21,16 +20,15 @@ fun NeedItFabVector(
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = contentDescription
+                contentDescription = ""
             )
         }
     }
 }
 
 @Composable
-fun NeedItFabPainter(
+fun NeedItFab(
     icon: Painter?,
-    contentDescription: String = "",
     onClick: () -> Unit
 ) {
     if (icon != null) {
@@ -41,7 +39,7 @@ fun NeedItFabPainter(
         ) {
             Icon(
                 painter = icon,
-                contentDescription = contentDescription
+                contentDescription = ""
             )
         }
     }

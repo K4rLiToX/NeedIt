@@ -25,8 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 enum class SortType(@StringRes val labelId: Int) {
     LowToHigh(labelId = R.string.sorting_dialog_lowest_to_highest),
@@ -67,12 +67,12 @@ fun NeedItSortingMenu(
         onDismiss = onDismiss
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xxs),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXXS),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    horizontal = MaterialTheme.spacing.m,
-                    vertical = MaterialTheme.spacing.l
+                    horizontal = MaterialTheme.dimensions.spacingM,
+                    vertical = MaterialTheme.dimensions.spacingL
                 )
         ) {
             SortType.values().forEach { type ->
@@ -106,8 +106,8 @@ private fun SortOption(
             .clickable { onOptionClick(sortType) }
             .background(backgroundColor)
             .padding(
-                horizontal = MaterialTheme.spacing.m,
-                vertical = MaterialTheme.spacing.s
+                horizontal = MaterialTheme.dimensions.spacingM,
+                vertical = MaterialTheme.dimensions.spacingS
             )
     ) {
         Text(
@@ -137,9 +137,9 @@ fun NeedItItemActionMenu(
             verticalAlignment = Alignment.Top,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MaterialTheme.spacing.l)
-                .padding(top = MaterialTheme.spacing.l)
-                .padding(bottom = MaterialTheme.spacing.xl)
+                .padding(horizontal = MaterialTheme.dimensions.spacingL)
+                .padding(top = MaterialTheme.dimensions.spacingL)
+                .padding(bottom = MaterialTheme.dimensions.spacingXL)
         ) {
             actions()
         }

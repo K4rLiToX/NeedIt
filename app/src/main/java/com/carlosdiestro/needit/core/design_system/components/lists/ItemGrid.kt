@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
 import com.carlosdiestro.needit.core.design_system.components.cards.WishCard
-import com.carlosdiestro.needit.core.design_system.theme.spacing
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
 fun NeedItWishGrid(
@@ -25,11 +25,11 @@ fun NeedItWishGrid(
         state = state,
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(
-            horizontal = MaterialTheme.spacing.m,
-            vertical = MaterialTheme.spacing.xl
+            horizontal = MaterialTheme.dimensions.spacingM,
+            vertical = MaterialTheme.dimensions.spacingXL
         ),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.l),
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.m),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
         modifier = Modifier.fillMaxSize()
     ) {
         items(

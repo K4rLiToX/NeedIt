@@ -29,7 +29,7 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItTextButton
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
-import com.carlosdiestro.needit.core.design_system.theme.spacing
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
 fun UpsertRoute(
@@ -162,10 +162,10 @@ private fun UpsertContent(
     modifier: Modifier = Modifier
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xxl),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXXL),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
-            .padding(horizontal = MaterialTheme.spacing.m)
+            .padding(horizontal = MaterialTheme.dimensions.spacingM)
     ) {
         ImageSection(imageUrl)
         BasicInformationSection(
@@ -225,7 +225,7 @@ private fun BasicInformationSection(
     updatePrice: (String) -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.l),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
@@ -234,35 +234,38 @@ private fun BasicInformationSection(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            val label = stringResource(
-                id = if (category == WishCategory.Books) R.string.upsert_title_hint else
-                    R.string.upsert_name_hint
-            )
+            val labelId = if (category == WishCategory.Books) R.string.upsert_title_hint else
+                R.string.upsert_name_hint
+
             OutlinedTextField(
                 value = title,
                 onValueChange = updateTitle,
                 label = {
-                    Text(text = label)
+                    Text(
+                        text = stringResource(id = labelId),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()
             )
         }
         Row(
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.l),
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            val label = stringResource(
-                id = if (category == WishCategory.Books) R.string.upsert_author_hint else R
-                    .string.upsert_brand_hint
-            )
+            val labelId = if (category == WishCategory.Books) R.string.upsert_author_hint else R
+                .string.upsert_brand_hint
             OutlinedTextField(
                 value = subtitle,
                 onValueChange = updateSubtitle,
                 label = {
-                    Text(text = label)
+                    Text(
+                        text = stringResource(id = labelId),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
@@ -271,7 +274,10 @@ private fun BasicInformationSection(
                 value = price,
                 onValueChange = updatePrice,
                 label = {
-                    Text(text = stringResource(id = R.string.upsert_price_hint))
+                    Text(
+                        text = stringResource(id = labelId),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -295,7 +301,10 @@ private fun SpecificInformationSection(
                 value = isbn,
                 onValueChange = updateIsbn,
                 label = {
-                    Text(text = stringResource(id = R.string.upsert_isbn_hint))
+                    Text(
+                        text = stringResource(id = R.string.upsert_isbn_hint),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -304,7 +313,7 @@ private fun SpecificInformationSection(
 
         else -> {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.l),
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -313,7 +322,10 @@ private fun SpecificInformationSection(
                     value = size,
                     onValueChange = updateSize,
                     label = {
-                        Text(text = stringResource(id = R.string.upsert_size_hint))
+                        Text(
+                            text = stringResource(id = R.string.upsert_size_hint),
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth(0.48f)
@@ -322,7 +334,10 @@ private fun SpecificInformationSection(
                     value = color,
                     onValueChange = updateColor,
                     label = {
-                        Text(text = stringResource(id = R.string.upsert_color_hint))
+                        Text(
+                            text = stringResource(id = R.string.upsert_color_hint),
+                            style = MaterialTheme.typography.bodySmall
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -340,7 +355,7 @@ private fun AdditionalInformationSection(
     updateDescription: (String) -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.l),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
@@ -349,7 +364,10 @@ private fun AdditionalInformationSection(
             value = webUrl,
             onValueChange = updateWebUrl,
             label = {
-                Text(text = stringResource(id = R.string.upsert_website_link_hint))
+                Text(
+                    text = stringResource(id = R.string.upsert_website_link_hint),
+                    style = MaterialTheme.typography.bodySmall
+                )
             },
             prefix = {
                 Text(text = "https://")
@@ -362,9 +380,8 @@ private fun AdditionalInformationSection(
             onValueChange = updateDescription,
             label = {
                 Text(
-                    text = stringResource(
-                        id = R.string.upsert_description_link
-                    )
+                    text = stringResource(id = R.string.upsert_description_link),
+                    style = MaterialTheme.typography.bodySmall
                 )
             },
             modifier = Modifier
