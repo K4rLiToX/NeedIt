@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear
-import com.carlosdiestro.needit.domain.wishes.GetWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

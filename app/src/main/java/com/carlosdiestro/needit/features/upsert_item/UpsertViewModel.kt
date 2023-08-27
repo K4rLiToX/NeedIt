@@ -11,8 +11,8 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.toWishC
 import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear
-import com.carlosdiestro.needit.domain.wishes.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.UpsertWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.UpsertWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

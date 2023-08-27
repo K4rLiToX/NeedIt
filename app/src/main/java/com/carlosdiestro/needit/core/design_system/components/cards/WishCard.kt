@@ -11,15 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.carlosdiestro.needit.core.design_system.components.buttons.IconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItImageContainer
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
-import com.carlosdiestro.needit.core.design_system.theme.icon
-import com.carlosdiestro.needit.core.design_system.theme.iconButton
 import com.carlosdiestro.needit.core.design_system.theme.icons
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 class SimpleWishPLO(
     val id: Long,
@@ -72,13 +70,13 @@ private fun IconSection(
         horizontalArrangement = Arrangement.End,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(MaterialTheme.spacing.s)
+            .padding(MaterialTheme.dimensions.spacingS)
     ) {
         if (isShared) {
             NeedItFilledIconButton(
                 icon = MaterialTheme.icons.Share,
-                containerSize = MaterialTheme.dimensions.iconButton.small,
-                iconSize = MaterialTheme.dimensions.icon.extraSmall,
+                containerSize = IconButtonSpecs.containerSmall,
+                iconSize = IconButtonSpecs.iconExtraSmall,
                 onClick = {},
             )
         }

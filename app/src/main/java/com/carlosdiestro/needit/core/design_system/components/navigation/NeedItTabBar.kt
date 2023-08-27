@@ -16,11 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
-import com.carlosdiestro.needit.core.design_system.theme.spacing
-import com.carlosdiestro.needit.core.design_system.theme.tabBar
+
+object TabBarSpecs {
+    val Height = 48.dp
+}
 
 enum class WishCategory(
     @StringRes val labelId: Int
@@ -56,7 +59,7 @@ fun NeedItScrollableTabBar(
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
         containerColor = containerColor,
-        edgePadding = MaterialTheme.spacing.m,
+        edgePadding = MaterialTheme.dimensions.spacingM,
         indicator = { tabPositions ->
             if (tabPositions.isNotEmpty()) {
                 TabRowDefaults.SecondaryIndicator(
@@ -67,7 +70,7 @@ fun NeedItScrollableTabBar(
             }
         },
         modifier = Modifier
-            .height(MaterialTheme.dimensions.tabBar.tabHeight),
+            .height(TabBarSpecs.Height),
         divider = {}
     ) {
         tabs.forEachIndexed { index, category ->
@@ -89,7 +92,7 @@ fun NeedItFixedTabBar(
         selectedTabIndex = selectedTabIndex,
         containerColor = MaterialTheme.colorScheme.background,
         modifier = Modifier
-            .height(MaterialTheme.dimensions.tabBar.tabHeight)
+            .height(TabBarSpecs.Height)
     ) {
         Gifts.values().toList().forEachIndexed { index, gift ->
             NeedItTab(
@@ -113,7 +116,7 @@ private fun NeedItTab(
         selectedContentColor = MaterialTheme.colorScheme.primary,
         unselectedContentColor = MaterialTheme.colorScheme.onBackground,
         modifier = Modifier
-            .height(MaterialTheme.dimensions.tabBar.tabHeight)
+            .height(TabBarSpecs.Height)
     ) {
         Text(
             text = stringResource(id = labelId),

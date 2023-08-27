@@ -20,8 +20,8 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItAvatar
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 private enum class TopAppBarSize {
     Default,
@@ -103,7 +103,10 @@ fun NeedItLargeTopAppBar(
 ) {
     NeedItBaseTopAppBar(
         title = {
-            Text(text = title)
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineMedium
+            )
         },
         onNavigateClick = onNavigateClick,
         topAppBarSize = TopAppBarSize.Large
@@ -132,7 +135,7 @@ fun NeedItTopAppBar(
 ) {
     NeedItBaseTopAppBar(
         title = {
-            if (title != null) Text(text = title)
+            if (title != null) Text(text = title, style = MaterialTheme.typography.titleLarge)
         },
         onNavigateClick = onNavigateClick,
         actions = actions
@@ -146,7 +149,7 @@ private fun AvatarAndTitle(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.xs)
+        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXS)
     ) {
         NeedItAvatar(imageUrl = avatarUrl)
         Text(text = title, style = MaterialTheme.typography.titleSmall)

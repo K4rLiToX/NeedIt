@@ -1,10 +1,12 @@
 package com.carlosdiestro.needit.core
 
+import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -13,15 +15,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFabPainter
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFabVector
+import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFab
 import com.carlosdiestro.needit.core.design_system.components.dialogs.CameraPermissionTextProvider
 import com.carlosdiestro.needit.core.design_system.components.dialogs.PermissionDialog
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItBottomBar
@@ -56,7 +60,7 @@ fun Main(
             if (appState.shouldShowFab) {
                 when (currentDestinationRoute) {
                     TopLevelDestination.Home.route -> {
-                        NeedItFabPainter(
+                        NeedItFab(
                             icon = painterResource(id = Icons.NeedIt),
                             onClick = {
                                 if (currentDestinationRoute == TopLevelDestination.Home.route) {
@@ -67,7 +71,7 @@ fun Main(
                     }
 
                     TopLevelDestination.Friends.route -> {
-                        NeedItFabVector(
+                        NeedItFab(
                             icon = MaterialTheme.icons.AddFriend,
                             onClick = {
                                 if (currentDestinationRoute == TopLevelDestination.Home.route) {
@@ -84,6 +88,8 @@ fun Main(
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
+        val window = (LocalView.current.context as Activity).window
+        window.navigationBarColor = appState.navigationBarColor
         NeedItNavHost(
             appState = appState,
             modifier = Modifier.padding(it)
@@ -150,6 +156,14 @@ class NeedItAppState(
 
     var shouldShowCameraPermissionDialog by mutableStateOf(false)
         private set
+
+    val navigationBarColor: Int
+        @Composable get() =
+            if (isTopLevelDestination()) {
+                MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp).toArgb()
+            } else {
+                MaterialTheme.colorScheme.background.toArgb()
+            }
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {

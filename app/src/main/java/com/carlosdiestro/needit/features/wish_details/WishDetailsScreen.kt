@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -19,15 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.components.buttons.ButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItOutlinedIconButton
 import com.carlosdiestro.needit.core.design_system.components.cards.Currency
 import com.carlosdiestro.needit.core.design_system.components.cards.NeedItItemDetailCard
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar
-import com.carlosdiestro.needit.core.design_system.theme.button
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 
 @Composable
 fun WishDetailsRoute(
@@ -59,8 +57,8 @@ private fun WishDetailsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-                .padding(horizontal = MaterialTheme.spacing.m)
-                .padding(bottom = MaterialTheme.spacing.l)
+                .padding(horizontal = MaterialTheme.dimensions.spacingM)
+                .padding(bottom = MaterialTheme.dimensions.spacingL)
         ) {
             WishInformation(
                 imageUrl = state.imageUrl,
@@ -101,7 +99,7 @@ private fun WishInformation(
             title = title,
             subtitle = subtitle,
             price = price,
-            currency = Currency("€", true),
+            currency = Currency("€", true), // TODO(Remove hardcoded values)
             description = description,
             size = size,
             color = color,
@@ -127,11 +125,11 @@ private fun WishActions(
         )
         NeedItFilledButton(
             labelId = if (!isShared) R.string.button_share else R.string.button_keep_private,
+            onClick = {},
             leadingIcon = if (!isShared) MaterialTheme.icons.Share else MaterialTheme.icons.Lock,
+            size = ButtonSpecs.LargeHeight,
             modifier = Modifier
                 .width(200.dp)
-                .height(MaterialTheme.dimensions.button.largeHeight),
-            onClick = {}
         )
         NeedItOutlinedIconButton(
             icon = MaterialTheme.icons.Edit,

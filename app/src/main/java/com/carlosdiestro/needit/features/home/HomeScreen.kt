@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItLabeledFilledIconButton
+import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItLabeledIconButton
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
 import com.carlosdiestro.needit.core.design_system.components.dialogs.NeedItDialog
 import com.carlosdiestro.needit.core.design_system.components.lists.NeedItWishGrid
@@ -33,8 +33,8 @@ import com.carlosdiestro.needit.core.design_system.components.menu.NeedItItemAct
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItScrollableTabBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
-import com.carlosdiestro.needit.core.design_system.theme.spacing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -107,10 +107,9 @@ private fun HomeEmptyState(
         Text(
             text = stringResource(id = R.string.home_empty),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
             modifier = Modifier
-                .padding(MaterialTheme.spacing.xxl)
+                .padding(MaterialTheme.dimensions.spacingXXL)
         )
     }
 }
@@ -186,7 +185,7 @@ private fun HomeSuccessState(
             sheetState = wishActionsBottomSheetState,
             onDismiss = { openActionBottomSheet = false },
             actions = {
-                NeedItLabeledFilledIconButton(
+                NeedItLabeledIconButton(
                     labelId = R.string.button_remove,
                     icon = MaterialTheme.icons.Delete,
                     onClick = {
@@ -194,7 +193,7 @@ private fun HomeSuccessState(
                         openRemoveWishBottomSheet = true
                     }
                 )
-                NeedItLabeledFilledIconButton(
+                NeedItLabeledIconButton(
                     labelId = R.string.button_update,
                     icon = MaterialTheme.icons.Edit,
                     onClick = {
@@ -202,7 +201,7 @@ private fun HomeSuccessState(
                         openActionBottomSheet = false
                     }
                 )
-                NeedItLabeledFilledIconButton(
+                NeedItLabeledIconButton(
                     labelId = labelId,
                     icon = icon,
                     onClick = {
