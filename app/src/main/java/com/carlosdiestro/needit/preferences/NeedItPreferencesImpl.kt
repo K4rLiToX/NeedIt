@@ -36,7 +36,7 @@ class NeedItPreferencesImpl @Inject constructor(
         }
     }
 
-    val userPrefs: Flow<UserPrefs> = prefsData.map { prefs ->
+    override val userInfo: Flow<UserPrefs> = prefsData.map { prefs ->
         UserPrefs(
             id = prefs[userIdKey].orEmpty(),
             username = prefs[usernameKey].orEmpty(),

@@ -8,6 +8,6 @@ interface UserLocalDatasource {
     val isUserGuest: Flow<Boolean>
     suspend fun updateIsUserGuest()
 
-    val userPrefs: Flow<UserPrefs>
+    val userInfo: Flow<UserPrefs>
     suspend fun updateUserInfo(userPrefs: UserPrefs)
 }
