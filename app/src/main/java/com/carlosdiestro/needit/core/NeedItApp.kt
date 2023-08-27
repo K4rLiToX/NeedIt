@@ -35,6 +35,7 @@ import com.carlosdiestro.needit.core.design_system.theme.Icons
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.features.home.navigateToHome
+import com.carlosdiestro.needit.features.profile.navigateToProfile
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -188,8 +189,7 @@ class NeedItAppState(
                 topLevelNavOptions
             )
 
-            TopLevelDestination.Profile -> navController.navigate(
-                topLevelDestination.route,
+            TopLevelDestination.Profile -> navController.navigateToProfile(
                 topLevelNavOptions
             )
         }
