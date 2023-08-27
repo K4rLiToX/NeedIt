@@ -1,10 +1,12 @@
 package com.carlosdiestro.needit.core
 
+import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -13,7 +15,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -83,6 +88,8 @@ fun Main(
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
+        val window = (LocalView.current.context as Activity).window
+        window.navigationBarColor = appState.navigationBarColor
         NeedItNavHost(
             appState = appState,
             modifier = Modifier.padding(it)
@@ -149,6 +156,14 @@ class NeedItAppState(
 
     var shouldShowCameraPermissionDialog by mutableStateOf(false)
         private set
+
+    val navigationBarColor: Int
+        @Composable get() =
+            if (isTopLevelDestination()) {
+                MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp).toArgb()
+            } else {
+                MaterialTheme.colorScheme.background.toArgb()
+            }
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
