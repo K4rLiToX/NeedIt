@@ -52,9 +52,7 @@ fun NeedItBottomBar(
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
 ) {
-    NavigationBar(
-        tonalElevation = 0.dp
-    ) {
+    NavigationBar() {
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
             NeedItBottomBarItem(
