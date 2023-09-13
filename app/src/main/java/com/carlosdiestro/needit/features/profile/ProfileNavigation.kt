@@ -12,11 +12,13 @@ fun NavController.navigateToProfile(
 ) = navigate(profileRoute, navOptions)
 
 fun NavGraphBuilder.profileScreen(
+    isUserGuest: Boolean,
     onItemClick: (Long) -> Unit,
     onItemLongClick: (Long) -> Unit
 ) {
     composable(route = profileRoute) {
         ProfileRoute(
+            isUserGuest = isUserGuest,
             onItemClick = onItemClick,
             onItemLongClick = onItemLongClick
         )

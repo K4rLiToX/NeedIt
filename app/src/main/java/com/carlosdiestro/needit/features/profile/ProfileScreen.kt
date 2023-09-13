@@ -12,6 +12,7 @@ import com.carlosdiestro.needit.core.design_system.theme.icons
 
 @Composable
 fun ProfileRoute(
+    isUserGuest: Boolean,
     onItemClick: (Long) -> Unit,
     onItemLongClick: (Long) -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
@@ -19,6 +20,7 @@ fun ProfileRoute(
     val state by viewModel.state.collectAsStateWithLifecycle()
     ProfileScreen(
         state = state,
+        isUserGuest = isUserGuest,
         onItemClick = onItemClick,
         onItemLongClick = onItemLongClick
     )
@@ -27,6 +29,7 @@ fun ProfileRoute(
 @Composable
 private fun ProfileScreen(
     state: ProfileState,
+    isUserGuest: Boolean,
     onItemClick: (Long) -> Unit,
     onItemLongClick: (Long) -> Unit
 ) {

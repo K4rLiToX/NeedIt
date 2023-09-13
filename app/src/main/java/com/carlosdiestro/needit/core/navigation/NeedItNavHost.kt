@@ -21,6 +21,7 @@ import com.carlosdiestro.needit.features.wish_details.wishDetailsRoute
 @Composable
 fun NeedItNavHost(
     appState: NeedItAppState,
+    isUserGuest: Boolean,
     modifier: Modifier = Modifier,
     startDestination: String = signInRoute
 ) {
@@ -47,6 +48,7 @@ fun NeedItNavHost(
             onFriendClick = {}
         )
         profileScreen(
+            isUserGuest = isUserGuest,
             onItemClick = {},
             onItemLongClick = {}
         )

@@ -19,12 +19,15 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.carlosdiestro.needit.MainViewModel
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFab
 import com.carlosdiestro.needit.core.design_system.components.dialogs.CameraPermissionTextProvider
 import com.carlosdiestro.needit.core.design_system.components.dialogs.PermissionDialog
@@ -41,11 +44,13 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun Main(
     appState: NeedItAppState,
+    viewModel: MainViewModel = hiltViewModel(),
     launchCameraPermissionLauncher: () -> Unit,
     isCameraPermissionPermanentlyDeclined: Boolean,
     onGoToAppSettingsClick: () -> Unit
 ) {
     val currentDestinationRoute = appState.currentDestinationRoute
+    val isUserGuest by viewModel.isUserGuest.collectAsStateWithLifecycle()
 
     Scaffold(
         bottomBar = {
@@ -93,6 +98,7 @@ fun Main(
         window.navigationBarColor = appState.navigationBarColor
         NeedItNavHost(
             appState = appState,
+            isUserGuest = isUserGuest,
             modifier = Modifier.padding(it)
         )
     }
