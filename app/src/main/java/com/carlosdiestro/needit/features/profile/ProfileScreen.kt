@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,7 +31,6 @@ import com.carlosdiestro.needit.core.design_system.components.buttons.IconButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItOutlinedIconButton
-import com.carlosdiestro.needit.core.design_system.components.container.NeedItScreenContainer
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItAvatar
 import com.carlosdiestro.needit.core.design_system.components.lists.NeedItWishGrid
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar
@@ -106,8 +106,7 @@ private fun ProfileScreenUser(
             ProfileHeader(
                 imageUrl = state.userInfo?.profilePictureUrl.orEmpty(),
                 email = state.userInfo?.email.orEmpty(),
-                username = state.userInfo?.username.orEmpty(),
-                tag = ""
+                username = state.userInfo?.username.orEmpty()
             )
             when (state.showEmptyScreen) {
                 true -> {
@@ -130,8 +129,7 @@ private fun ProfileScreenUser(
 private fun ProfileHeader(
     imageUrl: String,
     email: String,
-    username: String,
-    tag: String
+    username: String
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -214,7 +212,8 @@ private fun NameAndTag(
 @Composable
 private fun ProfileEmptyState() {
     Column(
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxHeight()
     ) {
         Text(
             text = stringResource(id = R.string.profile_empty),
