@@ -96,6 +96,7 @@ fun Main(
     ) {
         val window = (LocalView.current.context as Activity).window
         window.navigationBarColor = appState.navigationBarColor
+        window.statusBarColor = appState.statusBarColor
         NeedItNavHost(
             appState = appState,
             isUserGuest = isUserGuest,
@@ -170,6 +171,14 @@ class NeedItAppState(
                 MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp).toArgb()
             } else {
                 MaterialTheme.colorScheme.background.toArgb()
+            }
+
+    val statusBarColor: Int
+        @Composable get() =
+            when(currentDestinationRoute) {
+                TopLevelDestination.Profile.route -> MaterialTheme.colorScheme
+                    .surfaceColorAtElevation(3.dp).toArgb()
+                else -> MaterialTheme.colorScheme.background.toArgb()
             }
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
