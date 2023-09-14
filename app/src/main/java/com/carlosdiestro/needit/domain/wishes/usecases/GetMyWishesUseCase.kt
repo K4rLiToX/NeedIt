@@ -8,5 +8,6 @@ import javax.inject.Inject
 class GetMyWishesUseCase @Inject constructor(
     private val repository: WishRepository
 ) {
-    operator fun invoke(): Flow<List<Wish>> = repository.wishes
+    operator fun invoke(onlyShared: Boolean = false): Flow<List<Wish>> =
+        if (onlyShared) repository.sharedWishes else repository.wishes
 }

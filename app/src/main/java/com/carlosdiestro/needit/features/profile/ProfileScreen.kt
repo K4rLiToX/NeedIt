@@ -95,7 +95,6 @@ private fun ProfileScreenUser(
         }
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
