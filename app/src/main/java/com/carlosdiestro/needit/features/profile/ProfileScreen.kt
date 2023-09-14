@@ -230,18 +230,23 @@ fun SuggestSignIn(
     onSignInClick: () -> Unit
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXXL),
+        verticalArrangement = Arrangement.spacedBy(
+            space = MaterialTheme.dimensions.spacingXXL,
+            alignment = Alignment.CenterVertically
+        ),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
             text = stringResource(id = R.string.profile_guest),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            maxLines = 2
+            modifier = Modifier
+                .padding(horizontal = MaterialTheme.dimensions.spacingXXL)
         )
         NeedItFilledButton(
             labelId = R.string.button_login,
+            size = ButtonSpecs.LargeHeight,
             onClick = onSignInClick
         )
     }
