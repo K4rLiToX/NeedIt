@@ -25,7 +25,7 @@ fun NeedItWishGrid(
         state = state,
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(
-            horizontal = MaterialTheme.dimensions.spacingM, 
+            horizontal = MaterialTheme.dimensions.spacingM,
             vertical = MaterialTheme.dimensions.spacingM
         ),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),

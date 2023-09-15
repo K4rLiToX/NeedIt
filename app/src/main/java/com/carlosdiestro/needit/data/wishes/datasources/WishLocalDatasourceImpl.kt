@@ -14,6 +14,7 @@ class WishLocalDatasourceImpl @Inject constructor(
         get() = dao.getAll().toDomain()
     override val sharedWishes: Flow<List<Wish>>
         get() = dao.getShared().toDomain()
+
     override suspend fun getWish(id: Long): Wish = dao.getWish(id).toDomain()
     override suspend fun upsertWish(wish: Wish) = dao.upsert(wish.toEntity())
     override suspend fun removeWish(id: Long) = dao.remove(id)

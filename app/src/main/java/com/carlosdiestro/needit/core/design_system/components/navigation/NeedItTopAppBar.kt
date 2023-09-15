@@ -31,6 +31,7 @@ object TopAppBarSpecs {
         Default,
         Large
     }
+
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun defaultColors(): TopAppBarColors {

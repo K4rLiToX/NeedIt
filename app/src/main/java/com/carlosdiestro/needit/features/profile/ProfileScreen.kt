@@ -65,6 +65,7 @@ private fun ProfileScreen(
         true -> SuggestSignIn(
             onSignInClick = {}
         )
+
         false -> ProfileScreenUser(
             state = state,
             onItemClick = onItemClick,
@@ -111,6 +112,7 @@ private fun ProfileScreenUser(
                 true -> {
                     ProfileEmptyState()
                 }
+
                 false -> {
                     NeedItWishGrid(
                         state = gridState,
