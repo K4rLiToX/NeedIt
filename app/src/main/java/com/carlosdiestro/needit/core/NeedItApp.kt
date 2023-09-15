@@ -19,12 +19,15 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.carlosdiestro.needit.MainViewModel
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFab
 import com.carlosdiestro.needit.core.design_system.components.dialogs.CameraPermissionTextProvider
 import com.carlosdiestro.needit.core.design_system.components.dialogs.PermissionDialog
@@ -35,16 +38,20 @@ import com.carlosdiestro.needit.core.design_system.theme.Icons
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.features.home.navigateToHome
+import com.carlosdiestro.needit.features.profile.navigateToProfile
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun Main(
     appState: NeedItAppState,
+    viewModel: MainViewModel = hiltViewModel(),
     launchCameraPermissionLauncher: () -> Unit,
     isCameraPermissionPermanentlyDeclined: Boolean,
-    onGoToAppSettingsClick: () -> Unit
+    onGoToAppSettingsClick: () -> Unit,
+    isSignedIn: Boolean
 ) {
     val currentDestinationRoute = appState.currentDestinationRoute
+    val isUserGuest by viewModel.isUserGuest.collectAsStateWithLifecycle()
 
     Scaffold(
         bottomBar = {
@@ -90,8 +97,11 @@ fun Main(
     ) {
         val window = (LocalView.current.context as Activity).window
         window.navigationBarColor = appState.navigationBarColor
+        window.statusBarColor = appState.statusBarColor
         NeedItNavHost(
             appState = appState,
+            isUserGuest = isUserGuest,
+            isSignedIn = isSignedIn,
             modifier = Modifier.padding(it)
         )
     }
@@ -165,6 +175,15 @@ class NeedItAppState(
                 MaterialTheme.colorScheme.background.toArgb()
             }
 
+    val statusBarColor: Int
+        @Composable get() =
+            when (currentDestinationRoute) {
+                TopLevelDestination.Profile.route -> MaterialTheme.colorScheme
+                    .surfaceColorAtElevation(3.dp).toArgb()
+
+                else -> MaterialTheme.colorScheme.background.toArgb()
+            }
+
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
@@ -188,8 +207,7 @@ class NeedItAppState(
                 topLevelNavOptions
             )
 
-            TopLevelDestination.Profile -> navController.navigate(
-                topLevelDestination.route,
+            TopLevelDestination.Profile -> navController.navigateToProfile(
                 topLevelNavOptions
             )
         }

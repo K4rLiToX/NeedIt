@@ -9,13 +9,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItAvatar
@@ -23,9 +26,29 @@ import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
-private enum class TopAppBarSize {
-    Default,
-    Large
+object TopAppBarSpecs {
+    enum class TopAppBarSize {
+        Default,
+        Large
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun defaultColors(): TopAppBarColors {
+        return TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.background,
+            titleContentColor = MaterialTheme.colorScheme.onBackground
+        )
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun secondaryColors(): TopAppBarColors {
+        return TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+            titleContentColor = MaterialTheme.colorScheme.onSurface
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,10 +57,11 @@ private fun NeedItBaseTopAppBar(
     title: @Composable () -> Unit = {},
     onNavigateClick: (() -> Unit)? = null,
     actions: @Composable () -> Unit = {},
-    topAppBarSize: TopAppBarSize = TopAppBarSize.Default
+    colors: TopAppBarColors,
+    topAppBarSize: TopAppBarSpecs.TopAppBarSize = TopAppBarSpecs.TopAppBarSize.Default
 ) {
     when (topAppBarSize) {
-        TopAppBarSize.Default -> {
+        TopAppBarSpecs.TopAppBarSize.Default -> {
             TopAppBar(
                 title = title,
                 navigationIcon = {
@@ -48,15 +72,12 @@ private fun NeedItBaseTopAppBar(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
-                ),
+                colors = colors,
                 actions = { actions() }
             )
         }
 
-        TopAppBarSize.Large -> {
+        TopAppBarSpecs.TopAppBarSize.Large -> {
             MediumTopAppBar(
                 title = title,
                 navigationIcon = {
@@ -67,19 +88,18 @@ private fun NeedItBaseTopAppBar(
                         )
                     }
                 },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.onBackground
-                )
+                colors = colors
             )
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NeedItCenteredTopAppBar(
     title: String,
     onNavigateClick: () -> Unit,
+    colors: TopAppBarColors = TopAppBarSpecs.defaultColors(),
     actions: @Composable () -> Unit
 ) {
     NeedItBaseTopAppBar(
@@ -92,13 +112,16 @@ fun NeedItCenteredTopAppBar(
             )
         },
         onNavigateClick = onNavigateClick,
+        colors = colors,
         actions = actions
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NeedItLargeTopAppBar(
     title: String,
+    colors: TopAppBarColors = TopAppBarSpecs.defaultColors(),
     onNavigateClick: () -> Unit,
 ) {
     NeedItBaseTopAppBar(
@@ -109,28 +132,34 @@ fun NeedItLargeTopAppBar(
             )
         },
         onNavigateClick = onNavigateClick,
-        topAppBarSize = TopAppBarSize.Large
+        colors = colors,
+        topAppBarSize = TopAppBarSpecs.TopAppBarSize.Large
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NeedItAvatarTopAppBar(
     title: String,
     avatarUrl: String,
+    colors: TopAppBarColors = TopAppBarSpecs.defaultColors(),
     onNavigateClick: () -> Unit
 ) {
     NeedItBaseTopAppBar(
         title = {
             AvatarAndTitle(title = title, avatarUrl = avatarUrl)
         },
+        colors = colors,
         onNavigateClick = onNavigateClick
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NeedItTopAppBar(
     title: String? = null,
     onNavigateClick: (() -> Unit)? = null,
+    colors: TopAppBarColors = TopAppBarSpecs.defaultColors(),
     actions: @Composable () -> Unit = {}
 ) {
     NeedItBaseTopAppBar(
@@ -138,6 +167,7 @@ fun NeedItTopAppBar(
             if (title != null) Text(text = title, style = MaterialTheme.typography.titleLarge)
         },
         onNavigateClick = onNavigateClick,
+        colors = colors,
         actions = actions
     )
 }
@@ -156,6 +186,7 @@ private fun AvatarAndTitle(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 private fun NeedItTopAppBarPreview() {

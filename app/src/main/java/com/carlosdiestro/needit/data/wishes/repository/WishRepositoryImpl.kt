@@ -21,6 +21,9 @@ class WishRepositoryImpl @Inject constructor(
     override val wishes: Flow<List<Wish>>
         get() = localDatasource.wishes.flowOn(ioDispatcher)
 
+    override val sharedWishes: Flow<List<Wish>>
+        get() = localDatasource.sharedWishes.flowOn(ioDispatcher)
+
     override suspend fun getWish(id: Long): Wish = withContext(ioDispatcher) {
         localDatasource.getWish(id)
     }

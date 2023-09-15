@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.features.friends
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -20,6 +21,7 @@ fun FriendsRoute(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FriendsScreen(
     state: FriendsState

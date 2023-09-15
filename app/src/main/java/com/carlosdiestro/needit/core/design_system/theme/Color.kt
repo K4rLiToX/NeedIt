@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.core.design_system.theme
 
 import androidx.compose.ui.graphics.Color
 
-val ni_theme_light_primary = Color(0xFF005EB1)
+val ni_theme_light_primary = Color(0xFF007FEB)
 val ni_theme_light_onPrimary = Color(0xFFFFFFFF)
 val ni_theme_light_primaryContainer = Color(0xFFD5E3FF)
 val ni_theme_light_onPrimaryContainer = Color(0xFF001C3B)

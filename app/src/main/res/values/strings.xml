@@ -34,6 +34,7 @@
     <string name="profile_wishes">%d wishes</string>
     <string name="profile_reserved">%d reserved</string>
     <string name="profile_guest">Enjoy Need It to its best!</string>
+    <string name="profile_empty">Seems you haven\'t uploaded any wished yet!</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

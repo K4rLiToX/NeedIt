@@ -51,7 +51,7 @@ fun NeedItBottomBar(
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
 ) {
-    NavigationBar() {
+    NavigationBar {
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
             NeedItBottomBarItem(

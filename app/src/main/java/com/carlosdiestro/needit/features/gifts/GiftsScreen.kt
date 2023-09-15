@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.features.gifts
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
@@ -19,6 +20,7 @@ fun GiftsRoute(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun GiftsScreen(
     state: GiftsState
