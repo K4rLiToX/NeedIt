@@ -15,14 +15,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.core.Main
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.rememberNeedItAppState
 import com.carlosdiestro.needit.features.camera.navigateToCamera
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var googleAuthUiClient: GoogleAuthUiClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
@@ -41,6 +47,7 @@ class MainActivity : ComponentActivity() {
                             else appState.setShowCameraPermissionDialog(true)
                         }
                     )
+                    val isSignedIn = googleAuthUiClient.getSignedInUser() != null
                     Main(
                         appState = appState,
                         launchCameraPermissionLauncher = {
@@ -51,7 +58,8 @@ class MainActivity : ComponentActivity() {
                         isCameraPermissionPermanentlyDeclined = !shouldShowRequestPermissionRationale(
                             Manifest.permission.CAMERA
                         ),
-                        onGoToAppSettingsClick = ::openAppSettings
+                        onGoToAppSettingsClick = ::openAppSettings,
+                        isSignedIn = isSignedIn
                     )
                 }
             }

@@ -47,7 +47,8 @@ fun Main(
     viewModel: MainViewModel = hiltViewModel(),
     launchCameraPermissionLauncher: () -> Unit,
     isCameraPermissionPermanentlyDeclined: Boolean,
-    onGoToAppSettingsClick: () -> Unit
+    onGoToAppSettingsClick: () -> Unit,
+    isSignedIn: Boolean
 ) {
     val currentDestinationRoute = appState.currentDestinationRoute
     val isUserGuest by viewModel.isUserGuest.collectAsStateWithLifecycle()
@@ -100,6 +101,7 @@ fun Main(
         NeedItNavHost(
             appState = appState,
             isUserGuest = isUserGuest,
+            isSignedIn = isSignedIn,
             modifier = Modifier.padding(it)
         )
     }
@@ -175,9 +177,10 @@ class NeedItAppState(
 
     val statusBarColor: Int
         @Composable get() =
-            when(currentDestinationRoute) {
+            when (currentDestinationRoute) {
                 TopLevelDestination.Profile.route -> MaterialTheme.colorScheme
                     .surfaceColorAtElevation(3.dp).toArgb()
+
                 else -> MaterialTheme.colorScheme.background.toArgb()
             }
 
