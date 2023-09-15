@@ -48,7 +48,7 @@ fun SignInRoute(
 
     SignInScreen(
         state = state,
-        googleAuthUiClient = viewModel.googleAuthUiClient,
+        googleAuthUiClient = googleAuthUiClient,
         onSignInResult = viewModel::onSignInResult,
         resetState = viewModel::resetState,
         onSignInSuccessful = onSignInSuccessful,
