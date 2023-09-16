@@ -1,6 +1,8 @@
 package com.carlosdiestro.needit.network
 
 import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
+import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
+import com.carlosdiestro.needit.network.datasources.ImageRemoteDatasourceImpl
 import com.carlosdiestro.needit.network.datasources.UserRemoteDatasourceImpl
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,8 @@ interface DatasourceModule {
     @Singleton
     @Binds
     fun bindUserRemoteDatasource(impl: UserRemoteDatasourceImpl): UserRemoteDatasource
+
+    @Singleton
+    @Binds
+    fun bindImageRemoteDatasource(impl: ImageRemoteDatasourceImpl): ImageRemoteDatasource
 }
