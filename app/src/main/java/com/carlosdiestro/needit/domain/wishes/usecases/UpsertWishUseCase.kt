@@ -38,6 +38,7 @@ class UpsertWishUseCase @Inject constructor(
         val cloudImageUrl = imageRepository.insertImage(imageUrl, userId)
         WishFactory.initialize(
             id = id,
+            userId = userId,
             imageUrl = cloudImageUrl,
             title = title,
             subtitle = subtitle,

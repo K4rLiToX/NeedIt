@@ -21,6 +21,7 @@ import com.carlosdiestro.needit.core.design_system.theme.icons
 
 class SimpleWishPLO(
     val id: Long,
+    val userId: String,
     val title: String,
     val imageUrl: String,
     val isShared: Boolean,
@@ -88,6 +89,7 @@ private fun IconSection(
 private fun WishCardPreview() {
     val wish1 = SimpleWishPLO(
         id = 0,
+        userId = "",
         imageUrl = "",
         title = "Chanel",
         isShared = false,
@@ -95,6 +97,7 @@ private fun WishCardPreview() {
     )
     val wish2 = SimpleWishPLO(
         id = 1,
+        userId = "",
         imageUrl = "",
         title = "Chanel",
         isShared = true,

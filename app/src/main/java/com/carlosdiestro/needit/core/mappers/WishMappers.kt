@@ -22,6 +22,7 @@ fun WishEntity.toDomain(): Wish {
     val factory = WishFactory
         .initialize(
             id = this.id ?: -1,
+            userId = userId,
             imageUrl = this.imageUrl,
             price = this.price,
             description = this.description,
@@ -64,6 +65,7 @@ fun Flow<List<WishEntity>>.toDomain(): Flow<List<Wish>> = this.map { it.toDomain
 
 fun Wish.toPLO(): SimpleWishPLO = SimpleWishPLO(
     id = this.id,
+    userId = userId,
     imageUrl = this.imageUrl,
     title = this.title,
     isShared = this.isShared,
@@ -74,6 +76,7 @@ fun List<Wish>.toPLO(): List<SimpleWishPLO> = this.map { it.toPLO() }
 
 fun Wish.toEntity(): WishEntity = WishEntity(
     id = if (this.id == -1L) null else this.id,
+    userId = userId,
     imageUrl = this.imageUrl,
     title = this.title,
     subtitle = this.subtitle,
