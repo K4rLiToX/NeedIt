@@ -1,6 +1,7 @@
 package com.carlosdiestro.needit.core.design_system.components.images
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,9 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import coil.size.Size
+import com.carlosdiestro.needit.core.design_system.components.extensions.shimmerEffect
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -37,12 +43,34 @@ fun NeedItImageContainer(
                 onLongClick = onLongClick
             )
     ) {
-        AsyncImage(
-            model = imageUrl,
-            contentDescription = contentDescription,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+        val painter = rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imageUrl)
+                .size(Size.ORIGINAL)
+                .crossfade(true)
+                .build(),
+            contentScale = ContentScale.Crop
         )
-        cardContent()
+        val imageState = painter.state
+        if (imageState is AsyncImagePainter.State.Loading) {
+            ImageLoading()
+        } else if (imageState is AsyncImagePainter.State.Success) {
+            Image(
+                painter = painter,
+                contentDescription = contentDescription,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+            cardContent()
+        }
     }
+}
+
+@Composable
+private fun ImageLoading() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .shimmerEffect()
+    )
 }
