@@ -17,7 +17,7 @@ class RemoveWishUseCase @Inject constructor(
     }
 
     private fun getPath(imageUrl: String): String = imageUrl
-            .toHttpUrl()
-            .pathSegments
-            .last()
+        .toHttpUrl()
+        .pathSegments
+        .last()
 }
