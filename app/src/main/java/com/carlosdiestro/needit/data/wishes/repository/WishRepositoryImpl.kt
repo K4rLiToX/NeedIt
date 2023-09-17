@@ -47,6 +47,8 @@ class WishRepositoryImpl @Inject constructor(
     }
 
     override suspend fun lockWish(id: Long) = withContext(ioDispatcher) {
+        val wish = getWish(id)
         localDatasource.lockWish(id)
+        remoteDatasource.delete(wish.cloudId)
     }
 }

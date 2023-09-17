@@ -26,6 +26,6 @@ interface WishDao {
     @Query("UPDATE wish_table SET is_shared = 1, cloud_id = :cloudId WHERE id = :id")
     suspend fun share(id: Long, cloudId: String)
 
-    @Query("UPDATE wish_table SET is_shared = 0 WHERE id = :id")
+    @Query("UPDATE wish_table SET is_shared = 0, cloud_id = '' WHERE id = :id")
     suspend fun lock(id: Long)
 }

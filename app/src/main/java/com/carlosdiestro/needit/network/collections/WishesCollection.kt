@@ -15,4 +15,8 @@ class WishesCollection @Inject constructor(
             .await()
             .id
     }
+
+    suspend fun delete(cloudId: String) {
+        userWishesCollection.document(cloudId).delete()
+    }
 }
