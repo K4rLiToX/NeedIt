@@ -9,14 +9,22 @@ class WishesCollection @Inject constructor(
     private val userWishesCollection: CollectionReference
 ) {
 
-    suspend fun insert(dto: WishDto): String {
+    suspend fun insert(wish: WishDto): String {
         return userWishesCollection
-            .add(dto)
+            .add(wish)
             .await()
             .id
     }
 
     suspend fun delete(cloudId: String) {
-        userWishesCollection.document(cloudId).delete()
+        userWishesCollection
+            .document(cloudId
+            ).delete()
+    }
+
+    suspend fun update(cloudId: String, wish: WishDto) {
+        userWishesCollection
+            .document(cloudId)
+            .set(wish)
     }
 }

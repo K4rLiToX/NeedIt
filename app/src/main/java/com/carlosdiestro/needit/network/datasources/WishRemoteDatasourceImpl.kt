@@ -12,4 +12,5 @@ class WishRemoteDatasourceImpl @Inject constructor(
 
     override suspend fun insert(wish: Wish): String = wishesCollection.insert(wish.toDto())
     override suspend fun delete(cloudId: String) = wishesCollection.delete(cloudId)
+    override suspend fun update(wish: Wish) = wishesCollection.update(wish.cloudId, wish.toDto())
 }

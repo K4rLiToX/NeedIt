@@ -33,6 +33,7 @@ class WishRepositoryImpl @Inject constructor(
     override suspend fun upsertWish(wish: Wish) {
         appDispatcher.launch {
             localDatasource.upsertWish(wish)
+            if (wish.isShared) remoteDatasource.update(wish)
         }
     }
 
