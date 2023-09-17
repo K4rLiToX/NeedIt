@@ -2,6 +2,7 @@ package com.carlosdiestro.needit.network.collections
 
 import com.carlosdiestro.needit.network.dtos.WishDto
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -25,6 +26,6 @@ class WishesCollection @Inject constructor(
     suspend fun update(cloudId: String, wish: WishDto) {
         userWishesCollection
             .document(cloudId)
-            .set(wish)
+            .set(wish, SetOptions.merge())
     }
 }

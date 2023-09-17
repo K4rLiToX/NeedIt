@@ -10,24 +10,26 @@ import com.carlosdiestro.needit.domain.wishes.Footwear
 import com.carlosdiestro.needit.domain.wishes.FootwearParams
 import com.carlosdiestro.needit.domain.wishes.Other
 import com.carlosdiestro.needit.domain.wishes.OtherParams
+import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.WishFactory
-import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class UpsertWishUseCase @Inject constructor(
-    private val wishRepository: WishRepository,
-    private val imageRepository: ImageRepository,
+class UpdateWishUseCase @Inject constructor(
+    private val repository: WishRepository,
     private val getUserInfo: GetUserInfoUseCase
 ) {
+
     suspend operator fun invoke(
         id: Long,
+        cloudId: String,
         imageUrl: String,
         title: String,
         subtitle: String,
         price: String,
         webUrl: String,
+        isShared: Boolean,
         description: String,
         category: WishCategory,
         size: String,
@@ -35,16 +37,16 @@ class UpsertWishUseCase @Inject constructor(
         isbn: String
     ) {
         val userId = getUserInfo().first().id
-        val cloudImageUrl = imageRepository.insertImage(imageUrl, userId)
         WishFactory.initialize(
             id = id,
-            cloudId = "",
+            cloudId = cloudId,
             userId = userId,
-            imageUrl = cloudImageUrl,
+            imageUrl = imageUrl,
             title = title,
             subtitle = subtitle,
             price = if (price.isEmpty()) 0.0 else price.toDouble(),
             webUrl = webUrl,
+            isShared = isShared,
             description = description
         )
         val wish = when (category) {
@@ -70,6 +72,6 @@ class UpsertWishUseCase @Inject constructor(
                 OtherParams(category = category)
             )
         }
-        wishRepository.upsertWish(wish)
+        repository.upsertWish(wish)
     }
 }

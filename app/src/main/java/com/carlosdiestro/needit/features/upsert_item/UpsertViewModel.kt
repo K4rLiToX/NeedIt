@@ -11,8 +11,10 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.toWishC
 import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear
+import com.carlosdiestro.needit.domain.wishes.Other
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.UpsertWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
-    private val upsertWish: UpsertWishUseCase,
+    private val insertWish: InsertWishUseCase,
+    private val updateWish: UpdateWishUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -136,19 +139,38 @@ class UpsertViewModel @Inject constructor(
 
     fun save() {
         viewModelScope.launch {
-            upsertWish(
-                id = wishId,
-                imageUrl = imageUrl,
-                title = title,
-                subtitle = subtitle,
-                price = price,
-                webUrl = webUrl,
-                description = description,
-                category = category,
-                size = size,
-                color = color,
-                isbn = isbn
-            )
+            if (wishId != -1L) {
+                val wish = getWish(wishId)
+                updateWish(
+                    id = wish.id,
+                    cloudId = wish.cloudId,
+                    imageUrl = wish.imageUrl,
+                    title = title,
+                    subtitle = subtitle,
+                    price = price,
+                    webUrl = webUrl,
+                    isShared = wish.isShared,
+                    description = description,
+                    category = wish.category,
+                    size = size,
+                    color = color,
+                    isbn = isbn
+                )
+            } else {
+                insertWish(
+                    id = wishId,
+                    imageUrl = imageUrl,
+                    title = title,
+                    subtitle = subtitle,
+                    price = price,
+                    webUrl = webUrl,
+                    description = description,
+                    category = category,
+                    size = size,
+                    color = color,
+                    isbn = isbn
+                )
+            }
         }
     }
 

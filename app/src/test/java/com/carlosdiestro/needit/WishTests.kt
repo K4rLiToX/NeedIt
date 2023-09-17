@@ -4,7 +4,7 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.WishCat
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.RemoveWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.UpsertWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertThrows
@@ -16,7 +16,7 @@ class WishTests {
     private lateinit var repository: FakeWishRepository
     private lateinit var getMyWishes: GetMyWishesUseCase
     private lateinit var getWish: GetWishUseCase
-    private lateinit var upsertWish: UpsertWishUseCase
+    private lateinit var upsertWish: InsertWishUseCase
     private lateinit var removeWish: RemoveWishUseCase
 
     @Before
@@ -24,7 +24,7 @@ class WishTests {
         repository = FakeWishRepository()
         getMyWishes = GetMyWishesUseCase(repository)
         getWish = GetWishUseCase(repository)
-        upsertWish = UpsertWishUseCase(repository)
+        upsertWish = InsertWishUseCase(repository)
         removeWish = RemoveWishUseCase(repository)
     }
 
