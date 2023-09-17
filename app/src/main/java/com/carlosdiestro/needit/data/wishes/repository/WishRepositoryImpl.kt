@@ -36,8 +36,9 @@ class WishRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun removeWish(id: Long) = withContext(ioDispatcher) {
+    override suspend fun removeWish(id: Long, cloudId: String) = withContext(ioDispatcher) {
         localDatasource.removeWish(id)
+        if (cloudId.isNotEmpty()) remoteDatasource.delete(cloudId)
     }
 
     override suspend fun shareWish(id: Long) = withContext(ioDispatcher) {

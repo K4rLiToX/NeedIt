@@ -24,4 +24,8 @@ class ImagesCollection @Inject constructor(
             .await()
             .toString()
     }
+
+    suspend fun deleteImage(path: String) {
+        storage.reference.child(path).delete()
+    }
 }
