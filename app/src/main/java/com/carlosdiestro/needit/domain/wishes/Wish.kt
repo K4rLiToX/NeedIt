@@ -4,6 +4,7 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.WishCat
 
 sealed class Wish {
     abstract val id: Long
+    abstract val cloudId: String
     abstract val userId: String
     abstract val imageUrl: String
     abstract val price: Double
@@ -17,6 +18,7 @@ sealed class Wish {
 
 class Clothes(
     override val id: Long,
+    override val cloudId: String,
     override val userId: String,
     override val imageUrl: String,
     override val price: Double,
@@ -32,6 +34,7 @@ class Clothes(
 
 class Footwear(
     override val id: Long,
+    override val cloudId: String,
     override val userId: String,
     override val imageUrl: String,
     override val price: Double,
@@ -47,6 +50,7 @@ class Footwear(
 
 class Book(
     override val id: Long,
+    override val cloudId: String,
     override val userId: String,
     override val imageUrl: String,
     override val price: Double,
@@ -61,6 +65,7 @@ class Book(
 
 class Other(
     override val id: Long,
+    override val cloudId: String,
     override val userId: String,
     override val imageUrl: String,
     override val price: Double,
@@ -94,6 +99,7 @@ class OtherParams(
 
 object WishFactory {
     var id: Long = -1
+    var cloudId: String = ""
     var userId: String = ""
     lateinit var imageUrl: String
     var price: Double = 0.0
@@ -105,6 +111,7 @@ object WishFactory {
 
     fun initialize(
         id: Long,
+        cloudId: String,
         userId: String,
         imageUrl: String,
         price: Double,
@@ -115,6 +122,7 @@ object WishFactory {
         subtitle: String
     ): WishFactory = WishFactory.apply {
         this.id = id
+        this.cloudId = cloudId
         this.userId = userId
         this.imageUrl = imageUrl
         this.price = price
@@ -128,6 +136,7 @@ object WishFactory {
     inline fun <reified T> create(params: WishParams): T = when (params) {
         is ClothesParams -> Clothes(
             id = id,
+            cloudId = cloudId,
             userId = userId,
             imageUrl = imageUrl,
             price = price,
@@ -143,6 +152,7 @@ object WishFactory {
 
         is FootwearParams -> Footwear(
             id = id,
+            cloudId = cloudId,
             userId = userId,
             imageUrl = imageUrl,
             price = price,
@@ -158,6 +168,7 @@ object WishFactory {
 
         is BookParams -> Book(
             id = id,
+            cloudId = cloudId,
             userId = userId,
             imageUrl = imageUrl,
             price = price,
@@ -172,6 +183,7 @@ object WishFactory {
 
         is OtherParams -> Other(
             id = id,
+            cloudId = cloudId,
             userId = userId,
             imageUrl = imageUrl,
             price = price,

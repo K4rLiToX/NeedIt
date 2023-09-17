@@ -15,6 +15,7 @@ import com.carlosdiestro.needit.domain.wishes.Other
 import com.carlosdiestro.needit.domain.wishes.OtherParams
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.WishFactory
+import com.carlosdiestro.needit.network.dtos.WishDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -22,6 +23,7 @@ fun WishEntity.toDomain(): Wish {
     val factory = WishFactory
         .initialize(
             id = this.id ?: -1,
+            cloudId = cloudId,
             userId = userId,
             imageUrl = this.imageUrl,
             price = this.price,
@@ -76,6 +78,7 @@ fun List<Wish>.toPLO(): List<SimpleWishPLO> = this.map { it.toPLO() }
 
 fun Wish.toEntity(): WishEntity = WishEntity(
     id = if (this.id == -1L) null else this.id,
+    cloudId = cloudId,
     userId = userId,
     imageUrl = this.imageUrl,
     title = this.title,
@@ -85,6 +88,22 @@ fun Wish.toEntity(): WishEntity = WishEntity(
     isShared = this.isShared,
     description = this.description,
     webUrl = this.webUrl,
+    size = getSize(this),
+    color = getColor(this),
+    isbn = getIsbn(this)
+)
+
+fun Wish.toDto(): WishDto = WishDto(
+    id = id,
+    userId = userId,
+    imageUrl = imageUrl,
+    price = price,
+    description = description,
+    webUrl = webUrl,
+    isShared = isShared,
+    category = category.toIntValue(),
+    title = title,
+    subtitle = subtitle,
     size = getSize(this),
     color = getColor(this),
     isbn = getIsbn(this)
@@ -103,3 +122,4 @@ private fun getColor(wish: Wish): String? = when (wish) {
 }
 
 private fun getIsbn(wish: Wish): String? = if (wish is Book) wish.isbn else null
+

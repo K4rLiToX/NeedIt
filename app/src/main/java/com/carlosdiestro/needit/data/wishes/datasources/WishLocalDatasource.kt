@@ -9,6 +9,6 @@ interface WishLocalDatasource {
     suspend fun getWish(id: Long): Wish
     suspend fun upsertWish(wish: Wish)
     suspend fun removeWish(id: Long)
-    suspend fun shareWish(id: Long)
+    suspend fun shareWish(id: Long, cloudId: String)
     suspend fun lockWish(id: Long)
 }

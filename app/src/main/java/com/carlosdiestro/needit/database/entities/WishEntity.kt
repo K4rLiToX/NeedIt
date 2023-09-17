@@ -9,6 +9,8 @@ class WishEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long?,
+    @ColumnInfo(name = "cloud_id")
+    val cloudId: String = "",
     @ColumnInfo(name = "user_id")
     val userId: String,
     @ColumnInfo(name = "image_url")

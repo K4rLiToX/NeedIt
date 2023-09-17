@@ -2,8 +2,10 @@ package com.carlosdiestro.needit.network
 
 import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
 import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
+import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import com.carlosdiestro.needit.network.datasources.ImageRemoteDatasourceImpl
 import com.carlosdiestro.needit.network.datasources.UserRemoteDatasourceImpl
+import com.carlosdiestro.needit.network.datasources.WishRemoteDatasourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,6 +19,10 @@ interface DatasourceModule {
     @Singleton
     @Binds
     fun bindUserRemoteDatasource(impl: UserRemoteDatasourceImpl): UserRemoteDatasource
+
+    @Singleton
+    @Binds
+    fun bindWishRemoteDatasource(impl: WishRemoteDatasourceImpl): WishRemoteDatasource
 
     @Singleton
     @Binds

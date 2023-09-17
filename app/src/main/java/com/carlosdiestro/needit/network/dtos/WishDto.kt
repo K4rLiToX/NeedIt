@@ -7,7 +7,7 @@ data class WishDto(
     val price: Double,
     val description: String,
     val webUrl: String,
-    val isShared: Boolean,
+    @field: JvmField val isShared: Boolean,
     val category: Int,
     val title: String,
     val subtitle: String,

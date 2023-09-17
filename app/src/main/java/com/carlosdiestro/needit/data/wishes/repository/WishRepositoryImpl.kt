@@ -3,6 +3,7 @@ package com.carlosdiestro.needit.data.wishes.repository
 import com.carlosdiestro.needit.core.di.ApplicationScope
 import com.carlosdiestro.needit.core.di.IoDispatcher
 import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
+import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class WishRepositoryImpl @Inject constructor(
     private val localDatasource: WishLocalDatasource,
+    private val remoteDatasource: WishRemoteDatasource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     @ApplicationScope private val appDispatcher: CoroutineScope
 ) : WishRepository {
@@ -39,7 +41,9 @@ class WishRepositoryImpl @Inject constructor(
     }
 
     override suspend fun shareWish(id: Long) = withContext(ioDispatcher) {
-        localDatasource.shareWish(id)
+        val wish = getWish(id)
+        val cloudId = remoteDatasource.insert(wish)
+        localDatasource.shareWish(id, cloudId)
     }
 
     override suspend fun lockWish(id: Long) = withContext(ioDispatcher) {

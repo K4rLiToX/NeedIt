@@ -1,7 +1,9 @@
 package com.carlosdiestro.needit.network
 
+import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.network.collections.ImagesCollection
 import com.carlosdiestro.needit.network.collections.UsersCollection
+import com.carlosdiestro.needit.network.collections.WishesCollection
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -27,8 +29,26 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideUserId(googleAuthUiClient: GoogleAuthUiClient): String =
+        googleAuthUiClient.getSignedInUser()?.userId.orEmpty()
+
+    @Provides
+    @Singleton
     fun provideUsersCollection(firestore: FirebaseFirestore): UsersCollection =
         UsersCollection(firestore.collection(CollectionsPath.users))
+
+    @Provides
+    @Singleton
+    fun provideUsersWishesCollection(
+        firestore: FirebaseFirestore,
+        userId: String
+    ): WishesCollection =
+        WishesCollection(
+            firestore
+                .collection(CollectionsPath.users)
+                .document(userId)
+                .collection(CollectionsPath.userWishes)
+        )
 
     @Provides
     @Singleton
