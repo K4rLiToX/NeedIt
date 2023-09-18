@@ -14,26 +14,24 @@ class InsertWishUseCase @Inject constructor(
     private val getUserInfo: GetUserInfoUseCase
 ) {
     suspend operator fun invoke(
-        id: Long,
-        imageUrl: String,
+        imageLocalPath: String,
         title: String,
         subtitle: String,
         price: String,
         webUrl: String,
         description: String,
         category: WishCategory,
-        size: String,
-        color: String,
-        isbn: String
+        size: String?,
+        color: String?,
+        isbn: String?
     ) {
         val userId = getUserInfo().first().id
-        val cloudImageUrl = imageRepository.insertImage(imageUrl, userId)
         val wish = Wish(
-            id = id,
+            id = -1,
             cloudId = "",
             userId = userId,
-            imageLocalPath = imageUrl,
-            imageUrl = cloudImageUrl,
+            imageLocalPath = imageLocalPath,
+            imageUrl = "",
             title = title,
             subtitle = subtitle,
             price = if (price.isEmpty()) 0.0 else price.toDouble(),
@@ -45,6 +43,10 @@ class InsertWishUseCase @Inject constructor(
             color = color,
             isbn = isbn
         )
-        wishRepository.upsertWish(wish)
+        val finalId = wishRepository.insertWish(wish)
+        val cloudImageUrl = imageRepository.insertImage(imageLocalPath, userId)
+        wishRepository.updateWish(
+            wish.copy(id = finalId, imageUrl = cloudImageUrl)
+        )
     }
 }

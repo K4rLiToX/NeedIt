@@ -30,11 +30,14 @@ class WishRepositoryImpl @Inject constructor(
         localDatasource.getWish(id)
     }
 
-    override suspend fun upsertWish(wish: Wish) {
-        appDispatcher.launch {
-            localDatasource.upsertWish(wish)
-            if (wish.isShared) remoteDatasource.update(wish)
+    override suspend fun insertWish(wish: Wish): Long =
+        withContext(appDispatcher.coroutineContext) {
+            localDatasource.insertWish(wish)
         }
+
+    override suspend fun updateWish(wish: Wish) = withContext(appDispatcher.coroutineContext) {
+        localDatasource.updateWish(wish)
+        if (wish.isShared) remoteDatasource.update(wish)
     }
 
     override suspend fun removeWish(id: Long, cloudId: String) = withContext(ioDispatcher) {

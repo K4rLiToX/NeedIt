@@ -1,7 +1,9 @@
 package com.carlosdiestro.needit.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import androidx.room.Upsert
 import com.carlosdiestro.needit.database.entities.WishEntity
 import kotlinx.coroutines.flow.Flow
@@ -17,8 +19,11 @@ interface WishDao {
     @Query("SELECT * FROM wish_table WHERE id = :id")
     suspend fun getWish(id: Long): WishEntity
 
-    @Upsert
-    suspend fun upsert(entity: WishEntity)
+    @Insert
+    suspend fun insert(wish: WishEntity): Long
+
+    @Update
+    suspend fun update(wish: WishEntity)
 
     @Query("DELETE FROM wish_table WHERE id = :id")
     suspend fun remove(id: Long)

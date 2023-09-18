@@ -31,7 +31,7 @@ class WishDetailsViewModel @Inject constructor(
             val wish = getWish(wishId)
             _state.update {
                 it.copy(
-                    imageUrl = wish.imageUrl,
+                    imageUrl = wish.imageUrl.ifEmpty { wish.imageLocalPath },
                     title = wish.title,
                     subtitle = wish.subtitle,
                     price = wish.price.toString(),

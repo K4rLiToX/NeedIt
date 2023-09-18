@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.design_system.components.navigation.toWishCategory
+import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
@@ -26,12 +27,14 @@ class UpsertViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val imageUrl: String = (savedStateHandle[argImageUrl] ?: "").replace("-", "/")
+    private val imageLocalPath: String =
+        (savedStateHandle[argImageLocalPath] ?: "").replace("-", "/")
     private var category: WishCategory = (savedStateHandle[argCategory] ?: -1).toWishCategory()
     private val wishId: Long = savedStateHandle[argWishId] ?: -1L
+    private var wish: Wish? = null
 
     private var _state: MutableStateFlow<UpsertUiState> = MutableStateFlow(
-        UpsertUiState(imageUrl, category)
+        UpsertUiState(imageLocalPath, category)
     )
     val state = _state.asStateFlow()
 
@@ -50,13 +53,13 @@ class UpsertViewModel @Inject constructor(
     var webUrl by mutableStateOf("")
         private set
 
-    var size by mutableStateOf("")
+    var size: String? by mutableStateOf(null)
         private set
 
-    var color by mutableStateOf("")
+    var color: String? by mutableStateOf(null)
         private set
 
-    var isbn by mutableStateOf("")
+    var isbn: String? by mutableStateOf(null)
         private set
 
 
@@ -68,22 +71,24 @@ class UpsertViewModel @Inject constructor(
 
     private fun fetchWish() {
         viewModelScope.launch {
-            val wish = getWish(wishId)
-            category = wish.category
-            _state.update {
-                it.copy(
-                    imageUrl = wish.imageUrl,
-                    category = wish.category
-                )
+            wish = getWish(wishId)
+            wish?.let {
+                _state.update { currentState ->
+                    currentState.copy(
+                        imageLocalPath = it.imageUrl,
+                        category = it.category
+                    )
+                }
+                updateTitle(it.title)
+                updateSubtitle(it.subtitle)
+                updatePrice(it.price.toString())
+                updateWebUrl(it.webUrl)
+                updateDescription(it.description)
+                updateSize(it.size)
+                updateColor(it.color)
+                updateIsbn(it.isbn)
             }
-            updateTitle(wish.title)
-            updateSubtitle(wish.subtitle)
-            updatePrice(wish.price.toString())
-            updateWebUrl(wish.webUrl)
-            updateDescription(wish.description)
-            updateSize(wish.size)
-            updateColor(wish.color)
-            updateIsbn(wish.isbn)
+
         }
     }
 
@@ -122,26 +127,22 @@ class UpsertViewModel @Inject constructor(
     fun save() {
         viewModelScope.launch {
             if (wishId != -1L) {
-                val wish = getWish(wishId)
-                updateWish(
-                    id = wish.id,
-                    cloudId = wish.cloudId,
-                    imageUrl = wish.imageUrl,
-                    title = title,
-                    subtitle = subtitle,
-                    price = price,
-                    webUrl = webUrl,
-                    isShared = wish.isShared,
-                    description = description,
-                    category = wish.category,
-                    size = size,
-                    color = color,
-                    isbn = isbn
-                )
+                wish?.let {
+                    val updatedWish = it.copy(
+                        title = title,
+                        subtitle = subtitle,
+                        price = if (price.isEmpty()) 0.0 else price.toDouble(),
+                        webUrl = webUrl,
+                        description = description,
+                        size = size,
+                        color = color,
+                        isbn = isbn
+                    )
+                    updateWish(updatedWish)
+                }
             } else {
                 insertWish(
-                    id = wishId,
-                    imageUrl = imageUrl,
+                    imageLocalPath = imageLocalPath,
                     title = title,
                     subtitle = subtitle,
                     price = price,
@@ -160,6 +161,6 @@ class UpsertViewModel @Inject constructor(
 }
 
 data class UpsertUiState(
-    val imageUrl: String,
+    val imageLocalPath: String,
     val category: WishCategory,
 )

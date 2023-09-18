@@ -17,7 +17,8 @@ class WishLocalDatasourceImpl @Inject constructor(
         get() = dao.getShared().toDomain()
 
     override suspend fun getWish(id: Long): Wish = dao.getWish(id).toDomain()
-    override suspend fun upsertWish(wish: Wish) = dao.upsert(wish.toEntity())
+    override suspend fun insertWish(wish: Wish): Long = dao.insert(wish.toEntity())
+    override suspend fun updateWish(wish: Wish) = dao.update(wish.toEntity())
     override suspend fun removeWish(id: Long) = dao.remove(id)
     override suspend fun shareWish(id: Long, cloudId: String) = dao.share(id, cloudId)
     override suspend fun lockWish(id: Long) = dao.lock(id)
