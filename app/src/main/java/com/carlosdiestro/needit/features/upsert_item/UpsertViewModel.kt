@@ -8,10 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.core.design_system.components.navigation.toWishCategory
-import com.carlosdiestro.needit.domain.wishes.Book
-import com.carlosdiestro.needit.domain.wishes.Clothes
-import com.carlosdiestro.needit.domain.wishes.Footwear
-import com.carlosdiestro.needit.domain.wishes.Other
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
@@ -85,23 +81,9 @@ class UpsertViewModel @Inject constructor(
             updatePrice(wish.price.toString())
             updateWebUrl(wish.webUrl)
             updateDescription(wish.description)
-            when (wish) {
-                is Clothes -> {
-                    updateSize(wish.size)
-                    updateColor(wish.color)
-                }
-
-                is Footwear -> {
-                    updateSize(wish.size.toString())
-                    updateColor(wish.color)
-                }
-
-                is Book -> {
-                    updateIsbn(wish.isbn)
-                }
-
-                else -> Unit
-            }
+            updateSize(wish.size)
+            updateColor(wish.color)
+            updateIsbn(wish.isbn)
         }
     }
 
@@ -125,16 +107,16 @@ class UpsertViewModel @Inject constructor(
         description = value
     }
 
-    fun updateSize(value: String) {
-        size = value
+    fun updateSize(value: String?) {
+        size = value.orEmpty()
     }
 
-    fun updateColor(value: String) {
-        color = value
+    fun updateColor(value: String?) {
+        color = value.orEmpty()
     }
 
-    fun updateIsbn(value: String) {
-        isbn = value
+    fun updateIsbn(value: String?) {
+        isbn = value.orEmpty()
     }
 
     fun save() {
