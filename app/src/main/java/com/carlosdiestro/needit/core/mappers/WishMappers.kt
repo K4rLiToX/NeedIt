@@ -28,7 +28,12 @@ fun WishEntity.toDomain(): Wish = Wish(
 )
 
 fun List<WishEntity>.toDomain(): List<Wish> = this.map { it.toDomain() }
+
+@JvmName("flowListWishEntityToDomain")
 fun Flow<List<WishEntity>>.toDomain(): Flow<List<Wish>> = this.map { it.toDomain() }
+
+@JvmName("flowWishEntityToDomain")
+fun Flow<WishEntity>.toDomain(): Flow<Wish> = this.map { it.toDomain() }
 
 fun Wish.toPLO(): SimpleWishPLO = SimpleWishPLO(
     id = this.id,
