@@ -18,7 +18,6 @@ import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
 import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
 import com.carlosdiestro.needit.features.wish_details.wishDetailsRoute
-import kotlinx.coroutines.flow.first
 
 @Composable
 fun NeedItNavHost(

@@ -141,7 +141,7 @@ private fun WishActions(
         NeedItFilledButton(
             labelId = if (!isShared) R.string.button_share else R.string.button_keep_private,
             onClick = {
-                      if (!isShared) onShareClick() else onPrivateClick()
+                if (!isShared) onShareClick() else onPrivateClick()
             },
             leadingIcon = if (!isShared) MaterialTheme.icons.Share else MaterialTheme.icons.Lock,
             size = ButtonSpecs.LargeHeight,
