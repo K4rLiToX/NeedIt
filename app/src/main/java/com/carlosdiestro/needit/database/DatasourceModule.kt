@@ -2,8 +2,8 @@ package com.carlosdiestro.needit.database
 
 import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasource
 import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
-import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasourceImpl
 import com.carlosdiestro.needit.database.datasources.UserLocalDatasourceImpl
+import com.carlosdiestro.needit.database.datasources.WishLocalDatasourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

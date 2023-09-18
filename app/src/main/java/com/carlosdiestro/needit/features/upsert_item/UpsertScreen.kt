@@ -35,7 +35,7 @@ import com.carlosdiestro.needit.core.design_system.theme.dimensions
 @Composable
 fun UpsertRoute(
     onBackClick: () -> Unit,
-    navigateHome: () -> Unit,
+    onFinish: () -> Unit,
     viewModel: UpsertViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -54,12 +54,12 @@ fun UpsertRoute(
         price = price,
         webUrl = webUrl,
         description = description,
-        size = size,
-        color = color,
-        isbn = isbn,
+        size = size.orEmpty(),
+        color = color.orEmpty(),
+        isbn = isbn.orEmpty(),
         showSaveButton = viewModel.isFormFilledInCorrectly(),
         onBackClick = onBackClick,
-        navigateHome = navigateHome,
+        navigateHome = onFinish,
         onSaveClick = viewModel::save,
         updateTitle = viewModel::updateTitle,
         updateSubtitle = viewModel::updateSubtitle,
@@ -116,7 +116,7 @@ private fun UpsertScreen(
         }
     ) {
         UpsertContent(
-            imageUrl = state.imageUrl,
+            imageUrl = state.imageLocalPath,
             category = state.category,
             title = title,
             subtitle = subtitle,

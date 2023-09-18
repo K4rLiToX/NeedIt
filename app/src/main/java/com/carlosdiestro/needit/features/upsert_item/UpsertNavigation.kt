@@ -6,11 +6,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
-const val argImageUrl = "image_url"
+const val argImageLocalPath = "image_local_path"
 const val argCategory = "category"
 const val argWishId = "wish_id"
 val upsertArgs = listOf(
-    navArgument(argImageUrl) { type = NavType.StringType },
+    navArgument(argImageLocalPath) { type = NavType.StringType },
     navArgument(argCategory) { type = NavType.IntType },
     navArgument(argWishId) { type = NavType.LongType }
 )
@@ -21,18 +21,18 @@ val upsertRoute = upsertArgs.fold(upsertBaseRoute) { acc, arg ->
 }
 
 fun NavController.navigateToUpsert(
-    imageUrl: String,
+    imageLocalPath: String,
     category: Int,
     wishId: Long = -1L
 ) {
     navigate(
-        "$upsertBaseRoute/$imageUrl/$category/$wishId"
+        "$upsertBaseRoute/$imageLocalPath/$category/$wishId"
     )
 }
 
 fun NavGraphBuilder.upsertRoute(
     onBackClick: () -> Unit,
-    navigateHome: () -> Unit
+    onFinish: () -> Unit
 ) {
     composable(
         route = upsertRoute,
@@ -40,7 +40,7 @@ fun NavGraphBuilder.upsertRoute(
     ) {
         UpsertRoute(
             onBackClick = onBackClick,
-            navigateHome = navigateHome
+            onFinish = onFinish
         )
     }
 }

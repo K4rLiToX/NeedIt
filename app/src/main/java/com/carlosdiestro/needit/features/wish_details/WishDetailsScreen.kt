@@ -31,12 +31,16 @@ import com.carlosdiestro.needit.core.design_system.theme.icons
 @Composable
 fun WishDetailsRoute(
     onBackClick: () -> Unit,
+    onUpdateClick: (String, Int, Long) -> Unit,
     viewModel: WishDetailsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     WishDetailsScreen(
         state = state,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onUpdateClick = { onUpdateClick(" ", 0, state.id) },
+        onShareClick = viewModel::uploadWish,
+        onPrivateClick = viewModel::privateWish
     )
 }
 
@@ -44,7 +48,10 @@ fun WishDetailsRoute(
 @Composable
 private fun WishDetailsScreen(
     state: WishDetailsUiState,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onUpdateClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onPrivateClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -74,7 +81,10 @@ private fun WishDetailsScreen(
             )
             WishActions(
                 webUrl = state.webUrl,
-                isShared = state.isShared
+                isShared = state.isShared,
+                onUpdateClick = onUpdateClick,
+                onShareClick = onShareClick,
+                onPrivateClick = onPrivateClick
             )
         }
     }
@@ -113,7 +123,10 @@ private fun WishInformation(
 @Composable
 private fun WishActions(
     webUrl: String,
-    isShared: Boolean
+    isShared: Boolean,
+    onUpdateClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onPrivateClick: () -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -127,7 +140,9 @@ private fun WishActions(
         )
         NeedItFilledButton(
             labelId = if (!isShared) R.string.button_share else R.string.button_keep_private,
-            onClick = {},
+            onClick = {
+                if (!isShared) onShareClick() else onPrivateClick()
+            },
             leadingIcon = if (!isShared) MaterialTheme.icons.Share else MaterialTheme.icons.Lock,
             size = ButtonSpecs.LargeHeight,
             modifier = Modifier
@@ -135,7 +150,7 @@ private fun WishActions(
         )
         NeedItOutlinedIconButton(
             icon = MaterialTheme.icons.Edit,
-            onClick = {}
+            onClick = onUpdateClick
         )
     }
 }

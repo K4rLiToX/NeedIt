@@ -63,11 +63,16 @@ fun NeedItNavHost(
 
         upsertRoute(
             onBackClick = navController::popBackStack,
-            navigateHome = navController::navigateToHome
+            onFinish = {
+                val previousScreenRoute = navController.previousBackStackEntry?.destination?.route
+                if (previousScreenRoute == cameraRoute) navController.popBackStack(homeRoute, false)
+                else navController.popBackStack()
+            }
         )
 
         wishDetailsRoute(
-            onBackClick = navController::popBackStack
+            onBackClick = navController::popBackStack,
+            onUpdateClick = navController::navigateToUpsert
         )
     }
 }

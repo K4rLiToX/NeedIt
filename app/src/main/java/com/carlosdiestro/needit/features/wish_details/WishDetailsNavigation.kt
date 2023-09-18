@@ -27,13 +27,15 @@ fun NavController.navigateToWishDetails(
 
 fun NavGraphBuilder.wishDetailsRoute(
     onBackClick: () -> Unit,
+    onUpdateClick: (String, Int, Long) -> Unit
 ) {
     composable(
         route = detailsRoute,
         arguments = detailsArgs
     ) {
         WishDetailsRoute(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            onUpdateClick = onUpdateClick
         )
     }
 }
