@@ -4,50 +4,62 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class WishDetailsViewModel @Inject constructor(
-    private val getWish: GetWishUseCase,
+    getWish: GetWishUseCase,
+    private val shareWish: ShareWishUseCase,
+    private val lockWish: LockWishUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val wishId = savedStateHandle[argsWishId] ?: -1L
-    private var _state: MutableStateFlow<WishDetailsUiState> =
-        MutableStateFlow(WishDetailsUiState())
-    val state = _state.asStateFlow()
 
-    init {
-        fetchWish()
+    val state: StateFlow<WishDetailsUiState> = getWish(wishId)
+        .map { wish ->
+            WishDetailsUiState(
+                id = wish.id,
+                imageUrl = wish.imageUrl.ifEmpty { wish.imageLocalPath },
+                title = wish.title,
+                subtitle = wish.subtitle,
+                price = wish.price.toString(),
+                description = wish.description,
+                webUrl = wish.webUrl,
+                isShared = wish.isShared,
+                size = wish.size,
+                color = wish.color,
+                isbn = wish.isbn
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = WishDetailsUiState()
+        )
+
+    fun uploadWish() {
+        viewModelScope.launch {
+            shareWish(wishId)
+        }
     }
 
-    private fun fetchWish() {
+    fun privateWish() {
         viewModelScope.launch {
-            val wish = getWish(wishId)
-            _state.update {
-                it.copy(
-                    imageUrl = wish.imageUrl.ifEmpty { wish.imageLocalPath },
-                    title = wish.title,
-                    subtitle = wish.subtitle,
-                    price = wish.price.toString(),
-                    description = wish.description,
-                    webUrl = wish.webUrl,
-                    isShared = wish.isShared,
-                    size = wish.size,
-                    color = wish.color,
-                    isbn = wish.isbn
-                )
-            }
+            lockWish(wishId)
         }
     }
 }
 
 data class WishDetailsUiState(
+    val id: Long = -1,
     val imageUrl: String = "",
     val title: String = "",
     val subtitle: String = "",

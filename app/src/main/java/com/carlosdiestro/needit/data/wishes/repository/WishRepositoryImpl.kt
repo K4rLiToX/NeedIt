@@ -9,8 +9,8 @@ import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -26,9 +26,8 @@ class WishRepositoryImpl @Inject constructor(
     override val sharedWishes: Flow<List<Wish>>
         get() = localDatasource.sharedWishes.flowOn(ioDispatcher)
 
-    override suspend fun getWish(id: Long): Wish = withContext(ioDispatcher) {
-        localDatasource.getWish(id)
-    }
+    override fun getWish(id: Long): Flow<Wish> =
+        localDatasource.getWish(id).flowOn(ioDispatcher)
 
     override suspend fun insertWish(wish: Wish): Long =
         withContext(appDispatcher.coroutineContext) {
@@ -46,13 +45,13 @@ class WishRepositoryImpl @Inject constructor(
     }
 
     override suspend fun shareWish(id: Long) = withContext(ioDispatcher) {
-        val wish = getWish(id)
+        val wish = getWish(id).first()
         val cloudId = remoteDatasource.insert(wish)
         localDatasource.shareWish(id, cloudId)
     }
 
     override suspend fun lockWish(id: Long) = withContext(ioDispatcher) {
-        val wish = getWish(id)
+        val wish = getWish(id).first()
         localDatasource.lockWish(id)
         remoteDatasource.delete(wish.cloudId)
     }

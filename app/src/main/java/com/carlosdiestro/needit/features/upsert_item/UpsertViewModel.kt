@@ -15,6 +15,7 @@ import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -71,7 +72,7 @@ class UpsertViewModel @Inject constructor(
 
     private fun fetchWish() {
         viewModelScope.launch {
-            wish = getWish(wishId)
+            wish = getWish(wishId).first()
             wish?.let {
                 _state.update { currentState ->
                     currentState.copy(

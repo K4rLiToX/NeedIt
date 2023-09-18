@@ -17,7 +17,7 @@ interface WishDao {
     fun getShared(): Flow<List<WishEntity>>
 
     @Query("SELECT * FROM wish_table WHERE id = :id")
-    suspend fun getWish(id: Long): WishEntity
+    fun getWish(id: Long): Flow<WishEntity>
 
     @Insert
     suspend fun insert(wish: WishEntity): Long

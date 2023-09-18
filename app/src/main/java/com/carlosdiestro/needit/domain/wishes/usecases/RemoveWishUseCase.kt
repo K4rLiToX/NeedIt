@@ -7,13 +7,11 @@ import javax.inject.Inject
 
 class RemoveWishUseCase @Inject constructor(
     private val wishRepository: WishRepository,
-    private val imageRepository: ImageRepository,
-    private val getWish: GetWishUseCase
+    private val imageRepository: ImageRepository
 ) {
-    suspend operator fun invoke(id: Long) {
-        val wish = getWish(id)
-        wishRepository.removeWish(id, wish.cloudId)
-        imageRepository.deleteImage(getPath(wish.imageUrl))
+    suspend operator fun invoke(id: Long, cloudId: String, imageUrl: String) {
+        wishRepository.removeWish(id, cloudId)
+        imageRepository.deleteImage(getPath(imageUrl))
     }
 
     private fun getPath(imageUrl: String): String = imageUrl

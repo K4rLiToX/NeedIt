@@ -88,8 +88,13 @@ class HomeViewModel @Inject constructor(
 
     fun deleteWish() {
         viewModelScope.launch {
-            selectedWishId?.let {
-                removeWish(it)
+            selectedWishId?.let { id ->
+                val wish = wishes.find { it.id == id }!!
+                removeWish(
+                    id = id,
+                    cloudId = wish.cloudId,
+                    imageUrl = wish.imageUrl
+                )
             }
         }
     }
