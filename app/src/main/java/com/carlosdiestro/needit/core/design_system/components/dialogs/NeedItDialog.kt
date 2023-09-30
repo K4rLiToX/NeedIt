@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.buttons.ButtonSpecs
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
@@ -70,16 +70,16 @@ fun NeedItDialog(
             NeedItFilledButton(
                 labelId = R.string.button_reject,
                 onClick = onDismiss,
-                colors = ButtonSpecs.surfaceVariantColors(),
-                size = ButtonSpecs.LargeHeight,
+                colors = NiButtonSpecs.surfaceVariantColors(),
+                size = NiButtonSpecs.Large,
                 modifier = Modifier
                     .fillMaxWidth(0.48f)
             )
             NeedItFilledButton(
                 labelId = R.string.button_accept,
                 onClick = onAccept,
-                colors = ButtonSpecs.errorColors(),
-                size = ButtonSpecs.LargeHeight,
+                colors = NiButtonSpecs.error(),
+                size = NiButtonSpecs.Large,
                 modifier = Modifier
                     .fillMaxWidth()
             )

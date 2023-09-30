@@ -27,7 +27,7 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
-import com.carlosdiestro.needit.core.design_system.components.buttons.ButtonSpecs
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItOutlinedButton
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
@@ -124,7 +124,7 @@ private fun SignInScreen(
                     )
                 }
             },
-            size = ButtonSpecs.LargeHeight,
+            size = NiButtonSpecs.Large,
             modifier = Modifier
                 .fillMaxWidth()
         )
@@ -132,7 +132,7 @@ private fun SignInScreen(
         NeedItOutlinedButton(
             labelId = R.string.button_continue_as_guest,
             onClick = onContinueAsGuestClick,
-            size = ButtonSpecs.LargeHeight,
+            size = NiButtonSpecs.Large,
             modifier = Modifier
                 .fillMaxWidth()
         )
