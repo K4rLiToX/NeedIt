@@ -11,7 +11,7 @@ import com.carlosdiestro.needit.core.design_system.theme.Icons
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 
 @Composable
-fun NIFab(
+fun NiFab(
     icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -27,8 +27,8 @@ fun NIFab(
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-internal fun NIFabPreview() {
+internal fun NiFabPreview() {
     NeedItTheme {
-        NIFab(icon = Icons.AddFriend, onClick = {})
+        NiFab(icon = Icons.AddFriend, onClick = {})
     }
 }
