@@ -5,7 +5,7 @@
     </string>
 
     <!-- Home -->
-    <string name="home_title">My Wishes</string>
+    <string name="home_title">Wishes</string>
     <string name="home_empty">Seems you haven\'t added any wishes yet!</string>
 
     <!-- Gifts -->
