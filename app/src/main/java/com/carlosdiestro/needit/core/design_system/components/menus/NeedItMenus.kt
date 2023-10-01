@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.design_system.components.menu
+package com.carlosdiestro.needit.core.design_system.components.menus
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility

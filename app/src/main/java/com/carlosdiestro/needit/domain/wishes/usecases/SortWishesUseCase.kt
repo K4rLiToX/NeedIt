@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.domain.wishes.usecases
 
-import com.carlosdiestro.needit.core.design_system.components.menu.SortType
+import com.carlosdiestro.needit.core.design_system.components.menus.SortType
 import com.carlosdiestro.needit.domain.wishes.Wish
 import javax.inject.Inject
 
