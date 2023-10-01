@@ -11,11 +11,13 @@ import androidx.compose.ui.unit.dp
 
 @Immutable
 object NiIconButtonSpecs {
+    @Immutable
     object Size {
         val Default = 40.dp
         val Small = 32.dp
     }
 
+    @Immutable
     object Color {
         @Composable
         fun primary(): IconButtonColors {

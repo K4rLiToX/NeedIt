@@ -13,11 +13,13 @@ object NiButtonSpecs {
     val IconSpacing = ButtonDefaults.IconSpacing
     val IconSize = ButtonDefaults.IconSize
 
+    @Immutable
     object Height {
         val Default = ButtonDefaults.MinHeight
         val Large = 56.dp
     }
 
+    @Immutable
     object Color {
         @Composable
         fun primary(): ButtonColors {
