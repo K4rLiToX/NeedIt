@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.design_system.components.navigation
+package com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.design_system.components.selectors
+package com.carlosdiestro.needit.core.design_system.components.selectors.checkbox
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement

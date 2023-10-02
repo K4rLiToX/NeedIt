@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.design_system.components.buttons
+package com.carlosdiestro.needit.core.design_system.components.icon_buttons
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement

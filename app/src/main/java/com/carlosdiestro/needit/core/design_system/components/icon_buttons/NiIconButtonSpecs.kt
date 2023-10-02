@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.design_system.components.buttons
+package com.carlosdiestro.needit.core.design_system.components.icon_buttons
 
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults

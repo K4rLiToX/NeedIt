@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.design_system.components.navigation
+package com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiIconButton
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiIconButtonSpecs
+import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButton
+import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
