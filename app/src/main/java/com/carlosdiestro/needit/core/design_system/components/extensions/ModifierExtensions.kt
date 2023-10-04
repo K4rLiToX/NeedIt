@@ -53,3 +53,13 @@ fun Modifier.shimmerEffect(): Modifier = composed {
         size = it.size
     }
 }
+
+inline fun Modifier.conditional(
+    condition: Boolean,
+    ifTrue: Modifier.() -> Modifier,
+    ifFalse: Modifier.() -> Modifier = { this }
+): Modifier = if (condition) {
+    then(ifTrue(Modifier))
+} else {
+    then(ifFalse(Modifier))
+}
