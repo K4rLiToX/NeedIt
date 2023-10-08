@@ -1,8 +1,8 @@
 package com.carlosdiestro.needit.data.users.repository
 
 import com.carlosdiestro.needit.core.di.IoDispatcher
-import com.carlosdiestro.needit.core.mappers.toDomain
-import com.carlosdiestro.needit.core.mappers.toDto
+import com.carlosdiestro.needit.core.mappers.asDomain
+import com.carlosdiestro.needit.core.mappers.asDto
 import com.carlosdiestro.needit.core.mappers.toPreferences
 import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasource
 import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
@@ -19,11 +19,11 @@ class UserRepositoryImpl @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : UserRepository {
 
-    override val user: Flow<User> = userLocalDatasource.userInfo.toDomain()
+    override val user: Flow<User> = userLocalDatasource.userInfo.asDomain()
 
     override val isUserGuest: Flow<Boolean> = userLocalDatasource.isUserGuest
     override suspend fun createUser(user: User) = withContext(dispatcher) {
-        userRemoteDatasource.insertUser(user.toDto())
+        userRemoteDatasource.insertUser(user.asDto())
         userLocalDatasource.run {
             updateUserInfo(user.toPreferences())
             updateIsUserGuest()

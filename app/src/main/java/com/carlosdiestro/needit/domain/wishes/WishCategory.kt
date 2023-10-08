@@ -7,5 +7,9 @@ enum class WishCategory {
     Grooming,
     Books,
     Tech,
-    Other
+    Other;
+
+    fun toIntValue(): Int = this.ordinal
 }
+
+fun Int.toWishCategory(): WishCategory = WishCategory.values()[this]

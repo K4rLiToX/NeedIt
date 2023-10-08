@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.PhotoCamera
 import androidx.compose.material.icons.outlined.Redeem
 import androidx.compose.material.icons.outlined.Sync
 import androidx.compose.material.icons.outlined.Warning
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Celebration
@@ -47,6 +48,7 @@ object Icons {
     val Search = Icons.Rounded.Search
     val Delete = Icons.Outlined.Delete
     val Edit = Icons.Outlined.Edit
+    val Add = Icons.Rounded.Add
     val AddFriend = Icons.Outlined.PersonAdd
     val Share = Icons.Outlined.CloudUpload
     val Lock = Icons.Outlined.Lock
