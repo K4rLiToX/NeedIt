@@ -20,13 +20,11 @@ fun NavController.navigateToHomeCleaningBackStack() = navigate(homeRoute) {
 }
 
 fun NavGraphBuilder.homeScreen(
-    coroutineScope: CoroutineScope,
     onItemClick: (Long) -> Unit,
     onUpdateClick: (String, Int, Long) -> Unit
 ) {
     composable(route = homeRoute) {
         HomeRoute(
-            coroutineScope = coroutineScope,
             onItemClick = onItemClick,
             onUpdateClick = onUpdateClick
         )

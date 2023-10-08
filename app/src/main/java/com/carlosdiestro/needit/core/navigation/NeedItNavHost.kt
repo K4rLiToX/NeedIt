@@ -39,7 +39,6 @@ fun NeedItNavHost(
             onContinueAsGuestClick = navController::navigateToHome
         )
         homeScreen(
-            coroutineScope = appState.coroutineScope,
             onItemClick = navController::navigateToWishDetails,
             onUpdateClick = navController::navigateToUpsert
         )

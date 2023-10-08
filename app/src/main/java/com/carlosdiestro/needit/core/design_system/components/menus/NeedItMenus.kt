@@ -120,28 +120,3 @@ private fun SortOption(
         }
     }
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun NeedItItemActionMenu(
-    sheetState: SheetState,
-    onDismiss: () -> Unit,
-    actions: @Composable () -> Unit
-) {
-    NeedItBaseMenu(
-        sheetState = sheetState,
-        onDismiss = onDismiss
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.Top,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = MaterialTheme.dimensions.spacingL)
-                .padding(top = MaterialTheme.dimensions.spacingL)
-                .padding(bottom = MaterialTheme.dimensions.spacingXL)
-        ) {
-            actions()
-        }
-    }
-}

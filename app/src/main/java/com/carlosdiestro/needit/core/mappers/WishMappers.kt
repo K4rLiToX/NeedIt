@@ -1,10 +1,12 @@
 package com.carlosdiestro.needit.core.mappers
 
-import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
+import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
+import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.design_system.components.navigation.toIntValue
 import com.carlosdiestro.needit.core.design_system.components.navigation.toWishCategory
 import com.carlosdiestro.needit.database.entities.WishEntity
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.WishCategory
 import com.carlosdiestro.needit.network.dtos.WishDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -35,16 +37,24 @@ fun Flow<List<WishEntity>>.toDomain(): Flow<List<Wish>> = this.map { it.toDomain
 @JvmName("flowWishEntityToDomain")
 fun Flow<WishEntity>.toDomain(): Flow<Wish> = this.map { it.toDomain() }
 
-fun Wish.toPLO(): SimpleWishPLO = SimpleWishPLO(
+fun Wish.asPlo(): HomeWishPlo = HomeWishPlo(
     id = this.id,
-    userId = userId,
     imageUrl = this.imageUrl.ifEmpty { this.imageLocalPath },
-    title = this.title,
-    isShared = this.isShared,
-    category = this.category
+    shared = this.isShared,
+    category = this.category.asPlo()
 )
 
-fun List<Wish>.toPLO(): List<SimpleWishPLO> = this.map { it.toPLO() }
+fun WishCategory.asPlo(): WishCategoryPlo = when (this) {
+    WishCategory.Clothes -> WishCategoryPlo.Clothes
+    WishCategory.Footwear ->  WishCategoryPlo.Footwear
+    WishCategory.Accessories ->  WishCategoryPlo.Accessories
+    WishCategory.Grooming ->  WishCategoryPlo.Grooming
+    WishCategory.Books ->  WishCategoryPlo.Books
+    WishCategory.Tech -> WishCategoryPlo.Tech
+    WishCategory.Other ->  WishCategoryPlo.Other
+}
+
+fun List<Wish>.asPlo(): List<HomeWishPlo> = this.map { it.asPlo() }
 
 fun Wish.toEntity(): WishEntity = WishEntity(
     id = if (this.id == -1L) null else this.id,

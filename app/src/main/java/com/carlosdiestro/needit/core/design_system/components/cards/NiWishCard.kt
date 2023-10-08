@@ -18,10 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,12 +39,9 @@ fun NiWishCard(
     modifier: Modifier = Modifier,
     height: Dp = NiWishCardSpecs.Height,
     imageUrl: String,
-    shared: Boolean
+    shared: Boolean,
+    selected: Boolean
 ) {
-    var selected by rememberSaveable {
-        mutableStateOf(false)
-    }
-
     Card(
         modifier = modifier
             .height(height)
@@ -56,7 +49,6 @@ fun NiWishCard(
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = {
-                    selected = true
                     onLongClick()
                 }
             )

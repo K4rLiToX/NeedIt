@@ -15,11 +15,11 @@ import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
 fun NiScrollableTabBar(
-    @StringRes labelIds: List<Int>,
+    @StringRes tabLabelIds: List<Int>,
     modifier: Modifier = Modifier,
     selectedTabIndex: Int,
     containerColor: Color = NiTabBarSpecs.Color.transparent,
-    scrollToPage: (Int) -> Unit
+    onTabClick: (Int) -> Unit
 ) {
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
@@ -35,11 +35,11 @@ fun NiScrollableTabBar(
         modifier = modifier
             .height(NiTabBarSpecs.TabHeight)
     ) {
-        labelIds.forEachIndexed { index, labelId ->
+        listOf(R.string.item_category_all).plus(tabLabelIds).forEachIndexed { index, labelId ->
             NiTab(
                 labelId = labelId,
                 selected = index == selectedTabIndex,
-                onClick = { scrollToPage(index) }
+                onClick = { onTabClick(index) }
             )
         }
     }
@@ -61,9 +61,9 @@ internal fun NiScrollableTabBarPreview() {
             R.string.item_category_other
         )
         NiScrollableTabBar(
-            labelIds = tabs,
+            tabLabelIds = tabs,
             selectedTabIndex = 0,
-            scrollToPage = {}
+            onTabClick = {}
         )
     }
 }
