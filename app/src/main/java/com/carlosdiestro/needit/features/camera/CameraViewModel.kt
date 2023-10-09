@@ -1,53 +1,55 @@
 package com.carlosdiestro.needit.features.camera
 
 import androidx.lifecycle.ViewModel
-import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
+import androidx.lifecycle.viewModelScope
+import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class CameraViewModel @Inject constructor() : ViewModel() {
 
-    private var _state: MutableStateFlow<CameraUiState> = MutableStateFlow(CameraUiState())
-    val state = _state.asStateFlow()
+    private var _selectedCategory: MutableStateFlow<WishCategoryPlo> =
+        MutableStateFlow(WishCategoryPlo.Clothes)
+
+    private var _imageUri: MutableStateFlow<String> = MutableStateFlow("")
+
+    val state: StateFlow<CameraDataState> =
+        combine(
+            _selectedCategory,
+            _imageUri
+        ) { category, uri ->
+            CameraDataState(
+                category = category,
+                imageUri = uri
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = CameraDataState()
+        )
+
+    fun updateCategory(wishCategory: WishCategoryPlo) {
+        _selectedCategory.update {
+            wishCategory
+        }
+    }
 
     fun onShutterClick(imageUri: String) {
-        _state.update {
-            it.copy(
-                imageUri = imageUri,
-                step = CameraStep.Category
-            )
+        _imageUri.update {
+            imageUri
         }
     }
 
-    fun onBackToPhotoClick() {
-        _state.update {
-            it.copy(
-                step = CameraStep.Photo
-            )
+    fun resetPhoto() {
+        _imageUri.update {
+            ""
         }
     }
-
-    fun updateCategory(wishCategory: WishCategory) {
-        _state.update {
-            it.copy(
-                category = wishCategory
-            )
-        }
-    }
-}
-
-
-data class CameraUiState(
-    val imageUri: String = "",
-    val category: WishCategory = WishCategory.Clothes,
-    val step: CameraStep = CameraStep.Photo
-)
-
-enum class CameraStep {
-    Photo,
-    Category
 }

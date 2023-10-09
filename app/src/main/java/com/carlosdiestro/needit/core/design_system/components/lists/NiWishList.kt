@@ -24,7 +24,9 @@ enum class WishCategoryPlo(@StringRes val labelId: Int) {
     Grooming(R.string.item_category_grooming),
     Books(R.string.item_category_books),
     Tech(R.string.item_category_tech),
-    Other(R.string.item_category_other)
+    Other(R.string.item_category_other);
+
+    fun toIntValue(): Int = this.ordinal
 }
 
 @Composable

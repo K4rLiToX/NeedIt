@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.features.camera
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -7,57 +8,52 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.PageSize
-import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.util.lerp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
-import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
-import com.carlosdiestro.needit.core.design_system.components.navigation.toIntValue
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
+import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
+import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
+import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBarSpecs
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import kotlinx.coroutines.CoroutineScope
@@ -69,217 +65,221 @@ import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-import kotlin.math.absoluteValue
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CameraRoute(
-    coroutineScope: CoroutineScope,
     onBackClick: () -> Unit,
     onContinueClick: (String, Int, Long) -> Unit,
     viewModel: CameraViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val dataState by viewModel.state.collectAsStateWithLifecycle()
+    val uiState = rememberCameraUiState(
+        pagerState = rememberPagerState(0) {
+            WishCategoryPlo.values().size
+        }
+    )
     CameraScreen(
-        state = state,
-        coroutineScope = coroutineScope,
+        dataState = dataState,
+        uiState = uiState,
         onBackClick = onBackClick,
         onContinueClick = {
             onContinueClick(
-                state.imageUri.replace("/", "-"),
-                state.category.toIntValue(),
+                dataState.imageUri.replace("/", "-"),
+                dataState.category.toIntValue(),
                 -1
             )
         },
-        onBackToPhotoClick = viewModel::onBackToPhotoClick,
-        onShutterClick = viewModel::onShutterClick,
+        onBackToPhotoClick = {
+            viewModel.resetPhoto()
+            uiState.prevStep()
+        },
+        onShutterClick = { imageUri ->
+            viewModel.onShutterClick(imageUri)
+            uiState.nextStep()
+        },
         updateCategory = viewModel::updateCategory
     )
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CameraScreen(
-    state: CameraUiState,
-    coroutineScope: CoroutineScope,
+    dataState: CameraDataState,
+    uiState: CameraUiState,
     onBackClick: () -> Unit,
     onContinueClick: () -> Unit,
     onBackToPhotoClick: () -> Unit,
     onShutterClick: (String) -> Unit,
-    updateCategory: (WishCategory) -> Unit
+    updateCategory: (WishCategoryPlo) -> Unit
 ) {
-    val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
-
-    val previewView = remember {
-        PreviewView(context)
-    }
-
     val preview =
         Preview.Builder()
             .build()
-            .also { it.setSurfaceProvider(previewView.surfaceProvider) }
-
-    val imageCapture by remember {
-        mutableStateOf(
-            ImageCapture.Builder().build()
-        )
-    }
+            .also { it.setSurfaceProvider(uiState.previewView.surfaceProvider) }
 
     val cameraSelector = CameraSelector.Builder()
         .requireLensFacing(CameraSelector.LENS_FACING_BACK)
         .build()
 
-    LaunchedEffect(key1 = state.step == CameraStep.Photo) {
-        context.getCameraProvider().apply {
+    LaunchedEffect(uiState.shouldReloadCamera) {
+        uiState.context.getCameraProvider().apply {
             unbindAll()
             bindToLifecycle(
-                lifecycleOwner,
+                uiState.lifecycleOwner,
                 cameraSelector,
                 preview,
-                imageCapture
+                uiState.imageCapture
             )
         }
     }
 
-    Column(
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = MaterialTheme.dimensions.spacingM)
-            .padding(bottom = MaterialTheme.dimensions.spacingL)
+    Scaffold(
+        topBar = {
+            NiTopAppBar(
+                title = "",
+                onNavigationClick = {
+                    if (uiState.shouldReloadCamera) onBackClick()
+                    else onBackToPhotoClick()
+                },
+                colors = NiTopAppBarSpecs.Color.neutral(),
+                actions = {}
+            )
+        }
     ) {
-        CameraContent(
-            previewView = previewView,
-            imageUri = state.imageUri,
-            onBackClick = onBackClick,
-            onBackToPhotoClick = onBackToPhotoClick,
-            cameraStep = state.step,
-            updateCategory = updateCategory
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            CameraContent(
+                uiState = uiState,
+                imageUri = dataState.imageUri,
+                onShutterClick = onShutterClick
+            )
+            Actions(
+                uiState = uiState,
+                categories = WishCategoryPlo.values().toList(),
+                updateCategory = updateCategory,
+                onContinueClick = onContinueClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun CameraContent(
+    uiState: CameraUiState,
+    imageUri: String,
+    onShutterClick: (String) -> Unit
+) {
+    when (uiState.step) {
+        1 -> CameraPreview(
+            previewView = uiState.previewView,
+            coroutineScope = uiState.coroutineScope,
+            context = uiState.context,
+            imageCapture = uiState.imageCapture,
+            onShutterClick = onShutterClick
         )
-        Actions(
-            coroutineScope = coroutineScope,
-            context = context,
-            imageCapture = imageCapture,
-            cameraStep = state.step,
-            onShutterClick = onShutterClick,
-            onContinueClick = onContinueClick
-        )
+
+        else -> PhotoPreview(imageUri = imageUri)
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun CameraContent(
-    previewView: PreviewView,
-    imageUri: String,
-    cameraStep: CameraStep,
-    onBackClick: () -> Unit,
-    onBackToPhotoClick: () -> Unit,
-    updateCategory: (WishCategory) -> Unit
+private fun Actions(
+    uiState: CameraUiState,
+    categories: List<WishCategoryPlo>,
+    updateCategory: (WishCategoryPlo) -> Unit,
+    onContinueClick: () -> Unit
 ) {
-    Box(
-        contentAlignment = Alignment.TopStart,
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.85f)
-            .clip(RoundedCornerShape(24.dp))
-    ) {
-        when (cameraStep) {
-            CameraStep.Photo -> CameraPreview(
-                previewView = previewView
-            )
-
-            CameraStep.Category -> CategorySelector(
-                imageUri = imageUri
-            )
-        }
-        if (cameraStep == CameraStep.Category) {
-            val pagerState = rememberPagerState(
-                initialPage = 0,
-                pageCount = { WishCategory.values().size - 1 }
-            )
-            LaunchedEffect(key1 = pagerState) {
-                snapshotFlow { pagerState.currentPage }.collect {
-                    updateCategory(WishCategory.values()[it + 1])
+    when (uiState.step) {
+        1 -> {
+            LaunchedEffect(uiState.currentPage, uiState.isScrollInProgress) {
+                if (!uiState.isScrollInProgress) {
+                    updateCategory(categories[uiState.currentPage])
                 }
             }
-            VerticalPager(
-                state = pagerState,
-                contentPadding = PaddingValues(vertical = 280.dp),
-                pageSize = PageSize.Fixed(90.dp),
+
+            HorizontalPager(
+                state = uiState.pagerState,
+                contentPadding = PaddingValues(horizontal = MaterialTheme.dimensions.spacingM),
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(MaterialTheme.dimensions.spacingM)
+                    .fillMaxWidth()
             ) {
-                val pageOffset = (
-                        (pagerState.currentPage - it) + pagerState
-                            .currentPageOffsetFraction
-                        ).absoluteValue
+                val category = categories[it]
+                val textBackGroundColor by animateColorAsState(
+                    targetValue = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp),
+                    label = "Text background color"
+                )
                 Text(
-                    text = stringResource(id = WishCategory.values()[it + 1].labelId),
-                    style = MaterialTheme.typography.headlineLarge,
-                    color = if (it == pagerState.currentPage) MaterialTheme.colorScheme.onSurface
-                    else MaterialTheme.colorScheme.surface,
+                    text = stringResource(id = category.labelId),
+                    style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .pagerAnimation(pageOffset)
-                        .clip(RoundedCornerShape(100))
-                        .then(
-                            if (it == pagerState.currentPage) {
-                                Modifier.background(MaterialTheme.colorScheme.surface)
-                            } else {
-                                Modifier.background(Color.Transparent)
+                        .clickable {
+                            uiState.coroutineScope.launch {
+                                uiState.scrollToPage(category.ordinal)
+                            }
+                        }
+                        .clip(RoundedCornerShape(100.dp))
+                        .conditional(
+                            condition = uiState.currentPage == category.toIntValue(),
+                            ifTrue = {
+                                drawBehind {
+                                    drawRect(
+                                        textBackGroundColor
+                                    )
+                                }
                             }
                         )
-                        .padding(MaterialTheme.dimensions.spacingM)
-                        .fillMaxWidth()
+                        .padding(
+                            horizontal = MaterialTheme.dimensions.spacingS,
+                            vertical = MaterialTheme.dimensions.spacingXS
+                        )
                 )
             }
         }
-        NeedItFilledIconButton(
-            icon = MaterialTheme.icons.Back,
-            modifier = Modifier.padding(MaterialTheme.dimensions.spacingM),
-            onClick = {
-                when (cameraStep) {
-                    CameraStep.Photo -> onBackClick()
-                    CameraStep.Category -> onBackToPhotoClick()
-                }
-            }
-        )
-    }
-}
 
-@Composable
-private fun Actions(
-    coroutineScope: CoroutineScope,
-    context: Context,
-    imageCapture: ImageCapture,
-    cameraStep: CameraStep,
-    onShutterClick: (String) -> Unit,
-    onContinueClick: () -> Unit,
-) {
-    when (cameraStep) {
-        CameraStep.Photo -> CameraShutter(
-            coroutineScope = coroutineScope,
-            context = context,
-            imageCapture = imageCapture,
-            onShutterClick = onShutterClick
-        )
-
-        CameraStep.Category -> ContinueButton(
-            onContinueClick = onContinueClick
-        )
+        else -> {
+            NiFilledButton(
+                labelId = R.string.button_continue,
+                trailIcon = MaterialTheme.icons.Continue,
+                height = NiButtonSpecs.Height.Large,
+                onClick = onContinueClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = MaterialTheme.dimensions.spacingM)
+                    .padding(bottom = MaterialTheme.dimensions.spacingM)
+            )
+        }
     }
 }
 
 @Composable
 private fun CameraPreview(
-    previewView: PreviewView
+    previewView: PreviewView,
+    coroutineScope: CoroutineScope,
+    context: Context,
+    imageCapture: ImageCapture,
+    onShutterClick: (String) -> Unit
 ) {
-    AndroidView(
-        factory = { previewView },
-        modifier = Modifier.fillMaxSize()
-    )
+    Box {
+        AndroidView(
+            factory = { previewView },
+            modifier = Modifier.matchParentSize()
+        )
+
+        CameraShutter(
+            coroutineScope = coroutineScope,
+            context = context,
+            imageCapture = imageCapture,
+            onShutterClick = onShutterClick
+        )
+    }
 }
 
 @Composable
@@ -315,55 +315,15 @@ private fun CameraShutter(
 }
 
 @Composable
-private fun CategorySelector(
+private fun PhotoPreview(
     imageUri: String
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
+    AsyncImage(
+        model = imageUri,
+        contentDescription = "Photo",
+        contentScale = ContentScale.Crop,
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.onSurface)
-            .alpha(0.5F)
             .fillMaxSize()
-    ) {
-        AsyncImage(
-            model = imageUri,
-            contentDescription = "Photo",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize()
-        )
-    }
-}
-
-fun Modifier.pagerAnimation(pageOffset: Float): Modifier =
-    graphicsLayer {
-        lerp(
-            start = 0.75F,
-            stop = 1F,
-            fraction = 1F - pageOffset.coerceIn(0F, 1F)
-        ).also { scale ->
-            scaleX = scale
-            scaleY = scale
-        }
-
-        alpha = lerp(
-            start = 0.5f,
-            stop = 1f,
-            fraction = 1f - pageOffset.coerceIn(0f, 1f)
-        )
-    }
-
-@Composable
-private fun ContinueButton(
-    onContinueClick: () -> Unit
-) {
-    NeedItFilledButton(
-        labelId = R.string.button_continue,
-        trailingIcon = MaterialTheme.icons.Continue,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp),
-        onClick = onContinueClick
     )
 }
 
