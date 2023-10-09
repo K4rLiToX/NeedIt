@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItTextButton
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiTextButton
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
 @Composable
@@ -27,7 +27,7 @@ fun PermissionDialog(
         confirmButton = {
             val labelId =
                 if (isPermanentlyDeclined) R.string.button_go_to_settings else R.string.button_request_again
-            NeedItTextButton(
+            NiTextButton(
                 labelId = labelId,
                 onClick = {
                     if (isPermanentlyDeclined) onGoToAppSettingsClick() else onRequestClick()

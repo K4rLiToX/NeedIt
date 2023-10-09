@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.profile
+package com.carlosdiestro.needit.features.account
 
 import androidx.lifecycle.ViewModel
 import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
+class AccountViewModel @Inject constructor(
     private val getUserInfo: GetUserInfoUseCase,
     private val getSharedWishes: GetMyWishesUseCase
 ) : ViewModel() {
