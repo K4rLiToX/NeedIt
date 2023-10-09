@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.IconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledIconButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItOutlinedIconButton
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.images.NeedItAvatar
 import com.carlosdiestro.needit.core.design_system.components.lists.NeedItWishGrid
 import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar

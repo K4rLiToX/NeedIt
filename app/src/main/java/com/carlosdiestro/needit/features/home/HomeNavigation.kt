@@ -5,7 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.carlosdiestro.needit.features.sign_in.signInRoute
-import kotlinx.coroutines.CoroutineScope
 
 const val homeRoute = "home"
 
