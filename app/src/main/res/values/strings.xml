@@ -31,10 +31,8 @@
     <string name="people_friend_request_sent">Friend request sent!</string>
 
     <!-- Profile -->
-    <string name="profile_wishes">%d wishes</string>
-    <string name="profile_reserved">%d reserved</string>
-    <string name="profile_guest">Enjoy Need It to its best!</string>
-    <string name="profile_empty">Seems you haven\'t uploaded any wished yet!</string>
+    <string name="profile_birthday">Birthday</string>
+    <string name="profile_currency">Currency</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

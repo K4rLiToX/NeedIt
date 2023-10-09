@@ -11,7 +11,7 @@ import com.carlosdiestro.needit.features.home.homeRoute
 import com.carlosdiestro.needit.features.home.homeScreen
 import com.carlosdiestro.needit.features.home.navigateToHome
 import com.carlosdiestro.needit.features.home.navigateToHomeCleaningBackStack
-import com.carlosdiestro.needit.features.profile.profileScreen
+import com.carlosdiestro.needit.features.account.accountScreen
 import com.carlosdiestro.needit.features.sign_in.signInRoute
 import com.carlosdiestro.needit.features.sign_in.signInScreen
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
@@ -48,10 +48,8 @@ fun NeedItNavHost(
         friendsScreen(
             onFriendClick = {}
         )
-        profileScreen(
-            isUserGuest = isUserGuest,
-            onItemClick = {},
-            onItemLongClick = {}
+        accountScreen(
+            onBackClick = navController::popBackStack
         )
 
         cameraRoute(

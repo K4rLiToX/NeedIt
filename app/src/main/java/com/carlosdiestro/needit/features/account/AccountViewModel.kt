@@ -1,56 +1,33 @@
 package com.carlosdiestro.needit.features.account
 
 import androidx.lifecycle.ViewModel
-import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
-import com.carlosdiestro.needit.core.extensions.launchCollect
-import com.carlosdiestro.needit.core.mappers.toPLO
-import com.carlosdiestro.needit.domain.users.User
+import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.domain.users.usecases.GetUserInfoUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val getUserInfo: GetUserInfoUseCase,
-    private val getSharedWishes: GetMyWishesUseCase
+    getUserInfo: GetUserInfoUseCase
 ) : ViewModel() {
 
-    private var _state: MutableStateFlow<ProfileState> = MutableStateFlow(ProfileState())
-    val state = _state.asStateFlow()
-
-    init {
-        fetchUserInfo()
-        fetchSharedWishes()
-    }
-
-    private fun fetchUserInfo() {
-        launchCollect(getUserInfo()) { user ->
-            _state.update {
-                it.copy(
-                    userInfo = user
-                )
-            }
+    val state: StateFlow<AccountDataState> = getUserInfo()
+        .map { userInfo ->
+            AccountDataState(
+                profilePictureUrl = userInfo.profilePictureUrl,
+                name = userInfo.username,
+                email = userInfo.email,
+                birthday = "16/04",
+                currency = "EUR €"
+            )
         }
-    }
-
-    private fun fetchSharedWishes() {
-        launchCollect(getSharedWishes(onlyShared = true)) { wishes ->
-            _state.update {
-                it.copy(
-                    wishes = wishes.toPLO()
-                )
-            }
-        }
-    }
-}
-
-data class ProfileState(
-    val wishes: List<SimpleWishPLO> = emptyList(),
-    val userInfo: User? = null
-) {
-    val showEmptyScreen: Boolean = wishes.isEmpty()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = AccountDataState()
+        )
 }
