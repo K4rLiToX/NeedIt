@@ -67,7 +67,7 @@ fun UpsertRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun UpsertScreen(
-    state: UpsertUiState,
+    state: UpsertDataState,
     title: String,
     subtitle: String,
     price: String,

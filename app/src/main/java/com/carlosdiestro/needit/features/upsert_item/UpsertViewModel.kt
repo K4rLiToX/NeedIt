@@ -1,6 +1,5 @@
 package com.carlosdiestro.needit.features.upsert_item
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.design_system.components.lists.toWishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
@@ -39,8 +37,8 @@ class UpsertViewModel @Inject constructor(
     private val wishId: Long = savedStateHandle[argWishId] ?: -1L
     private var wish: Wish? = null
 
-    private var _state: MutableStateFlow<UpsertUiState> = MutableStateFlow(
-        UpsertUiState(imageLocalPath, category)
+    private var _state: MutableStateFlow<UpsertDataState> = MutableStateFlow(
+        UpsertDataState(imageLocalPath, category)
     )
     val state = _state.asStateFlow()
 
@@ -166,27 +164,4 @@ class UpsertViewModel @Inject constructor(
             }
         }
     }
-}
-
-data class UpsertUiState(
-    val imageUrl: String,
-    val category: WishCategoryPlo,
-) {
-    @get:StringRes
-    val titleHintId: Int
-        get() {
-            return if (category == WishCategoryPlo.Books)
-                R.string.upsert_title_hint
-            else
-                R.string.upsert_name_hint
-        }
-
-    @get:StringRes
-    val subtitleHintId: Int
-        get() {
-            return if (category == WishCategoryPlo.Books)
-                R.string.upsert_author_hint
-            else
-                R.string.upsert_brand_hint
-        }
 }
