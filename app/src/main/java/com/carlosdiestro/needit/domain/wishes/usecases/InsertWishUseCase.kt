@@ -1,6 +1,7 @@
 package com.carlosdiestro.needit.domain.wishes.usecases
 
-import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
+import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.domain.users.usecases.GetUserInfoUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
@@ -20,7 +21,7 @@ class InsertWishUseCase @Inject constructor(
         price: String,
         webUrl: String,
         description: String,
-        category: WishCategory,
+        category: WishCategoryPlo,
         size: String?,
         color: String?,
         isbn: String?
@@ -37,7 +38,7 @@ class InsertWishUseCase @Inject constructor(
             price = if (price.isEmpty()) 0.0 else price.toDouble(),
             webUrl = webUrl,
             description = description,
-            category = category,
+            category = category.asDomain(),
             isShared = false,
             size = size,
             color = color,
