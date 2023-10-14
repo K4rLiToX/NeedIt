@@ -20,7 +20,7 @@ class SignInViewModel @Inject constructor(
     private val signIn: SignInUseCase
 ) : ViewModel() {
 
-    private var _state: MutableStateFlow<SignInUiState> = MutableStateFlow(SignInUiState())
+    private var _state: MutableStateFlow<SignInDataState> = MutableStateFlow(SignInDataState())
     val state = _state.asStateFlow()
 
     fun onSignInResult(result: SignInResult) {
@@ -39,11 +39,6 @@ class SignInViewModel @Inject constructor(
     }
 
     fun resetState() {
-        _state.update { SignInUiState() }
+        _state.update { SignInDataState() }
     }
 }
-
-data class SignInUiState(
-    val userAuth: UserAuth? = null,
-    val signInError: String? = null
-)
