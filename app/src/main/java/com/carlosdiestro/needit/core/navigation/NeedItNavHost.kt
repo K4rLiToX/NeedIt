@@ -53,7 +53,6 @@ fun NeedItNavHost(
         )
 
         cameraRoute(
-            coroutineScope = appState.coroutineScope,
             onBackClick = navController::popBackStack,
             onContinueClick = navController::navigateToUpsert
         )

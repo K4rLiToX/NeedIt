@@ -10,7 +10,6 @@ const val cameraRoute = "camera"
 fun NavController.navigateToCamera() = navigate(cameraRoute)
 
 fun NavGraphBuilder.cameraRoute(
-    coroutineScope: CoroutineScope,
     onBackClick: () -> Unit,
     onContinueClick: (String, Int, Long) -> Unit
 ) {
@@ -18,7 +17,6 @@ fun NavGraphBuilder.cameraRoute(
         route = cameraRoute
     ) {
         CameraRoute(
-            coroutineScope = coroutineScope,
             onBackClick = onBackClick,
             onContinueClick = onContinueClick
         )
