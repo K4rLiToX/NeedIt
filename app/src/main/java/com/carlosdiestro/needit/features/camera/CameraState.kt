@@ -12,7 +12,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -34,7 +33,7 @@ fun rememberCameraUiState(
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     previewView: PreviewView = remember { PreviewView(context) }
 ): CameraUiState {
-    return rememberSaveable {
+    return remember {
         CameraUiState(
             pagerState = pagerState,
             coroutineScope = coroutineScope,

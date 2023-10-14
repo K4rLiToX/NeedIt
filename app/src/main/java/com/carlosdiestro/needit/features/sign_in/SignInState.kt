@@ -3,7 +3,7 @@ package com.carlosdiestro.needit.features.sign_in
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -20,7 +20,7 @@ fun rememberSignInUiState(
     context: Context = LocalContext.current,
     lifecycleScope: LifecycleCoroutineScope = LocalLifecycleOwner.current.lifecycleScope
 ): SignInUiState {
-    return rememberSaveable {
+    return remember {
         SignInUiState(
             context = context,
             lifecycleScope = lifecycleScope
