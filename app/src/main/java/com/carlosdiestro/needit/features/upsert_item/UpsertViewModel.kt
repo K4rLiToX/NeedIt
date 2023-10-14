@@ -1,13 +1,17 @@
 package com.carlosdiestro.needit.features.upsert_item
 
+import androidx.annotation.StringRes
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
-import com.carlosdiestro.needit.core.design_system.components.navigation.toWishCategory
+import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.needit.core.design_system.components.lists.toWishCategoryPlo
+import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
@@ -30,7 +34,8 @@ class UpsertViewModel @Inject constructor(
 
     private val imageLocalPath: String =
         (savedStateHandle[argImageLocalPath] ?: "").replace("-", "/")
-    private var category: WishCategory = (savedStateHandle[argCategory] ?: -1).toWishCategory()
+    private val category: WishCategoryPlo = (savedStateHandle[argCategory] ?: -1)
+        .toWishCategoryPlo()
     private val wishId: Long = savedStateHandle[argWishId] ?: -1L
     private var wish: Wish? = null
 
@@ -38,6 +43,10 @@ class UpsertViewModel @Inject constructor(
         UpsertUiState(imageLocalPath, category)
     )
     val state = _state.asStateFlow()
+
+    val saveButtonEnabled by derivedStateOf {
+        title.trim().isNotEmpty()
+    }
 
     var title by mutableStateOf("")
         private set
@@ -76,8 +85,8 @@ class UpsertViewModel @Inject constructor(
             wish?.let {
                 _state.update { currentState ->
                     currentState.copy(
-                        imageLocalPath = it.imageUrl,
-                        category = it.category
+                        imageUrl = it.imageUrl,
+                        category = it.category.asPlo()
                     )
                 }
                 updateTitle(it.title)
@@ -157,11 +166,27 @@ class UpsertViewModel @Inject constructor(
             }
         }
     }
-
-    fun isFormFilledInCorrectly(): Boolean = title.trim().isNotEmpty()
 }
 
 data class UpsertUiState(
-    val imageLocalPath: String,
-    val category: WishCategory,
-)
+    val imageUrl: String,
+    val category: WishCategoryPlo,
+) {
+    @get:StringRes
+    val titleHintId: Int
+        get() {
+            return if (category == WishCategoryPlo.Books)
+                R.string.upsert_title_hint
+            else
+                R.string.upsert_name_hint
+        }
+
+    @get:StringRes
+    val subtitleHintId: Int
+        get() {
+            return if (category == WishCategoryPlo.Books)
+                R.string.upsert_author_hint
+            else
+                R.string.upsert_brand_hint
+        }
+}

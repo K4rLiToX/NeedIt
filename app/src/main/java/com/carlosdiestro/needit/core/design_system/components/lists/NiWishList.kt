@@ -29,6 +29,8 @@ enum class WishCategoryPlo(@StringRes val labelId: Int) {
     fun toIntValue(): Int = this.ordinal
 }
 
+fun Int.toWishCategoryPlo(): WishCategoryPlo = WishCategoryPlo.values()[this]
+
 @Composable
 fun NiHomeWishList(
     onItemClick: (Long) -> Unit,

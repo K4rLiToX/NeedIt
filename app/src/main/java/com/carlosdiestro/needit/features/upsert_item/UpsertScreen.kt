@@ -27,9 +27,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItTextButton
-import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItTopAppBar
-import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiTextButton
+import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
@@ -39,25 +39,17 @@ fun UpsertRoute(
     viewModel: UpsertViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    val title = viewModel.title
-    val subtitle = viewModel.subtitle
-    val price = viewModel.price
-    val webUrl = viewModel.webUrl
-    val description = viewModel.description
-    val size = viewModel.size
-    val color = viewModel.color
-    val isbn = viewModel.isbn
     UpsertScreen(
         state = state,
-        title = title,
-        subtitle = subtitle,
-        price = price,
-        webUrl = webUrl,
-        description = description,
-        size = size.orEmpty(),
-        color = color.orEmpty(),
-        isbn = isbn.orEmpty(),
-        showSaveButton = viewModel.isFormFilledInCorrectly(),
+        title = viewModel.title,
+        subtitle = viewModel.subtitle,
+        price = viewModel.price,
+        webUrl = viewModel.webUrl,
+        description = viewModel.description,
+        size = viewModel.size.orEmpty(),
+        color = viewModel.color.orEmpty(),
+        isbn = viewModel.isbn.orEmpty(),
+        saveButtonEnabled = viewModel.saveButtonEnabled,
         onBackClick = onBackClick,
         navigateHome = onFinish,
         onSaveClick = viewModel::save,
@@ -84,7 +76,7 @@ private fun UpsertScreen(
     size: String,
     color: String,
     isbn: String,
-    showSaveButton: Boolean,
+    saveButtonEnabled: Boolean,
     onBackClick: () -> Unit,
     navigateHome: () -> Unit,
     onSaveClick: () -> Unit,
@@ -99,128 +91,81 @@ private fun UpsertScreen(
 ) {
     Scaffold(
         topBar = {
-            NeedItTopAppBar(
-                onNavigateClick = onBackClick,
+            NiTopAppBar(
+                title = "",
+                onNavigationClick = onBackClick,
                 actions = {
-                    if (showSaveButton) {
-                        NeedItTextButton(
-                            labelId = R.string.button_save,
-                            onClick = {
-                                onSaveClick()
-                                navigateHome()
-                            }
-                        )
-                    }
+                    NiTextButton(
+                        labelId = R.string.button_save,
+                        enabled = saveButtonEnabled,
+                        onClick = {
+                            onSaveClick()
+                            navigateHome()
+                        }
+                    )
                 }
             )
         }
     ) {
-        UpsertContent(
-            imageUrl = state.imageLocalPath,
-            category = state.category,
-            title = title,
-            subtitle = subtitle,
-            price = price,
-            webUrl = webUrl,
-            description = description,
-            size = size,
-            color = color,
-            isbn = isbn,
-            updateTitle = updateTitle,
-            updateSubtitle = updateSubtitle,
-            updatePrice = updatePrice,
-            updateWebUrl = updateWebUrl,
-            updateDescription = updateDescription,
-            updateSize = updateSize,
-            updateColor = updateColor,
-            updateIsbn = updateIsbn,
+        Column(
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXXL),
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-        )
-    }
-}
-
-@Composable
-private fun UpsertContent(
-    imageUrl: String,
-    category: WishCategory,
-    title: String,
-    subtitle: String,
-    price: String,
-    webUrl: String,
-    description: String,
-    size: String,
-    color: String,
-    isbn: String,
-    updateTitle: (String) -> Unit,
-    updateSubtitle: (String) -> Unit,
-    updatePrice: (String) -> Unit,
-    updateWebUrl: (String) -> Unit,
-    updateDescription: (String) -> Unit,
-    updateSize: (String) -> Unit,
-    updateColor: (String) -> Unit,
-    updateIsbn: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXXL),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .padding(horizontal = MaterialTheme.dimensions.spacingM)
-    ) {
-        ImageSection(imageUrl)
-        BasicInformationSection(
-            category = category,
-            title = title,
-            subtitle = subtitle,
-            price = price,
-            updateTitle = updateTitle,
-            updateSubtitle = updateSubtitle,
-            updatePrice = updatePrice
-        )
-        if (category == WishCategory.Clothes || category == WishCategory.Footwear || category ==
-            WishCategory.Books
+                .padding(horizontal = MaterialTheme.dimensions.spacingM)
         ) {
-            SpecificInformationSection(
-                category = category,
-                size = size,
-                color = color,
-                isbn = isbn,
-                updateSize = updateSize,
-                updateColor = updateColor,
-                updateIsbn = updateIsbn
+            val isSpecificInformationNeeded = state.category in listOf(
+                WishCategoryPlo.Clothes,
+                WishCategoryPlo.Footwear,
+                WishCategoryPlo.Books
+            )
+            AsyncImage(
+                model = state.imageUrl,
+                contentDescription = "Photo",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(24.dp))
+                    .height(221.dp)
+            )
+            CommonInformation(
+                title = title,
+                titleHintId = state.titleHintId,
+                subtitle = subtitle,
+                subtitleHintId = state.subtitleHintId,
+                price = price,
+                updateTitle = updateTitle,
+                updateSubtitle = updateSubtitle,
+                updatePrice = updatePrice
+            )
+            if (isSpecificInformationNeeded) {
+                SpecificInformation(
+                    category = state.category,
+                    size = size,
+                    color = color,
+                    isbn = isbn,
+                    updateSize = updateSize,
+                    updateColor = updateColor,
+                    updateIsbn = updateIsbn
+                )
+            }
+            AdditionalInformation(
+                webUrl = webUrl,
+                description = description,
+                updateWebUrl = updateWebUrl,
+                updateDescription = updateDescription
             )
         }
-        AdditionalInformationSection(
-            webUrl = webUrl,
-            description = description,
-            updateWebUrl = updateWebUrl,
-            updateDescription = updateDescription
-        )
     }
 }
 
 @Composable
-private fun ImageSection(
-    imageUrl: String
-) {
-    AsyncImage(
-        model = imageUrl,
-        contentDescription = "Photo",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(24.dp))
-            .height(221.dp)
-    )
-}
-
-@Composable
-private fun BasicInformationSection(
-    category: WishCategory,
+private fun CommonInformation(
     title: String,
+    titleHintId: Int,
     subtitle: String,
+    subtitleHintId: Int,
     price: String,
     updateTitle: (String) -> Unit,
     updateSubtitle: (String) -> Unit,
@@ -236,15 +181,12 @@ private fun BasicInformationSection(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            val labelId = if (category == WishCategory.Books) R.string.upsert_title_hint else
-                R.string.upsert_name_hint
-
             OutlinedTextField(
                 value = title,
                 onValueChange = updateTitle,
                 label = {
                     Text(
-                        text = stringResource(id = labelId),
+                        text = stringResource(id = titleHintId),
                         style = MaterialTheme.typography.bodySmall
                     )
                 },
@@ -258,14 +200,12 @@ private fun BasicInformationSection(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            val labelId = if (category == WishCategory.Books) R.string.upsert_author_hint else R
-                .string.upsert_brand_hint
             OutlinedTextField(
                 value = subtitle,
                 onValueChange = updateSubtitle,
                 label = {
                     Text(
-                        text = stringResource(id = labelId),
+                        text = stringResource(id = subtitleHintId),
                         style = MaterialTheme.typography.bodySmall
                     )
                 },
@@ -277,7 +217,7 @@ private fun BasicInformationSection(
                 onValueChange = updatePrice,
                 label = {
                     Text(
-                        text = stringResource(id = labelId),
+                        text = stringResource(id = R.string.upsert_price_hint),
                         style = MaterialTheme.typography.bodySmall
                     )
                 },
@@ -288,8 +228,8 @@ private fun BasicInformationSection(
 }
 
 @Composable
-private fun SpecificInformationSection(
-    category: WishCategory,
+private fun SpecificInformation(
+    category: WishCategoryPlo,
     size: String,
     color: String,
     isbn: String,
@@ -298,7 +238,7 @@ private fun SpecificInformationSection(
     updateIsbn: (String) -> Unit
 ) {
     when (category) {
-        WishCategory.Books -> {
+        WishCategoryPlo.Books -> {
             OutlinedTextField(
                 value = isbn,
                 onValueChange = updateIsbn,
@@ -350,7 +290,7 @@ private fun SpecificInformationSection(
 }
 
 @Composable
-private fun AdditionalInformationSection(
+private fun AdditionalInformation(
     webUrl: String,
     description: String,
     updateWebUrl: (String) -> Unit,
