@@ -12,6 +12,7 @@ import androidx.compose.material.icons.outlined.ImageSearch
 import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PersonAdd
 import androidx.compose.material.icons.outlined.PhotoCamera
@@ -31,7 +32,6 @@ import androidx.compose.material.icons.rounded.Lens
 import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.Logout
 import androidx.compose.material.icons.rounded.NavigateNext
-import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Sort
@@ -70,7 +70,7 @@ object Icons {
     val DeselectAll = Icons.Rounded.Deselect
     val Birthday = Icons.Rounded.Celebration
     val Calendar = Icons.Rounded.CalendarMonth
-    val Notification = Icons.Rounded.Notifications
+    val Notification = Icons.Outlined.Notifications
     val Lens = Icons.Rounded.Lens
     val Warning = Icons.Outlined.Warning
     val NeedIt = R.drawable.ic_needit

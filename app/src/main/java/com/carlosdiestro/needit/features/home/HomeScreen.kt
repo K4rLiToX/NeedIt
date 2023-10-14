@@ -83,6 +83,7 @@ private fun HomeScreen(
     Scaffold(
         topBar = {
             NiMainTopAppBar(
+                accountImageUrl = dataState.profilePictureUrl,
                 onNotificationClick = {},
                 onAccountClick = {}
             )

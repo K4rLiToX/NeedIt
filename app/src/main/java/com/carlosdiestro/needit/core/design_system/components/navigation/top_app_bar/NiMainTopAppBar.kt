@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.core.design_system.components.avatars.NiAvatar
+import com.carlosdiestro.needit.core.design_system.components.avatars.NiAvatarSpecs
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButton
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
@@ -46,10 +47,11 @@ fun NiMainTopAppBar(
         actions = {
             NiAvatar(
                 imageUrl = accountImageUrl,
+                size = NiAvatarSpecs.Medium,
                 onClick = onAccountClick
             )
         },
-        modifier = modifier,
+        modifier = modifier ,
         scrollBehavior = scrollBehavior
     )
 }

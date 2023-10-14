@@ -26,7 +26,8 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 data class HomeDataState(
     val wishes: List<HomeWishPlo> = emptyList(),
     val categories: List<WishCategoryPlo> = emptyList(),
-    val selectedWish: Wish? = null
+    val selectedWish: Wish? = null,
+    val profilePictureUrl: String = ""
 ) {
     val noData: Boolean
         get() = wishes.isEmpty()
