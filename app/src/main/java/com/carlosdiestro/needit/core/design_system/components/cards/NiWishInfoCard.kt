@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -49,10 +48,7 @@ fun NiWishInfoCard(
     Card(
         modifier = modifier
             .padding(horizontal = MaterialTheme.dimensions.spacingM)
-            .padding(
-                top = MaterialTheme.dimensions.spacingL,
-                bottom = MaterialTheme.dimensions.spacingM
-            )
+            .padding(bottom = MaterialTheme.dimensions.spacingM)
     ) {
         NiWishCardInfoDetails(
             title = title,
@@ -62,13 +58,16 @@ fun NiWishInfoCard(
             size = size,
             color = color,
             isbn = isbn,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.wrapContentSize()
         )
         Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingXL))
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = MaterialTheme.dimensions.spacingM)
+                .padding(bottom = MaterialTheme.dimensions.spacingM),
             content = actions
         )
     }
@@ -89,6 +88,8 @@ internal fun NiWishCardInfoDetails(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
         horizontalAlignment = Alignment.Start,
         modifier = modifier
+            .padding(horizontal = MaterialTheme.dimensions.spacingM)
+            .padding(top = MaterialTheme.dimensions.spacingL)
     ) {
         NiWishCardInfoDetailsHeader(
             title = title,
@@ -104,12 +105,14 @@ internal fun NiWishCardInfoDetails(
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        NiWishCardInfoDetailsPills(
-            size = size,
-            color = color,
-            isbn = isbn,
-            modifier = Modifier.fillMaxWidth()
-        )
+        if (!size.isNullOrEmpty() || !color.isNullOrEmpty() || !isbn.isNullOrEmpty()) {
+            NiWishCardInfoDetailsPills(
+                size = size,
+                color = color,
+                isbn = isbn,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
 
@@ -127,8 +130,7 @@ internal fun NiWishCardInfoDetailsHeader(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXXS),
-            horizontalAlignment = Alignment.Start,
-            modifier = modifier
+            horizontalAlignment = Alignment.Start
         ) {
             Text(
                 text = title,
@@ -144,7 +146,7 @@ internal fun NiWishCardInfoDetailsHeader(
             }
         }
         Spacer(modifier = Modifier.width(70.dp))
-        if (price.isNotEmpty()) {
+        if (price.isNotEmpty() && price != "0.0") {
             Text(
                 text = price,
                 style = MaterialTheme.typography.headlineMedium,

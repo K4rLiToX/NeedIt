@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -74,7 +75,6 @@ private fun WishDetailsScreen(
             imageUrl = dataState.imageUrl,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(MaterialTheme.dimensions.spacingM)
         ) {
             NiWishInfoCard(
                 title = dataState.title,
@@ -83,7 +83,8 @@ private fun WishDetailsScreen(
                 description = dataState.description,
                 size = dataState.size,
                 color = dataState.color,
-                isbn = dataState.isbn
+                isbn = dataState.isbn,
+                modifier = Modifier.wrapContentSize()
             ) {
                 NiFilledButton(
                     labelId = dataState.actionLabelId,
