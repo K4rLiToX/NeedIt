@@ -1,12 +1,10 @@
 package com.carlosdiestro.needit.core
 
-import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -15,9 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
@@ -88,14 +83,12 @@ fun Main(
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
-        val window = (LocalView.current.context as Activity).window
-        window.navigationBarColor = appState.navigationBarColor
-        window.statusBarColor = appState.statusBarColor
         NeedItNavHost(
             appState = appState,
             isUserGuest = isUserGuest,
             isSignedIn = isSignedIn,
-            modifier = Modifier.padding(it)
+            modifier = Modifier
+                .padding(bottom = it.calculateBottomPadding())
         )
     }
 
@@ -160,17 +153,6 @@ class NeedItAppState(
 
     var shouldShowCameraPermissionDialog by mutableStateOf(false)
         private set
-
-    val navigationBarColor: Int
-        @Composable get() =
-            if (isTopLevelDestination()) {
-                MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp).toArgb()
-            } else {
-                MaterialTheme.colorScheme.background.toArgb()
-            }
-
-    val statusBarColor: Int
-        @Composable get() = MaterialTheme.colorScheme.background.toArgb()
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
