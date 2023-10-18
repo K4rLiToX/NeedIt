@@ -153,16 +153,6 @@ private fun HomeSuccessState(
     onPrivateClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val tabLabelIds by rememberSaveable(categories) {
-        mutableStateOf(categories.map { it.labelId })
-    }
-
-    val wishlist by rememberSaveable(uiState.selectedTabIndex) {
-        mutableStateOf(
-            wishes.filter { it.category == categories[uiState.selectedTabIndex] }
-        )
-    }
-
     LaunchedEffect(uiState.selectedTabIndex) {
         uiState.scrollToPage(uiState.selectedTabIndex)
     }
@@ -173,6 +163,19 @@ private fun HomeSuccessState(
         }
     }
 
+    val tabLabelIds by rememberSaveable(categories) {
+        mutableStateOf(categories.map { it.labelId })
+    }
+
+    val wishlist by rememberSaveable(uiState.selectedTabIndex, wishes) {
+        mutableStateOf(
+            if (uiState.selectedTabIndex == 0) {
+                wishes
+            } else {
+                wishes.filter { it.category == categories[uiState.selectedTabIndex - 1] }
+            }
+        )
+    }
 
     Column(
         modifier = modifier
