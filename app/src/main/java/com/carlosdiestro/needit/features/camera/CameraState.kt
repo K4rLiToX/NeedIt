@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 data class CameraDataState(
     val category: WishCategoryPlo = WishCategoryPlo.Clothes,
@@ -90,7 +91,9 @@ class CameraUiState(
         step--
     }
 
-    suspend fun scrollToItem(index: Int) {
-        listState.animateScrollToItem(index)
+    fun scrollToItem(index: Int) {
+        coroutineScope.launch {
+            listState.animateScrollToItem(index)
+        }
     }
 }

@@ -8,21 +8,16 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,17 +25,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -50,7 +41,7 @@ import coil.compose.AsyncImage
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
-import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
+import com.carlosdiestro.needit.core.design_system.components.lists.NiCategoryScrollable
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBarSpecs
@@ -212,51 +203,17 @@ private fun Actions(
                     updateCategory(categories[uiState.selectedIndex])
                 }
             }
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
-                verticalAlignment = Alignment.CenterVertically,
-                contentPadding = PaddingValues(horizontal = uiState.screenWidth / 2),
-                state = uiState.listState,
-                flingBehavior = uiState.snapBehavior,
+            NiCategoryScrollable(
+                categories = categories,
+                selectedIndex = uiState.selectedIndex,
+                listState = uiState.listState,
+                snapBehavior = uiState.snapBehavior,
+                screenWidth = uiState.screenWidth,
+                onCategoryClick = uiState::scrollToItem,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = MaterialTheme.dimensions.spacingXS)
-            ) {
-                items(
-                    items = categories,
-                    key = { category -> category.ordinal }
-                ) { category ->
-                    val textBackGroundColor by animateColorAsState(
-                        targetValue = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp),
-                        label = "Text background color"
-                    )
-                    Text(
-                        text = stringResource(id = category.labelId),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(100.dp))
-                            .clickable {
-                                uiState.coroutineScope.launch {
-                                    uiState.scrollToItem(category.ordinal)
-                                }
-                            }
-                            .conditional(
-                                condition = uiState.selectedIndex == category.toIntValue(),
-                                ifTrue = {
-                                    drawBehind {
-                                        drawRect(
-                                            textBackGroundColor
-                                        )
-                                    }
-                                }
-                            )
-                            .padding(
-                                horizontal = MaterialTheme.dimensions.spacingS,
-                                vertical = MaterialTheme.dimensions.spacingXS
-                            )
-                    )
-                }
-            }
+            )
         }
 
         else -> {
