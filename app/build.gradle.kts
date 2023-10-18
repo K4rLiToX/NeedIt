@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.carlosdiestro.needit"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.carlosdiestro.needit"
