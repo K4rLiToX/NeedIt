@@ -9,19 +9,20 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,7 +41,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -66,7 +66,6 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CameraRoute(
     onBackClick: () -> Unit,
@@ -74,11 +73,7 @@ fun CameraRoute(
     viewModel: CameraViewModel = hiltViewModel()
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
-    val uiState = rememberCameraUiState(
-        pagerState = rememberPagerState(0) {
-            WishCategoryPlo.values().size
-        }
-    )
+    val uiState = rememberCameraUiState()
     CameraScreen(
         dataState = dataState,
         uiState = uiState,
@@ -157,8 +152,18 @@ private fun CameraScreen(
             CameraContent(
                 uiState = uiState,
                 imageUri = dataState.imageUri,
-                onShutterClick = onShutterClick
+                onShutterClick = onShutterClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(
+                        RoundedCornerShape(
+                            bottomStart = 24.dp,
+                            bottomEnd = 24.dp
+                        )
+                    )
+                    .weight(1F)
             )
+            Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingM))
             Actions(
                 uiState = uiState,
                 categories = WishCategoryPlo.values().toList(),
@@ -171,6 +176,7 @@ private fun CameraScreen(
 
 @Composable
 private fun CameraContent(
+    modifier: Modifier = Modifier,
     uiState: CameraUiState,
     imageUri: String,
     onShutterClick: (String) -> Unit
@@ -181,14 +187,17 @@ private fun CameraContent(
             coroutineScope = uiState.coroutineScope,
             context = uiState.context,
             imageCapture = uiState.imageCapture,
-            onShutterClick = onShutterClick
+            onShutterClick = onShutterClick,
+            modifier = modifier
         )
 
-        else -> PhotoPreview(imageUri = imageUri)
+        else -> PhotoPreview(
+            imageUri = imageUri,
+            modifier = modifier
+        )
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Actions(
     uiState: CameraUiState,
@@ -198,49 +207,55 @@ private fun Actions(
 ) {
     when (uiState.step) {
         1 -> {
-            LaunchedEffect(uiState.currentPage, uiState.isScrollInProgress) {
+            LaunchedEffect(uiState.selectedIndex, uiState.isScrollInProgress) {
                 if (!uiState.isScrollInProgress) {
-                    updateCategory(categories[uiState.currentPage])
+                    updateCategory(categories[uiState.selectedIndex])
                 }
             }
-
-            HorizontalPager(
-                state = uiState.pagerState,
-                contentPadding = PaddingValues(horizontal = MaterialTheme.dimensions.spacingM),
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
+                verticalAlignment = Alignment.CenterVertically,
+                contentPadding = PaddingValues(horizontal = uiState.screenWidth / 2),
+                state = uiState.listState,
+                flingBehavior = uiState.snapBehavior,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(vertical = MaterialTheme.dimensions.spacingXS)
             ) {
-                val category = categories[it]
-                val textBackGroundColor by animateColorAsState(
-                    targetValue = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp),
-                    label = "Text background color"
-                )
-                Text(
-                    text = stringResource(id = category.labelId),
-                    style = MaterialTheme.typography.bodyLarge,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .clickable {
-                            uiState.coroutineScope.launch {
-                                uiState.scrollToPage(category.ordinal)
-                            }
-                        }
-                        .clip(RoundedCornerShape(100.dp))
-                        .conditional(
-                            condition = uiState.currentPage == category.toIntValue(),
-                            ifTrue = {
-                                drawBehind {
-                                    drawRect(
-                                        textBackGroundColor
-                                    )
+                items(
+                    items = categories,
+                    key = { category -> category.ordinal }
+                ) { category ->
+                    val textBackGroundColor by animateColorAsState(
+                        targetValue = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp),
+                        label = "Text background color"
+                    )
+                    Text(
+                        text = stringResource(id = category.labelId),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(100.dp))
+                            .clickable {
+                                uiState.coroutineScope.launch {
+                                    uiState.scrollToItem(category.ordinal)
                                 }
                             }
-                        )
-                        .padding(
-                            horizontal = MaterialTheme.dimensions.spacingS,
-                            vertical = MaterialTheme.dimensions.spacingXS
-                        )
-                )
+                            .conditional(
+                                condition = uiState.selectedIndex == category.toIntValue(),
+                                ifTrue = {
+                                    drawBehind {
+                                        drawRect(
+                                            textBackGroundColor
+                                        )
+                                    }
+                                }
+                            )
+                            .padding(
+                                horizontal = MaterialTheme.dimensions.spacingS,
+                                vertical = MaterialTheme.dimensions.spacingXS
+                            )
+                    )
+                }
             }
         }
 
@@ -261,16 +276,21 @@ private fun Actions(
 
 @Composable
 private fun CameraPreview(
+    modifier: Modifier = Modifier,
     previewView: PreviewView,
     coroutineScope: CoroutineScope,
     context: Context,
     imageCapture: ImageCapture,
     onShutterClick: (String) -> Unit
 ) {
-    Box {
+    Box(
+        contentAlignment = Alignment.BottomCenter,
+        modifier = modifier
+    ) {
         AndroidView(
             factory = { previewView },
-            modifier = Modifier.matchParentSize()
+            modifier = Modifier
+                .matchParentSize()
         )
 
         CameraShutter(
@@ -299,31 +319,31 @@ private fun CameraShutter(
             }
         },
         modifier = Modifier
-            .padding(bottom = MaterialTheme.dimensions.spacingXS)
+            .padding(bottom = MaterialTheme.dimensions.spacingM)
             .size(80.dp)
     ) {
         Icon(
             imageVector = MaterialTheme.icons.Lens,
             contentDescription = "Take picture",
-            tint = MaterialTheme.colorScheme.primary,
+            tint = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
                 .size(100.dp)
                 .padding(1.dp)
-                .border(2.dp, MaterialTheme.colorScheme.primary, CircleShape)
+                .border(2.dp, MaterialTheme.colorScheme.onPrimary, CircleShape)
         )
     }
 }
 
 @Composable
 private fun PhotoPreview(
+    modifier: Modifier = Modifier,
     imageUri: String
 ) {
     AsyncImage(
         model = imageUri,
         contentDescription = "Photo",
         contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
     )
 }
 
