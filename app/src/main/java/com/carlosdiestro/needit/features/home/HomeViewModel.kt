@@ -30,7 +30,6 @@ class HomeViewModel @Inject constructor(
     private val getUserInfo: GetUserInfoUseCase
 ) : ViewModel() {
 
-    private var wishes: List<Wish> = emptyList()
 
     private var _selectedWishId: MutableStateFlow<Long> = MutableStateFlow(-1)
     private val selectedWishId = _selectedWishId.asStateFlow()
@@ -41,11 +40,10 @@ class HomeViewModel @Inject constructor(
             getMyWishes(),
             getUserInfo()
         ) { selectedWishId, wishlist, userInfo ->
-            wishes = wishlist
             HomeDataState(
                 wishes = wishlist.asPlo(),
-                categories = getCategories(wishes),
-                selectedWish = wishes.find { it.id == selectedWishId },
+                categories = getCategories(wishlist),
+                selectedWish = wishlist.find { it.id == selectedWishId },
                 profilePictureUrl = userInfo.profilePictureUrl
             )
         }
