@@ -13,13 +13,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
@@ -43,6 +47,7 @@ fun NiWishCard(
     selected: Boolean
 ) {
     Card(
+        shape = RoundedCornerShape(24.dp),
         modifier = modifier
             .height(height)
             .fillMaxWidth()
@@ -55,10 +60,11 @@ fun NiWishCard(
             .conditional(
                 condition = selected,
                 ifTrue = {
-                    padding(
-                        vertical = MaterialTheme.dimensions.spacingXXL,
-                        horizontal = 31.dp
-                    )
+                    background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
+                        .padding(
+                            vertical = MaterialTheme.dimensions.spacingXXL,
+                            horizontal = 31.dp
+                        )
                 }
             )
     ) {
@@ -91,7 +97,8 @@ fun NiWishCard(
     reserved: Boolean
 ) {
     Card(
-        modifier
+        shape = RoundedCornerShape(24.dp),
+        modifier = modifier
             .height(height)
             .fillMaxWidth()
             .combinedClickable(
@@ -131,14 +138,43 @@ internal fun NiWishCardInformation(
     shared: Boolean
 ) {
     Column(
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.End,
         modifier = modifier
+            .conditional(
+                condition = selected,
+                ifTrue = { padding(2.dp) },
+                ifFalse = { padding(MaterialTheme.dimensions.spacingXS) }
+            )
     ) {
         if (selected)
-            Icon(imageVector = MaterialTheme.icons.Check, contentDescription = "")
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1F)
+            ) {
+                Icon(
+                    imageVector = MaterialTheme.icons.Check,
+                    contentDescription = "",
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primary)
+                )
+            }
         if (shared)
-            Icon(imageVector = MaterialTheme.icons.Share, contentDescription = "")
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Icon(
+                    imageVector = MaterialTheme.icons.Share,
+                    contentDescription = "", tint =
+                    MaterialTheme.colorScheme.onPrimary
+                )
+            }
     }
 }
 
