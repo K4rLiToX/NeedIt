@@ -154,26 +154,16 @@ private fun HomeSuccessState(
     onPrivateClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LaunchedEffect(uiState.selectedTabIndex) {
-        uiState.scrollToPage(uiState.selectedTabIndex)
-    }
-
-    LaunchedEffect(uiState.currentPage, uiState.isScrollInProgress) {
-        if (!uiState.isScrollInProgress) {
-            uiState.updateSelectedTabIndex(uiState.currentPage)
-        }
-    }
-
     val tabLabelIds by rememberSaveable(categories) {
         mutableStateOf(categories.map { it.labelId })
     }
 
-    val wishlist by rememberSaveable(uiState.selectedTabIndex, wishes) {
+    val wishlist by rememberSaveable(uiState.currentPage, wishes) {
         mutableStateOf(
-            if (uiState.selectedTabIndex == 0) {
+            if (uiState.currentPage == 0) {
                 wishes
             } else {
-                wishes.filter { it.category == categories[uiState.selectedTabIndex - 1] }
+                wishes.filter { it.category == categories[uiState.currentPage - 1] }
             }
         )
     }
@@ -183,9 +173,9 @@ private fun HomeSuccessState(
     ) {
         NiScrollableTabBar(
             tabLabelIds = tabLabelIds,
-            selectedTabIndex = uiState.selectedTabIndex,
+            selectedTabIndex = uiState.currentPage,
             onTabClick = { index ->
-                uiState.updateSelectedTabIndex(index)
+                uiState.scrollToPage(index)
             },
             modifier = Modifier.fillMaxWidth()
         )

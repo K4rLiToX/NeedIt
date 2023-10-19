@@ -12,9 +12,9 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.carlosdiestro.needit.R
@@ -22,6 +22,8 @@ import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.domain.wishes.Wish
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 data class HomeDataState(
     val wishes: List<HomeWishPlo> = emptyList(),
@@ -49,17 +51,20 @@ data class HomeDataState(
 @Composable
 fun rememberHomeUiState(
     pagerState: PagerState,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     lazyGridState: LazyGridState = rememberLazyGridState(),
     wishActionsBottomSheetState: SheetState = rememberModalBottomSheetState(),
     deleteWishBottomSheetState: SheetState = rememberModalBottomSheetState(),
 ): HomeUiState {
     return remember(
+        coroutineScope,
         lazyGridState,
         pagerState,
         wishActionsBottomSheetState,
         deleteWishBottomSheetState
     ) {
         HomeUiState(
+            coroutineScope = coroutineScope,
             lazyGridState = lazyGridState,
             pagerState = pagerState,
             wishActionsBottomSheetState = wishActionsBottomSheetState,
@@ -71,6 +76,7 @@ fun rememberHomeUiState(
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Stable
 class HomeUiState(
+    val coroutineScope: CoroutineScope,
     val lazyGridState: LazyGridState,
     val pagerState: PagerState,
     val wishActionsBottomSheetState: SheetState,
@@ -88,9 +94,6 @@ class HomeUiState(
     val isScrollInProgress: Boolean
         get() = pagerState.isScrollInProgress
 
-    var selectedTabIndex: Int by mutableIntStateOf(0)
-        private set
-
     fun openActionBottomSheet() {
         shouldOpenActionBottomSheet = true
     }
@@ -107,11 +110,9 @@ class HomeUiState(
         shouldOpenRemoveWishBottomSheet = false
     }
 
-    fun updateSelectedTabIndex(value: Int) {
-        selectedTabIndex = value
-    }
-
-    suspend fun scrollToPage(index: Int) {
-        pagerState.animateScrollToPage(index)
+    fun scrollToPage(index: Int) {
+        coroutineScope.launch {
+            pagerState.animateScrollToPage(index)
+        }
     }
 }
