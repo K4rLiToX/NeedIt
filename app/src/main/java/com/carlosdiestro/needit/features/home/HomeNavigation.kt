@@ -3,7 +3,7 @@ package com.carlosdiestro.needit.features.home
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import androidx.navigation.compose.composable
+import com.carlosdiestro.needit.core.design_system.components.navigation.destinations.topLevelDestination
 import com.carlosdiestro.needit.features.sign_in.signInRoute
 
 const val homeRoute = "home"
@@ -22,7 +22,9 @@ fun NavGraphBuilder.homeScreen(
     onItemClick: (Long) -> Unit,
     onUpdateClick: (String, Int, Long) -> Unit
 ) {
-    composable(route = homeRoute) {
+    topLevelDestination(
+        route = homeRoute
+    ) {
         HomeRoute(
             onItemClick = onItemClick,
             onUpdateClick = onUpdateClick

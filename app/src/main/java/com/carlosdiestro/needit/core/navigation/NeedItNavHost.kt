@@ -1,9 +1,15 @@
 package com.carlosdiestro.needit.core.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.carlosdiestro.needit.core.NeedItAppState
+import com.carlosdiestro.needit.core.design_system.components.animations.noEnterTransition
+import com.carlosdiestro.needit.core.design_system.components.animations.noExitTransition
+import com.carlosdiestro.needit.core.design_system.components.animations.topLeveExitTransition
+import com.carlosdiestro.needit.core.design_system.components.animations.topLevelEnterTransition
 import com.carlosdiestro.needit.features.account.accountScreen
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.friends.friendsScreen
@@ -32,7 +38,11 @@ fun NeedItNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination,
+        enterTransition = noEnterTransition,
+        exitTransition = noExitTransition,
+        popEnterTransition = noEnterTransition,
+        popExitTransition = noExitTransition
     ) {
         signInScreen(
             onSignInSuccessful = navController::navigateToHomeCleaningBackStack,
