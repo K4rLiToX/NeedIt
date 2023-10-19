@@ -112,7 +112,7 @@ private fun HomeScreen(
                 onPrivateClick = onPrivateClick,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(it)
+                    .padding(top = it.calculateTopPadding())
             )
     }
 }
