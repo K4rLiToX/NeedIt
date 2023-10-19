@@ -3,15 +3,14 @@ package com.carlosdiestro.needit.core.design_system.components.navigation.tab_ba
 import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ScrollableTabRow
+import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
-import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
 fun NiScrollableTabBar(
@@ -21,10 +20,10 @@ fun NiScrollableTabBar(
     containerColor: Color = NiTabBarSpecs.Color.transparent,
     onTabClick: (Int) -> Unit
 ) {
-    ScrollableTabRow(
+    PrimaryScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
         containerColor = containerColor,
-        edgePadding = MaterialTheme.dimensions.spacingM,
+        edgePadding = 0.dp,
         indicator = { tabPositions ->
             NiTabIndicator(
                 tabPositions = tabPositions,

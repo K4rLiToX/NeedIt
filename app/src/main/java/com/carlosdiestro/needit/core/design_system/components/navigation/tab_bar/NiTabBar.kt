@@ -3,7 +3,7 @@ package com.carlosdiestro.needit.core.design_system.components.navigation.tab_ba
 import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.TabRow
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,7 +19,7 @@ fun NiTabBar(
     containerColor: Color = NiTabBarSpecs.Color.transparent,
     scrollToPage: (Int) -> Unit
 ) {
-    TabRow(
+    PrimaryTabRow(
         selectedTabIndex = selectedTabIndex,
         containerColor = containerColor,
         indicator = { tabPositions ->

@@ -3,6 +3,7 @@ package com.carlosdiestro.needit.core.design_system.components.navigation.top_ap
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -19,6 +20,7 @@ import com.carlosdiestro.needit.core.design_system.components.avatars.NiAvatarSp
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButton
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +53,8 @@ fun NiMainTopAppBar(
                 onClick = onAccountClick
             )
         },
-        modifier = modifier ,
+        modifier = modifier
+            .padding(horizontal = MaterialTheme.dimensions.spacingM),
         scrollBehavior = scrollBehavior
     )
 }
