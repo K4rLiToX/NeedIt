@@ -1,9 +1,9 @@
 package com.carlosdiestro.needit.core
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -33,12 +33,11 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.navigat
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.routes
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
+import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.home.navigateToHome
-import com.carlosdiestro.needit.features.wish_details.detailsBaseRoute
 import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import kotlinx.coroutines.CoroutineScope
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Main(
     appState: NeedItAppState,
@@ -95,9 +94,21 @@ fun Main(
             isSignedIn = isSignedIn,
             modifier = Modifier
                 .conditional(
-                    condition = !appState.shouldHaveNavigationBarPadding,
+                    condition = appState.shouldNotHaveStatusBarPadding,
                     ifTrue = {
-                        navigationBarsPadding()
+                        this
+                    },
+                    ifFalse = {
+                        statusBarsPadding()
+                    }
+                )
+                .conditional(
+                    condition = appState.shouldNotHaveNavigationBarPadding,
+                    ifTrue = {
+                        this
+                    },
+                    ifFalse = {
+                        padding(bottom = it.calculateBottomPadding())
                     }
                 )
         )
@@ -142,6 +153,15 @@ class NeedItAppState(
     val navController: NavHostController,
     val coroutineScope: CoroutineScope
 ) {
+    private val routesWithoutStatusBarPadding: List<String> = listOf(
+        detailsRoute,
+        cameraRoute
+    )
+
+    private val routesWithoutNavigationBarPadding: List<String> = listOf(
+        detailsRoute
+    )
+
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
@@ -165,8 +185,11 @@ class NeedItAppState(
     var shouldShowCameraPermissionDialog by mutableStateOf(false)
         private set
 
-    val shouldHaveNavigationBarPadding: Boolean
-        @Composable get() = currentDestinationRoute == detailsRoute
+    val shouldNotHaveStatusBarPadding: Boolean
+        @Composable get() = currentDestinationRoute in routesWithoutStatusBarPadding
+
+    val shouldNotHaveNavigationBarPadding: Boolean
+        @Composable get() = currentDestinationRoute in routesWithoutNavigationBarPadding
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
