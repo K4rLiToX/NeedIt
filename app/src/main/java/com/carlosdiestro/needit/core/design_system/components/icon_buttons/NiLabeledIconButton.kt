@@ -76,7 +76,7 @@ internal fun NiLabeledIconButtonsPreview() {
             NiLabeledIconButton(
                 labelId = R.string.button_login,
                 icon = MaterialTheme.icons.AddFriend,
-                colors = NiIconButtonSpecs.Color.transparent(),
+                colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {}
             )
         }

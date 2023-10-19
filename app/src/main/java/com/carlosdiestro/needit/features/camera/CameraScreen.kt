@@ -41,6 +41,7 @@ import coil.compose.AsyncImage
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
+import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.lists.NiCategoryScrollable
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
@@ -129,6 +130,7 @@ private fun CameraScreen(
                     if (uiState.shouldReloadCamera) onBackClick()
                     else onBackToPhotoClick()
                 },
+                navigationIconColor = NiIconButtonSpecs.Color.transparentSecondary(),
                 colors = NiTopAppBarSpecs.Color.neutral(),
                 actions = {}
             )

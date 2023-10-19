@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -32,6 +33,7 @@ fun NiTopAppBar(
     modifier: Modifier = Modifier,
     profileImageUrl: String? = null,
     onNavigationClick: () -> Unit,
+    navigationIconColor: IconButtonColors = NiIconButtonSpecs.Color.transparentPrimary(),
     colors: TopAppBarColors = NiTopAppBarSpecs.Color.transparent(),
     actions: @Composable() (RowScope.() -> Unit),
     topAppBarState: TopAppBarState = rememberTopAppBarState()
@@ -47,7 +49,7 @@ fun NiTopAppBar(
         navigationIcon = {
             NiIconButton(
                 icon = MaterialTheme.icons.Back,
-                colors = NiIconButtonSpecs.Color.transparent(),
+                colors = navigationIconColor,
                 onClick = onNavigationClick
             )
         },

@@ -77,7 +77,7 @@ internal fun NiIconButton() {
         )
         NiIconButton(
             icon = MaterialTheme.icons.AddFriend,
-            colors = NiIconButtonSpecs.Color.transparent(),
+            colors = NiIconButtonSpecs.Color.transparentPrimary(),
             onClick = {}
         )
     }
@@ -108,7 +108,7 @@ internal fun NiSmallIconButton() {
         NiIconButton(
             icon = MaterialTheme.icons.AddFriend,
             buttonSize = NiIconButtonSpecs.Size.Small,
-            colors = NiIconButtonSpecs.Color.transparent(),
+            colors = NiIconButtonSpecs.Color.transparentPrimary(),
             onClick = {}
         )
     }

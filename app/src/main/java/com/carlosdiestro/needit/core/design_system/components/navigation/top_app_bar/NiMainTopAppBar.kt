@@ -41,7 +41,7 @@ fun NiMainTopAppBar(
         navigationIcon = {
             NiIconButton(
                 icon = MaterialTheme.icons.Notification,
-                colors = NiIconButtonSpecs.Color.transparent(),
+                colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = onNotificationClick
             )
         },

@@ -42,7 +42,7 @@ fun NiMediumTopAppBar(
         navigationIcon = {
             NiIconButton(
                 icon = MaterialTheme.icons.Back,
-                colors = NiIconButtonSpecs.Color.transparent(),
+                colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = onNavigationClick
             )
         },
@@ -66,7 +66,7 @@ internal fun NiMediumTopAppBarPreview() {
             actions = {
                 NiIconButton(
                     icon = MaterialTheme.icons.Delete,
-                    colors = NiIconButtonSpecs.Color.transparent(),
+                    colors = NiIconButtonSpecs.Color.transparentPrimary(),
                     onClick = {}
                 )
             }

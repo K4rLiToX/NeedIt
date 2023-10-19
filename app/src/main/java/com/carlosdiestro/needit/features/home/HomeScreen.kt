@@ -221,7 +221,7 @@ private fun HomeSuccessState(
             NiLabeledIconButton(
                 labelId = R.string.button_remove,
                 icon = MaterialTheme.icons.Delete,
-                colors = NiIconButtonSpecs.Color.transparent(),
+                colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {
                     uiState.closeActionBottomSheet()
                     uiState.openRemoveWishBottomSheet()
@@ -230,7 +230,7 @@ private fun HomeSuccessState(
             NiLabeledIconButton(
                 labelId = R.string.button_update,
                 icon = MaterialTheme.icons.Edit,
-                colors = NiIconButtonSpecs.Color.transparent(),
+                colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {
                     onUpdateClick()
                     uiState.closeActionBottomSheet()
@@ -239,7 +239,7 @@ private fun HomeSuccessState(
             NiLabeledIconButton(
                 labelId = selectedWishActionLabelId,
                 icon = selectedWishActionIcon,
-                colors = NiIconButtonSpecs.Color.transparent(),
+                colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {
                     if (selectedWish?.isShared == true) onPrivateClick()
                     else onShareClick()

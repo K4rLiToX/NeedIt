@@ -28,7 +28,9 @@ object NiTopAppBarSpecs {
         @Composable
         fun neutral(): TopAppBarColors {
             return TopAppBarDefaults.topAppBarColors(
-                containerColor = Color(0x80000000)
+                containerColor = Color(0x80000000),
+                navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
+                actionIconContentColor = MaterialTheme.colorScheme.onPrimary
             )
         }
     }

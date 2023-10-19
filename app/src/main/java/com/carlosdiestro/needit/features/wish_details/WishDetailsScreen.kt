@@ -3,7 +3,6 @@ package com.carlosdiestro.needit.features.wish_details
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -21,7 +20,6 @@ import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIco
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBarSpecs
-import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
 @Composable
@@ -55,16 +53,17 @@ private fun WishDetailsScreen(
             NiTopAppBar(
                 title = "",
                 onNavigationClick = onBackClick,
+                navigationIconColor = NiIconButtonSpecs.Color.transparentSecondary(),
                 colors = NiTopAppBarSpecs.Color.neutral(),
                 actions = {
                     NiIconButton(
                         icon = MaterialTheme.icons.Edit,
-                        colors = NiIconButtonSpecs.Color.transparent(),
+                        colors = NiIconButtonSpecs.Color.transparentSecondary(),
                         onClick = onUpdateClick
                     )
                     NiIconButton(
                         icon = MaterialTheme.icons.Link,
-                        colors = NiIconButtonSpecs.Color.transparent(),
+                        colors = NiIconButtonSpecs.Color.transparentSecondary(),
                         onClick = {}
                     )
                 }

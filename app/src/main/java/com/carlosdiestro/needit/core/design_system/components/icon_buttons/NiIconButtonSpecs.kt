@@ -44,9 +44,16 @@ object NiIconButtonSpecs {
         }
 
         @Composable
-        fun transparent(): IconButtonColors {
+        fun transparentPrimary(): IconButtonColors {
             return IconButtonDefaults.iconButtonColors(
                 contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        @Composable
+        fun transparentSecondary(): IconButtonColors {
+            return IconButtonDefaults.iconButtonColors(
+                contentColor = MaterialTheme.colorScheme.onPrimary
             )
         }
     }
