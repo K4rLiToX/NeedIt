@@ -8,7 +8,7 @@ const val cameraRoute = "camera"
 
 fun NavController.navigateToCamera() = navigate(cameraRoute)
 
-fun NavGraphBuilder.cameraRoute(
+fun NavGraphBuilder.cameraScreen(
     onBackClick: () -> Unit,
     onContinueClick: (String, Int, Long) -> Unit
 ) {

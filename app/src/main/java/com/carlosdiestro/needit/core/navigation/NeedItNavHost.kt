@@ -1,17 +1,14 @@
 package com.carlosdiestro.needit.core.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.carlosdiestro.needit.core.NeedItAppState
 import com.carlosdiestro.needit.core.design_system.components.animations.noEnterTransition
 import com.carlosdiestro.needit.core.design_system.components.animations.noExitTransition
-import com.carlosdiestro.needit.core.design_system.components.animations.topLeveExitTransition
-import com.carlosdiestro.needit.core.design_system.components.animations.topLevelEnterTransition
 import com.carlosdiestro.needit.features.account.accountScreen
 import com.carlosdiestro.needit.features.camera.cameraRoute
+import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.friends.friendsScreen
 import com.carlosdiestro.needit.features.gifts.giftsScreen
 import com.carlosdiestro.needit.features.home.homeRoute
@@ -21,9 +18,9 @@ import com.carlosdiestro.needit.features.home.navigateToHomeCleaningBackStack
 import com.carlosdiestro.needit.features.sign_in.signInRoute
 import com.carlosdiestro.needit.features.sign_in.signInScreen
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
-import com.carlosdiestro.needit.features.upsert_item.upsertRoute
+import com.carlosdiestro.needit.features.upsert_item.upsertScreen
 import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
-import com.carlosdiestro.needit.features.wish_details.wishDetailsRoute
+import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen
 
 @Composable
 fun NeedItNavHost(
@@ -62,12 +59,12 @@ fun NeedItNavHost(
             onBackClick = navController::popBackStack
         )
 
-        cameraRoute(
+        cameraScreen(
             onBackClick = navController::popBackStack,
             onContinueClick = navController::navigateToUpsert
         )
 
-        upsertRoute(
+        upsertScreen(
             onBackClick = navController::popBackStack,
             onFinish = {
                 val previousScreenRoute = navController.previousBackStackEntry?.destination?.route
@@ -76,7 +73,7 @@ fun NeedItNavHost(
             }
         )
 
-        wishDetailsRoute(
+        wishDetailsScreen(
             onBackClick = navController::popBackStack,
             onUpdateClick = navController::navigateToUpsert
         )

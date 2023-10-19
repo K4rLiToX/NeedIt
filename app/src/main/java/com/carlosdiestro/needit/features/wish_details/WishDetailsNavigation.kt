@@ -25,7 +25,7 @@ fun NavController.navigateToWishDetails(
     )
 }
 
-fun NavGraphBuilder.wishDetailsRoute(
+fun NavGraphBuilder.wishDetailsScreen(
     onBackClick: () -> Unit,
     onUpdateClick: (String, Int, Long) -> Unit
 ) {
