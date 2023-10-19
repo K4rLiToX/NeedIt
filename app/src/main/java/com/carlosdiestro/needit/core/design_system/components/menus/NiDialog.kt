@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.design_system.components.dialogs
+package com.carlosdiestro.needit.core.design_system.components.menus
 
 import android.content.res.Configuration
 import androidx.annotation.StringRes
@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
@@ -43,32 +42,38 @@ fun NiDialog(
         sheetState = sheetState,
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 2.dp,
-        shape = RoundedCornerShape(24.dp),
-        dragHandle = {},
+        shape = NiMenuSpecs.RoundedCorners,
+        dragHandle = NiMenuSpecs.NoDragHandle,
         modifier = modifier
             .padding(horizontal = MaterialTheme.dimensions.spacingM)
-            .padding(top = MaterialTheme.dimensions.spacingL)
-            .padding(bottom = MaterialTheme.dimensions.spacingXL)
     ) {
         Text(
             text = stringResource(id = titleId),
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = MaterialTheme.dimensions.spacingM)
+                .padding(top = MaterialTheme.dimensions.spacingL)
         )
         Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingL))
         Text(
             text = stringResource(id = bodyId),
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = MaterialTheme.dimensions.spacingM)
         )
         Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingL))
         Row(
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),
             verticalAlignment = Alignment.CenterVertically,
             content = actions,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = MaterialTheme.dimensions.spacingM)
+                .padding(bottom = MaterialTheme.dimensions.spacingM)
         )
     }
 }

@@ -27,7 +27,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
-import com.carlosdiestro.needit.core.design_system.components.dialogs.NiDialog
+import com.carlosdiestro.needit.core.design_system.components.menus.NiDialog
+import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiLabeledIconButton
 import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
 import com.carlosdiestro.needit.core.design_system.components.lists.NiHomeWishList
@@ -220,6 +221,7 @@ private fun HomeSuccessState(
             NiLabeledIconButton(
                 labelId = R.string.button_remove,
                 icon = MaterialTheme.icons.Delete,
+                colors = NiIconButtonSpecs.Color.transparent(),
                 onClick = {
                     uiState.closeActionBottomSheet()
                     uiState.openRemoveWishBottomSheet()
@@ -228,6 +230,7 @@ private fun HomeSuccessState(
             NiLabeledIconButton(
                 labelId = R.string.button_update,
                 icon = MaterialTheme.icons.Edit,
+                colors = NiIconButtonSpecs.Color.transparent(),
                 onClick = {
                     onUpdateClick()
                     uiState.closeActionBottomSheet()
@@ -236,6 +239,7 @@ private fun HomeSuccessState(
             NiLabeledIconButton(
                 labelId = selectedWishActionLabelId,
                 icon = selectedWishActionIcon,
+                colors = NiIconButtonSpecs.Color.transparent(),
                 onClick = {
                     if (selectedWish?.isShared == true) onPrivateClick()
                     else onShareClick()
