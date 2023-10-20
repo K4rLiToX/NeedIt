@@ -52,22 +52,19 @@ fun rememberHomeUiState(
     pagerState: PagerState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     lazyGridState: LazyGridState = rememberLazyGridState(),
-    wishActionsBottomSheetState: SheetState = rememberModalBottomSheetState(),
-    deleteWishBottomSheetState: SheetState = rememberModalBottomSheetState(),
+    wishActionsBottomSheetState: SheetState = rememberModalBottomSheetState()
 ): HomeUiState {
     return remember(
         coroutineScope,
         lazyGridState,
         pagerState,
-        wishActionsBottomSheetState,
-        deleteWishBottomSheetState
+        wishActionsBottomSheetState
     ) {
         HomeUiState(
             coroutineScope = coroutineScope,
             lazyGridState = lazyGridState,
             pagerState = pagerState,
-            wishActionsBottomSheetState = wishActionsBottomSheetState,
-            deleteWishBottomSheetState = deleteWishBottomSheetState
+            wishActionsBottomSheetState = wishActionsBottomSheetState
         )
     }
 }
@@ -78,20 +75,16 @@ class HomeUiState(
     val coroutineScope: CoroutineScope,
     val lazyGridState: LazyGridState,
     val pagerState: PagerState,
-    val wishActionsBottomSheetState: SheetState,
-    val deleteWishBottomSheetState: SheetState
+    val wishActionsBottomSheetState: SheetState
 ) {
     var shouldOpenActionBottomSheet: Boolean by mutableStateOf(false)
         private set
 
-    var shouldOpenRemoveWishBottomSheet: Boolean by mutableStateOf(false)
+    var shouldShowRemoveWishDialogs: Boolean by mutableStateOf(false)
         private set
 
     val currentPage: Int
         get() = pagerState.currentPage
-
-    val isScrollInProgress: Boolean
-        get() = pagerState.isScrollInProgress
 
     fun openActionBottomSheet() {
         shouldOpenActionBottomSheet = true
@@ -101,12 +94,12 @@ class HomeUiState(
         shouldOpenActionBottomSheet = false
     }
 
-    fun openRemoveWishBottomSheet() {
-        shouldOpenRemoveWishBottomSheet = true
+    fun openRemoveWishDialog() {
+        shouldShowRemoveWishDialogs = true
     }
 
-    fun closeRemoveWishBottomSheet() {
-        shouldOpenRemoveWishBottomSheet = false
+    fun closeRemoveWishDialog() {
+        shouldShowRemoveWishDialogs = false
     }
 
     fun scrollToPage(index: Int) {

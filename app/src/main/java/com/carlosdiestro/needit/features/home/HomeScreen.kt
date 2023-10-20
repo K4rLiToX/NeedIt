@@ -24,8 +24,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiLabeledIconButton
 import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
@@ -202,7 +200,7 @@ private fun HomeSuccessState(
                 colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {
                     uiState.closeActionBottomSheet()
-                    uiState.openRemoveWishBottomSheet()
+                    uiState.openRemoveWishDialog()
                 }
             )
             NiLabeledIconButton(
@@ -226,37 +224,19 @@ private fun HomeSuccessState(
         }
     }
 
-    if (uiState.shouldOpenRemoveWishBottomSheet) {
+    if (uiState.shouldShowRemoveWishDialogs) {
         NiDialog(
             titleId = R.string.delete_dialog_title,
             bodyId = R.string.delete_dialog_body,
-            sheetState = uiState.deleteWishBottomSheetState,
+            onConfirm = {
+                onDeleteClick()
+                uiState.closeRemoveWishDialog()
+            },
             onDismiss = {
-                uiState.closeRemoveWishBottomSheet()
+                uiState.closeRemoveWishDialog()
                 onMenuDismiss()
             }
-        ) {
-            NiFilledButton(
-                labelId = R.string.button_reject,
-                colors = NiButtonSpecs.Color.neutral(),
-                height = NiButtonSpecs.Height.Large,
-                onClick = {
-                    uiState.closeRemoveWishBottomSheet()
-                    onMenuDismiss()
-                },
-                modifier = Modifier.fillMaxWidth(0.48F)
-            )
-            NiFilledButton(
-                labelId = R.string.button_continue,
-                colors = NiButtonSpecs.Color.error(),
-                height = NiButtonSpecs.Height.Large,
-                onClick = {
-                    onDeleteClick()
-                    uiState.closeRemoveWishBottomSheet()
-                },
-                modifier = Modifier.weight(1F)
-            )
-        }
+        )
     }
 }
 
