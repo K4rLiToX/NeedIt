@@ -47,8 +47,6 @@ fun NiWishInfoCard(
 ) {
     Card(
         modifier = modifier
-            .padding(horizontal = MaterialTheme.dimensions.spacingM)
-            .padding(bottom = MaterialTheme.dimensions.spacingM)
     ) {
         NiWishCardInfoDetails(
             title = title,

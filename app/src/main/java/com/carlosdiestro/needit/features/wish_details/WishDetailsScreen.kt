@@ -3,6 +3,7 @@ package com.carlosdiestro.needit.features.wish_details
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +21,7 @@ import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIco
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBarSpecs
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
 @Composable
@@ -83,7 +85,11 @@ private fun WishDetailsScreen(
                 size = dataState.size,
                 color = dataState.color,
                 isbn = dataState.isbn,
-                modifier = Modifier.wrapContentSize()
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(horizontal = MaterialTheme.dimensions.spacingM)
+                    .padding(bottom = MaterialTheme.dimensions.spacingM)
+                    .padding(bottom = it.calculateBottomPadding())
             ) {
                 NiFilledButton(
                     labelId = dataState.actionLabelId,
