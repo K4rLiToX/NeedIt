@@ -14,7 +14,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -27,15 +26,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
-import com.carlosdiestro.needit.core.design_system.components.menus.NiDialog
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiLabeledIconButton
 import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
 import com.carlosdiestro.needit.core.design_system.components.lists.NiHomeWishList
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.needit.core.design_system.components.menus.NiDialog
 import com.carlosdiestro.needit.core.design_system.components.menus.NiWishActionMenu
 import com.carlosdiestro.needit.core.design_system.components.navigation.tab_bar.NiScrollableTabBar
-import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.domain.wishes.Wish
@@ -68,7 +66,6 @@ fun HomeRoute(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreen(
     dataState: HomeDataState,
@@ -81,15 +78,7 @@ private fun HomeScreen(
     onShareClick: () -> Unit,
     onPrivateClick: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            NiMainTopAppBar(
-                accountImageUrl = dataState.profilePictureUrl,
-                onNotificationClick = {},
-                onAccountClick = {}
-            )
-        }
-    ) {
+    Scaffold {
         if (dataState.noData)
             HomeEmptyState(
                 modifier = Modifier
@@ -113,7 +102,6 @@ private fun HomeScreen(
                 onPrivateClick = onPrivateClick,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = it.calculateTopPadding())
             )
     }
 }

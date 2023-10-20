@@ -28,8 +28,7 @@ import kotlinx.coroutines.launch
 data class HomeDataState(
     val wishes: List<HomeWishPlo> = emptyList(),
     val categories: List<WishCategoryPlo> = emptyList(),
-    val selectedWish: Wish? = null,
-    val profilePictureUrl: String = ""
+    val selectedWish: Wish? = null
 ) {
     val noData: Boolean
         get() = wishes.isEmpty()

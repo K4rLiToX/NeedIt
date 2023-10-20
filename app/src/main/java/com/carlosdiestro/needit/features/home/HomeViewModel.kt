@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
-import com.carlosdiestro.needit.domain.users.usecases.GetUserInfoUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
@@ -26,8 +25,7 @@ class HomeViewModel @Inject constructor(
     private val getMyWishes: GetMyWishesUseCase,
     private val removeWish: RemoveWishUseCase,
     private val shareWish: ShareWishUseCase,
-    private val lockWish: LockWishUseCase,
-    private val getUserInfo: GetUserInfoUseCase
+    private val lockWish: LockWishUseCase
 ) : ViewModel() {
 
 
@@ -37,14 +35,12 @@ class HomeViewModel @Inject constructor(
     val state: StateFlow<HomeDataState> =
         combine(
             selectedWishId,
-            getMyWishes(),
-            getUserInfo()
-        ) { selectedWishId, wishlist, userInfo ->
+            getMyWishes()
+        ) { selectedWishId, wishlist ->
             HomeDataState(
                 wishes = wishlist.asPlo(),
                 categories = getCategories(wishlist),
-                selectedWish = wishlist.find { it.id == selectedWishId },
-                profilePictureUrl = userInfo.profilePictureUrl
+                selectedWish = wishlist.find { it.id == selectedWishId }
             )
         }
             .stateIn(

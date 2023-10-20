@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.core
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -30,6 +30,7 @@ import com.carlosdiestro.needit.core.design_system.components.fab.NiFab
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.TopLevelDestination
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.routes
+import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.features.camera.cameraRoute
@@ -37,6 +38,7 @@ import com.carlosdiestro.needit.features.home.navigateToHome
 import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import kotlinx.coroutines.CoroutineScope
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Main(
     appState: NeedItAppState,
@@ -47,9 +49,18 @@ fun Main(
     isSignedIn: Boolean
 ) {
     val currentDestinationRoute = appState.currentDestinationRoute
-    val isUserGuest by viewModel.isUserGuest.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
+        topBar = {
+            if (appState.shouldShowTopBar) {
+                NiMainTopAppBar(
+                    accountImageUrl = state.profilePictureUrl,
+                    onNotificationClick = {},
+                    onAccountClick = {}
+                )
+            }
+        },
         bottomBar = {
             if (appState.shouldShowBottomBar) {
                 NiNavigationBar(
@@ -89,7 +100,7 @@ fun Main(
     ) {
         NeedItNavHost(
             appState = appState,
-            isUserGuest = isUserGuest,
+            isUserGuest = state.isUserGuest,
             isSignedIn = isSignedIn,
             modifier = Modifier
                 .conditional(
@@ -98,7 +109,7 @@ fun Main(
                         this
                     },
                     ifFalse = {
-                        statusBarsPadding()
+                        padding(top = it.calculateTopPadding())
                     }
                 )
                 .conditional(
@@ -189,6 +200,9 @@ class NeedItAppState(
 
     val shouldNotHaveNavigationBarPadding: Boolean
         @Composable get() = currentDestinationRoute in routesWithoutNavigationBarPadding
+
+    val shouldShowTopBar: Boolean
+        @Composable get() = isTopLevelDestination()
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
