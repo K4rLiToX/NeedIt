@@ -1,12 +1,11 @@
 package com.carlosdiestro.needit.core
 
-import android.app.Activity
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -15,10 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
@@ -28,19 +23,22 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.carlosdiestro.needit.MainViewModel
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFab
-import com.carlosdiestro.needit.core.design_system.components.dialogs.CameraPermissionTextProvider
-import com.carlosdiestro.needit.core.design_system.components.dialogs.PermissionDialog
-import com.carlosdiestro.needit.core.design_system.components.navigation.NeedItBottomBar
-import com.carlosdiestro.needit.core.design_system.components.navigation.TopLevelDestination
-import com.carlosdiestro.needit.core.design_system.components.navigation.routes
-import com.carlosdiestro.needit.core.design_system.theme.Icons
+import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
+import com.carlosdiestro.needit.core.design_system.components.fab.NiFab
+import com.carlosdiestro.needit.core.design_system.components.menus.CameraPermissionTextProvider
+import com.carlosdiestro.needit.core.design_system.components.menus.PermissionDialog
+import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
+import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.TopLevelDestination
+import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.routes
+import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
+import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.home.navigateToHome
-import com.carlosdiestro.needit.features.profile.navigateToProfile
+import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import kotlinx.coroutines.CoroutineScope
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Main(
     appState: NeedItAppState,
@@ -51,12 +49,21 @@ fun Main(
     isSignedIn: Boolean
 ) {
     val currentDestinationRoute = appState.currentDestinationRoute
-    val isUserGuest by viewModel.isUserGuest.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
+        topBar = {
+            if (appState.shouldShowTopBar) {
+                NiMainTopAppBar(
+                    accountImageUrl = state.profilePictureUrl,
+                    onNotificationClick = {},
+                    onAccountClick = {}
+                )
+            }
+        },
         bottomBar = {
             if (appState.shouldShowBottomBar) {
-                NeedItBottomBar(
+                NiNavigationBar(
                     destinations = appState.topLevelDestinations,
                     onNavigateToDestination = appState::navigateToTopLevelDestination,
                     currentDestination = appState.currentDestination
@@ -67,8 +74,8 @@ fun Main(
             if (appState.shouldShowFab) {
                 when (currentDestinationRoute) {
                     TopLevelDestination.Home.route -> {
-                        NeedItFab(
-                            icon = painterResource(id = Icons.NeedIt),
+                        NiFab(
+                            icon = MaterialTheme.icons.Add,
                             onClick = {
                                 if (currentDestinationRoute == TopLevelDestination.Home.route) {
                                     launchCameraPermissionLauncher()
@@ -78,13 +85,9 @@ fun Main(
                     }
 
                     TopLevelDestination.Friends.route -> {
-                        NeedItFab(
+                        NiFab(
                             icon = MaterialTheme.icons.AddFriend,
-                            onClick = {
-                                if (currentDestinationRoute == TopLevelDestination.Home.route) {
-                                    launchCameraPermissionLauncher()
-                                }
-                            }
+                            onClick = {}
                         )
                     }
 
@@ -95,14 +98,29 @@ fun Main(
         },
         floatingActionButtonPosition = FabPosition.End
     ) {
-        val window = (LocalView.current.context as Activity).window
-        window.navigationBarColor = appState.navigationBarColor
-        window.statusBarColor = appState.statusBarColor
         NeedItNavHost(
             appState = appState,
-            isUserGuest = isUserGuest,
+            isUserGuest = state.isUserGuest,
             isSignedIn = isSignedIn,
-            modifier = Modifier.padding(it)
+            modifier = Modifier
+                .conditional(
+                    condition = appState.shouldNotHaveStatusBarPadding,
+                    ifTrue = {
+                        this
+                    },
+                    ifFalse = {
+                        padding(top = it.calculateTopPadding())
+                    }
+                )
+                .conditional(
+                    condition = appState.shouldNotHaveNavigationBarPadding,
+                    ifTrue = {
+                        this
+                    },
+                    ifFalse = {
+                        padding(bottom = it.calculateBottomPadding())
+                    }
+                )
         )
     }
 
@@ -145,6 +163,15 @@ class NeedItAppState(
     val navController: NavHostController,
     val coroutineScope: CoroutineScope
 ) {
+    private val routesWithoutStatusBarPadding: List<String> = listOf(
+        detailsRoute,
+        cameraRoute
+    )
+
+    private val routesWithoutNavigationBarPadding: List<String> = listOf(
+        detailsRoute
+    )
+
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
@@ -153,9 +180,10 @@ class NeedItAppState(
         @Composable get() = currentDestination?.route ?: ""
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
-    private val topLevelDestinationsWithFab: List<String> = topLevelDestinations
-        .filter { it.hasFab }
-        .routes()
+    private val topLevelDestinationsWithFab: List<String> = listOf(
+        TopLevelDestination.Home.route,
+        TopLevelDestination.Friends.route
+    )
     private val topLevelDestinationsRoutes: List<String> = topLevelDestinations.routes()
 
     val shouldShowFab: Boolean
@@ -167,22 +195,14 @@ class NeedItAppState(
     var shouldShowCameraPermissionDialog by mutableStateOf(false)
         private set
 
-    val navigationBarColor: Int
-        @Composable get() =
-            if (isTopLevelDestination()) {
-                MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp).toArgb()
-            } else {
-                MaterialTheme.colorScheme.background.toArgb()
-            }
+    val shouldNotHaveStatusBarPadding: Boolean
+        @Composable get() = currentDestinationRoute in routesWithoutStatusBarPadding
 
-    val statusBarColor: Int
-        @Composable get() =
-            when (currentDestinationRoute) {
-                TopLevelDestination.Profile.route -> MaterialTheme.colorScheme
-                    .surfaceColorAtElevation(3.dp).toArgb()
+    val shouldNotHaveNavigationBarPadding: Boolean
+        @Composable get() = currentDestinationRoute in routesWithoutNavigationBarPadding
 
-                else -> MaterialTheme.colorScheme.background.toArgb()
-            }
+    val shouldShowTopBar: Boolean
+        @Composable get() = isTopLevelDestination()
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
@@ -204,10 +224,6 @@ class NeedItAppState(
 
             TopLevelDestination.Friends -> navController.navigate(
                 topLevelDestination.route,
-                topLevelNavOptions
-            )
-
-            TopLevelDestination.Profile -> navController.navigateToProfile(
                 topLevelNavOptions
             )
         }

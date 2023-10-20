@@ -1,15 +1,16 @@
 package com.carlosdiestro.needit.core.mappers
 
-import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
-import com.carlosdiestro.needit.core.design_system.components.navigation.toIntValue
-import com.carlosdiestro.needit.core.design_system.components.navigation.toWishCategory
+import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
+import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.database.entities.WishEntity
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.WishCategory
+import com.carlosdiestro.needit.domain.wishes.toWishCategory
 import com.carlosdiestro.needit.network.dtos.WishDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-fun WishEntity.toDomain(): Wish = Wish(
+fun WishEntity.asDomain(): Wish = Wish(
     id = this.id ?: -1,
     cloudId = this.cloudId,
     userId = this.userId,
@@ -27,26 +28,27 @@ fun WishEntity.toDomain(): Wish = Wish(
     isbn = this.isbn
 )
 
-fun List<WishEntity>.toDomain(): List<Wish> = this.map { it.toDomain() }
+fun List<WishEntity>.asDomain(): List<Wish> = this.map { it.asDomain() }
 
 @JvmName("flowListWishEntityToDomain")
-fun Flow<List<WishEntity>>.toDomain(): Flow<List<Wish>> = this.map { it.toDomain() }
+fun Flow<List<WishEntity>>.asDomain(): Flow<List<Wish>> = this.map { it.asDomain() }
 
 @JvmName("flowWishEntityToDomain")
-fun Flow<WishEntity>.toDomain(): Flow<Wish> = this.map { it.toDomain() }
+fun Flow<WishEntity>.asDomain(): Flow<Wish> = this.map { it.asDomain() }
 
-fun Wish.toPLO(): SimpleWishPLO = SimpleWishPLO(
+fun Wish.asPlo(): HomeWishPlo = HomeWishPlo(
     id = this.id,
-    userId = userId,
     imageUrl = this.imageUrl.ifEmpty { this.imageLocalPath },
-    title = this.title,
-    isShared = this.isShared,
-    category = this.category
+    shared = this.isShared,
+    category = this.category.asPlo()
 )
 
-fun List<Wish>.toPLO(): List<SimpleWishPLO> = this.map { it.toPLO() }
+fun WishCategory.asPlo(): WishCategoryPlo = WishCategoryPlo.values()[this.ordinal]
+fun WishCategoryPlo.asDomain(): WishCategory = WishCategory.values()[this.ordinal]
 
-fun Wish.toEntity(): WishEntity = WishEntity(
+fun List<Wish>.asPlo(): List<HomeWishPlo> = this.map { it.asPlo() }
+
+fun Wish.asEntity(): WishEntity = WishEntity(
     id = if (this.id == -1L) null else this.id,
     cloudId = this.cloudId,
     userId = this.userId,
@@ -64,7 +66,7 @@ fun Wish.toEntity(): WishEntity = WishEntity(
     isbn = this.isbn
 )
 
-fun Wish.toDto(): WishDto = WishDto(
+fun Wish.asDto(): WishDto = WishDto(
     id = id,
     userId = userId,
     imageUrl = imageUrl,
@@ -79,4 +81,3 @@ fun Wish.toDto(): WishDto = WishDto(
     color = this.color,
     isbn = this.isbn
 )
-

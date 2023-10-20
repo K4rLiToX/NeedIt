@@ -18,18 +18,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
-import com.carlosdiestro.needit.core.design_system.components.buttons.ButtonSpecs
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItFilledButton
-import com.carlosdiestro.needit.core.design_system.components.buttons.NeedItOutlinedButton
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiOutlinedButton
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import kotlinx.coroutines.launch
 
@@ -39,15 +36,17 @@ fun SignInRoute(
     onSignInSuccessful: () -> Unit,
     onContinueAsGuestClick: () -> Unit
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
     val googleAuthUiClient = viewModel.googleAuthUiClient
-
     LaunchedEffect(key1 = Unit) {
         if (googleAuthUiClient.getSignedInUser() != null) onSignInSuccessful()
     }
 
+    val dataState by viewModel.state.collectAsStateWithLifecycle()
+    val uiState = rememberSignInUiState()
+
     SignInScreen(
-        state = state,
+        dataState = dataState,
+        uiState = uiState,
         googleAuthUiClient = googleAuthUiClient,
         onSignInResult = viewModel::onSignInResult,
         resetState = viewModel::resetState,
@@ -59,7 +58,8 @@ fun SignInRoute(
 
 @Composable
 private fun SignInScreen(
-    state: SignInUiState,
+    dataState: SignInDataState,
+    uiState: SignInUiState,
     googleAuthUiClient: GoogleAuthUiClient,
     onSignInResult: (SignInResult) -> Unit,
     resetState: () -> Unit,
@@ -67,13 +67,11 @@ private fun SignInScreen(
     signIn: (UserAuth) -> Unit,
     onContinueAsGuestClick: () -> Unit
 ) {
-    val context = LocalContext.current
-    val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
         onResult = { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                lifecycleScope.launch {
+                uiState.lifecycleScope.launch {
                     val signInResult = googleAuthUiClient.signInWithIntent(
                         intent = result.data ?: return@launch
                     )
@@ -83,19 +81,19 @@ private fun SignInScreen(
         }
     )
 
-    LaunchedEffect(key1 = state.signInError) {
-        state.signInError?.let { error ->
+    LaunchedEffect(key1 = dataState.signInError) {
+        dataState.signInError?.let { error ->
             Toast.makeText(
-                context,
+                uiState.context,
                 error,
                 Toast.LENGTH_LONG
             ).show()
         }
     }
 
-    LaunchedEffect(key1 = state.userAuth) {
-        if (state.userAuth != null) {
-            signIn(state.userAuth)
+    LaunchedEffect(key1 = dataState.userAuth) {
+        if (dataState.userAuth != null) {
+            signIn(dataState.userAuth)
             onSignInSuccessful()
             resetState()
         }
@@ -112,10 +110,10 @@ private fun SignInScreen(
                 bottom = MaterialTheme.dimensions.spacingXXL
             )
     ) {
-        NeedItFilledButton(
+        NiFilledButton(
             labelId = R.string.button_login,
             onClick = {
-                lifecycleScope.launch {
+                uiState.lifecycleScope.launch {
                     val signInIntentSender = googleAuthUiClient.signIn()
                     launcher.launch(
                         IntentSenderRequest.Builder(
@@ -124,15 +122,15 @@ private fun SignInScreen(
                     )
                 }
             },
-            size = ButtonSpecs.LargeHeight,
+            height = NiButtonSpecs.Height.Large,
             modifier = Modifier
                 .fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingM))
-        NeedItOutlinedButton(
+        NiOutlinedButton(
             labelId = R.string.button_continue_as_guest,
             onClick = onContinueAsGuestClick,
-            size = ButtonSpecs.LargeHeight,
+            height = NiButtonSpecs.Height.Large,
             modifier = Modifier
                 .fillMaxWidth()
         )

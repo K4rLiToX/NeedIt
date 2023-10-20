@@ -2,10 +2,8 @@ package com.carlosdiestro.needit.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.core.design_system.components.cards.SimpleWishPLO
-import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
-import com.carlosdiestro.needit.core.extensions.launchCollect
-import com.carlosdiestro.needit.core.mappers.toPLO
+import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
@@ -13,7 +11,11 @@ import com.carlosdiestro.needit.domain.wishes.usecases.RemoveWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,84 +28,73 @@ class HomeViewModel @Inject constructor(
     private val lockWish: LockWishUseCase
 ) : ViewModel() {
 
-    private var _state: MutableStateFlow<HomeUiState> = MutableStateFlow(HomeUiState())
-    val state = _state.asStateFlow()
-    private lateinit var wishes: List<Wish>
-    var selectedWishId: Long? = null
-        private set
 
-    init {
-        fetchMyWishes()
-    }
+    private var _selectedWishId: MutableStateFlow<Long> = MutableStateFlow(-1)
+    private val selectedWishId = _selectedWishId.asStateFlow()
 
-    private fun fetchMyWishes() {
-        launchCollect(getMyWishes()) { list ->
-            wishes = list
-            _state.update { currentState ->
-                currentState.copy(
-                    wishes = list.toPLO(),
-                    tabs = getCategoryTabs(list.toPLO()),
-                    isEmpty = list.isEmpty()
-                )
-            }
-        }
-    }
-
-    private fun getCategoryTabs(wishes: List<SimpleWishPLO>): List<WishCategory> {
-        return listOf(WishCategory.All)
-            .plus(
-                wishes
-                    .map { it.category }
-                    .toSet()
-                    .sortedBy { it.ordinal }
+    val state: StateFlow<HomeDataState> =
+        combine(
+            selectedWishId,
+            getMyWishes()
+        ) { selectedWishId, wishlist ->
+            HomeDataState(
+                wishes = wishlist.asPlo(),
+                categories = getCategories(wishlist),
+                selectedWish = wishlist.find { it.id == selectedWishId }
             )
-    }
+        }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = HomeDataState()
+            )
+
+    private fun getCategories(wishes: List<Wish>): List<WishCategoryPlo> =
+        wishes
+            .map { it.category.asPlo() }
+            .toSet()
+            .sortedBy { it.ordinal }
 
     fun onSelectedWish(id: Long) {
-        selectedWishId = id
-        _state.update {
-            it.copy(
-                wishIsShared = wishes.find { wish -> wish.id == id }!!.isShared
-            )
+        _selectedWishId.update {
+            id
         }
     }
 
     fun uploadWish() {
         viewModelScope.launch {
-            selectedWishId?.let {
-                shareWish(it)
+            val wish = state.value.selectedWish
+            wish?.let {
+                shareWish(it.id)
+                onSelectedWish(-1)
             }
-            selectedWishId = null
         }
     }
 
     fun privateWish() {
         viewModelScope.launch {
-            selectedWishId?.let {
-                lockWish(it)
+            val wish = state.value.selectedWish
+            wish?.let {
+                lockWish(it.id)
+                onSelectedWish(-1)
             }
-            selectedWishId = null
         }
     }
 
     fun deleteWish() {
         viewModelScope.launch {
-            selectedWishId?.let { id ->
-                val wish = wishes.find { it.id == id }!!
+            val wish = state.value.selectedWish
+            wish?.let {
                 removeWish(
-                    id = id,
-                    cloudId = wish.cloudId,
-                    imageUrl = wish.imageUrl
+                    id = it.id,
+                    cloudId = it.cloudId,
+                    imageUrl = it.imageUrl
                 )
             }
         }
     }
 
+    fun clearWishSelection() {
+        onSelectedWish(-1)
+    }
 }
-
-data class HomeUiState(
-    val wishes: List<SimpleWishPLO> = emptyList(),
-    val tabs: List<WishCategory> = emptyList(),
-    val isEmpty: Boolean = false,
-    val wishIsShared: Boolean = false
-)

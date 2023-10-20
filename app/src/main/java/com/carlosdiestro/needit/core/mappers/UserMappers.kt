@@ -7,14 +7,14 @@ import com.carlosdiestro.needit.preferences.UserPrefs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-fun User.toDto(): UserDto = UserDto(
+fun User.asDto(): UserDto = UserDto(
     id = id,
     username = username,
     email = email,
     profilePictureUrl = profilePictureUrl
 )
 
-fun UserAuth.toDomain(): User = User(
+fun UserAuth.asDomain(): User = User(
     id = userId,
     username = username,
     email = email,
@@ -28,11 +28,11 @@ fun User.toPreferences(): UserPrefs = UserPrefs(
     profilePictureUrl = profilePictureUrl
 )
 
-fun UserPrefs.toDomain(): User = User(
+fun UserPrefs.asDomain(): User = User(
     id = id,
     username = username,
     email = email,
     profilePictureUrl = profilePictureUrl
 )
 
-fun Flow<UserPrefs>.toDomain(): Flow<User> = this.map { it.toDomain() }
+fun Flow<UserPrefs>.asDomain(): Flow<User> = this.map { it.asDomain() }

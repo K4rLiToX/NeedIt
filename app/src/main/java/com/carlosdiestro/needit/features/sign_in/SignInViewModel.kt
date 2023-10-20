@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.auth.GoogleAuthUiClient
 import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
-import com.carlosdiestro.needit.core.mappers.toDomain
+import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.domain.users.usecases.SignInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ class SignInViewModel @Inject constructor(
     private val signIn: SignInUseCase
 ) : ViewModel() {
 
-    private var _state: MutableStateFlow<SignInUiState> = MutableStateFlow(SignInUiState())
+    private var _state: MutableStateFlow<SignInDataState> = MutableStateFlow(SignInDataState())
     val state = _state.asStateFlow()
 
     fun onSignInResult(result: SignInResult) {
@@ -34,16 +34,11 @@ class SignInViewModel @Inject constructor(
 
     fun signIn(userAuth: UserAuth) {
         viewModelScope.launch {
-            signIn(userAuth.toDomain())
+            signIn(userAuth.asDomain())
         }
     }
 
     fun resetState() {
-        _state.update { SignInUiState() }
+        _state.update { SignInDataState() }
     }
 }
-
-data class SignInUiState(
-    val userAuth: UserAuth? = null,
-    val signInError: String? = null
-)

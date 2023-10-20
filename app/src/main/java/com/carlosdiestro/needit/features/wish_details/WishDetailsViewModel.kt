@@ -24,9 +24,9 @@ class WishDetailsViewModel @Inject constructor(
 
     private val wishId = savedStateHandle[argsWishId] ?: -1L
 
-    val state: StateFlow<WishDetailsUiState> = getWish(wishId)
+    val state: StateFlow<WishDetailsDataState> = getWish(wishId)
         .map { wish ->
-            WishDetailsUiState(
+            WishDetailsDataState(
                 id = wish.id,
                 imageUrl = wish.imageUrl.ifEmpty { wish.imageLocalPath },
                 title = wish.title,
@@ -42,7 +42,7 @@ class WishDetailsViewModel @Inject constructor(
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = WishDetailsUiState()
+            initialValue = WishDetailsDataState()
         )
 
     fun uploadWish() {
@@ -57,17 +57,3 @@ class WishDetailsViewModel @Inject constructor(
         }
     }
 }
-
-data class WishDetailsUiState(
-    val id: Long = -1,
-    val imageUrl: String = "",
-    val title: String = "",
-    val subtitle: String = "",
-    val price: String = "0.0",
-    val description: String = "",
-    val webUrl: String = "",
-    val isShared: Boolean = false,
-    val size: String? = null,
-    val color: String? = null,
-    val isbn: String? = null
-)

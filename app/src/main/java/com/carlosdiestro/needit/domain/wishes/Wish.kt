@@ -1,7 +1,5 @@
 package com.carlosdiestro.needit.domain.wishes
 
-import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
-
 data class Wish(
     val id: Long,
     val cloudId: String,

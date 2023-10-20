@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.network.datasources
 
-import com.carlosdiestro.needit.core.mappers.toDto
+import com.carlosdiestro.needit.core.mappers.asDto
 import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.network.collections.WishesCollection
@@ -10,7 +10,7 @@ class WishRemoteDatasourceImpl @Inject constructor(
     private val wishesCollection: WishesCollection
 ) : WishRemoteDatasource {
 
-    override suspend fun insert(wish: Wish): String = wishesCollection.insert(wish.toDto())
+    override suspend fun insert(wish: Wish): String = wishesCollection.insert(wish.asDto())
     override suspend fun delete(cloudId: String) = wishesCollection.delete(cloudId)
-    override suspend fun update(wish: Wish) = wishesCollection.update(wish.cloudId, wish.toDto())
+    override suspend fun update(wish: Wish) = wishesCollection.update(wish.cloudId, wish.asDto())
 }

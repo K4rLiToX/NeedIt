@@ -30,7 +30,7 @@ fun NavController.navigateToUpsert(
     )
 }
 
-fun NavGraphBuilder.upsertRoute(
+fun NavGraphBuilder.upsertScreen(
     onBackClick: () -> Unit,
     onFinish: () -> Unit
 ) {
