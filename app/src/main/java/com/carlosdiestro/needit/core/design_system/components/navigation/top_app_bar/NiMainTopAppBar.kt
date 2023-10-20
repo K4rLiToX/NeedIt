@@ -39,12 +39,12 @@ fun NiMainTopAppBar(
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)
     CenterAlignedTopAppBar(
         title = {
-           Icon(
-               painter = painterResource(id = MaterialTheme.icons.NeedIt),
-               contentDescription = "",
-               tint = MaterialTheme.colorScheme.primary,
-               modifier = Modifier.size(40.dp)
-           )
+            Icon(
+                painter = painterResource(id = MaterialTheme.icons.NeedIt),
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(40.dp)
+            )
         },
         navigationIcon = {
             NiIconButton(
