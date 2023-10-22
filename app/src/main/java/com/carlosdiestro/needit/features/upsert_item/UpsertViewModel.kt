@@ -1,5 +1,8 @@
 package com.carlosdiestro.needit.features.upsert_item
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +23,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -149,8 +153,10 @@ class UpsertViewModel @Inject constructor(
                     updateWish(updatedWish)
                 }
             } else {
+                val compressedImage = imageLocalPath.toBitmap().compress()
                 insertWish(
                     imageLocalPath = imageLocalPath,
+                    compressedImage = compressedImage,
                     title = title,
                     subtitle = subtitle,
                     price = price,
@@ -164,4 +170,17 @@ class UpsertViewModel @Inject constructor(
             }
         }
     }
+}
+
+private fun String.toBitmap(): Bitmap = BitmapFactory.decodeFile(this).rotate()
+
+private fun Bitmap.compress(): ByteArray {
+    val baos = ByteArrayOutputStream()
+    this.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+    return baos.toByteArray()
+}
+
+private fun Bitmap.rotate(): Bitmap {
+    val matrix = Matrix().apply { postRotate(90F) }
+    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
