@@ -1,8 +1,5 @@
 package com.carlosdiestro.needit.features.upsert_item
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,6 +11,7 @@ import com.carlosdiestro.needit.core.design_system.components.lists.WishCategory
 import com.carlosdiestro.needit.core.design_system.components.lists.toWishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.usecases.GetImageUriUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
@@ -23,7 +21,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +28,7 @@ class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
     private val insertWish: InsertWishUseCase,
     private val updateWish: UpdateWishUseCase,
+    private val getImageUri: GetImageUriUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val category: WishCategoryPlo = (savedStateHandle[argCategory] ?: -1)
@@ -75,6 +73,8 @@ class UpsertViewModel @Inject constructor(
     init {
         if (wishId != -1L) {
             fetchWish()
+        } else {
+            fetchImageLocalPath()
         }
     }
 
@@ -84,7 +84,7 @@ class UpsertViewModel @Inject constructor(
             wish?.let {
                 _state.update { currentState ->
                     currentState.copy(
-                        imageUrl = it.imageUrl,
+                        imageUrl = it.imageLocalPath.ifEmpty { it.imageUrl },
                         category = it.category.asPlo()
                     )
                 }
@@ -98,6 +98,17 @@ class UpsertViewModel @Inject constructor(
                 updateIsbn(it.isbn)
             }
 
+        }
+    }
+
+    private fun fetchImageLocalPath() {
+        viewModelScope.launch {
+            val uri = getImageUri()
+            _state.update {
+                it.copy(
+                    imageUrl = uri
+                )
+            }
         }
     }
 
@@ -133,7 +144,7 @@ class UpsertViewModel @Inject constructor(
         isbn = value.orEmpty()
     }
 
-    fun save(savedUri: String) {
+    fun save() {
         viewModelScope.launch {
             if (wishId != -1L) {
                 wish?.let {
@@ -150,10 +161,8 @@ class UpsertViewModel @Inject constructor(
                     updateWish(updatedWish)
                 }
             } else {
-                val compressedImage = savedUri.toBitmap().compress()
                 insertWish(
-                    imageLocalPath = savedUri,
-                    compressedImage = compressedImage,
+                    imageLocalPath = state.value.imageUrl,
                     title = title,
                     subtitle = subtitle,
                     price = price,
@@ -169,15 +178,3 @@ class UpsertViewModel @Inject constructor(
     }
 }
 
-private fun String.toBitmap(): Bitmap = BitmapFactory.decodeFile(this).rotate()
-
-private fun Bitmap.compress(): ByteArray {
-    val baos = ByteArrayOutputStream()
-    this.compress(Bitmap.CompressFormat.JPEG, 50, baos)
-    return baos.toByteArray()
-}
-
-private fun Bitmap.rotate(): Bitmap {
-    val matrix = Matrix().apply { postRotate(90F) }
-    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
-}
