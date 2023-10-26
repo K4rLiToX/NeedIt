@@ -271,10 +271,11 @@ private fun CameraShutter(
     IconButton(
         onClick = {
             coroutineScope.launch {
-                val imageUri = imageCapture
-                    .takePhoto(context.executor)
-                    .toString()
-                onShutterClick(imageUri)
+                imageCapture
+                    .takePhoto(
+                        executor = context.executor,
+                        onImageCapture = onShutterClick
+                    )
             }
         },
         modifier = Modifier
@@ -317,7 +318,10 @@ suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutin
 private val Context.executor: Executor
     get() = ContextCompat.getMainExecutor(this)
 
-suspend fun ImageCapture.takePhoto(executor: Executor): File {
+suspend fun ImageCapture.takePhoto(
+    executor: Executor,
+    onImageCapture: (String) -> Unit
+) {
     val file = withContext(Dispatchers.IO) {
         kotlin.runCatching {
             File.createTempFile("image", ".jpg")
@@ -327,9 +331,10 @@ suspend fun ImageCapture.takePhoto(executor: Executor): File {
     }
     return suspendCoroutine { continuation ->
         val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
-        takePicture(outputOptions, executor, object : ImageCapture.OnImageSavedCallback {
+        takePicture(outputOptions, executor, object : ImageCapture
+            .OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                continuation.resume(file)
+                onImageCapture(file.absolutePath)
             }
 
             override fun onError(exception: ImageCaptureException) {
