@@ -326,22 +326,7 @@ fun ImageCapture.takePhoto(
     contentResolver: ContentResolver,
     onImageCapture: (String) -> Unit
 ) {
-    val photoName = SimpleDateFormat(
-        "yyyMMddHHmmSS",
-        Locale.getDefault()
-    ).format(System.currentTimeMillis())
-    val contentValues = ContentValues().apply {
-        put(MediaStore.MediaColumns.DISPLAY_NAME, photoName)
-        put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/NeedIt")
-        }
-    }
-    val outputOptions = ImageCapture.OutputFileOptions.Builder(
-        contentResolver,
-        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-        contentValues
-    ).build()
+    val outputOptions = createOutputOptions(contentResolver)
     takePicture(
         outputOptions,
         executor,
@@ -356,3 +341,25 @@ fun ImageCapture.takePhoto(
         }
     )
 }
+
+private fun createOutputOptions(
+    contentResolver: ContentResolver
+): ImageCapture.OutputFileOptions = ImageCapture.OutputFileOptions
+    .Builder(
+        contentResolver,
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        createFileMetadata()
+    ).build()
+
+private fun createFileMetadata(): ContentValues = ContentValues().apply {
+    put(MediaStore.MediaColumns.DISPLAY_NAME, createFileName())
+    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+        put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/NeedIt")
+    }
+}
+
+private fun createFileName(): String = SimpleDateFormat(
+    "yyyyMMddHHmmSS",
+    Locale.getDefault()
+).format(System.currentTimeMillis())
