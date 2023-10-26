@@ -1,7 +1,11 @@
 package com.carlosdiestro.needit.features.camera
 
 import android.annotation.SuppressLint
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
+import android.os.Build
+import android.provider.MediaStore
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -32,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -49,13 +54,11 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.top_app
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Locale
 import java.util.concurrent.Executor
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 @Composable
@@ -268,14 +271,15 @@ private fun CameraShutter(
     imageCapture: ImageCapture,
     onShutterClick: (String) -> Unit
 ) {
+    val contentResolver = LocalContext.current.applicationContext.contentResolver
     IconButton(
         onClick = {
             coroutineScope.launch {
-                imageCapture
-                    .takePhoto(
-                        executor = context.executor,
-                        onImageCapture = onShutterClick
-                    )
+                imageCapture.takePhoto(
+                    executor = context.executor,
+                    contentResolver = contentResolver,
+                    onImageCapture = onShutterClick
+                )
             }
         },
         modifier = Modifier
@@ -318,28 +322,38 @@ suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutin
 private val Context.executor: Executor
     get() = ContextCompat.getMainExecutor(this)
 
-suspend fun ImageCapture.takePhoto(
+fun ImageCapture.takePhoto(
     executor: Executor,
+    contentResolver: ContentResolver,
     onImageCapture: (String) -> Unit
 ) {
-    val file = withContext(Dispatchers.IO) {
-        kotlin.runCatching {
-            File.createTempFile("image", ".jpg")
-        }.getOrElse {
-            File("/dev/null")
+    val photoName = SimpleDateFormat(
+        "yyyMMddHHmmSS",
+        Locale.getDefault()
+    ).format(System.currentTimeMillis())
+    val contentValues = ContentValues().apply {
+        put(MediaStore.MediaColumns.DISPLAY_NAME, photoName)
+        put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/NeedIt")
         }
     }
-    return suspendCoroutine { continuation ->
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
-        takePicture(outputOptions, executor, object : ImageCapture
-            .OnImageSavedCallback {
+    val outputOptions = ImageCapture.OutputFileOptions.Builder(
+        contentResolver,
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        contentValues
+    ).build()
+    takePicture(
+        outputOptions,
+        executor,
+        object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                onImageCapture(file.absolutePath)
+                onImageCapture(outputFileResults.savedUri.toString())
             }
 
             override fun onError(exception: ImageCaptureException) {
-                continuation.resumeWithException(exception)
+                TODO("Not yet implemented")
             }
-        })
-    }
+        }
+    )
 }
