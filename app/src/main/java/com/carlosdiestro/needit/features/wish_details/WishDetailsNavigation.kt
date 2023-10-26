@@ -27,7 +27,7 @@ fun NavController.navigateToWishDetails(
 
 fun NavGraphBuilder.wishDetailsScreen(
     onBackClick: () -> Unit,
-    onUpdateClick: (String, Int, Long) -> Unit
+    onUpdateClick: (Int, Long) -> Unit
 ) {
     composable(
         route = detailsRoute,

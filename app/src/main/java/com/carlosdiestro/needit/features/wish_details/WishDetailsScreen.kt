@@ -27,14 +27,14 @@ import com.carlosdiestro.needit.core.design_system.theme.icons
 @Composable
 fun WishDetailsRoute(
     onBackClick: () -> Unit,
-    onUpdateClick: (String, Int, Long) -> Unit,
+    onUpdateClick: (Int, Long) -> Unit,
     viewModel: WishDetailsViewModel = hiltViewModel()
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
     WishDetailsScreen(
         dataState = dataState,
         onBackClick = onBackClick,
-        onUpdateClick = { onUpdateClick(" ", 0, dataState.id) },
+        onUpdateClick = { onUpdateClick(0, dataState.id) },
         onShareClick = viewModel::uploadWish,
         onPrivateClick = viewModel::privateWish
     )

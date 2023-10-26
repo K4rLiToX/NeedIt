@@ -35,6 +35,7 @@ import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.home.navigateToHome
+import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import kotlinx.coroutines.CoroutineScope
 
@@ -165,7 +166,8 @@ class NeedItAppState(
 ) {
     private val routesWithoutStatusBarPadding: List<String> = listOf(
         detailsRoute,
-        cameraRoute
+        cameraRoute,
+        upsertRoute
     )
 
     private val routesWithoutNavigationBarPadding: List<String> = listOf(

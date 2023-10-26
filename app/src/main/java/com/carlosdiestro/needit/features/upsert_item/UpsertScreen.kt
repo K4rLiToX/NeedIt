@@ -112,7 +112,7 @@ private fun UpsertScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
+                .padding(top = it.calculateTopPadding())
                 .padding(horizontal = MaterialTheme.dimensions.spacingM)
         ) {
             val isSpecificInformationNeeded = state.category in listOf(

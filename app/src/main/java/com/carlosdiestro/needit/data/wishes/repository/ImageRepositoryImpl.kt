@@ -15,9 +15,9 @@ class ImageRepositoryImpl @Inject constructor(
     @ApplicationScope private val appDispatcher: CoroutineScope
 ) : ImageRepository {
 
-    override suspend fun insertImage(path: String, userId: String): String =
+    override suspend fun insertImage(bytes: ByteArray, userId: String): String =
         withContext(appDispatcher.coroutineContext) {
-            remoteDatasource.insertImage(path, userId)
+            remoteDatasource.insertImage(bytes, userId)
         }
 
     override suspend fun deleteImage(path: String) = withContext(ioDispatcher) {

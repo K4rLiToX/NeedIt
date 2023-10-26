@@ -11,6 +11,7 @@ import com.carlosdiestro.needit.core.design_system.components.lists.WishCategory
 import com.carlosdiestro.needit.core.design_system.components.lists.toWishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.usecases.GetImageUriUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
@@ -27,18 +28,16 @@ class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
     private val insertWish: InsertWishUseCase,
     private val updateWish: UpdateWishUseCase,
+    private val getImageUri: GetImageUriUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    private val imageLocalPath: String =
-        (savedStateHandle[argImageLocalPath] ?: "").replace("-", "/")
     private val category: WishCategoryPlo = (savedStateHandle[argCategory] ?: -1)
         .toWishCategoryPlo()
     private val wishId: Long = savedStateHandle[argWishId] ?: -1L
     private var wish: Wish? = null
 
     private var _state: MutableStateFlow<UpsertDataState> = MutableStateFlow(
-        UpsertDataState(imageLocalPath, category)
+        UpsertDataState("", category)
     )
     val state = _state.asStateFlow()
 
@@ -74,6 +73,8 @@ class UpsertViewModel @Inject constructor(
     init {
         if (wishId != -1L) {
             fetchWish()
+        } else {
+            fetchImageLocalPath()
         }
     }
 
@@ -83,7 +84,7 @@ class UpsertViewModel @Inject constructor(
             wish?.let {
                 _state.update { currentState ->
                     currentState.copy(
-                        imageUrl = it.imageUrl,
+                        imageUrl = it.imageLocalPath.ifEmpty { it.imageUrl },
                         category = it.category.asPlo()
                     )
                 }
@@ -97,6 +98,17 @@ class UpsertViewModel @Inject constructor(
                 updateIsbn(it.isbn)
             }
 
+        }
+    }
+
+    private fun fetchImageLocalPath() {
+        viewModelScope.launch {
+            val uri = getImageUri()
+            _state.update {
+                it.copy(
+                    imageUrl = uri
+                )
+            }
         }
     }
 
@@ -150,7 +162,7 @@ class UpsertViewModel @Inject constructor(
                 }
             } else {
                 insertWish(
-                    imageLocalPath = imageLocalPath,
+                    imageLocalPath = state.value.imageUrl,
                     title = title,
                     subtitle = subtitle,
                     price = price,
@@ -165,3 +177,4 @@ class UpsertViewModel @Inject constructor(
         }
     }
 }
+

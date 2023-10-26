@@ -1,9 +1,11 @@
 package com.carlosdiestro.needit.data
 
 import com.carlosdiestro.needit.data.users.repository.UserRepositoryImpl
+import com.carlosdiestro.needit.data.wishes.repository.FileManagerRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.ImageRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.WishRepositoryImpl
 import com.carlosdiestro.needit.domain.users.repository.UserRepository
+import com.carlosdiestro.needit.domain.wishes.repository.FileManagerRepository
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import dagger.Binds
@@ -27,4 +29,8 @@ interface DataModule {
     @Singleton
     @Binds
     fun bindImageRepository(impl: ImageRepositoryImpl): ImageRepository
+
+    @Singleton
+    @Binds
+    fun bindFileManagerRepository(impl: FileManagerRepositoryImpl): FileManagerRepository
 }

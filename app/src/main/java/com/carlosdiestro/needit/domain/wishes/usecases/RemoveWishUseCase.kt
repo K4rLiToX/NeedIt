@@ -9,7 +9,11 @@ class RemoveWishUseCase @Inject constructor(
     private val wishRepository: WishRepository,
     private val imageRepository: ImageRepository
 ) {
-    suspend operator fun invoke(id: Long, cloudId: String, imageUrl: String) {
+    suspend operator fun invoke(
+        id: Long,
+        cloudId: String,
+        imageUrl: String
+    ) {
         wishRepository.removeWish(id, cloudId)
         imageRepository.deleteImage(getPath(imageUrl))
     }
