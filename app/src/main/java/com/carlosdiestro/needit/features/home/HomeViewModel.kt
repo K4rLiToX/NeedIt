@@ -27,8 +27,6 @@ class HomeViewModel @Inject constructor(
     private val shareWish: ShareWishUseCase,
     private val lockWish: LockWishUseCase
 ) : ViewModel() {
-
-
     private var _selectedWishId: MutableStateFlow<Long> = MutableStateFlow(-1)
     private val selectedWishId = _selectedWishId.asStateFlow()
 
