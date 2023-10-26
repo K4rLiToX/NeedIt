@@ -40,7 +40,7 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 @Composable
 fun HomeRoute(
     onItemClick: (Long) -> Unit,
-    onUpdateClick: (String, Int, Long) -> Unit,
+    onUpdateClick: (Int, Long) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
@@ -58,7 +58,7 @@ fun HomeRoute(
         onItemLongClick = viewModel::onSelectedWish,
         onMenuDismiss = viewModel::clearWishSelection,
         onDeleteClick = viewModel::deleteWish,
-        onUpdateClick = { onUpdateClick(" ", 0, dataState.selectedWish?.id!!) },
+        onUpdateClick = { onUpdateClick(0, dataState.selectedWish?.id!!) },
         onShareClick = viewModel::uploadWish,
         onPrivateClick = viewModel::privateWish
     )

@@ -10,7 +10,7 @@ fun NavController.navigateToCamera() = navigate(cameraRoute)
 
 fun NavGraphBuilder.cameraScreen(
     onBackClick: () -> Unit,
-    onContinueClick: (String, Int, Long) -> Unit
+    onContinueClick: (Int, Long) -> Unit
 ) {
     composable(
         route = cameraRoute

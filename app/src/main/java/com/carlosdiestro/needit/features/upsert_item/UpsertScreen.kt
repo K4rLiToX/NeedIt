@@ -1,8 +1,5 @@
 package com.carlosdiestro.needit.features.upsert_item
 
-import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -83,7 +79,7 @@ private fun UpsertScreen(
     saveButtonEnabled: Boolean,
     onBackClick: () -> Unit,
     navigateHome: () -> Unit,
-    onSaveClick: (String) -> Unit,
+    onSaveClick: () -> Unit,
     updateTitle: (String) -> Unit,
     updateSubtitle: (String) -> Unit,
     updatePrice: (String) -> Unit,
@@ -93,33 +89,6 @@ private fun UpsertScreen(
     updateColor: (String) -> Unit,
     updateIsbn: (String) -> Unit
 ) {
-    var savedUri = Uri.EMPTY.toString()
-    val collection =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            MediaStore.Images.Media.getContentUri(
-                MediaStore.VOLUME_EXTERNAL
-            )
-        } else {
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        }
-    val projection = arrayOf(
-        MediaStore.Images.Media.DATA
-    )
-    val query = LocalContext.current.applicationContext.contentResolver.query(
-        collection,
-        projection,
-        null,
-        null,
-        null
-    )
-    query?.use { cursor ->
-        val dataColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        if (cursor.moveToLast()) {
-            val data = cursor.getString(dataColumn)
-            savedUri = data
-        }
-    }
-    query?.close()
     Scaffold(
         topBar = {
             NiTopAppBar(
@@ -130,7 +99,7 @@ private fun UpsertScreen(
                         labelId = R.string.button_save,
                         enabled = saveButtonEnabled,
                         onClick = {
-                            onSaveClick(savedUri)
+                            onSaveClick()
                             navigateHome()
                         }
                     )
@@ -152,7 +121,7 @@ private fun UpsertScreen(
                 WishCategoryPlo.Books
             )
             AsyncImage(
-                model = savedUri,
+                model = state.imageUrl,
                 contentDescription = "Photo",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

@@ -33,16 +33,13 @@ class UpsertViewModel @Inject constructor(
     private val updateWish: UpdateWishUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-
-    private val imageLocalPath: String =
-        (savedStateHandle[argImageLocalPath] ?: "").replace("-", "/")
     private val category: WishCategoryPlo = (savedStateHandle[argCategory] ?: -1)
         .toWishCategoryPlo()
     private val wishId: Long = savedStateHandle[argWishId] ?: -1L
     private var wish: Wish? = null
 
     private var _state: MutableStateFlow<UpsertDataState> = MutableStateFlow(
-        UpsertDataState(imageLocalPath, category)
+        UpsertDataState("", category)
     )
     val state = _state.asStateFlow()
 
