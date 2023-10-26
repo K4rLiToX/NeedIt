@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
@@ -47,19 +48,34 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val appState = rememberNeedItAppState()
-                    val cameraPermissionResultLauncher = rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.RequestPermission(),
-                        onResult = { isGranted ->
-                            if (isGranted) appState.navController.navigateToCamera()
-                            else appState.setShowCameraPermissionDialog(true)
+                    val permissions = arrayOf(
+                        Manifest.permission.CAMERA,
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                            Manifest.permission.READ_MEDIA_IMAGES
+                        else
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
+                    val multiplePermissionsResultLauncher = rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.RequestMultiplePermissions(),
+                        onResult = { permissions ->
+                            val areGranted = permissions.values.reduce { acc, next -> acc && next }
+                            if (areGranted) appState.navController.navigateToCamera()
+                            else Unit
                         }
                     )
+//                    val cameraPermissionResultLauncher = rememberLauncherForActivityResult(
+//                        contract = ActivityResultContracts.RequestPermission(),
+//                        onResult = { isGranted ->
+//                            if (isGranted) appState.navController.navigateToCamera()
+//                            else appState.setShowCameraPermissionDialog(true)
+//                        }
+//                    )
                     val isSignedIn = googleAuthUiClient.getSignedInUser() != null
                     Main(
                         appState = appState,
                         launchCameraPermissionLauncher = {
-                            cameraPermissionResultLauncher.launch(
-                                Manifest.permission.CAMERA
+                            multiplePermissionsResultLauncher.launch(
+                                permissions
                             )
                         },
                         isCameraPermissionPermanentlyDeclined = !shouldShowRequestPermissionRationale(
