@@ -136,7 +136,7 @@ class UpsertViewModel @Inject constructor(
         isbn = value.orEmpty()
     }
 
-    fun save() {
+    fun save(savedUri: String) {
         viewModelScope.launch {
             if (wishId != -1L) {
                 wish?.let {
@@ -153,9 +153,9 @@ class UpsertViewModel @Inject constructor(
                     updateWish(updatedWish)
                 }
             } else {
-                val compressedImage = imageLocalPath.toBitmap().compress()
+                val compressedImage = savedUri.toBitmap().compress()
                 insertWish(
-                    imageLocalPath = imageLocalPath,
+                    imageLocalPath = savedUri,
                     compressedImage = compressedImage,
                     title = title,
                     subtitle = subtitle,
