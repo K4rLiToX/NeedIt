@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.data
 
-import com.carlosdiestro.needit.data.wishes.repository.FileManagerRepositoryImpl
 import com.carlosdiestro.needit.data.users.repository.UserRepositoryImpl
+import com.carlosdiestro.needit.data.wishes.repository.FileManagerRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.ImageRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.WishRepositoryImpl
 import com.carlosdiestro.needit.domain.users.repository.UserRepository
