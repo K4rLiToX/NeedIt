@@ -43,10 +43,4 @@ class FileManagerImpl @Inject constructor(
             }
         } ?: Uri.EMPTY.toString()
     }
-
-    override suspend fun delete(uri: String) {
-        withContext(dispatcher) {
-            contentResolver.delete(Uri.parse(uri), null, null)
-        }
-    }
 }
