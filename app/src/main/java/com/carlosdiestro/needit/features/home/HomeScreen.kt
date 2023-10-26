@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -144,7 +145,7 @@ private fun HomeSuccessState(
         mutableStateOf(categories.map { it.labelId })
     }
 
-    val wishlist by rememberSaveable(uiState.currentPage, wishes) {
+    val wishlist by remember(uiState.currentPage, wishes) {
         mutableStateOf(
             if (uiState.currentPage == 0) {
                 wishes
