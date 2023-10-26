@@ -88,7 +88,8 @@ class HomeViewModel @Inject constructor(
                 removeWish(
                     id = it.id,
                     cloudId = it.cloudId,
-                    imageUrl = it.imageUrl
+                    imageUrl = it.imageUrl,
+                    imageLocalPath = it.imageLocalPath
                 )
             }
         }
