@@ -28,7 +28,7 @@ class WishDetailsViewModel @Inject constructor(
         .map { wish ->
             WishDetailsDataState(
                 id = wish.id,
-                imageUrl = wish.imageUrl.ifEmpty { wish.imageLocalPath },
+                imageUrl = wish.imageLocalPath.ifEmpty { wish.imageUrl },
                 title = wish.title,
                 subtitle = wish.subtitle,
                 price = wish.price.toString(),

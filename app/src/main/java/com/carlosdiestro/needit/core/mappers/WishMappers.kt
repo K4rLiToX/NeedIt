@@ -38,7 +38,7 @@ fun Flow<WishEntity>.asDomain(): Flow<Wish> = this.map { it.asDomain() }
 
 fun Wish.asPlo(): HomeWishPlo = HomeWishPlo(
     id = this.id,
-    imageUrl = this.imageUrl.ifEmpty { this.imageLocalPath },
+    imageUrl = this.imageLocalPath.ifEmpty { this.imageUrl },
     shared = this.isShared,
     category = this.category.asPlo()
 )
