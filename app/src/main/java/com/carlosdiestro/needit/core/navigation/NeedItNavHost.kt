@@ -25,7 +25,7 @@ import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen
 @Composable
 fun NeedItNavHost(
     appState: NeedItAppState,
-    isUserGuest: Boolean,
+    isUserAnonymous: Boolean,
     isSignedIn: Boolean,
     modifier: Modifier = Modifier
 ) {
@@ -42,8 +42,7 @@ fun NeedItNavHost(
         popExitTransition = noExitTransition
     ) {
         signInScreen(
-            onSignInSuccessful = navController::navigateToHomeCleaningBackStack,
-            onContinueAsGuestClick = navController::navigateToHome
+            onSignInSuccessful = navController::navigateToHomeCleaningBackStack
         )
         homeScreen(
             onItemClick = navController::navigateToWishDetails,
