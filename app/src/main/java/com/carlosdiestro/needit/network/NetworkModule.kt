@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.network
 
-import com.carlosdiestro.needit.auth.GoogleAuthUiClient
+import com.carlosdiestro.needit.auth.AuthClient
 import com.carlosdiestro.needit.network.collections.ImagesCollection
 import com.carlosdiestro.needit.network.collections.UsersCollection
 import com.carlosdiestro.needit.network.collections.WishesCollection
@@ -29,8 +29,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserId(googleAuthUiClient: GoogleAuthUiClient): String =
-        googleAuthUiClient.getSignedInUser()?.userId.orEmpty()
+    fun provideUserId(authClient: AuthClient): String =
+        authClient.signedInUser?.userId.orEmpty()
 
     @Provides
     @Singleton
