@@ -26,22 +26,14 @@ class NeedItPreferencesImpl @Inject constructor(
     private val preferences = context.preferences
     private val prefsData = preferences.data
 
-    override val isUserGuest: Flow<Boolean> = prefsData.map { prefs ->
-        prefs[isUserNameKey] ?: true
-    }
-
-    override suspend fun updateIsUserGuest() {
-        preferences.edit { prefs ->
-            prefs[isUserNameKey] = false
-        }
-    }
 
     override val userInfo: Flow<UserPrefs> = prefsData.map { prefs ->
         UserPrefs(
             id = prefs[userIdKey].orEmpty(),
             username = prefs[usernameKey].orEmpty(),
             email = prefs[userEmailKey].orEmpty(),
-            profilePictureUrl = prefs[userProfilePictureKey].orEmpty()
+            profilePictureUrl = prefs[userProfilePictureKey].orEmpty(),
+            isAnonymous = prefs[userIsAnonymousKey] ?: true
         )
     }
 
@@ -51,20 +43,20 @@ class NeedItPreferencesImpl @Inject constructor(
             prefs[usernameKey] = userPrefs.username
             prefs[userEmailKey] = userPrefs.email
             prefs[userProfilePictureKey] = userPrefs.profilePictureUrl
+            prefs[userIsAnonymousKey] = userPrefs.isAnonymous
         }
     }
 
     companion object {
-        private const val isUserGuestKeyName = "user_type"
-        private val isUserNameKey = booleanPreferencesKey(isUserGuestKeyName)
-
         private const val userIdKeyName = "user_id"
         private const val usernameKeyName = "user_username"
         private const val userEmailKeyName = "user_email"
         private const val userProfilePictureUrlKeyName = "user_profile_picture_url"
+        private const val userIsAnonymousKeyName = "user_is_anonymous"
         private val userIdKey = stringPreferencesKey(userIdKeyName)
         private val usernameKey = stringPreferencesKey(usernameKeyName)
         private val userEmailKey = stringPreferencesKey(userEmailKeyName)
         private val userProfilePictureKey = stringPreferencesKey(userProfilePictureUrlKeyName)
+        private val userIsAnonymousKey = booleanPreferencesKey(userIsAnonymousKeyName)
     }
 }
