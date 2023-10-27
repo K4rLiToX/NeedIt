@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.network
 
-import com.carlosdiestro.needit.auth.AuthClient
+import com.carlosdiestro.needit.core.di.IoDispatcher
 import com.carlosdiestro.needit.network.collections.ImagesCollection
 import com.carlosdiestro.needit.network.collections.UsersCollection
 import com.carlosdiestro.needit.network.collections.WishesCollection
@@ -13,6 +13,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -29,11 +30,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserId(authClient: AuthClient): String =
-        authClient.signedInUser?.userId.orEmpty()
-
-    @Provides
-    @Singleton
     fun provideUsersCollection(firestore: FirebaseFirestore): UsersCollection =
         UsersCollection(firestore.collection(CollectionsPath.users))
 
@@ -41,14 +37,11 @@ object NetworkModule {
     @Singleton
     fun provideUsersWishesCollection(
         firestore: FirebaseFirestore,
-        userId: String
-    ): WishesCollection =
-        WishesCollection(
-            firestore
-                .collection(CollectionsPath.users)
-                .document(userId)
-                .collection(CollectionsPath.userWishes)
-        )
+        @IoDispatcher dispatcher: CoroutineDispatcher
+    ): WishesCollection = WishesCollection(
+        usersCollection = firestore.collection(CollectionsPath.users),
+        ioDispatcher = dispatcher
+    )
 
     @Provides
     @Singleton
