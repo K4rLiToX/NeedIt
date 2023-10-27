@@ -1,7 +1,11 @@
 package com.carlosdiestro.needit.auth
 
 import android.content.Context
+import com.carlosdiestro.needit.R
 import com.google.android.gms.auth.api.identity.Identity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,14 +16,35 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AuthModule {
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
+
+    @Provides
+    @Singleton
+    fun provideAnonymousAuthClient(auth: FirebaseAuth): AnonymousAuthClient =
+        AnonymousAuthClient(auth)
 
     @Provides
     @Singleton
     fun provideGoogleAuthUiClient(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
+        auth: FirebaseAuth
     ): GoogleAuthUiClient = GoogleAuthUiClient(
-        context = context,
-        oneTapClient = Identity.getSignInClient(context)
+        oneTapClient = Identity.getSignInClient(context),
+        auth = auth,
+        webClientId = context.getString(R.string.web_client_id)
     )
 
+    @Provides
+    @Singleton
+    fun provideAuthClient(
+        anonymousAuthClient: AnonymousAuthClient,
+        googleAuthUiClient: GoogleAuthUiClient,
+        auth: FirebaseAuth
+    ): AuthClient = AuthClient(
+        anonymousAuthClient = anonymousAuthClient,
+        googleAuthUiClient = googleAuthUiClient,
+        auth = auth
+    )
 }
