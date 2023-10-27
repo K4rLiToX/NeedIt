@@ -7,7 +7,7 @@ import com.carlosdiestro.needit.core.design_system.components.lists.WishCategory
 import com.carlosdiestro.needit.core.di.ApplicationScope
 import com.carlosdiestro.needit.core.di.DefaultDispatcher
 import com.carlosdiestro.needit.core.mappers.asDomain
-import com.carlosdiestro.needit.domain.users.usecases.GetUserInfoUseCase
+import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class InsertWishUseCase @Inject constructor(
     private val wishRepository: WishRepository,
     private val imageRepository: ImageRepository,
-    private val getUserInfo: GetUserInfoUseCase,
+    private val getUserInfo: GetSignedInUserUseCase,
     @ApplicationScope private val scope: CoroutineScope,
     @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) {

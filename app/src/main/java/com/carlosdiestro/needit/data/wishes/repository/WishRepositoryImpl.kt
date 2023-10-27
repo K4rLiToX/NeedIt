@@ -37,7 +37,10 @@ class WishRepositoryImpl @Inject constructor(
 
     override suspend fun removeWish(id: Long, cloudId: String) = withContext(ioDispatcher) {
         localDatasource.removeWish(id)
-        if (cloudId.isNotEmpty()) remoteDatasource.delete(cloudId)
+        if (cloudId.isNotEmpty()) {
+            val userId = getWish(id).first().userId
+            remoteDatasource.delete(cloudId, userId)
+        }
     }
 
     override suspend fun shareWish(id: Long) = withContext(ioDispatcher) {
@@ -49,6 +52,6 @@ class WishRepositoryImpl @Inject constructor(
     override suspend fun lockWish(id: Long) = withContext(ioDispatcher) {
         val wish = getWish(id).first()
         localDatasource.lockWish(id)
-        remoteDatasource.delete(wish.cloudId)
+        remoteDatasource.delete(wish.cloudId, wish.userId)
     }
 }

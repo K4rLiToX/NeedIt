@@ -46,8 +46,7 @@ fun Main(
     viewModel: MainViewModel = hiltViewModel(),
     launchCameraPermissionLauncher: () -> Unit,
     isCameraPermissionPermanentlyDeclined: Boolean,
-    onGoToAppSettingsClick: () -> Unit,
-    isSignedIn: Boolean
+    onGoToAppSettingsClick: () -> Unit
 ) {
     val currentDestinationRoute = appState.currentDestinationRoute
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -101,8 +100,8 @@ fun Main(
     ) {
         NeedItNavHost(
             appState = appState,
-            isUserGuest = state.isUserGuest,
-            isSignedIn = isSignedIn,
+            isUserAnonymous = state.isUserAnonymous,
+            isSignedIn = state.isSignedIn,
             modifier = Modifier
                 .conditional(
                     condition = appState.shouldNotHaveStatusBarPadding,

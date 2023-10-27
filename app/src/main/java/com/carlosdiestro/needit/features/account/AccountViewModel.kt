@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.features.account
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.domain.users.usecases.GetUserInfoUseCase
+import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    getUserInfo: GetUserInfoUseCase
+    getUserInfo: GetSignedInUserUseCase
 ) : ViewModel() {
 
     val state: StateFlow<AccountDataState> = getUserInfo()

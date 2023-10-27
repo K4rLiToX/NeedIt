@@ -10,10 +10,6 @@ class UserLocalDatasourceImpl @Inject constructor(
     private val preferences: NeedItPreferences
 ) : UserLocalDatasource {
 
-    override val isUserGuest: Flow<Boolean> = preferences.isUserGuest
-
-    override suspend fun updateIsUserGuest() = preferences.updateIsUserGuest()
-
     override val userInfo: Flow<UserPrefs> = preferences.userInfo
 
     override suspend fun updateUserInfo(userPrefs: UserPrefs) =

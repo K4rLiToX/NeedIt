@@ -1,6 +1,7 @@
 package com.carlosdiestro.needit.features.sign_in
 
 import android.app.Activity
+import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
@@ -18,82 +19,81 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.auth.GoogleAuthUiClient
-import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiOutlinedButton
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
-import kotlinx.coroutines.launch
 
 @Composable
 fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel(),
-    onSignInSuccessful: () -> Unit,
-    onContinueAsGuestClick: () -> Unit
+    onSignInSuccessful: () -> Unit
 ) {
-    val googleAuthUiClient = viewModel.googleAuthUiClient
     LaunchedEffect(key1 = Unit) {
-        if (googleAuthUiClient.getSignedInUser() != null) onSignInSuccessful()
+        if (viewModel.signedInUser != null) onSignInSuccessful()
     }
 
     val dataState by viewModel.state.collectAsStateWithLifecycle()
-    val uiState = rememberSignInUiState()
 
     SignInScreen(
         dataState = dataState,
-        uiState = uiState,
-        googleAuthUiClient = googleAuthUiClient,
-        onSignInResult = viewModel::onSignInResult,
+        signInAnonymously = viewModel::signInAnonymously,
+        requestGoogleSignInIntent = viewModel::requestGoogleSignInIntent,
+        signInWithGoogle = viewModel::signInWithGoogle,
         resetState = viewModel::resetState,
         onSignInSuccessful = onSignInSuccessful,
-        signIn = viewModel::signIn,
-        onContinueAsGuestClick = onContinueAsGuestClick
+        createUser = viewModel::createNewUser
     )
 }
 
 @Composable
 private fun SignInScreen(
     dataState: SignInDataState,
-    uiState: SignInUiState,
-    googleAuthUiClient: GoogleAuthUiClient,
-    onSignInResult: (SignInResult) -> Unit,
+    signInAnonymously: () -> Unit,
+    requestGoogleSignInIntent: () -> Unit,
+    signInWithGoogle: (Intent) -> Unit,
     resetState: () -> Unit,
     onSignInSuccessful: () -> Unit,
-    signIn: (UserAuth) -> Unit,
-    onContinueAsGuestClick: () -> Unit
+    createUser: (UserAuth) -> Unit
 ) {
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
         onResult = { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                uiState.lifecycleScope.launch {
-                    val signInResult = googleAuthUiClient.signInWithIntent(
-                        intent = result.data ?: return@launch
-                    )
-                    onSignInResult(signInResult)
-                }
+                signInWithGoogle(result.data ?: return@rememberLauncherForActivityResult)
             }
         }
     )
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = dataState.signInError) {
         dataState.signInError?.let { error ->
             Toast.makeText(
-                uiState.context,
+                context,
                 error,
                 Toast.LENGTH_LONG
             ).show()
         }
     }
 
+    LaunchedEffect(key1 = dataState.googleIntent) {
+        if (dataState.googleIntent != null) {
+            launcher.launch(
+                IntentSenderRequest.Builder(
+                    intentSender = dataState.googleIntent
+                ).build()
+            )
+        }
+    }
+
     LaunchedEffect(key1 = dataState.userAuth) {
         if (dataState.userAuth != null) {
-            signIn(dataState.userAuth)
+            createUser(dataState.userAuth)
             onSignInSuccessful()
             resetState()
         }
@@ -112,16 +112,7 @@ private fun SignInScreen(
     ) {
         NiFilledButton(
             labelId = R.string.button_login,
-            onClick = {
-                uiState.lifecycleScope.launch {
-                    val signInIntentSender = googleAuthUiClient.signIn()
-                    launcher.launch(
-                        IntentSenderRequest.Builder(
-                            intentSender = signInIntentSender ?: return@launch
-                        ).build()
-                    )
-                }
-            },
+            onClick = requestGoogleSignInIntent,
             height = NiButtonSpecs.Height.Large,
             modifier = Modifier
                 .fillMaxWidth()
@@ -129,7 +120,7 @@ private fun SignInScreen(
         Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingM))
         NiOutlinedButton(
             labelId = R.string.button_continue_as_guest,
-            onClick = onContinueAsGuestClick,
+            onClick = signInAnonymously,
             height = NiButtonSpecs.Height.Large,
             modifier = Modifier
                 .fillMaxWidth()

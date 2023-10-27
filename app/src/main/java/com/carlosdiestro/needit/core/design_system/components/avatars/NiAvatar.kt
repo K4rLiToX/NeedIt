@@ -29,7 +29,7 @@ fun NiAvatar(
 ) {
     val imageVector = rememberVectorPainter(image = MaterialTheme.icons.Profile)
     AsyncImage(
-        model = imageUrl,
+        model = imageUrl?.ifEmpty { null },
         contentDescription = "",
         contentScale = ContentScale.Crop,
         fallback = imageVector,

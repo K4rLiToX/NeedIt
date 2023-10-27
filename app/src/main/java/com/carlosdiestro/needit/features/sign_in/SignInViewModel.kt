@@ -1,12 +1,13 @@
 package com.carlosdiestro.needit.features.sign_in
 
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.auth.GoogleAuthUiClient
+import com.carlosdiestro.needit.auth.AuthClient
 import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.core.mappers.asDomain
-import com.carlosdiestro.needit.domain.users.usecases.SignInUseCase
+import com.carlosdiestro.needit.domain.users.usecases.CreateNewUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,29 +17,56 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    val googleAuthUiClient: GoogleAuthUiClient,
-    private val signIn: SignInUseCase
+    private val createNewUser: CreateNewUserUseCase,
+    private val authClient: AuthClient
 ) : ViewModel() {
 
     private var _state: MutableStateFlow<SignInDataState> = MutableStateFlow(SignInDataState())
     val state = _state.asStateFlow()
 
-    fun onSignInResult(result: SignInResult) {
+    val signedInUser = authClient.signedInUser
+
+    fun signInAnonymously() {
+        viewModelScope.launch {
+            val signInResult = authClient.signInAnonymously()
+            updateState(signInResult)
+        }
+    }
+
+    fun signInWithGoogle(intent: Intent) {
+        viewModelScope.launch {
+            val signInResult = authClient.signInWithGoogle(intent)
+            updateState(signInResult)
+        }
+    }
+
+    fun requestGoogleSignInIntent() {
+        viewModelScope.launch {
+            val intent = authClient.requestGoogleIntent()
+            _state.update {
+                it.copy(
+                    googleIntent = intent
+                )
+            }
+        }
+    }
+
+    fun createNewUser(userAuth: UserAuth) {
+        viewModelScope.launch {
+            createNewUser(userAuth.asDomain())
+        }
+    }
+
+    fun resetState() {
+        _state.update { SignInDataState() }
+    }
+
+    private fun updateState(result: SignInResult) {
         _state.update {
             it.copy(
                 userAuth = result.data,
                 signInError = result.errorMessage
             )
         }
-    }
-
-    fun signIn(userAuth: UserAuth) {
-        viewModelScope.launch {
-            signIn(userAuth.asDomain())
-        }
-    }
-
-    fun resetState() {
-        _state.update { SignInDataState() }
     }
 }

@@ -1,25 +1,22 @@
 package com.carlosdiestro.needit.auth
 
-import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import com.carlosdiestro.needit.R
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class GoogleAuthUiClient(
-    private val context: Context,
-    private val oneTapClient: SignInClient
+class GoogleAuthUiClient @Inject constructor(
+    private val oneTapClient: SignInClient,
+    private val auth: FirebaseAuth,
+    private val webClientId: String
 ) {
-    private val auth = Firebase.auth
-
-    suspend fun signIn(): IntentSender? {
+    suspend fun requestIntent(): IntentSender? {
         val result = try {
             oneTapClient.beginSignIn(
                 buildSignInRequest()
@@ -42,16 +39,7 @@ class GoogleAuthUiClient(
         }
     }
 
-    fun getSignedInUser(): UserAuth? = auth.currentUser?.run {
-        UserAuth(
-            userId = uid,
-            username = displayName ?: "User",
-            email = email ?: "",
-            profilePictureUrl = photoUrl.toString()
-        )
-    }
-
-    suspend fun signInWithIntent(intent: Intent): SignInResult {
+    suspend fun signIn(intent: Intent): SignInResult {
         val credential = oneTapClient.getSignInCredentialFromIntent(intent)
         val googleIdToken = credential.googleIdToken
         val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
@@ -64,7 +52,8 @@ class GoogleAuthUiClient(
                         userId = uid,
                         username = displayName ?: "User",
                         email = email ?: "",
-                        profilePictureUrl = photoUrl.toString()
+                        profilePictureUrl = photoUrl.toString(),
+                        isAnonymous = false
                     )
                 },
                 errorMessage = null
@@ -86,7 +75,7 @@ class GoogleAuthUiClient(
                     .setSupported(true)
                     // False -> show all google accounts added on the device
                     .setFilterByAuthorizedAccounts(false)
-                    .setServerClientId(context.getString(R.string.web_client_id))
+                    .setServerClientId(webClientId)
                     .build()
             )
             .setAutoSelectEnabled(true)
