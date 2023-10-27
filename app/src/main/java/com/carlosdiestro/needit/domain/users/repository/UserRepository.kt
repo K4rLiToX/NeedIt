@@ -7,4 +7,5 @@ interface UserRepository {
 
     val user: Flow<User>
     suspend fun createUser(user: User)
+    suspend fun updateUser(user: User)
 }

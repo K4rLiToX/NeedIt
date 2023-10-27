@@ -21,12 +21,13 @@ class UserRepositoryImpl @Inject constructor(
 
     override val user: Flow<User> = userLocalDatasource.userInfo.asDomain()
 
-    override val isUserGuest: Flow<Boolean> = userLocalDatasource.isUserGuest
     override suspend fun createUser(user: User) = withContext(dispatcher) {
         userRemoteDatasource.insertUser(user.asDto())
-        userLocalDatasource.run {
-            updateUserInfo(user.toPreferences())
-            updateIsUserGuest()
-        }
+        userLocalDatasource.updateUserInfo(user.toPreferences())
+    }
+
+    override suspend fun updateUser(user: User) = withContext(dispatcher) {
+        userRemoteDatasource.updateUser(user.asDto())
+        userLocalDatasource.updateUserInfo(user.toPreferences())
     }
 }
