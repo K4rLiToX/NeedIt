@@ -6,8 +6,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetState
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -28,6 +26,7 @@ import com.carlosdiestro.needit.MainViewModel
 import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
 import com.carlosdiestro.needit.core.design_system.components.fab.NiFab
 import com.carlosdiestro.needit.core.design_system.components.menus.CameraPermissionTextProvider
+import com.carlosdiestro.needit.core.design_system.components.menus.NiAccountDialog
 import com.carlosdiestro.needit.core.design_system.components.menus.PermissionDialog
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.TopLevelDestination
@@ -59,7 +58,7 @@ fun Main(
                 NiMainTopAppBar(
                     accountImageUrl = state.profilePictureUrl,
                     onNotificationClick = {},
-                    onAccountClick = {}
+                    onAccountClick = { appState.setShowAccountDialog(true) }
                 )
             }
         },
@@ -142,33 +141,46 @@ fun Main(
             modifier = Modifier.fillMaxWidth()
         )
     }
+
+    if (appState.shouldShowAccountDialog) {
+        NiAccountDialog(
+            profilePictureUrl = state.profilePictureUrl,
+            username = state.username,
+            email = state.email,
+            isUserAnonymous = state.isUserAnonymous,
+            onDismiss = { appState.setShowAccountDialog(false) },
+            onManageAccountClick = {},
+            onLoginClick = {},
+            onSettingsClick = {},
+            onFeedbackClick = {},
+            onReportBugClick = {},
+            onPrivacyPolicyClick = {},
+            onTermsOfServiceClick = {},
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun rememberNeedItAppState(
     navController: NavHostController = rememberNavController(),
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    accountBottomSheetState: SheetState = rememberModalBottomSheetState()
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ): NeedItAppState {
     return remember(
         navController,
-        coroutineScope,
-        accountBottomSheetState
+        coroutineScope
     ) {
         NeedItAppState(
             navController = navController,
-            coroutineScope = coroutineScope,
-            accountBottomSheetState = accountBottomSheetState
+            coroutineScope = coroutineScope
         )
     }
 }
 
 @Stable
-class NeedItAppState @OptIn(ExperimentalMaterial3Api::class) constructor(
+class NeedItAppState constructor(
     val navController: NavHostController,
-    val coroutineScope: CoroutineScope,
-    val accountBottomSheetState: SheetState
+    val coroutineScope: CoroutineScope
 ) {
     private val routesWithoutStatusBarPadding: List<String> = listOf(
         detailsRoute,
@@ -212,7 +224,7 @@ class NeedItAppState @OptIn(ExperimentalMaterial3Api::class) constructor(
     val shouldShowTopBar: Boolean
         @Composable get() = isTopLevelDestination()
 
-    var shouldShowAccountBottomSheet by mutableStateOf(false)
+    var shouldShowAccountDialog by mutableStateOf(false)
         private set
 
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
@@ -248,7 +260,7 @@ class NeedItAppState @OptIn(ExperimentalMaterial3Api::class) constructor(
     private fun isTopLevelDestination(): Boolean =
         currentDestinationRoute in topLevelDestinationsRoutes
 
-    fun setShowAccountBottomSheet(shouldShow: Boolean) {
-        shouldShowAccountBottomSheet = shouldShow
+    fun setShowAccountDialog(shouldShow: Boolean) {
+        shouldShowAccountDialog = shouldShow
     }
 }

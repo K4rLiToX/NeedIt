@@ -19,6 +19,8 @@ class MainViewModel @Inject constructor(
 
     val state: StateFlow<MainState> = getSignedInUser().map { user ->
         MainState(
+            username = user.username,
+            email = user.email,
             profilePictureUrl = user.profilePictureUrl,
             isUserAnonymous = user.isAnonymous,
             isSignedIn = authClient.signedInUser != null
@@ -31,7 +33,9 @@ class MainViewModel @Inject constructor(
 }
 
 data class MainState(
-    val isSignedIn: Boolean,
+    val username: String = "",
+    val email: String = "",
     val profilePictureUrl: String = "",
-    val isUserAnonymous: Boolean = true
+    val isUserAnonymous: Boolean = true,
+    val isSignedIn: Boolean
 )

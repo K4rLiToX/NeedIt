@@ -21,7 +21,10 @@ fun NiDoubleButton(
     modifier: Modifier = Modifier
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
+        horizontalArrangement = Arrangement.spacedBy(
+            space = MaterialTheme.dimensions.spacingM,
+            alignment = Alignment.CenterHorizontally
+        ),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
