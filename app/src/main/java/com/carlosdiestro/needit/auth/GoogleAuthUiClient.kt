@@ -5,6 +5,7 @@ import android.content.IntentSender
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.CancellationException
@@ -40,9 +41,7 @@ class GoogleAuthUiClient @Inject constructor(
     }
 
     suspend fun signIn(intent: Intent): SignInResult {
-        val credential = oneTapClient.getSignInCredentialFromIntent(intent)
-        val googleIdToken = credential.googleIdToken
-        val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
+        val googleCredentials = getGoogleAuthCredentials(intent)
 
         return try {
             val user = auth.signInWithCredential(googleCredentials).await().user
@@ -66,6 +65,12 @@ class GoogleAuthUiClient @Inject constructor(
                 errorMessage = e.message
             )
         }
+    }
+
+    fun getGoogleAuthCredentials(intent: Intent): AuthCredential {
+        val credential = oneTapClient.getSignInCredentialFromIntent(intent)
+        val googleIdToken = credential.googleIdToken
+        return GoogleAuthProvider.getCredential(googleIdToken, null)
     }
 
     private fun buildSignInRequest(): BeginSignInRequest {

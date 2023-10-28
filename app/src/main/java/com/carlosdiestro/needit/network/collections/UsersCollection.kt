@@ -9,7 +9,7 @@ class UsersCollection @Inject constructor(
     private val usersCollection: CollectionReference
 ) {
 
-    suspend fun insert(dto: UserDto) {
+    suspend fun upsert(dto: UserDto) {
         usersCollection
             .document(dto.id)
             .set(dto)

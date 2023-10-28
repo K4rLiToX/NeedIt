@@ -7,7 +7,7 @@ import com.carlosdiestro.needit.auth.AuthClient
 import com.carlosdiestro.needit.auth.SignInResult
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.core.mappers.asDomain
-import com.carlosdiestro.needit.domain.users.usecases.CreateNewUserUseCase
+import com.carlosdiestro.needit.domain.users.usecases.UpsertUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
-    private val createNewUser: CreateNewUserUseCase,
+    private val upsertUser: UpsertUserUseCase,
     private val authClient: AuthClient
 ) : ViewModel() {
 
@@ -53,7 +53,7 @@ class SignInViewModel @Inject constructor(
 
     fun createNewUser(userAuth: UserAuth) {
         viewModelScope.launch {
-            createNewUser(userAuth.asDomain())
+            upsertUser(userAuth.asDomain())
         }
     }
 

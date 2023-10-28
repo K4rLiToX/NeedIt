@@ -4,9 +4,9 @@ import com.carlosdiestro.needit.domain.users.User
 import com.carlosdiestro.needit.domain.users.repository.UserRepository
 import javax.inject.Inject
 
-class CreateNewUserUseCase @Inject constructor(
+class UpsertUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    suspend operator fun invoke(user: User) = userRepository.createUser(user)
+    suspend operator fun invoke(user: User) = userRepository.upsertUser(user)
 }
