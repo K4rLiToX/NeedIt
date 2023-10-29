@@ -215,11 +215,13 @@ fun Main(
                 AppOption(
                     icon = MaterialTheme.icons.Birthday,
                     labelId = R.string.profile_birthday,
+                    value = "16/04",
                     onClick = {}
                 )
                 AppOption(
                     icon = MaterialTheme.icons.Currency,
                     labelId = R.string.profile_currency,
+                    value = "EUR €",
                     onClick = {}
                 )
             },

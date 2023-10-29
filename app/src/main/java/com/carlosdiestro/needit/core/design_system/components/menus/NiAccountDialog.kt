@@ -286,10 +286,11 @@ fun AppOption(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     @StringRes labelId: Int,
+    value: String = "",
     onClick: () -> Unit
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .clickable { onClick() }
@@ -299,13 +300,23 @@ fun AppOption(
             )
             .fillMaxWidth()
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = ""
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingM),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = ""
+            )
+            Text(
+                text = stringResource(id = labelId),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
         Text(
-            text = stringResource(id = labelId),
-            style = MaterialTheme.typography.titleMedium,
+            text = value,
+            style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
