@@ -6,8 +6,11 @@ import androidx.compose.material.icons.automirrored.rounded.KeyboardBackspace
 import androidx.compose.material.icons.automirrored.rounded.Logout
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.Sort
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.BugReport
+import androidx.compose.material.icons.outlined.Celebration
 import androidx.compose.material.icons.outlined.CloudUpload
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
@@ -16,6 +19,7 @@ import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.ImageSearch
 import androidx.compose.material.icons.outlined.Link
+import androidx.compose.material.icons.outlined.LocalAtm
 import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Notifications
@@ -29,7 +33,6 @@ import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.CalendarMonth
-import androidx.compose.material.icons.rounded.Celebration
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Checklist
 import androidx.compose.material.icons.rounded.Deselect
@@ -70,7 +73,7 @@ object Icons {
     val Unlock = Icons.Rounded.LockOpen
     val SelectAll = Icons.Rounded.Checklist
     val DeselectAll = Icons.Rounded.Deselect
-    val Birthday = Icons.Rounded.Celebration
+    val Birthday = Icons.Outlined.Celebration
     val Calendar = Icons.Rounded.CalendarMonth
     val Notification = Icons.Outlined.Notifications
     val Lens = Icons.Rounded.Lens
@@ -78,6 +81,9 @@ object Icons {
     val NeedIt = R.drawable.ic_needit
     val Feedback = Icons.AutoMirrored.Outlined.Message
     val Bug = Icons.Outlined.BugReport
+    val ArrowUp = Icons.Filled.ArrowDropUp
+    val ArrowDown = Icons.Filled.ArrowDropDown
+    val Currency = Icons.Outlined.LocalAtm
 }
 
 val MaterialTheme.icons: com.carlosdiestro.needit.core.design_system.theme.Icons

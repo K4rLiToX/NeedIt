@@ -1,11 +1,16 @@
 package com.carlosdiestro.needit.core.design_system.components.menus
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +24,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,120 +38,170 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.avatars.NiAvatar
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiDoubleButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiOutlinedButton
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiTextButton
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
+
+@Composable
+fun rememberNiAccountDialogState(): NiAccountDialogState {
+    return remember {
+        NiAccountDialogState()
+    }
+}
+
+@Stable
+class NiAccountDialogState {
+
+    var shouldShowAccountExtras by mutableStateOf(false)
+        private set
+
+    fun setShowAccountExtra(show: Boolean) {
+        shouldShowAccountExtras = show
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NiAccountDialog(
     modifier: Modifier = Modifier,
-    profilePictureUrl: String,
+    state: NiAccountDialogState,
     username: String,
     email: String,
+    profilePictureUrl: String,
     isUserAnonymous: Boolean,
     onDismiss: () -> Unit,
-    onManageAccountClick: () -> Unit,
-    onLoginClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onFeedbackClick: () -> Unit,
-    onReportBugClick: () -> Unit,
-    onPrivacyPolicyClick: () -> Unit,
-    onTermsOfServiceClick: () -> Unit
+    onAccountActionClick: () -> Unit,
+    header: @Composable RowScope.() -> Unit = {},
+    accountExtras: @Composable ColumnScope.() -> Unit = {},
+    appOptions: @Composable ColumnScope.() -> Unit = {},
+    footer: @Composable () -> Unit = {}
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false
-        ),
+        properties = DialogProperties(usePlatformDefaultWidth = false),
         modifier = modifier
             .padding(horizontal = MaterialTheme.dimensions.spacingM)
             .clip(RoundedCornerShape(32.dp))
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp))
     ) {
         Column {
-            Logo(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(MaterialTheme.dimensions.spacingM)
+            AccountDialogHeader(
+                content = header
             )
-            AccountHeader(
+            AccountDialogAccount(
                 profilePictureUrl = profilePictureUrl,
                 username = username,
                 email = email,
                 isUserAnonymous = isUserAnonymous,
-                onManageAccountClick = onManageAccountClick,
-                onLoginClick = onLoginClick,
-                modifier = Modifier
-                    .padding(horizontal = MaterialTheme.dimensions.spacingXS)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                    .background(MaterialTheme.colorScheme.surface)
+                shouldShowAccountExtras = state.shouldShowAccountExtras,
+                onAccountInformationClick = state::setShowAccountExtra,
+                onAccountActionClick = onAccountActionClick,
+                accountExtras = accountExtras
             )
             Spacer(modifier = Modifier.height(2.dp))
-            AppActions(
-                onSettingsClick = onSettingsClick,
-                onFeedbackClick = onFeedbackClick,
-                onReportBugClick = onReportBugClick,
-                modifier = Modifier
-                    .padding(horizontal = MaterialTheme.dimensions.spacingXS)
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
-                    .background(MaterialTheme.colorScheme.surface)
+            AccountDialogBody(
+                content = appOptions
             )
-            LegalActions(
-                onPrivacyPolicyClick = onPrivacyPolicyClick,
-                onTermsOfServiceClick = onTermsOfServiceClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = MaterialTheme.dimensions.spacingL,
-                        vertical = MaterialTheme.dimensions.spacingS
-                    )
+            AccountDialogFooter(
+                content = footer
             )
         }
-
     }
 }
 
 @Composable
-private fun Logo(
-    modifier: Modifier = Modifier
+private fun AccountDialogHeader(
+    content: @Composable RowScope.() -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(MaterialTheme.dimensions.spacingM),
+        content = content
+    )
+}
+
+@Composable
+private fun AccountDialogAccount(
+    profilePictureUrl: String,
+    username: String,
+    email: String,
+    isUserAnonymous: Boolean,
+    shouldShowAccountExtras: Boolean,
+    onAccountInformationClick: (Boolean) -> Unit,
+    onAccountActionClick: () -> Unit,
+    accountExtras: @Composable ColumnScope.() -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = MaterialTheme.dimensions.spacingXS)
+            .fillMaxWidth()
     ) {
-        Text(
-            text = stringResource(id = R.string.app_name),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
+        AccountDialogAccountHeader(
+            profilePictureUrl = profilePictureUrl,
+            username = username,
+            email = email,
+            isUserAnonymous = isUserAnonymous,
+            shouldShowAccountExtras = shouldShowAccountExtras,
+            onAccountInformationClick = onAccountInformationClick
+        )
+        AccountDialogAccountAction(
+            isUserAnonymous = isUserAnonymous,
+            onAccountActionClick = onAccountActionClick
+        )
+        if (shouldShowAccountExtras) Spacer(modifier = Modifier.height(2.dp))
+        AccountDialogAccountExtraInformation(
+            shouldShowAccountExtras = shouldShowAccountExtras,
+            content = accountExtras
         )
     }
 }
 
 @Composable
-private fun AccountHeader(
-    modifier: Modifier = Modifier,
+private fun AccountDialogAccountAction(
+    isUserAnonymous: Boolean,
+    onAccountActionClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(horizontal = 64.dp)
+            .padding(
+                top = MaterialTheme.dimensions.spacingXS,
+                bottom = MaterialTheme.dimensions.spacingL
+            )
+    ) {
+        NiOutlinedButton(
+            labelId = if (!isUserAnonymous) R.string.button_logout else R.string
+                .button_login,
+            onClick = onAccountActionClick,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+private fun AccountDialogAccountHeader(
     profilePictureUrl: String,
     username: String,
     email: String,
     isUserAnonymous: Boolean,
-    onManageAccountClick: () -> Unit,
-    onLoginClick: () -> Unit
+    shouldShowAccountExtras: Boolean,
+    onAccountInformationClick: (Boolean) -> Unit
 ) {
-    Column(
-        modifier = modifier
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+            .background(MaterialTheme.colorScheme.surface)
+            .clickable { onAccountInformationClick(!shouldShowAccountExtras) }
+            .padding(MaterialTheme.dimensions.spacingM)
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MaterialTheme.dimensions.spacingM)
-        ) {
+        Row {
             NiAvatar(
                 imageUrl = profilePictureUrl
             )
@@ -164,54 +224,60 @@ private fun AccountHeader(
                 }
             }
         }
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 64.dp)
-                .padding(
-                    top = MaterialTheme.dimensions.spacingXS,
-                    bottom = MaterialTheme.dimensions.spacingL
-                )
-        ) {
-            NiOutlinedButton(
-                labelId = if (!isUserAnonymous) R.string.button_manage_account else R.string
-                    .button_login,
-                onClick = if (!isUserAnonymous) onManageAccountClick else onLoginClick,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+        Icon(
+            imageVector = if (shouldShowAccountExtras) MaterialTheme
+                .icons.ArrowUp else
+                MaterialTheme
+                    .icons.ArrowDown,
+            contentDescription = ""
+        )
     }
 }
 
 @Composable
-private fun AppActions(
-    modifier: Modifier = Modifier,
-    onSettingsClick: () -> Unit,
-    onFeedbackClick: () -> Unit,
-    onReportBugClick: () -> Unit
+private fun AccountDialogAccountExtraInformation(
+    shouldShowAccountExtras: Boolean,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    AnimatedVisibility(
+        visible = shouldShowAccountExtras,
+        enter = expandVertically(expandFrom = Alignment.Top),
+        exit = shrinkVertically()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface),
+            content = content
+        )
+    }
+}
+
+@Composable
+private fun AccountDialogBody(
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
-        modifier = modifier
-    ) {
-        AppOption(
-            icon = MaterialTheme.icons.Settings,
-            labelId = R.string.settings_title,
-            onClick = onSettingsClick
-        )
-        AppOption(
-            icon = MaterialTheme.icons.Feedback,
-            labelId = R.string.send_feedback_title,
-            onClick = onFeedbackClick
-        )
-        AppOption(
-            icon = MaterialTheme.icons.Bug,
-            labelId = R.string.report_bug_title,
-            onClick = onReportBugClick
-        )
+        modifier = Modifier
+            .padding(horizontal = MaterialTheme.dimensions.spacingXS)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
+            .background(MaterialTheme.colorScheme.surface),
+        content = content
+    )
+}
+
+@Composable
+private fun AccountDialogFooter(
+    content: @Composable () -> Unit
+) {
+    Row {
+        content()
     }
 }
 
 @Composable
-private fun AppOption(
+fun AppOption(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     @StringRes labelId: Int,
@@ -238,27 +304,4 @@ private fun AppOption(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
-}
-
-@Composable
-private fun LegalActions(
-    modifier: Modifier = Modifier,
-    onPrivacyPolicyClick: () -> Unit,
-    onTermsOfServiceClick: () -> Unit
-) {
-    NiDoubleButton(
-        leftButton = {
-            NiTextButton(
-                labelId = R.string.button_privacy_policy,
-                onClick = onPrivacyPolicyClick
-            )
-        },
-        rightButton = {
-            NiTextButton(
-                labelId = R.string.button_terms_of_service,
-                onClick = onTermsOfServiceClick
-            )
-        },
-        modifier = modifier
-    )
 }
