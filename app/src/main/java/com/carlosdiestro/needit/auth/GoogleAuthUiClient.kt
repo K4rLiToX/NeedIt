@@ -44,25 +44,32 @@ class GoogleAuthUiClient @Inject constructor(
         val googleCredentials = getGoogleAuthCredentials(intent)
 
         return try {
-            val user = auth.signInWithCredential(googleCredentials).await().user
+            val result = auth.signInWithCredential(googleCredentials).await()
+            val user = result.user
+            val username = result.additionalUserInfo?.profile?.get("name") as String? ?: "User"
+            val profilePictureUrl = result.additionalUserInfo?.profile?.get("picture") as String?
+                ?: ""
+            val isNewUser = result.additionalUserInfo?.isNewUser ?: true
             SignInResult(
                 data = user?.run {
                     UserAuth(
                         userId = uid,
-                        username = displayName ?: "User",
+                        username = displayName ?: username,
                         email = email ?: "",
-                        profilePictureUrl = photoUrl.toString(),
+                        profilePictureUrl = photoUrl?.toString() ?: profilePictureUrl,
                         isAnonymous = false
                     )
                 },
-                errorMessage = null
+                errorMessage = null,
+                isNewUser = isNewUser
             )
         } catch (e: Exception) {
             e.printStackTrace()
             if (e is CancellationException) throw e
             SignInResult(
                 data = null,
-                errorMessage = e.message
+                errorMessage = e.message,
+                isNewUser = true
             )
         }
     }

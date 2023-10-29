@@ -33,14 +33,16 @@ class AuthClient @Inject constructor(
         return try {
             SignInResult(
                 data = user,
-                errorMessage = null
+                errorMessage = null,
+                isNewUser = false
             )
         } catch (e: Exception) {
             e.printStackTrace()
             if (e is CancellationException) throw e
             SignInResult(
                 data = null,
-                errorMessage = e.message
+                errorMessage = e.message,
+                isNewUser = true
             )
         }
     }

@@ -65,6 +65,7 @@ class SignInViewModel @Inject constructor(
         _state.update {
             it.copy(
                 userAuth = result.data,
+                isNewUser = result.isNewUser,
                 signInError = result.errorMessage
             )
         }
