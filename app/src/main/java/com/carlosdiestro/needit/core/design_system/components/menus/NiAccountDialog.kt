@@ -199,7 +199,9 @@ private fun AccountDialogAccountHeader(
             .clickable { onAccountInformationClick(!shouldShowAccountExtras) }
             .padding(MaterialTheme.dimensions.spacingM)
     ) {
-        Row {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             NiAvatar(
                 imageUrl = profilePictureUrl
             )
