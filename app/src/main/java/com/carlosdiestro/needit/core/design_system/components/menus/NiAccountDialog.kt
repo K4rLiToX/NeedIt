@@ -147,20 +147,18 @@ private fun AccountDialogAccount(
             shouldShowAccountExtras = shouldShowAccountExtras,
             onAccountInformationClick = onAccountInformationClick
         )
-        AccountDialogAccountAction(
-            isUserAnonymous = isUserAnonymous,
-            onAccountActionClick = onAccountActionClick
-        )
         if (shouldShowAccountExtras) Spacer(modifier = Modifier.height(2.dp))
         AccountDialogAccountExtraInformation(
+            isUserAnonymous = isUserAnonymous,
             shouldShowAccountExtras = shouldShowAccountExtras,
+            onAccountActionClick = onAccountActionClick,
             content = accountExtras
         )
     }
 }
 
 @Composable
-private fun AccountDialogAccountAction(
+fun AccountDialogAccountAction(
     isUserAnonymous: Boolean,
     onAccountActionClick: () -> Unit
 ) {
@@ -236,7 +234,9 @@ private fun AccountDialogAccountHeader(
 
 @Composable
 private fun AccountDialogAccountExtraInformation(
+    isUserAnonymous: Boolean,
     shouldShowAccountExtras: Boolean,
+    onAccountActionClick: () -> Unit,
     content: @Composable ColumnScope.() -> Unit
 ) {
     AnimatedVisibility(
@@ -248,8 +248,13 @@ private fun AccountDialogAccountExtraInformation(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surface),
-            content = content
-        )
+        ) {
+            content()
+            AccountDialogAccountAction(
+                isUserAnonymous = isUserAnonymous,
+                onAccountActionClick = onAccountActionClick
+            )
+        }
     }
 }
 
