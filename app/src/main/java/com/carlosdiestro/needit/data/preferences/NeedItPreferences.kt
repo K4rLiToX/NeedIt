@@ -7,4 +7,5 @@ interface NeedItPreferences {
 
     val userInfo: Flow<UserPrefs>
     suspend fun updateUserInfo(userPrefs: UserPrefs)
+    suspend fun cleanPreferences()
 }

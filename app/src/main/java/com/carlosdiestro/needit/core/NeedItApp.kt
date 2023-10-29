@@ -53,6 +53,7 @@ import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.home.navigateToHome
+import com.carlosdiestro.needit.features.sign_in.navigateToSignIn
 import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import kotlinx.coroutines.CoroutineScope
@@ -200,7 +201,8 @@ fun Main(
                 if (state.isUserAnonymous) {
                     viewModel.requestGoogleSignInIntent()
                 } else {
-                    Unit
+                    viewModel.signOut()
+                    appState.navController.navigateToSignIn()
                 }
                 appState.closeAccountDialog()
             },

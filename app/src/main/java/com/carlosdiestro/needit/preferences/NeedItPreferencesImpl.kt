@@ -47,6 +47,10 @@ class NeedItPreferencesImpl @Inject constructor(
         }
     }
 
+    override suspend fun cleanPreferences() {
+        preferences.edit { prefs -> prefs.clear() }
+    }
+
     companion object {
         private const val userIdKeyName = "user_id"
         private const val usernameKeyName = "user_username"

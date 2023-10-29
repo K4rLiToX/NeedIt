@@ -30,4 +30,8 @@ class UserRepositoryImpl @Inject constructor(
         userRemoteDatasource.updateUser(user.asDto())
         userLocalDatasource.updateUserInfo(user.toPreferences())
     }
+
+    override suspend fun cleanSignedInUser() = withContext(dispatcher) {
+        userLocalDatasource.cleanSignedInUser()
+    }
 }

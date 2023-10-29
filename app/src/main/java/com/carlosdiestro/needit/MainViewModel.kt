@@ -64,6 +64,12 @@ class MainViewModel @Inject constructor(
             if (signInResult.data != null) upsertUser(signInResult.data.asDomain())
         }
     }
+
+    fun signOut() {
+        viewModelScope.launch {
+            authClient.signOut()
+        }
+    }
 }
 
 data class MainState(
