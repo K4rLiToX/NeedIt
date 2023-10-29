@@ -29,8 +29,8 @@ class AuthClient @Inject constructor(
 
     suspend fun linkAccount(intent: Intent): SignInResult {
         val credential = googleAuthUiClient.getGoogleAuthCredentials(intent) as GoogleAuthCredential
-        val user = auth.currentUser?.linkWithCredential(credential)?.await().createUserAuth()
         return try {
+            val user = auth.currentUser?.linkWithCredential(credential)?.await().createUserAuth()
             SignInResult(
                 data = user,
                 errorMessage = null,
@@ -42,7 +42,7 @@ class AuthClient @Inject constructor(
             SignInResult(
                 data = null,
                 errorMessage = e.message,
-                isNewUser = true
+                isNewUser = false
             )
         }
     }
