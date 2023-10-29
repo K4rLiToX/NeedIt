@@ -2,7 +2,6 @@ package com.carlosdiestro.needit.features.sign_in
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
@@ -35,13 +34,6 @@ fun SignInRoute(
     viewModel: SignInViewModel = hiltViewModel(),
     onSignInSuccessful: () -> Unit
 ) {
-    LaunchedEffect(key1 = Unit) {
-        if (viewModel.signedInUser != null) {
-            Log.d("Leider", "SignInScreen: User Signed In")
-            onSignInSuccessful()
-        }
-    }
-
     val dataState by viewModel.state.collectAsStateWithLifecycle()
 
     SignInScreen(
