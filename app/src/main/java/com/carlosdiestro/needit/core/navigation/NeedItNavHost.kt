@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import com.carlosdiestro.needit.core.NeedItAppState
 import com.carlosdiestro.needit.core.design_system.components.animations.noEnterTransition
 import com.carlosdiestro.needit.core.design_system.components.animations.noExitTransition
+import com.carlosdiestro.needit.features.account.settingsScreen
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.friends.friendsScreen
@@ -70,6 +71,13 @@ fun NeedItNavHost(
         wishDetailsScreen(
             onBackClick = navController::popBackStack,
             onUpdateClick = navController::navigateToUpsert
+        )
+
+        settingsScreen(
+            onBackClick = navController::popBackStack,
+            onVersionClick = {},
+            onPrivacyPolicyClick = {},
+            onTermsOfUseClick = {}
         )
     }
 }

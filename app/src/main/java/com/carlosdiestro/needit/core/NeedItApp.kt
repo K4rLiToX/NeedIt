@@ -51,6 +51,7 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.top_app
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
+import com.carlosdiestro.needit.features.account.navigateToSettings
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.home.navigateToHome
 import com.carlosdiestro.needit.features.sign_in.navigateToSignIn
@@ -231,7 +232,7 @@ fun Main(
                 AppOption(
                     icon = MaterialTheme.icons.Settings,
                     labelId = R.string.settings_title,
-                    onClick = {}
+                    onClick = appState.navController::navigateToSettings
                 )
                 AppOption(
                     icon = MaterialTheme.icons.Feedback,
