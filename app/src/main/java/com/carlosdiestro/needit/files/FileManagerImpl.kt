@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class FileManagerImpl @Inject constructor(
     private val contentResolver: ContentResolver,
-    private val dispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher
 ) : FileManager {
     private val imageFolder: Uri
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -27,7 +27,7 @@ class FileManagerImpl @Inject constructor(
             MediaStore.Images.Media.DATA
         )
 
-    override suspend fun getImageUri(): String = withContext(dispatcher) {
+    override suspend fun getImageUri(): String = withContext(ioDispatcher) {
         contentResolver.query(
             imageFolder,
             projection,

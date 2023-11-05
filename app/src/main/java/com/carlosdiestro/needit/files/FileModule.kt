@@ -24,6 +24,6 @@ object FileModule {
     @Singleton
     fun provideFileManager(
         contentResolver: ContentResolver,
-        @IoDispatcher dispatcher: CoroutineDispatcher
-    ): FileManager = FileManagerImpl(contentResolver, dispatcher)
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): FileManager = FileManagerImpl(contentResolver, ioDispatcher)
 }
