@@ -3,7 +3,7 @@ package com.carlosdiestro.needit.core.mappers
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.domain.users.User
 import com.carlosdiestro.needit.network.dtos.UserDto
-import com.carlosdiestro.needit.preferences.UserPrefs
+import com.carlosdiestro.needit.preferences.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -23,7 +23,7 @@ fun UserAuth.asDomain(): User = User(
     isAnonymous = isAnonymous
 )
 
-fun User.toPreferences(): UserPrefs = UserPrefs(
+fun User.toPreferences(): UserPreferences = UserPreferences(
     id = id,
     username = username,
     email = email,
@@ -31,7 +31,7 @@ fun User.toPreferences(): UserPrefs = UserPrefs(
     isAnonymous = isAnonymous
 )
 
-fun UserPrefs.asDomain(): User = User(
+fun UserPreferences.asDomain(): User = User(
     id = id,
     username = username,
     email = email,
@@ -39,4 +39,4 @@ fun UserPrefs.asDomain(): User = User(
     isAnonymous = isAnonymous
 )
 
-fun Flow<UserPrefs>.asDomain(): Flow<User> = this.map { it.asDomain() }
+fun Flow<UserPreferences>.asDomain(): Flow<User> = this.map { it.asDomain() }

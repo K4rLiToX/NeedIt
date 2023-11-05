@@ -25,8 +25,8 @@ class NeedItPreferencesImpl @Inject constructor(
     private val preferences = context.preferences
     private val prefsData = preferences.data
 
-    override val userInfo: Flow<UserPrefs> = prefsData.map { prefs ->
-        UserPrefs(
+    override val user: Flow<UserPreferences> = prefsData.map { prefs ->
+        UserPreferences(
             id = prefs[userIdKey].orEmpty(),
             username = prefs[usernameKey].orEmpty(),
             email = prefs[userEmailKey].orEmpty(),
@@ -34,20 +34,20 @@ class NeedItPreferencesImpl @Inject constructor(
             isAnonymous = prefs[userIsAnonymousKey] ?: true
         )
     }
-    override val settings: Flow<SettingsPrefs> = prefsData.map { prefs ->
-        SettingsPrefs(
+    override val settings: Flow<SettingsPreferences> = prefsData.map { prefs ->
+        SettingsPreferences(
             useSystemScheme = prefs[settingsUseSystemSchemeKey] ?: true,
             isNightMode = prefs[settingsIsNightModeKey] ?: false
         )
     }
 
-    override suspend fun updateUserInfo(userPrefs: UserPrefs) {
+    override suspend fun updateUserInfo(userPreferences: UserPreferences) {
         preferences.edit { prefs ->
-            prefs[userIdKey] = userPrefs.id
-            prefs[usernameKey] = userPrefs.username
-            prefs[userEmailKey] = userPrefs.email
-            prefs[userProfilePictureKey] = userPrefs.profilePictureUrl
-            prefs[userIsAnonymousKey] = userPrefs.isAnonymous
+            prefs[userIdKey] = userPreferences.id
+            prefs[usernameKey] = userPreferences.username
+            prefs[userEmailKey] = userPreferences.email
+            prefs[userProfilePictureKey] = userPreferences.profilePictureUrl
+            prefs[userIsAnonymousKey] = userPreferences.isAnonymous
         }
     }
 

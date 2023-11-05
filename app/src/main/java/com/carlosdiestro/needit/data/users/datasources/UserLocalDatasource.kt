@@ -1,11 +1,11 @@
 package com.carlosdiestro.needit.data.users.datasources
 
-import com.carlosdiestro.needit.preferences.UserPrefs
+import com.carlosdiestro.needit.preferences.UserPreferences
 import kotlinx.coroutines.flow.Flow
 
 interface UserLocalDatasource {
 
-    val userInfo: Flow<UserPrefs>
-    suspend fun updateUserInfo(userPrefs: UserPrefs)
+    val userInfo: Flow<UserPreferences>
+    suspend fun updateUserInfo(userPreferences: UserPreferences)
     suspend fun cleanSignedInUser()
 }
