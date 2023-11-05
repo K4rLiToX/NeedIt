@@ -36,6 +36,12 @@ class NeedItPreferencesImpl @Inject constructor(
             isAnonymous = prefs[userIsAnonymousKey] ?: true
         )
     }
+    override val settings: Flow<SettingsPrefs> = prefsData.map { prefs ->
+        SettingsPrefs(
+            useSystemScheme = prefs[settingsUseSystemScheme] ?: true,
+            isNightMode = prefs[settingsIsNightMode] ?: false
+        )
+    }
 
     override suspend fun updateUserInfo(userPrefs: UserPrefs) {
         preferences.edit { prefs ->
@@ -57,10 +63,14 @@ class NeedItPreferencesImpl @Inject constructor(
         private const val userEmailKeyName = "user_email"
         private const val userProfilePictureUrlKeyName = "user_profile_picture_url"
         private const val userIsAnonymousKeyName = "user_is_anonymous"
+        private const val settingsUseSystemSchemeKey = "settings_use_system_scheme"
+        private const val settingsIsNightModeKey = "settings_is_night_mode"
         private val userIdKey = stringPreferencesKey(userIdKeyName)
         private val usernameKey = stringPreferencesKey(usernameKeyName)
         private val userEmailKey = stringPreferencesKey(userEmailKeyName)
         private val userProfilePictureKey = stringPreferencesKey(userProfilePictureUrlKeyName)
         private val userIsAnonymousKey = booleanPreferencesKey(userIsAnonymousKeyName)
+        private val settingsUseSystemScheme = booleanPreferencesKey(settingsUseSystemSchemeKey)
+        private val settingsIsNightMode = booleanPreferencesKey(settingsIsNightModeKey)
     }
 }
