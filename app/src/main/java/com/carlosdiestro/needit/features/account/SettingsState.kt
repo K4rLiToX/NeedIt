@@ -24,7 +24,7 @@ data class SettingsDataState(
 fun rememberSettingsUiState(
     topAppBarState: TopAppBarState = rememberTopAppBarState(),
     lazyListState: LazyListState = rememberLazyListState()
-) : SettingsUiState {
+): SettingsUiState {
     return remember(
         topAppBarState,
         lazyListState

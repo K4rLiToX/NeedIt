@@ -32,7 +32,9 @@ fun NiMediumTopAppBar(
     colors: TopAppBarColors = NiTopAppBarSpecs.Color.transparent(),
     actions: @Composable() (RowScope.() -> Unit),
     topAppBarState: TopAppBarState = rememberTopAppBarState(),
-    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
+        topAppBarState
+    )
 ) {
     MediumTopAppBar(
         title = {
