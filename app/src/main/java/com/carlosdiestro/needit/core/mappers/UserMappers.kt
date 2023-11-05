@@ -3,7 +3,7 @@ package com.carlosdiestro.needit.core.mappers
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.domain.users.User
 import com.carlosdiestro.needit.network.dtos.UserDto
-import com.carlosdiestro.needit.datastore.UserPreferences
+import com.carlosdiestro.needit.datastore.models.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.core.mappers
 
 import com.carlosdiestro.needit.domain.settings.Settings
-import com.carlosdiestro.needit.datastore.SettingsPreferences
+import com.carlosdiestro.needit.datastore.models.SettingsPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

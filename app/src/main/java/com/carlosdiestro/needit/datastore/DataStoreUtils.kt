@@ -1,55 +1,14 @@
 package com.carlosdiestro.needit.datastore
 
-import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import com.carlosdiestro.needit.data.preferences.NeedItPreferences
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.carlosdiestro.needit.datastore.models.SettingsPreferences
+import com.carlosdiestro.needit.datastore.models.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
-
-const val needItPreferencesName = "needit_preferences"
-val Context.preferences: DataStore<Preferences> by preferencesDataStore(
-    name = needItPreferencesName
-)
-
-class NeedItPreferencesImpl @Inject constructor(
-    @ApplicationContext private val context: Context
-) : NeedItPreferences {
-
-    private val preferences = context.preferences
-
-    override val user: Flow<UserPreferences> = preferences.user
-
-    override val settings: Flow<SettingsPreferences> = preferences.settings
-
-    override suspend fun updateUserInfo(userPreferences: UserPreferences) {
-        preferences.edit { prefs ->
-            prefs.user = userPreferences
-        }
-    }
-
-    override suspend fun updateUseSystemScheme() {
-        preferences.edit { prefs ->
-            prefs.useSystemScheme = !prefs.useSystemScheme
-        }
-    }
-
-    override suspend fun updateIsNightMode() {
-        preferences.edit { prefs ->
-            prefs.isNightMode = !prefs.isNightMode
-        }
-    }
-
-    override suspend fun cleanPreferences() {
-        preferences.edit { prefs -> prefs.clear() }
-    }
-}
 
 internal object UserKeys {
     internal val id = stringPreferencesKey("user_id")
@@ -62,6 +21,22 @@ internal object UserKeys {
 internal object SettingsKeys {
     internal val useSystemScheme = booleanPreferencesKey("settings_use_system_scheme")
     internal val isNightMode = booleanPreferencesKey("settings_is_night_mode")
+}
+
+internal suspend fun DataStore<Preferences>.updateUser(user: UserPreferences) {
+    this.edit { prefs -> prefs.user = user }
+}
+
+internal suspend fun DataStore<Preferences>.updateUseSystemScheme() {
+    this.edit { prefs -> prefs.useSystemScheme = !prefs.useSystemScheme }
+}
+
+internal suspend fun DataStore<Preferences>.updateIsNightMode() {
+    this.edit { prefs -> prefs.isNightMode = !prefs.isNightMode }
+}
+
+internal suspend fun DataStore<Preferences>.clear() {
+    this.edit { prefs -> prefs.clear() }
 }
 
 internal val DataStore<Preferences>.user: Flow<UserPreferences>
