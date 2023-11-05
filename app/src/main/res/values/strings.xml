@@ -36,16 +36,16 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
-    <string name="settings_display_section">Display</string>
+    <string name="settings_display_section">Color scheme</string>
+    <string name="settings_display_section_use_system_scheme">Use system scheme</string>
     <string name="settings_display_section_night_mode">Night mode</string>
-    <string name="settings_display_section_language">Language</string>
     <string name="settings_notifications_section">Notifications</string>
-    <string name="settings_notifications_sections_friend_requests">Friend requests</string>
+    <string name="settings_notifications_section_friend_requests">Friend requests</string>
     <string name="settings_notifications_section_addition_to_groups">Addition to groups</string>
-    <string name="settings_other_section">Other</string>
-    <string name="settings_other_section_privacy_policy">Privacy policy</string>
-    <string name="settings_other_section_terms_of_use">Terms of use</string>
-    <string name="settings_other_section_version_updates">Version &amp; Updates</string>
+    <string name="settings_about_title">About</string>
+    <string name="settings_about_section_version_and_updates">Version &amp; Updates</string>
+    <string name="settings_about_section_privacy_policy">Privacy policy</string>
+    <string name="settings_about_section_terms_of_use">Terms of use</string>
 
     <!-- Send Feedback -->
     <string name="send_feedback_title">Send feedback</string>

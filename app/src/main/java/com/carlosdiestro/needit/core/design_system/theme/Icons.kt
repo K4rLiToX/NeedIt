@@ -35,6 +35,7 @@ import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Checklist
+import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Deselect
 import androidx.compose.material.icons.rounded.EuroSymbol
 import androidx.compose.material.icons.rounded.Lens
@@ -84,6 +85,7 @@ object Icons {
     val ArrowUp = Icons.Filled.ArrowDropUp
     val ArrowDown = Icons.Filled.ArrowDropDown
     val Currency = Icons.Outlined.LocalAtm
+    val ArrowRight = Icons.Rounded.ChevronRight
 }
 
 val MaterialTheme.icons: com.carlosdiestro.needit.core.design_system.theme.Icons
