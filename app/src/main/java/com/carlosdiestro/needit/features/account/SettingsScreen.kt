@@ -1,19 +1,14 @@
 package com.carlosdiestro.needit.features.account
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -28,6 +23,7 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.top_app
 import com.carlosdiestro.needit.core.design_system.components.selectors.switch.NiLabeledSwitch
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsRoute(
     onBackClick: () -> Unit,
@@ -37,8 +33,10 @@ fun SettingsRoute(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
+    val uiState = rememberSettingsUiState()
     SettingsScreen(
         dataState = dataState,
+        uiState = uiState,
         onBackClick = onBackClick,
         onVersionClick = onVersionClick,
         onPrivatePolicyClick = onPrivatePolicyClick,
@@ -55,6 +53,7 @@ fun SettingsRoute(
 @Composable
 private fun SettingsScreen(
     dataState: SettingsDataState,
+    uiState: SettingsUiState,
     onBackClick: () -> Unit,
     onVersionClick: () -> Unit,
     onPrivatePolicyClick: () -> Unit,
@@ -64,89 +63,94 @@ private fun SettingsScreen(
     onFriendRequestsClick: () -> Unit,
     onAdditionToGroupsClick: () -> Unit
 ) {
-    val scrollState = rememberScrollState()
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         topBar = {
             NiMediumTopAppBar(
                 titleId = R.string.settings_title,
                 onNavigationClick = onBackClick,
-                scrollBehavior = scrollBehavior,
+                topAppBarState = uiState.topAppBarState,
+                scrollBehavior = uiState.scrollBehavior,
                 actions = {}
             )
         },
         modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .nestedScroll(uiState.scrollBehavior.nestedScrollConnection)
     ) {
-        Column(
+        LazyColumn(
+            state = uiState.lazyListState,
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(it)
+                .padding(top = it.calculateTopPadding())
                 .padding(
                     horizontal = MaterialTheme.dimensions.spacingM,
                     vertical = MaterialTheme.dimensions.spacingL
                 )
         ) {
-            NiSettingSectionCard(
-                titleId = R.string.settings_display_section,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                NiLabeledSwitch(
-                    labelId = R.string.settings_display_section_use_system_scheme,
-                    checked = dataState.useSystemScheme,
-                    onCheckedChange = { onUseSystemSchemeClick() },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                NiLabeledSwitch(
-                    labelId = R.string.settings_display_section_night_mode,
-                    checked = dataState.isNightMode,
-                    enabled = dataState.isNightModeEnabled,
-                    onCheckedChange = { onNightModeClick() },
-                    modifier = Modifier.fillMaxWidth()
-                )
+            item {
+                NiSettingSectionCard(
+                    titleId = R.string.settings_display_section,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    NiLabeledSwitch(
+                        labelId = R.string.settings_display_section_use_system_scheme,
+                        checked = dataState.useSystemScheme,
+                        onCheckedChange = { onUseSystemSchemeClick() },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    NiLabeledSwitch(
+                        labelId = R.string.settings_display_section_night_mode,
+                        checked = dataState.isNightMode,
+                        enabled = dataState.isNightModeEnabled,
+                        onCheckedChange = { onNightModeClick() },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
-            NiSettingSectionCard(
-                titleId = R.string.settings_notifications_section,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                NiLabeledSwitch(
-                    labelId = R.string.settings_notifications_section_friend_requests,
-                    checked = true,
-                    onCheckedChange = { onFriendRequestsClick() },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                NiLabeledSwitch(
-                    labelId = R.string.settings_notifications_section_addition_to_groups,
-                    checked = false,
-                    onCheckedChange = { onAdditionToGroupsClick() },
-                    modifier = Modifier.fillMaxWidth()
-                )
+            item {
+                NiSettingSectionCard(
+                    titleId = R.string.settings_notifications_section,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    NiLabeledSwitch(
+                        labelId = R.string.settings_notifications_section_friend_requests,
+                        checked = true,
+                        onCheckedChange = { onFriendRequestsClick() },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    NiLabeledSwitch(
+                        labelId = R.string.settings_notifications_section_addition_to_groups,
+                        checked = false,
+                        onCheckedChange = { onAdditionToGroupsClick() },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
-            NiSettingSectionCard(
-                titleId = R.string.settings_about_section,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                NiTitleWithSubtitle(
-                    title = stringResource(id = R.string.settings_about_section_version_and_updates),
-                    subtitle = "v1.0.0",
-                    onClick = onVersionClick,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                NiTitleWithSubtitle(
-                    title = stringResource(id = R.string.settings_about_section_privacy_policy),
-                    onClick = onPrivatePolicyClick,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                NiTitleWithSubtitle(
-                    title = stringResource(id = R.string.settings_about_section_terms_of_use),
-                    onClick = onTermsOfUseClick,
-                    modifier = Modifier.fillMaxWidth()
-                )
+            item {
+                NiSettingSectionCard(
+                    titleId = R.string.settings_about_section,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    NiTitleWithSubtitle(
+                        title = stringResource(id = R.string.settings_about_section_version_and_updates),
+                        subtitle = "v1.0.0",
+                        onClick = onVersionClick,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    NiTitleWithSubtitle(
+                        title = stringResource(id = R.string.settings_about_section_privacy_policy),
+                        onClick = onPrivatePolicyClick,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    NiTitleWithSubtitle(
+                        title = stringResource(id = R.string.settings_about_section_terms_of_use),
+                        onClick = onTermsOfUseClick,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }
