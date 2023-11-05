@@ -5,9 +5,9 @@ import com.carlosdiestro.needit.datastore.models.SettingsPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-fun SettingsPreferences.toDomain(): Settings = Settings(
+fun SettingsPreferences.asDomain(): Settings = Settings(
     useSystemScheme = useSystemScheme,
     isNightMode = isNightMode
 )
 
-fun Flow<SettingsPreferences>.toDomain(): Flow<Settings> = this.map { it.toDomain() }
+fun Flow<SettingsPreferences>.asDomain(): Flow<Settings> = this.map { it.asDomain() }
