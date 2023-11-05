@@ -76,6 +76,7 @@ private fun SettingsScreen(
         modifier = Modifier
             .nestedScroll(uiState.scrollBehavior.nestedScrollConnection)
     ) {
+        println("System Scheme: ${dataState.useSystemScheme}")
         LazyColumn(
             state = uiState.lazyListState,
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),

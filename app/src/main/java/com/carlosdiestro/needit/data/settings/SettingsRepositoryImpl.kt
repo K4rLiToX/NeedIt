@@ -8,8 +8,11 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SettingsRepositoryImpl @Inject constructor(
-    preferences: NeedItPreferences
+    private val preferences: NeedItPreferences
 ) : SettingsRepository {
 
     override val settings: Flow<Settings> = preferences.settings.toDomain()
+    override suspend fun updateUseSystemScheme() = preferences.updateUseSystemScheme()
+
+    override suspend fun updateIsNightMode() = preferences.updateIsNightMode()
 }

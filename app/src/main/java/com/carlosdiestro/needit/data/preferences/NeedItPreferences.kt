@@ -9,5 +9,7 @@ interface NeedItPreferences {
     val userInfo: Flow<UserPrefs>
     val settings: Flow<SettingsPrefs>
     suspend fun updateUserInfo(userPrefs: UserPrefs)
+    suspend fun updateUseSystemScheme()
+    suspend fun updateIsNightMode()
     suspend fun cleanPreferences()
 }

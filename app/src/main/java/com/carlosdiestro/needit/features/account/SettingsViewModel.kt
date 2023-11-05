@@ -3,16 +3,19 @@ package com.carlosdiestro.needit.features.account
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.domain.settings.GetSettingsUseCase
+import com.carlosdiestro.needit.domain.settings.UpdateUseSystemSchemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    getSettings: GetSettingsUseCase
+    getSettings: GetSettingsUseCase,
+    private val updateUseSystemSchemeUseCase: UpdateUseSystemSchemeUseCase
 ) : ViewModel() {
 
     val state: StateFlow<SettingsDataState> = getSettings()
@@ -29,7 +32,9 @@ class SettingsViewModel @Inject constructor(
         )
 
     fun updateUseSystemScheme() {
-
+        viewModelScope.launch {
+            updateUseSystemSchemeUseCase()
+        }
     }
 
     fun updateNightMode() {

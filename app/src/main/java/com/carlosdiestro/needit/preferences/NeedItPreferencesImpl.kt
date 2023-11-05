@@ -38,8 +38,8 @@ class NeedItPreferencesImpl @Inject constructor(
     }
     override val settings: Flow<SettingsPrefs> = prefsData.map { prefs ->
         SettingsPrefs(
-            useSystemScheme = prefs[settingsUseSystemScheme] ?: true,
-            isNightMode = prefs[settingsIsNightMode] ?: false
+            useSystemScheme = prefs[settingsUseSystemSchemeKey] ?: true,
+            isNightMode = prefs[settingsIsNightModeKey] ?: false
         )
     }
 
@@ -53,6 +53,20 @@ class NeedItPreferencesImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateUseSystemScheme() {
+        preferences.edit { prefs ->
+            val value = prefs[settingsUseSystemSchemeKey] ?: false
+            prefs[settingsUseSystemSchemeKey] = !value
+        }
+    }
+
+    override suspend fun updateIsNightMode() {
+        preferences.edit { prefs ->
+            val value = prefs[settingsIsNightModeKey] ?: true
+            prefs[settingsIsNightModeKey] = !value
+        }
+    }
+
     override suspend fun cleanPreferences() {
         preferences.edit { prefs -> prefs.clear() }
     }
@@ -63,14 +77,15 @@ class NeedItPreferencesImpl @Inject constructor(
         private const val userEmailKeyName = "user_email"
         private const val userProfilePictureUrlKeyName = "user_profile_picture_url"
         private const val userIsAnonymousKeyName = "user_is_anonymous"
-        private const val settingsUseSystemSchemeKey = "settings_use_system_scheme"
-        private const val settingsIsNightModeKey = "settings_is_night_mode"
+        private const val settingsUseSystemSchemeKeyName = "settings_use_system_scheme"
+        private const val settingsIsNightModeKeyName = "settings_is_night_mode"
         private val userIdKey = stringPreferencesKey(userIdKeyName)
         private val usernameKey = stringPreferencesKey(usernameKeyName)
         private val userEmailKey = stringPreferencesKey(userEmailKeyName)
         private val userProfilePictureKey = stringPreferencesKey(userProfilePictureUrlKeyName)
         private val userIsAnonymousKey = booleanPreferencesKey(userIsAnonymousKeyName)
-        private val settingsUseSystemScheme = booleanPreferencesKey(settingsUseSystemSchemeKey)
-        private val settingsIsNightMode = booleanPreferencesKey(settingsIsNightModeKey)
+        private val settingsUseSystemSchemeKey =
+            booleanPreferencesKey(settingsUseSystemSchemeKeyName)
+        private val settingsIsNightModeKey = booleanPreferencesKey(settingsIsNightModeKeyName)
     }
 }
