@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.data.users.datasources
 
-import com.carlosdiestro.needit.preferences.UserPreferences
+import com.carlosdiestro.needit.datastore.UserPreferences
 import kotlinx.coroutines.flow.Flow
 
 interface UserLocalDatasource {

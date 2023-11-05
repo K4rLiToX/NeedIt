@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.preferences
+package com.carlosdiestro.needit.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

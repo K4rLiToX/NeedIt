@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.preferences
+package com.carlosdiestro.needit.datastore
 
 data class SettingsPreferences(
     val useSystemScheme: Boolean,

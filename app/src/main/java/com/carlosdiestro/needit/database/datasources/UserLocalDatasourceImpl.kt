@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.database.datasources
 
 import com.carlosdiestro.needit.data.preferences.NeedItPreferences
 import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasource
-import com.carlosdiestro.needit.preferences.UserPreferences
+import com.carlosdiestro.needit.datastore.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

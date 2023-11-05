@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.preferences
+package com.carlosdiestro.needit.datastore
 
 class UserPreferences(
     val id: String,

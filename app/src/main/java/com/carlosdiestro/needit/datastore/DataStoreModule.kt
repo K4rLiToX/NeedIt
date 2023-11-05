@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.preferences
+package com.carlosdiestro.needit.datastore
 
 import com.carlosdiestro.needit.data.preferences.NeedItPreferences
 import dagger.Binds
@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface PreferencesModule {
+interface DataStoreModule {
 
     @Singleton
     @Binds

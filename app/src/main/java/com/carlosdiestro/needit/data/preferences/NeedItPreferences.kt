@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.data.preferences
 
-import com.carlosdiestro.needit.preferences.SettingsPreferences
-import com.carlosdiestro.needit.preferences.UserPreferences
+import com.carlosdiestro.needit.datastore.SettingsPreferences
+import com.carlosdiestro.needit.datastore.UserPreferences
 import kotlinx.coroutines.flow.Flow
 
 interface NeedItPreferences {
