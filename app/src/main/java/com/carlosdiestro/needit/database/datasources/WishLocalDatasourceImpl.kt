@@ -11,11 +11,9 @@ import javax.inject.Inject
 class WishLocalDatasourceImpl @Inject constructor(
     private val dao: WishDao
 ) : WishLocalDatasource {
-    override val wishes: Flow<List<Wish>>
-        get() = dao.getAll().asDomain()
-    override val sharedWishes: Flow<List<Wish>>
-        get() = dao.getShared().asDomain()
 
+    override val wishes: Flow<List<Wish>> = dao.getAll().asDomain()
+    override val sharedWishes: Flow<List<Wish>> = dao.getShared().asDomain()
     override fun getWish(id: Long): Flow<Wish> = dao.getWish(id).asDomain()
     override suspend fun insertWish(wish: Wish): Long = dao.insert(wish.asEntity())
     override suspend fun updateWish(wish: Wish) = dao.update(wish.asEntity())
