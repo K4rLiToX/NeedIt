@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-
 const val needItPreferencesName = "needit_preferences"
 val Context.preferences: DataStore<Preferences> by preferencesDataStore(
     name = needItPreferencesName
@@ -25,7 +24,6 @@ class NeedItPreferencesImpl @Inject constructor(
 
     private val preferences = context.preferences
     private val prefsData = preferences.data
-
 
     override val userInfo: Flow<UserPrefs> = prefsData.map { prefs ->
         UserPrefs(
