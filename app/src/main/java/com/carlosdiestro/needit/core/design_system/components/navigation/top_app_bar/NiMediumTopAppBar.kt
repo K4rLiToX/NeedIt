@@ -10,6 +10,7 @@ import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.TopAppBarState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -30,9 +31,11 @@ fun NiMediumTopAppBar(
     onNavigationClick: () -> Unit,
     colors: TopAppBarColors = NiTopAppBarSpecs.Color.transparent(),
     actions: @Composable() (RowScope.() -> Unit),
-    topAppBarState: TopAppBarState = rememberTopAppBarState()
+    topAppBarState: TopAppBarState = rememberTopAppBarState(),
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
+        topAppBarState
+    )
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)
     MediumTopAppBar(
         title = {
             Text(

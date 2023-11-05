@@ -2,24 +2,21 @@ package com.carlosdiestro.needit.auth
 
 import android.content.Intent
 import android.content.IntentSender
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthCredential
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthClient @Inject constructor(
     private val anonymousAuthClient: AnonymousAuthClient,
     private val googleAuthUiClient: GoogleAuthUiClient,
-    auth: FirebaseAuth
+    private val auth: FirebaseAuth
 ) {
 
-    val signedInUser: UserAuth? = auth.currentUser?.run {
-        UserAuth(
-            userId = uid,
-            username = displayName ?: "Anonymous",
-            email = email ?: "",
-            profilePictureUrl = photoUrl?.toString() ?: "",
-            isAnonymous = isAnonymous
-        )
-    }
+    val signedInUser: UserAuth? = auth.currentUser.asUserAuth()
 
     suspend fun signInAnonymously(): SignInResult =
         anonymousAuthClient.signIn()
@@ -30,8 +27,53 @@ class AuthClient @Inject constructor(
     suspend fun signInWithGoogle(intent: Intent): SignInResult =
         googleAuthUiClient.signIn(intent)
 
+    suspend fun linkAccount(intent: Intent): SignInResult {
+        val credential = googleAuthUiClient.getGoogleAuthCredentials(intent) as GoogleAuthCredential
+        return try {
+            val user = auth.currentUser?.linkWithCredential(credential)?.await().createUserAuth()
+            SignInResult(
+                data = user,
+                errorMessage = null,
+                isNewUser = false
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            if (e is CancellationException) throw e
+            SignInResult(
+                data = null,
+                errorMessage = e.message,
+                isNewUser = false
+            )
+        }
+    }
+
     suspend fun signOut() = kotlin.run {
         anonymousAuthClient.signOut()
         googleAuthUiClient.signOut()
     }
+}
+
+private fun FirebaseUser?.asUserAuth(): UserAuth? = this?.run {
+    UserAuth(
+        userId = uid,
+        username = displayName ?: "Anonymous",
+        email = email ?: "",
+        profilePictureUrl = photoUrl?.toString() ?: "",
+        isAnonymous = isAnonymous
+    )
+}
+
+private fun AuthResult?.createUserAuth(): UserAuth? = this?.run {
+    val userId = user?.uid ?: ""
+    val email = user?.email ?: ""
+    val isAnonymous = user?.isAnonymous ?: true
+    val username = additionalUserInfo?.profile?.get("name") as String
+    val profilePictureUrl = additionalUserInfo?.profile?.get("picture") as String
+    UserAuth(
+        userId = userId,
+        username = username,
+        email = email,
+        profilePictureUrl = profilePictureUrl,
+        isAnonymous = isAnonymous
+    )
 }

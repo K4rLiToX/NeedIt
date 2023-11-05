@@ -9,6 +9,6 @@ class UserRemoteDatasourceImpl @Inject constructor(
     private val usesCollection: UsersCollection
 ) : UserRemoteDatasource {
 
-    override suspend fun insertUser(dto: UserDto) = usesCollection.insert(dto)
+    override suspend fun upsert(dto: UserDto) = usesCollection.upsert(dto)
     override suspend fun updateUser(dto: UserDto) = usesCollection.update(dto)
 }

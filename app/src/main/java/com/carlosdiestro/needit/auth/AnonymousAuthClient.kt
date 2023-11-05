@@ -21,14 +21,16 @@ class AnonymousAuthClient @Inject constructor(
                         isAnonymous = true
                     )
                 },
-                errorMessage = null
+                errorMessage = null,
+                isNewUser = true
             )
         } catch (e: Exception) {
             e.printStackTrace()
             if (e is CancellationException) throw e
             SignInResult(
                 data = null,
-                errorMessage = e.message
+                errorMessage = e.message,
+                isNewUser = true
             )
         }
     }

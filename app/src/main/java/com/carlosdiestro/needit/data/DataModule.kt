@@ -1,9 +1,11 @@
 package com.carlosdiestro.needit.data
 
+import com.carlosdiestro.needit.data.settings.SettingsRepositoryImpl
 import com.carlosdiestro.needit.data.users.repository.UserRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.FileManagerRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.ImageRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.WishRepositoryImpl
+import com.carlosdiestro.needit.domain.settings.SettingsRepository
 import com.carlosdiestro.needit.domain.users.repository.UserRepository
 import com.carlosdiestro.needit.domain.wishes.repository.FileManagerRepository
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
@@ -33,4 +35,8 @@ interface DataModule {
     @Singleton
     @Binds
     fun bindFileManagerRepository(impl: FileManagerRepositoryImpl): FileManagerRepository
+
+    @Singleton
+    @Binds
+    fun bindSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
 }

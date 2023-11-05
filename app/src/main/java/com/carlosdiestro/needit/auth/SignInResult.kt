@@ -2,7 +2,8 @@ package com.carlosdiestro.needit.auth
 
 data class SignInResult(
     val data: UserAuth?,
-    val errorMessage: String?
+    val errorMessage: String?,
+    val isNewUser: Boolean
 )
 
 data class UserAuth(

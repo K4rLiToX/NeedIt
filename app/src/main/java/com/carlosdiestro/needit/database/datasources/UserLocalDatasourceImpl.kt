@@ -14,4 +14,7 @@ class UserLocalDatasourceImpl @Inject constructor(
 
     override suspend fun updateUserInfo(userPrefs: UserPrefs) =
         preferences.updateUserInfo(userPrefs)
+
+    override suspend fun cleanSignedInUser() =
+        preferences.cleanPreferences()
 }

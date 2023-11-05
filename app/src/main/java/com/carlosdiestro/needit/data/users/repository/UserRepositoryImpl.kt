@@ -21,13 +21,17 @@ class UserRepositoryImpl @Inject constructor(
 
     override val user: Flow<User> = userLocalDatasource.userInfo.asDomain()
 
-    override suspend fun createUser(user: User) = withContext(dispatcher) {
-        userRemoteDatasource.insertUser(user.asDto())
+    override suspend fun upsertUser(user: User) = withContext(dispatcher) {
+        userRemoteDatasource.upsert(user.asDto())
         userLocalDatasource.updateUserInfo(user.toPreferences())
     }
 
     override suspend fun updateUser(user: User) = withContext(dispatcher) {
         userRemoteDatasource.updateUser(user.asDto())
         userLocalDatasource.updateUserInfo(user.toPreferences())
+    }
+
+    override suspend fun cleanSignedInUser() = withContext(dispatcher) {
+        userLocalDatasource.cleanSignedInUser()
     }
 }

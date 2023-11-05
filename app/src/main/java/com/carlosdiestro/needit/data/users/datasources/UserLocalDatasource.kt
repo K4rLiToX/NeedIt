@@ -7,4 +7,5 @@ interface UserLocalDatasource {
 
     val userInfo: Flow<UserPrefs>
     suspend fun updateUserInfo(userPrefs: UserPrefs)
+    suspend fun cleanSignedInUser()
 }

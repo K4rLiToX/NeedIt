@@ -1,12 +1,20 @@
 package com.carlosdiestro.needit.core
 
+import android.app.Activity
+import android.content.Context
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -23,18 +32,29 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.carlosdiestro.needit.MainViewModel
+import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiDoubleButton
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiTextButton
 import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
 import com.carlosdiestro.needit.core.design_system.components.fab.NiFab
+import com.carlosdiestro.needit.core.design_system.components.menus.AppOption
 import com.carlosdiestro.needit.core.design_system.components.menus.CameraPermissionTextProvider
+import com.carlosdiestro.needit.core.design_system.components.menus.NiAccountDialog
+import com.carlosdiestro.needit.core.design_system.components.menus.NiAccountDialogState
 import com.carlosdiestro.needit.core.design_system.components.menus.PermissionDialog
+import com.carlosdiestro.needit.core.design_system.components.menus.rememberNiAccountDialogState
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.TopLevelDestination
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.routes
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
+import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
+import com.carlosdiestro.needit.features.account.navigateToSettings
+import com.carlosdiestro.needit.features.account.settingsRoute
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.home.navigateToHome
+import com.carlosdiestro.needit.features.sign_in.navigateToSignIn
 import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import kotlinx.coroutines.CoroutineScope
@@ -43,7 +63,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun Main(
     appState: NeedItAppState,
-    viewModel: MainViewModel = hiltViewModel(),
+    viewModel: MainViewModel,
     launchCameraPermissionLauncher: () -> Unit,
     isCameraPermissionPermanentlyDeclined: Boolean,
     onGoToAppSettingsClick: () -> Unit
@@ -51,13 +71,42 @@ fun Main(
     val currentDestinationRoute = appState.currentDestinationRoute
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.linkAccount(result.data ?: return@rememberLauncherForActivityResult)
+            }
+        }
+    )
+
+    LaunchedEffect(key1 = state.signInError) {
+        state.signInError?.let { error ->
+            Toast.makeText(
+                appState.context,
+                error,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    LaunchedEffect(key1 = state.googleIntent) {
+        if (state.googleIntent != null) {
+            launcher.launch(
+                IntentSenderRequest.Builder(
+                    intentSender = state.googleIntent!!
+                ).build()
+            )
+        }
+    }
+
     Scaffold(
         topBar = {
             if (appState.shouldShowTopBar) {
                 NiMainTopAppBar(
                     accountImageUrl = state.profilePictureUrl,
                     onNotificationClick = {},
-                    onAccountClick = {}
+                    onAccountClick = { appState.openAccountDialog() }
                 )
             }
         },
@@ -140,33 +189,125 @@ fun Main(
             modifier = Modifier.fillMaxWidth()
         )
     }
+
+    if (appState.shouldShowAccountDialog) {
+        NiAccountDialog(
+            state = appState.accountDialogState,
+            username = state.username,
+            email = state.email,
+            profilePictureUrl = state.profilePictureUrl,
+            isUserAnonymous = state.isUserAnonymous,
+            onDismiss = { appState.closeAccountDialog() },
+            onAccountActionClick = {
+                if (state.isUserAnonymous) {
+                    viewModel.requestGoogleSignInIntent()
+                } else {
+                    viewModel.signOut()
+                    appState.navController.navigateToSignIn()
+                }
+                appState.closeAccountDialog()
+            },
+            header = {
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            },
+            accountExtras = {
+                AppOption(
+                    icon = MaterialTheme.icons.Birthday,
+                    labelId = R.string.profile_birthday,
+                    value = "16/04",
+                    onClick = {}
+                )
+                AppOption(
+                    icon = MaterialTheme.icons.Currency,
+                    labelId = R.string.profile_currency,
+                    value = "EUR €",
+                    onClick = {}
+                )
+            },
+            appOptions = {
+                AppOption(
+                    icon = MaterialTheme.icons.Settings,
+                    labelId = R.string.settings_title,
+                    onClick = {
+                        appState.navController.navigateToSettings()
+                        appState.closeAccountDialog()
+                    }
+                )
+                AppOption(
+                    icon = MaterialTheme.icons.Feedback,
+                    labelId = R.string.send_feedback_title,
+                    onClick = {}
+                )
+                AppOption(
+                    icon = MaterialTheme.icons.Bug,
+                    labelId = R.string.report_bug_title,
+                    onClick = {}
+                )
+            },
+            footer = {
+                NiDoubleButton(
+                    leftButton = {
+                        NiTextButton(
+                            labelId = R.string.button_privacy_policy,
+                            onClick = {}
+                        )
+                    },
+                    rightButton = {
+                        NiTextButton(
+                            labelId = R.string.button_terms_of_service,
+                            onClick = {}
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = MaterialTheme.dimensions.spacingL,
+                            vertical = MaterialTheme.dimensions.spacingS
+                        )
+                )
+            }
+        )
+    }
 }
 
 @Composable
 fun rememberNeedItAppState(
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    context: Context = LocalContext.current,
+    accountDialogState: NiAccountDialogState = rememberNiAccountDialogState()
 ): NeedItAppState {
     return remember(
         navController,
-        coroutineScope
+        coroutineScope,
+        context,
+        accountDialogState
     ) {
         NeedItAppState(
             navController = navController,
-            coroutineScope = coroutineScope
+            coroutineScope = coroutineScope,
+            context = context,
+            accountDialogState = accountDialogState
         )
     }
 }
 
 @Stable
-class NeedItAppState(
+class NeedItAppState constructor(
     val navController: NavHostController,
-    val coroutineScope: CoroutineScope
+    val coroutineScope: CoroutineScope,
+    val context: Context,
+    val accountDialogState: NiAccountDialogState
 ) {
     private val routesWithoutStatusBarPadding: List<String> = listOf(
         detailsRoute,
         cameraRoute,
-        upsertRoute
+        upsertRoute,
+        settingsRoute
     )
 
     private val routesWithoutNavigationBarPadding: List<String> = listOf(
@@ -205,6 +346,9 @@ class NeedItAppState(
     val shouldShowTopBar: Boolean
         @Composable get() = isTopLevelDestination()
 
+    var shouldShowAccountDialog by mutableStateOf(false)
+        private set
+
     fun navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelNavOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
@@ -237,4 +381,12 @@ class NeedItAppState(
     @Composable
     private fun isTopLevelDestination(): Boolean =
         currentDestinationRoute in topLevelDestinationsRoutes
+
+    fun closeAccountDialog() {
+        shouldShowAccountDialog = false
+    }
+
+    fun openAccountDialog() {
+        shouldShowAccountDialog = true
+    }
 }

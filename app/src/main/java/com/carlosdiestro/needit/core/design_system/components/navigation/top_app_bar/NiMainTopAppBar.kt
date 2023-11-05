@@ -58,11 +58,11 @@ fun NiMainTopAppBar(
             NiAvatar(
                 imageUrl = accountImageUrl,
                 size = NiAvatarSpecs.Medium,
-                onClick = onAccountClick
+                onClick = onAccountClick,
+                modifier = Modifier.padding(end = MaterialTheme.dimensions.spacingM)
             )
         },
-        modifier = modifier
-            .padding(horizontal = MaterialTheme.dimensions.spacingM),
+        modifier = modifier,
         scrollBehavior = scrollBehavior
     )
 }
