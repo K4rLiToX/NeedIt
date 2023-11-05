@@ -52,6 +52,7 @@ import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.features.account.navigateToSettings
+import com.carlosdiestro.needit.features.account.settingsRoute
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.home.navigateToHome
 import com.carlosdiestro.needit.features.sign_in.navigateToSignIn
@@ -232,7 +233,10 @@ fun Main(
                 AppOption(
                     icon = MaterialTheme.icons.Settings,
                     labelId = R.string.settings_title,
-                    onClick = appState.navController::navigateToSettings
+                    onClick = {
+                        appState.navController.navigateToSettings()
+                        appState.closeAccountDialog()
+                    }
                 )
                 AppOption(
                     icon = MaterialTheme.icons.Feedback,
@@ -303,7 +307,8 @@ class NeedItAppState constructor(
     private val routesWithoutStatusBarPadding: List<String> = listOf(
         detailsRoute,
         cameraRoute,
-        upsertRoute
+        upsertRoute,
+        settingsRoute
     )
 
     private val routesWithoutNavigationBarPadding: List<String> = listOf(

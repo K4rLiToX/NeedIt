@@ -42,7 +42,7 @@
     <string name="settings_notifications_section">Notifications</string>
     <string name="settings_notifications_section_friend_requests">Friend requests</string>
     <string name="settings_notifications_section_addition_to_groups">Addition to groups</string>
-    <string name="settings_about_title">About</string>
+    <string name="settings_about_section">About</string>
     <string name="settings_about_section_version_and_updates">Version &amp; Updates</string>
     <string name="settings_about_section_privacy_policy">Privacy policy</string>
     <string name="settings_about_section_terms_of_use">Terms of use</string>

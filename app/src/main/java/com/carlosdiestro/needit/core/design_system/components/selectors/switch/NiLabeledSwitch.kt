@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,11 +31,16 @@ fun NiLabeledSwitch(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
+            .padding(
+                horizontal = MaterialTheme.dimensions.spacingM,
+                vertical = MaterialTheme.dimensions.spacingXXS
+            )
     ) {
         Text(
             text = stringResource(id = labelId),
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurface
+            color = if (enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme
+                .colorScheme.onSurfaceVariant
         )
         Spacer(modifier = Modifier.width(MaterialTheme.dimensions.spacingM))
         NiSwitch(
