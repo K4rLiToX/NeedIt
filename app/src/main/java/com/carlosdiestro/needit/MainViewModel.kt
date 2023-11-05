@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.auth.AuthClient
 import com.carlosdiestro.needit.core.mappers.asDomain
+import com.carlosdiestro.needit.domain.settings.GetSettingsUseCase
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.needit.domain.users.usecases.UpsertUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     getSignedInUser: GetSignedInUserUseCase,
+    getSettings: GetSettingsUseCase,
     private val upsertUser: UpsertUserUseCase,
     private val authClient: AuthClient
 ) : ViewModel() {
@@ -30,9 +32,10 @@ class MainViewModel @Inject constructor(
 
     val state: StateFlow<MainState> = combine(
         getSignedInUser(),
+        getSettings(),
         _googleIntentState,
         _signInErrorState
-    ) { user, googleIntent, signInError ->
+    ) { user, settings, googleIntent, signInError ->
         MainState(
             username = user.username,
             email = user.email,
@@ -40,7 +43,9 @@ class MainViewModel @Inject constructor(
             isUserAnonymous = user.isAnonymous,
             signInError = signInError,
             isSignedIn = authClient.signedInUser != null,
-            googleIntent = googleIntent
+            googleIntent = googleIntent,
+            useSystemScheme = settings.useSystemScheme,
+            isNightMode = settings.isNightMode
         )
     }.stateIn(
         scope = viewModelScope,
@@ -80,4 +85,6 @@ data class MainState(
     val signInError: String? = null,
     val isSignedIn: Boolean,
     val googleIntent: IntentSender? = null,
+    val useSystemScheme: Boolean = true,
+    val isNightMode: Boolean = false
 )

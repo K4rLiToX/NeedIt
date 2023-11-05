@@ -64,7 +64,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun Main(
     appState: NeedItAppState,
-    viewModel: MainViewModel = hiltViewModel(),
+    viewModel: MainViewModel,
     launchCameraPermissionLauncher: () -> Unit,
     isCameraPermissionPermanentlyDeclined: Boolean,
     onGoToAppSettingsClick: () -> Unit
