@@ -63,8 +63,8 @@ class MainActivity : ComponentActivity() {
                     )
                     val multiplePermissionsResultLauncher = rememberLauncherForActivityResult(
                         contract = ActivityResultContracts.RequestMultiplePermissions(),
-                        onResult = { permissions ->
-                            val areGranted = permissions.values.reduce { acc, next -> acc && next }
+                        onResult = { result ->
+                            val areGranted = result.values.reduce { acc, next -> acc && next }
                             if (areGranted) appState.navController.navigateToCamera()
                             else Unit
                         }
