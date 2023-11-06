@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
-data class WishDetailsDataState(
+internal data class WishDetailsDataState(
     val id: Long = -1,
     val imageUrl: String = "",
     val title: String = "",

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WishDetailsViewModel @Inject constructor(
+internal class WishDetailsViewModel @Inject constructor(
     getWish: GetWishUseCase,
     private val shareWish: ShareWishUseCase,
     private val lockWish: LockWishUseCase,
