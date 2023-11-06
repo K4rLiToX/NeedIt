@@ -11,9 +11,9 @@ import com.carlosdiestro.needit.core.design_system.components.lists.WishCategory
 import com.carlosdiestro.needit.core.design_system.components.lists.toWishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.usecases.CreateWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetImageUriUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.CreateWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
