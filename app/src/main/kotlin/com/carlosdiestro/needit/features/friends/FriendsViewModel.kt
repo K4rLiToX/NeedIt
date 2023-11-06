@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class FriendsViewModel @Inject constructor() : ViewModel() {
+internal class FriendsViewModel @Inject constructor() : ViewModel() {
     private var _state: MutableStateFlow<FriendsState> = MutableStateFlow(FriendsState())
     val state = _state.asStateFlow()
 }
 
-data class FriendsState(
+internal data class FriendsState(
     val friends: List<String> = emptyList()
 ) {
     val showEmptyScreen: Boolean = friends.isEmpty()
