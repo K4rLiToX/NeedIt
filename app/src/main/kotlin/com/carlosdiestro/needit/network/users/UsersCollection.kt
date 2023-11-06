@@ -1,6 +1,5 @@
-package com.carlosdiestro.needit.network.collections
+package com.carlosdiestro.needit.network.users
 
-import com.carlosdiestro.needit.network.dtos.UserDto
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
 import javax.inject.Inject

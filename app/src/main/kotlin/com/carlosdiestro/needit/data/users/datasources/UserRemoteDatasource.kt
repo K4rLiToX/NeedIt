@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.data.users.datasources
 
-import com.carlosdiestro.needit.network.dtos.UserDto
+import com.carlosdiestro.needit.network.users.UserDto
 
 interface UserRemoteDatasource {
 

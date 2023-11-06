@@ -1,9 +1,9 @@
 package com.carlosdiestro.needit.network
 
 import com.carlosdiestro.needit.core.di.IoDispatcher
-import com.carlosdiestro.needit.network.collections.ImagesCollection
-import com.carlosdiestro.needit.network.collections.UsersCollection
-import com.carlosdiestro.needit.network.collections.WishesCollection
+import com.carlosdiestro.needit.network.images.ImagesCollection
+import com.carlosdiestro.needit.network.users.UsersCollection
+import com.carlosdiestro.needit.network.wishes.WishesCollection
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

@@ -1,7 +1,6 @@
-package com.carlosdiestro.needit.network.collections
+package com.carlosdiestro.needit.network.wishes
 
 import com.carlosdiestro.needit.network.CollectionsPath
-import com.carlosdiestro.needit.network.dtos.WishDto
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.CoroutineDispatcher

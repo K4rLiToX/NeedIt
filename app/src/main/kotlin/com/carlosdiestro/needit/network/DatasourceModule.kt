@@ -3,9 +3,9 @@ package com.carlosdiestro.needit.network
 import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
 import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
 import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
-import com.carlosdiestro.needit.network.datasources.ImageRemoteDatasourceImpl
-import com.carlosdiestro.needit.network.datasources.UserRemoteDatasourceImpl
-import com.carlosdiestro.needit.network.datasources.WishRemoteDatasourceImpl
+import com.carlosdiestro.needit.network.images.ImageRemoteDatasourceImpl
+import com.carlosdiestro.needit.network.users.UserRemoteDatasourceImpl
+import com.carlosdiestro.needit.network.wishes.WishRemoteDatasourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

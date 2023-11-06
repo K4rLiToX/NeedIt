@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.network.dtos
+package com.carlosdiestro.needit.network.wishes
 
 data class WishDto(
     val id: Long,

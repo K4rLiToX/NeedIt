@@ -6,7 +6,7 @@ import com.carlosdiestro.needit.database.entities.WishEntity
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.WishCategory
 import com.carlosdiestro.needit.domain.wishes.toWishCategory
-import com.carlosdiestro.needit.network.dtos.WishDto
+import com.carlosdiestro.needit.network.wishes.WishDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

@@ -1,9 +1,8 @@
-package com.carlosdiestro.needit.network.datasources
+package com.carlosdiestro.needit.network.wishes
 
 import com.carlosdiestro.needit.core.mappers.asDto
 import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import com.carlosdiestro.needit.domain.wishes.Wish
-import com.carlosdiestro.needit.network.collections.WishesCollection
 import javax.inject.Inject
 
 class WishRemoteDatasourceImpl @Inject constructor(

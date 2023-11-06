@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.network.dtos
+package com.carlosdiestro.needit.network.users
 
 data class UserDto(
     val id: String,

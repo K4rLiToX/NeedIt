@@ -1,7 +1,6 @@
-package com.carlosdiestro.needit.network.datasources
+package com.carlosdiestro.needit.network.images
 
 import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
-import com.carlosdiestro.needit.network.collections.ImagesCollection
 import javax.inject.Inject
 
 class ImageRemoteDatasourceImpl @Inject constructor(
