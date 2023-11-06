@@ -12,7 +12,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class GoogleAuthUiClient @Inject constructor(
+internal class GoogleAuthUiClient @Inject constructor(
     private val oneTapClient: SignInClient,
     private val auth: FirebaseAuth,
     private val webClientId: String

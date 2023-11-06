@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthModule {
+internal object AuthModule {
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
@@ -42,7 +42,7 @@ object AuthModule {
         anonymousAuthClient: AnonymousAuthClient,
         googleAuthUiClient: GoogleAuthUiClient,
         auth: FirebaseAuth
-    ): AuthClient = AuthClient(
+    ): AuthClient = AuthClientImpl(
         anonymousAuthClient = anonymousAuthClient,
         googleAuthUiClient = googleAuthUiClient,
         auth = auth

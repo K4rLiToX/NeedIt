@@ -5,7 +5,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class AnonymousAuthClient @Inject constructor(
+internal class AnonymousAuthClient @Inject constructor(
     private val auth: FirebaseAuth
 ) {
     suspend fun signIn(): SignInResult {
