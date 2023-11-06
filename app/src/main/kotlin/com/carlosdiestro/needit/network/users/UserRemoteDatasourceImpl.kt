@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.network.users
 
-import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
+import com.carlosdiestro.needit.data.users.UserRemoteDatasource
 import javax.inject.Inject
 
 internal class UserRemoteDatasourceImpl @Inject constructor(

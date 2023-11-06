@@ -1,5 +1,6 @@
-package com.carlosdiestro.needit.domain.preferences
+package com.carlosdiestro.needit.domain.preferences.usecases
 
+import com.carlosdiestro.needit.domain.preferences.repository.NeedItPreferencesRepository
 import javax.inject.Inject
 
 class UpdateUseSystemSchemeUseCase @Inject constructor(

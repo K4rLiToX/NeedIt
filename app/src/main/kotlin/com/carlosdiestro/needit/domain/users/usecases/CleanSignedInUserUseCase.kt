@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.domain.users.usecases
 
-import com.carlosdiestro.needit.domain.preferences.NeedItPreferencesRepository
+import com.carlosdiestro.needit.domain.preferences.repository.NeedItPreferencesRepository
 import javax.inject.Inject
 
 class CleanSignedInUserUseCase @Inject constructor(

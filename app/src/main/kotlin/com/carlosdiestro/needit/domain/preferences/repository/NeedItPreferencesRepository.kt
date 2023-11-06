@@ -1,5 +1,6 @@
-package com.carlosdiestro.needit.domain.preferences
+package com.carlosdiestro.needit.domain.preferences.repository
 
+import com.carlosdiestro.needit.domain.preferences.Settings
 import com.carlosdiestro.needit.domain.users.User
 import kotlinx.coroutines.flow.Flow
 

@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.network
 
-import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
+import com.carlosdiestro.needit.data.users.UserRemoteDatasource
 import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
 import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import com.carlosdiestro.needit.network.images.ImageRemoteDatasourceImpl

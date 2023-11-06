@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.data.preferences
 
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asPreferences
-import com.carlosdiestro.needit.domain.preferences.NeedItPreferencesRepository
+import com.carlosdiestro.needit.domain.preferences.repository.NeedItPreferencesRepository
 import com.carlosdiestro.needit.domain.preferences.Settings
 import com.carlosdiestro.needit.domain.users.User
 import kotlinx.coroutines.flow.Flow
