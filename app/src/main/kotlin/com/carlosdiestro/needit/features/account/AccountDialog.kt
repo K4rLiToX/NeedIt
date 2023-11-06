@@ -1,5 +1,10 @@
-package com.carlosdiestro.needit.core.design_system.components.menus
+package com.carlosdiestro.needit.features.account
 
+import android.app.Activity
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -24,11 +29,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,39 +38,167 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.avatars.NiAvatar
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiDoubleButton
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiOutlinedButton
+import com.carlosdiestro.needit.core.design_system.components.buttons.NiTextButton
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
 @Composable
-fun rememberNiAccountDialogState(): NiAccountDialogState {
-    return remember {
-        NiAccountDialogState()
+fun AccountDialogRoute(
+    onDismiss: () -> Unit,
+    onSignOutClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    viewModel: AccountViewModel = hiltViewModel()
+) {
+    val dataState by viewModel.state.collectAsStateWithLifecycle()
+    val googleIntent by viewModel.googleSignInIntentState.collectAsStateWithLifecycle()
+    val signInError by viewModel.signInErrorState.collectAsStateWithLifecycle()
+    val uiState = rememberAccountDialogState()
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.linkAccount(result.data ?: return@rememberLauncherForActivityResult)
+            }
+        }
+    )
+
+    LaunchedEffect(signInError) {
+        signInError?.let { error ->
+            Toast.makeText(
+                uiState.context,
+                error,
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
+
+    LaunchedEffect(googleIntent) {
+        if (googleIntent != null) {
+            launcher.launch(
+                IntentSenderRequest.Builder(
+                    intentSender = googleIntent!!
+                ).build()
+            )
+        }
+    }
+
+    AccountDialog(
+        uiState = uiState,
+        dataState = dataState,
+        onDismiss = onDismiss,
+        requestGoogleSignInIntent = viewModel::requestGoogleSignInIntent,
+        onSignOutClick = {
+            viewModel.signOut()
+            onSignOutClick()
+        },
+        onSettingsClick = onSettingsClick
+    )
 }
 
-@Stable
-class NiAccountDialogState {
-
-    var shouldShowAccountExtras by mutableStateOf(false)
-        private set
-
-    fun setShowAccountExtra(show: Boolean) {
-        shouldShowAccountExtras = show
+@Composable
+private fun AccountDialog(
+    uiState: AccountDialogUiState,
+    dataState: AccountDataState,
+    onDismiss: () -> Unit,
+    requestGoogleSignInIntent: () -> Unit,
+    onSignOutClick: () -> Unit,
+    onSettingsClick: () -> Unit
+) {
+    when (dataState) {
+        AccountDataState.Loading -> Unit
+        is AccountDataState.Success -> {
+            AccountDialog(
+                uiState = uiState,
+                username = dataState.account.username,
+                email = dataState.account.username,
+                profilePictureUrl = dataState.account.profilePictureUrl,
+                isAnonymous = dataState.account.isAnonymous,
+                onDismiss = onDismiss,
+                onAccountActionClick = {
+                    if (dataState.account.isAnonymous) requestGoogleSignInIntent()
+                    else onSignOutClick()
+                },
+                header = {
+                    Text(
+                        text = stringResource(id = R.string.app_name),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                accountExtras = {
+                    AppOption(
+                        icon = MaterialTheme.icons.Birthday,
+                        labelId = R.string.profile_birthday,
+                        value = dataState.account.birthday,
+                        onClick = {}
+                    )
+                    AppOption(
+                        icon = MaterialTheme.icons.Currency,
+                        labelId = R.string.profile_currency,
+                        value = dataState.account.currency,
+                        onClick = {}
+                    )
+                },
+                appOptions = {
+                    AppOption(
+                        icon = MaterialTheme.icons.Settings,
+                        labelId = R.string.settings_title,
+                        onClick = onSettingsClick
+                    )
+                    AppOption(
+                        icon = MaterialTheme.icons.Feedback,
+                        labelId = R.string.send_feedback_title,
+                        onClick = {}
+                    )
+                    AppOption(
+                        icon = MaterialTheme.icons.Bug,
+                        labelId = R.string.report_bug_title,
+                        onClick = {}
+                    )
+                },
+                footer = {
+                    NiDoubleButton(
+                        leftButton = {
+                            NiTextButton(
+                                labelId = R.string.button_privacy_policy,
+                                onClick = {}
+                            )
+                        },
+                        rightButton = {
+                            NiTextButton(
+                                labelId = R.string.button_terms_of_service,
+                                onClick = {}
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = MaterialTheme.dimensions.spacingL,
+                                vertical = MaterialTheme.dimensions.spacingS
+                            )
+                    )
+                }
+            )
+        }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NiAccountDialog(
+private fun AccountDialog(
     modifier: Modifier = Modifier,
-    state: NiAccountDialogState,
+    uiState: AccountDialogUiState,
     username: String,
     email: String,
     profilePictureUrl: String,
-    isUserAnonymous: Boolean,
+    isAnonymous: Boolean,
     onDismiss: () -> Unit,
     onAccountActionClick: () -> Unit,
     header: @Composable RowScope.() -> Unit = {},
@@ -92,9 +222,9 @@ fun NiAccountDialog(
                 profilePictureUrl = profilePictureUrl,
                 username = username,
                 email = email,
-                isUserAnonymous = isUserAnonymous,
-                shouldShowAccountExtras = state.shouldShowAccountExtras,
-                onAccountInformationClick = state::setShowAccountExtra,
+                isUserAnonymous = isAnonymous,
+                shouldShowAccountExtras = uiState.shouldShowAccountExtras,
+                onAccountInformationClick = uiState::setShowAccountExtra,
                 onAccountActionClick = onAccountActionClick,
                 accountExtras = accountExtras
             )
@@ -284,7 +414,7 @@ private fun AccountDialogFooter(
 }
 
 @Composable
-fun AppOption(
+private fun AppOption(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     @StringRes labelId: Int,
