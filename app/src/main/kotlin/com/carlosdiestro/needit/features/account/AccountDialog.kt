@@ -117,7 +117,7 @@ private fun AccountDialog(
             AccountDialog(
                 uiState = uiState,
                 username = dataState.account.username,
-                email = dataState.account.username,
+                email = dataState.account.email,
                 profilePictureUrl = dataState.account.profilePictureUrl,
                 isAnonymous = dataState.account.isAnonymous,
                 onDismiss = onDismiss,
