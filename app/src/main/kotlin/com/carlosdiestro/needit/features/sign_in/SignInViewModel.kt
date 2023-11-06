@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(
+internal class SignInViewModel @Inject constructor(
     private val upsertUser: UpsertUserUseCase,
     private val authClient: AuthClient
 ) : ViewModel() {
