@@ -52,6 +52,19 @@ import com.carlosdiestro.needit.core.design_system.theme.icons
 fun AccountDialogRoute(
     onDismiss: () -> Unit,
     onSignOutClick: () -> Unit,
+    onSettingsClick: () -> Unit
+) {
+    AccountDialog(
+        onDismiss = onDismiss,
+        onSignOutClick = onSignOutClick,
+        onSettingsClick = onSettingsClick
+    )
+}
+
+@Composable
+private fun AccountDialog(
+    onDismiss: () -> Unit,
+    onSignOutClick: () -> Unit,
     onSettingsClick: () -> Unit,
     viewModel: AccountViewModel = hiltViewModel()
 ) {

@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AccountViewModel @Inject constructor(
+internal class AccountViewModel @Inject constructor(
     private val authClient: AuthClient,
     private val upsertUser: UpsertUserUseCase,
     getSignedInUser: GetSignedInUserUseCase
