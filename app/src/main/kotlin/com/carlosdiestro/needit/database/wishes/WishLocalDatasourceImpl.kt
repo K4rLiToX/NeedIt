@@ -1,9 +1,8 @@
-package com.carlosdiestro.needit.database.datasources
+package com.carlosdiestro.needit.database.wishes
 
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asEntity
 import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
-import com.carlosdiestro.needit.database.dao.WishDao
 import com.carlosdiestro.needit.domain.wishes.Wish
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

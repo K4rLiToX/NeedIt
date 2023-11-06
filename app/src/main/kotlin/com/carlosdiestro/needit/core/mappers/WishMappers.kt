@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.core.mappers
 
 import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
-import com.carlosdiestro.needit.database.entities.WishEntity
+import com.carlosdiestro.needit.database.wishes.WishEntity
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.WishCategory
 import com.carlosdiestro.needit.domain.wishes.toWishCategory

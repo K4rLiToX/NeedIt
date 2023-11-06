@@ -1,10 +1,9 @@
-package com.carlosdiestro.needit.database.dao
+package com.carlosdiestro.needit.database.wishes
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.carlosdiestro.needit.database.entities.WishEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

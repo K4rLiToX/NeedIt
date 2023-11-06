@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.database
 
 import android.content.Context
 import androidx.room.Room
-import com.carlosdiestro.needit.database.dao.WishDao
+import com.carlosdiestro.needit.database.wishes.WishDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.database.entities
+package com.carlosdiestro.needit.database.wishes
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
