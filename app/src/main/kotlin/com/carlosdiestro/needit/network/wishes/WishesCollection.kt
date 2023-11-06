@@ -3,13 +3,11 @@ package com.carlosdiestro.needit.network.wishes
 import com.carlosdiestro.needit.network.CollectionsPath
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 internal class WishesCollection @Inject constructor(
-    private val usersCollection: CollectionReference,
-    private val ioDispatcher: CoroutineDispatcher
+    private val usersCollection: CollectionReference
 ) {
 
     suspend fun insert(wish: WishDto): String =
