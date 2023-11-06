@@ -5,7 +5,6 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class WishesCollection @Inject constructor(
@@ -21,14 +20,14 @@ class WishesCollection @Inject constructor(
             .await()
             .id
 
-    suspend fun delete(cloudId: String, userId: String) {
+    fun delete(cloudId: String, userId: String) {
             usersCollection
                 .document(userId)
                 .collection(CollectionsPath.userWishes)
                 .document(cloudId).delete()
     }
 
-    suspend fun update(cloudId: String, wish: WishDto) {
+    fun update(cloudId: String, wish: WishDto) {
             usersCollection
                 .document(wish.userId)
                 .collection(CollectionsPath.userWishes)
