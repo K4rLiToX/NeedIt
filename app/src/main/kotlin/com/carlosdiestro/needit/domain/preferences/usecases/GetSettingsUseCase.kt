@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.domain.preferences.usecases
 
-import com.carlosdiestro.needit.domain.preferences.repository.NeedItPreferencesRepository
 import com.carlosdiestro.needit.domain.preferences.Settings
+import com.carlosdiestro.needit.domain.preferences.repository.NeedItPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
