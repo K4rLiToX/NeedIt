@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 
-data class SettingsDataState(
+internal data class SettingsDataState(
     val useSystemScheme: Boolean = true,
     val isNightMode: Boolean = false
 ) {
@@ -21,7 +21,7 @@ data class SettingsDataState(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun rememberSettingsUiState(
+internal fun rememberSettingsUiState(
     topAppBarState: TopAppBarState = rememberTopAppBarState(),
     lazyListState: LazyListState = rememberLazyListState()
 ): SettingsUiState {
@@ -38,7 +38,7 @@ fun rememberSettingsUiState(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Stable
-class SettingsUiState constructor(
+internal class SettingsUiState constructor(
     val topAppBarState: TopAppBarState,
     val lazyListState: LazyListState
 ) {

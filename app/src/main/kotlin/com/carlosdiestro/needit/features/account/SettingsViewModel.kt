@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(
+internal class SettingsViewModel @Inject constructor(
     getSettings: GetSettingsUseCase,
     private val updateUseSystemSchemeUseCase: UpdateUseSystemSchemeUseCase,
     private val updateIsNightModeUseCase: UpdateIsNightModeUseCase
