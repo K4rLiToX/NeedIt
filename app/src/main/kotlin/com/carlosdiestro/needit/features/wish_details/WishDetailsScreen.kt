@@ -25,7 +25,7 @@ import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
 @Composable
-fun WishDetailsRoute(
+internal fun WishDetailsRoute(
     onBackClick: () -> Unit,
     onUpdateClick: (Int, Long) -> Unit,
     viewModel: WishDetailsViewModel = hiltViewModel()

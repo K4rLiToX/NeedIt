@@ -39,7 +39,7 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun HomeRoute(
+internal fun HomeRoute(
     onItemClick: (Long) -> Unit,
     onUpdateClick: (Int, Long) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()

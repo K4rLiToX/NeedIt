@@ -25,7 +25,7 @@ import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsRoute(
+internal fun SettingsRoute(
     onBackClick: () -> Unit,
     onVersionClick: () -> Unit,
     onPrivatePolicyClick: () -> Unit,

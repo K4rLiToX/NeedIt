@@ -6,7 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun FriendsRoute(
+internal fun FriendsRoute(
     onFriendClick: (String) -> Unit,
     viewModel: FriendsViewModel = hiltViewModel()
 ) {

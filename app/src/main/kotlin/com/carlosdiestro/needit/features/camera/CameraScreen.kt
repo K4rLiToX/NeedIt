@@ -62,7 +62,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 @Composable
-fun CameraRoute(
+internal fun CameraRoute(
     onBackClick: () -> Unit,
     onContinueClick: (Int, Long) -> Unit,
     viewModel: CameraViewModel = hiltViewModel()

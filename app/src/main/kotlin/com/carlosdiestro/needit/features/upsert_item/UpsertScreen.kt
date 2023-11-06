@@ -33,7 +33,7 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.top_app
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
-fun UpsertRoute(
+internal fun UpsertRoute(
     onBackClick: () -> Unit,
     onFinish: () -> Unit,
     viewModel: UpsertViewModel = hiltViewModel()

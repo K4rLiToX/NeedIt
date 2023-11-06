@@ -30,9 +30,9 @@ import com.carlosdiestro.needit.core.design_system.components.buttons.NiOutlined
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
 @Composable
-fun SignInRoute(
-    viewModel: SignInViewModel = hiltViewModel(),
-    onSignInSuccessful: () -> Unit
+internal fun SignInRoute(
+    onSignInSuccessful: () -> Unit,
+    viewModel: SignInViewModel = hiltViewModel()
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
 
