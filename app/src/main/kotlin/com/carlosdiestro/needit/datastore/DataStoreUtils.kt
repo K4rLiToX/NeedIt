@@ -24,15 +24,25 @@ internal object SettingsKeys {
 }
 
 internal suspend fun DataStore<Preferences>.updateUser(user: UserPreferences) {
-    this.edit { prefs -> prefs.user = user }
+    this.edit { prefs ->
+        prefs[UserKeys.id] = user.id
+        prefs[UserKeys.username] = user.username
+        prefs[UserKeys.email] = user.email
+        prefs[UserKeys.profilePictureUrl] = user.profilePictureUrl
+        prefs[UserKeys.isAnonymous] = user.isAnonymous
+    }
 }
 
 internal suspend fun DataStore<Preferences>.updateUseSystemScheme() {
-    this.edit { prefs -> prefs.useSystemScheme = !prefs.useSystemScheme }
+    this.edit { prefs ->
+        prefs[SettingsKeys.useSystemScheme] = !prefs.useSystemScheme
+    }
 }
 
 internal suspend fun DataStore<Preferences>.updateIsNightMode() {
-    this.edit { prefs -> prefs.isNightMode = !prefs.isNightMode }
+    this.edit { prefs ->
+        prefs[SettingsKeys.isNightMode] = !prefs.isNightMode
+    }
 }
 
 internal suspend fun DataStore<Preferences>.clear() {
@@ -51,7 +61,7 @@ internal val Flow<Preferences>.user: Flow<UserPreferences>
 internal val Flow<Preferences>.settings: Flow<SettingsPreferences>
     get() = this.map { it.settings }
 
-internal var Preferences.user: UserPreferences
+internal val Preferences.user: UserPreferences
     get() = UserPreferences(
         id = userId,
         username = username,
@@ -59,70 +69,30 @@ internal var Preferences.user: UserPreferences
         profilePictureUrl = profilePictureUrl,
         isAnonymous = isAnonymous
     )
-    set(value) {
-        this.userId = value.id
-        this.username = value.username
-        this.email = value.email
-        this.profilePictureUrl = value.profilePictureUrl
-        this.isAnonymous = value.isAnonymous
-    }
 
-internal var Preferences.settings: SettingsPreferences
+internal val Preferences.settings: SettingsPreferences
     get() = SettingsPreferences(
         useSystemScheme = useSystemScheme,
         isNightMode = isNightMode
     )
-    set(value) {
-        this.useSystemScheme = value.useSystemScheme
-        this.isNightMode = value.isNightMode
-    }
 
-internal var Preferences.userId: String
+internal val Preferences.userId: String
     get() = this[UserKeys.id].orEmpty()
-    set(value) {
-        this[UserKeys.id] = value
-    }
 
-internal var Preferences.username: String
+internal val Preferences.username: String
     get() = this[UserKeys.username].orEmpty()
-    set(value) {
-        this[UserKeys.username] = value
-    }
 
-internal var Preferences.email: String
+internal val Preferences.email: String
     get() = this[UserKeys.email].orEmpty()
-    set(value) {
-        this[UserKeys.email] = value
-    }
 
-internal var Preferences.profilePictureUrl: String
+internal val Preferences.profilePictureUrl: String
     get() = this[UserKeys.profilePictureUrl].orEmpty()
-    set(value) {
-        this[UserKeys.profilePictureUrl] = value
-    }
 
-internal var Preferences.isAnonymous: Boolean
+internal val Preferences.isAnonymous: Boolean
     get() = this[UserKeys.isAnonymous] ?: true
-    set(value) {
-        this[UserKeys.isAnonymous] = value
-    }
 
-internal var Preferences.useSystemScheme: Boolean
+internal val Preferences.useSystemScheme: Boolean
     get() = this[SettingsKeys.useSystemScheme] ?: true
-    set(value) {
-        this[SettingsKeys.useSystemScheme] = value
-    }
 
-internal var Preferences.isNightMode: Boolean
+internal val Preferences.isNightMode: Boolean
     get() = this[SettingsKeys.isNightMode] ?: false
-    set(value) {
-        this[SettingsKeys.isNightMode] = value
-    }
-
-private operator fun Preferences.set(key: Preferences.Key<String>, value: String) {
-    this[key] = value
-}
-
-private operator fun Preferences.set(key: Preferences.Key<Boolean>, value: Boolean) {
-    this[key] = value
-}
