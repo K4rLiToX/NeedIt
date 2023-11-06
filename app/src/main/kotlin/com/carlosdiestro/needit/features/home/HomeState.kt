@@ -25,7 +25,7 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-data class HomeDataState(
+internal data class HomeDataState(
     val wishes: List<HomeWishPlo> = emptyList(),
     val categories: List<WishCategoryPlo> = emptyList(),
     val selectedWish: Wish? = null
@@ -48,7 +48,7 @@ data class HomeDataState(
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun rememberHomeUiState(
+internal fun rememberHomeUiState(
     pagerState: PagerState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     lazyGridState: LazyGridState = rememberLazyGridState(),
@@ -71,7 +71,7 @@ fun rememberHomeUiState(
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Stable
-class HomeUiState(
+internal class HomeUiState(
     val coroutineScope: CoroutineScope,
     val lazyGridState: LazyGridState,
     val pagerState: PagerState,
