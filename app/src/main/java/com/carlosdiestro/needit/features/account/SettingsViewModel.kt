@@ -2,9 +2,9 @@ package com.carlosdiestro.needit.features.account
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.domain.settings.GetSettingsUseCase
-import com.carlosdiestro.needit.domain.settings.UpdateIsNightModeUseCase
-import com.carlosdiestro.needit.domain.settings.UpdateUseSystemSchemeUseCase
+import com.carlosdiestro.needit.domain.preferences.GetSettingsUseCase
+import com.carlosdiestro.needit.domain.preferences.UpdateIsNightModeUseCase
+import com.carlosdiestro.needit.domain.preferences.UpdateUseSystemSchemeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

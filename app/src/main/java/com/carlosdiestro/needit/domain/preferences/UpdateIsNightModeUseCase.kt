@@ -1,9 +1,9 @@
-package com.carlosdiestro.needit.domain.settings
+package com.carlosdiestro.needit.domain.preferences
 
 import javax.inject.Inject
 
 class UpdateIsNightModeUseCase @Inject constructor(
-    private val repository: SettingsRepository
+    private val repository: NeedItPreferencesRepository
 ) {
     suspend operator fun invoke() = repository.updateIsNightMode()
 }

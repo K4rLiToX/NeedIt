@@ -23,7 +23,7 @@ fun UserAuth.asDomain(): User = User(
     isAnonymous = isAnonymous
 )
 
-fun User.toPreferences(): UserPreferences = UserPreferences(
+fun User.asPreferences(): UserPreferences = UserPreferences(
     id = id,
     username = username,
     email = email,
