@@ -24,7 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.carlosdiestro.needit.core.Main
+import com.carlosdiestro.needit.core.NeedItApp
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.rememberNeedItAppState
 import com.carlosdiestro.needit.features.camera.navigateToCamera
@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
 //                            else appState.setShowCameraPermissionDialog(true)
 //                        }
 //                    )
-                    Main(
+                    NeedItApp(
                         appState = appState,
                         viewModel = viewModel,
                         launchCameraPermissionLauncher = {
