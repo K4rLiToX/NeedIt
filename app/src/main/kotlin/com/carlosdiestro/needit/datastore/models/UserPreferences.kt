@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.datastore.models
 
-class UserPreferences(
+data class UserPreferences(
     val id: String,
     val username: String,
     val email: String,
