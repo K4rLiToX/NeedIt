@@ -8,7 +8,7 @@ import com.carlosdiestro.needit.domain.users.User
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class NeedItPreferencesRepositoryImpl @Inject constructor(
+internal class NeedItPreferencesRepositoryImpl @Inject constructor(
     private val datasource: NeedItPreferencesDatasource
 ) : NeedItPreferencesRepository {
 

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-class WishRepositoryImpl @Inject constructor(
+internal class WishRepositoryImpl @Inject constructor(
     private val localDatasource: WishLocalDatasource,
     private val remoteDatasource: WishRemoteDatasource,
 ) : WishRepository {

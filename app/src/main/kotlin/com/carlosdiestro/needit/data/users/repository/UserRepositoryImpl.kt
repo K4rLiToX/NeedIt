@@ -6,7 +6,7 @@ import com.carlosdiestro.needit.domain.users.User
 import com.carlosdiestro.needit.domain.users.repository.UserRepository
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
+internal class UserRepositoryImpl @Inject constructor(
     private val userRemoteDatasource: UserRemoteDatasource,
 ) : UserRepository {
 

@@ -4,7 +4,7 @@ import com.carlosdiestro.needit.data.wishes.datasources.FileManager
 import com.carlosdiestro.needit.domain.wishes.repository.FileManagerRepository
 import javax.inject.Inject
 
-class FileManagerRepositoryImpl @Inject constructor(
+internal class FileManagerRepositoryImpl @Inject constructor(
     private val fileManager: FileManager
 ) : FileManagerRepository {
     override suspend fun getImageUri(): String = fileManager.getImageUri()

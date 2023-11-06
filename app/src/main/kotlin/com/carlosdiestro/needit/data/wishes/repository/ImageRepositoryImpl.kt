@@ -4,7 +4,7 @@ import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
 import javax.inject.Inject
 
-class ImageRepositoryImpl @Inject constructor(
+internal class ImageRepositoryImpl @Inject constructor(
     private val remoteDatasource: ImageRemoteDatasource
 ) : ImageRepository {
 
