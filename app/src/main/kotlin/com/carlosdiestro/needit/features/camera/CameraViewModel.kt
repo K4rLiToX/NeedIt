@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class CameraViewModel @Inject constructor() : ViewModel() {
+internal class CameraViewModel @Inject constructor() : ViewModel() {
 
     private var _selectedCategory: MutableStateFlow<WishCategoryPlo> =
         MutableStateFlow(WishCategoryPlo.Clothes)

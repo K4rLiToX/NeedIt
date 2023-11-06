@@ -27,14 +27,14 @@ import com.carlosdiestro.needit.core.design_system.components.lists.WishCategory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-data class CameraDataState(
+internal data class CameraDataState(
     val category: WishCategoryPlo = WishCategoryPlo.Clothes,
     val imageUri: String = ""
 )
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun rememberCameraUiState(
+internal fun rememberCameraUiState(
     listState: LazyListState = rememberLazyListState(),
     snapBehavior: FlingBehavior = rememberSnapFlingBehavior(lazyListState = listState),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
@@ -57,7 +57,7 @@ fun rememberCameraUiState(
 }
 
 @Stable
-class CameraUiState(
+internal class CameraUiState(
     val listState: LazyListState,
     val snapBehavior: FlingBehavior,
     val coroutineScope: CoroutineScope,
