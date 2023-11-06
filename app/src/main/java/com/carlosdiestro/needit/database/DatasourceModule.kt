@@ -1,8 +1,6 @@
 package com.carlosdiestro.needit.database
 
-import com.carlosdiestro.needit.data.users.datasources.UserLocalDatasource
 import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
-import com.carlosdiestro.needit.database.datasources.UserLocalDatasourceImpl
 import com.carlosdiestro.needit.database.datasources.WishLocalDatasourceImpl
 import dagger.Binds
 import dagger.Module
@@ -13,10 +11,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface DatasourceModule {
-
-    @Singleton
-    @Binds
-    fun bindUserLocalDatasource(impl: UserLocalDatasourceImpl): UserLocalDatasource
 
     @Singleton
     @Binds
