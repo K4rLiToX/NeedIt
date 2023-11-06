@@ -10,5 +10,5 @@ class UserRepositoryImpl @Inject constructor(
     private val userRemoteDatasource: UserRemoteDatasource,
 ) : UserRepository {
 
-    override suspend fun upsertUser(user: User) = userRemoteDatasource.upsert(user.asDto())
+    override fun upsertUser(user: User) = userRemoteDatasource.upsert(user.asDto())
 }

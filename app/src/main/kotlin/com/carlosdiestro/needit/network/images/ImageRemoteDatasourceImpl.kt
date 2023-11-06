@@ -10,7 +10,7 @@ class ImageRemoteDatasourceImpl @Inject constructor(
     override suspend fun insertImage(bytes: ByteArray, userId: String): String =
         imagesCollection.insertImage(bytes, userId)
 
-    override suspend fun deleteImage(path: String) {
+    override fun deleteImage(path: String) {
         imagesCollection.deleteImage(path)
     }
 }
