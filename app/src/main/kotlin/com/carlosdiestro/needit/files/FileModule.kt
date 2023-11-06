@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object FileModule {
+internal object FileModule {
     @Provides
     @Singleton
     fun provideContentResolver(@ApplicationContext context: Context): ContentResolver =

@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FileManagerImpl @Inject constructor(
+internal class FileManagerImpl @Inject constructor(
     private val contentResolver: ContentResolver,
     private val ioDispatcher: CoroutineDispatcher
 ) : FileManager {
