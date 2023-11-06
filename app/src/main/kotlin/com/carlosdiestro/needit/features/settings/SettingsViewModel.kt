@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.account
+package com.carlosdiestro.needit.features.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

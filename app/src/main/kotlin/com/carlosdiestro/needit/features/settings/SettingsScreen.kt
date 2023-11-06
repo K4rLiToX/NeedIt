@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.account
+package com.carlosdiestro.needit.features.settings
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement

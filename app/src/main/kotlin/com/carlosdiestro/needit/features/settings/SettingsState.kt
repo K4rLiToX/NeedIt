@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.account
+package com.carlosdiestro.needit.features.settings
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
