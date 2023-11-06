@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface DatasourceModule {
+internal interface FirebaseDatasourceModule {
 
     @Singleton
     @Binds
