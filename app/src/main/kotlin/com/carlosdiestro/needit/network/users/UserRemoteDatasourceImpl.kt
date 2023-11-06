@@ -8,5 +8,4 @@ class UserRemoteDatasourceImpl @Inject constructor(
 ) : UserRemoteDatasource {
 
     override fun upsert(dto: UserDto) = usesCollection.upsert(dto)
-    override fun updateUser(dto: UserDto) = usesCollection.update(dto)
 }

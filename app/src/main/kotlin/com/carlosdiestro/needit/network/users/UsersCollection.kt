@@ -13,10 +13,4 @@ class UsersCollection @Inject constructor(
             .document(dto.id)
             .set(dto)
     }
-
-    fun update(dto: UserDto) {
-        usersCollection
-            .document(dto.id)
-            .set(dto, SetOptions.merge())
-    }
 }
