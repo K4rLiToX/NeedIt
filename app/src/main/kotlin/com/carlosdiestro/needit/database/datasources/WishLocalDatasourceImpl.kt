@@ -8,7 +8,7 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class WishLocalDatasourceImpl @Inject constructor(
+internal class WishLocalDatasourceImpl @Inject constructor(
     private val dao: WishDao
 ) : WishLocalDatasource {
 

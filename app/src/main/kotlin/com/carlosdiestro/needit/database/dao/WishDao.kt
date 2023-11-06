@@ -8,7 +8,7 @@ import com.carlosdiestro.needit.database.entities.WishEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface WishDao {
+internal interface WishDao {
     @Query("SELECT * FROM wish_table")
     fun getAll(): Flow<List<WishEntity>>
 
