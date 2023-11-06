@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 
-data class UpsertDataState(
+internal data class UpsertDataState(
     val imageUrl: String,
     val category: WishCategoryPlo,
 ) {

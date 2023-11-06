@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UpsertViewModel @Inject constructor(
+internal class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
     private val insertWish: InsertWishUseCase,
     private val updateWish: UpdateWishUseCase,
