@@ -149,10 +149,13 @@ fun Main(
     if (appState.shouldShowAccountDialog) {
         AccountDialogRoute(
             onDismiss = appState::closeAccountDialog,
-            onSignOutClick = appState.navController::navigateToSignIn,
-            onSettingsClick = {
-                appState.navController.navigateToSettings()
+            onSignOutClick = {
                 appState.closeAccountDialog()
+                appState.navController.navigateToSignIn()
+            },
+            onSettingsClick = {
+                appState.closeAccountDialog()
+                appState.navController.navigateToSettings()
             }
         )
     }
