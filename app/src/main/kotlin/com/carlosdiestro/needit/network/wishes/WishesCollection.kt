@@ -13,31 +13,26 @@ class WishesCollection @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher
 ) {
 
-    suspend fun insert(wish: WishDto): String = withContext(ioDispatcher) {
+    suspend fun insert(wish: WishDto): String =
         usersCollection
             .document(wish.userId)
             .collection(CollectionsPath.userWishes)
             .add(wish)
             .await()
             .id
-    }
 
     suspend fun delete(cloudId: String, userId: String) {
-        withContext(ioDispatcher) {
             usersCollection
                 .document(userId)
                 .collection(CollectionsPath.userWishes)
                 .document(cloudId).delete()
-        }
     }
 
     suspend fun update(cloudId: String, wish: WishDto) {
-        withContext(ioDispatcher) {
             usersCollection
                 .document(wish.userId)
                 .collection(CollectionsPath.userWishes)
                 .document(cloudId)
                 .set(wish, SetOptions.merge())
-        }
     }
 }
