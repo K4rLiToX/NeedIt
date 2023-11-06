@@ -21,17 +21,17 @@ class WishesCollection @Inject constructor(
             .id
 
     fun delete(cloudId: String, userId: String) {
-            usersCollection
-                .document(userId)
-                .collection(CollectionsPath.userWishes)
-                .document(cloudId).delete()
+        usersCollection
+            .document(userId)
+            .collection(CollectionsPath.userWishes)
+            .document(cloudId).delete()
     }
 
     fun update(cloudId: String, wish: WishDto) {
-            usersCollection
-                .document(wish.userId)
-                .collection(CollectionsPath.userWishes)
-                .document(cloudId)
-                .set(wish, SetOptions.merge())
+        usersCollection
+            .document(wish.userId)
+            .collection(CollectionsPath.userWishes)
+            .document(cloudId)
+            .set(wish, SetOptions.merge())
     }
 }
