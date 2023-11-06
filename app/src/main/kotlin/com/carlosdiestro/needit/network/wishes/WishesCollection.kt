@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class WishesCollection @Inject constructor(
+internal class WishesCollection @Inject constructor(
     private val usersCollection: CollectionReference,
     private val ioDispatcher: CoroutineDispatcher
 ) {

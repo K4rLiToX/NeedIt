@@ -3,7 +3,7 @@ package com.carlosdiestro.needit.network.images
 import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
 import javax.inject.Inject
 
-class ImageRemoteDatasourceImpl @Inject constructor(
+internal class ImageRemoteDatasourceImpl @Inject constructor(
     private val imagesCollection: ImagesCollection
 ) : ImageRemoteDatasource {
 

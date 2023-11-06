@@ -3,7 +3,7 @@ package com.carlosdiestro.needit.network.users
 import com.carlosdiestro.needit.data.users.datasources.UserRemoteDatasource
 import javax.inject.Inject
 
-class UserRemoteDatasourceImpl @Inject constructor(
+internal class UserRemoteDatasourceImpl @Inject constructor(
     private val usesCollection: UsersCollection
 ) : UserRemoteDatasource {
 

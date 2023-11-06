@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface DatasourceModule {
+internal interface DatasourceModule {
 
     @Singleton
     @Binds

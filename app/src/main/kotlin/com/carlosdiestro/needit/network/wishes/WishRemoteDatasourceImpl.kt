@@ -5,7 +5,7 @@ import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import com.carlosdiestro.needit.domain.wishes.Wish
 import javax.inject.Inject
 
-class WishRemoteDatasourceImpl @Inject constructor(
+internal class WishRemoteDatasourceImpl @Inject constructor(
     private val wishesCollection: WishesCollection
 ) : WishRemoteDatasource {
 

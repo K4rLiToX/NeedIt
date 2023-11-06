@@ -4,7 +4,7 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class ImagesCollection @Inject constructor(
+internal class ImagesCollection @Inject constructor(
     private val storage: FirebaseStorage
 ) {
 
