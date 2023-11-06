@@ -8,27 +8,64 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 internal interface WishDao {
-    @Query("SELECT * FROM wish_table")
+    @Insert
+    suspend fun create(wish: WishEntity): Long
+
+    @Query(
+        """
+            SELECT *
+            FROM WISH_TABLE
+        """
+    )
     fun getAll(): Flow<List<WishEntity>>
 
-    @Query("SELECT * FROM wish_table WHERE is_shared = 1")
+    @Query(
+        """
+            SELECT * 
+            FROM wish_table 
+            WHERE is_shared = 1
+        """
+    )
     fun getShared(): Flow<List<WishEntity>>
 
-    @Query("SELECT * FROM wish_table WHERE id = :id")
+    @Query(
+        """
+            SELECT * 
+            FROM wish_table 
+            WHERE id = :id
+        """
+    )
     fun getWish(id: Long): Flow<WishEntity>
-
-    @Insert
-    suspend fun insert(wish: WishEntity): Long
 
     @Update
     suspend fun update(wish: WishEntity)
 
-    @Query("DELETE FROM wish_table WHERE id = :id")
-    suspend fun remove(id: Long)
-
-    @Query("UPDATE wish_table SET is_shared = 1, cloud_id = :cloudId WHERE id = :id")
+    @Query(
+        """
+            UPDATE wish_table 
+            SET is_shared = 1, 
+                cloud_id = :cloudId 
+            WHERE id = :id
+        """
+    )
     suspend fun share(id: Long, cloudId: String)
 
-    @Query("UPDATE wish_table SET is_shared = 0, cloud_id = '' WHERE id = :id")
+    @Query(
+        """
+            UPDATE wish_table 
+            SET is_shared = 0, 
+                cloud_id = '' 
+            WHERE id = :id
+        """
+    )
     suspend fun lock(id: Long)
+
+    @Query(
+        """
+            DELETE 
+            FROM wish_table 
+            WHERE id = :id
+        """
+    )
+    suspend fun delete(id: Long)
 }

@@ -7,9 +7,9 @@ interface WishRepository {
     val wishes: Flow<List<Wish>>
     val sharedWishes: Flow<List<Wish>>
     fun getWish(id: Long): Flow<Wish>
-    suspend fun insertWish(wish: Wish): Long
-    suspend fun updateWish(wish: Wish)
-    suspend fun removeWish(id: Long, cloudId: String)
-    suspend fun shareWish(id: Long)
-    suspend fun lockWish(id: Long)
+    suspend fun create(wish: Wish): Long
+    suspend fun update(wish: Wish)
+    suspend fun delete(id: Long, cloudId: String)
+    suspend fun share(id: Long)
+    suspend fun lock(id: Long)
 }

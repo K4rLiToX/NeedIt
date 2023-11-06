@@ -45,13 +45,13 @@ internal class WishDetailsViewModel @Inject constructor(
             initialValue = WishDetailsDataState()
         )
 
-    fun uploadWish() {
+    fun shareWish() {
         viewModelScope.launch {
             shareWish(wishId)
         }
     }
 
-    fun privateWish() {
+    fun lockWish() {
         viewModelScope.launch {
             lockWish(wishId)
         }

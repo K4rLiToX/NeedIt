@@ -13,6 +13,7 @@ internal class NeedItPreferencesRepositoryImpl @Inject constructor(
 ) : NeedItPreferencesRepository {
 
     override val user: Flow<User> = datasource.user.asDomain()
+
     override val settings: Flow<Settings> = datasource.settings.asDomain()
 
     override suspend fun updateUser(user: User) = datasource.updateUser(user.asPreferences())

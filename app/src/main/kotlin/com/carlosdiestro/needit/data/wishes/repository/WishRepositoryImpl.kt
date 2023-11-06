@@ -1,5 +1,8 @@
 package com.carlosdiestro.needit.data.wishes.repository
 
+import com.carlosdiestro.needit.core.mappers.asDomain
+import com.carlosdiestro.needit.core.mappers.asDto
+import com.carlosdiestro.needit.core.mappers.asEntity
 import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
 import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import com.carlosdiestro.needit.domain.wishes.Wish
@@ -14,38 +17,38 @@ internal class WishRepositoryImpl @Inject constructor(
 ) : WishRepository {
 
     override val wishes: Flow<List<Wish>>
-        get() = localDatasource.wishes
+        get() = localDatasource.wishes.asDomain()
 
     override val sharedWishes: Flow<List<Wish>>
-        get() = localDatasource.sharedWishes
+        get() = localDatasource.sharedWishes.asDomain()
 
     override fun getWish(id: Long): Flow<Wish> =
-        localDatasource.getWish(id)
+        localDatasource.getWish(id).asDomain()
 
-    override suspend fun insertWish(wish: Wish): Long = localDatasource.insertWish(wish)
+    override suspend fun create(wish: Wish): Long = localDatasource.create(wish.asEntity())
 
-    override suspend fun updateWish(wish: Wish) = kotlin.run {
-        localDatasource.updateWish(wish)
-        if (wish.isShared) remoteDatasource.update(wish)
+    override suspend fun update(wish: Wish) = kotlin.run {
+        localDatasource.update(wish.asEntity())
+        if (wish.isShared) remoteDatasource.update(wish.cloudId, wish.asDto())
     }
 
-    override suspend fun removeWish(id: Long, cloudId: String) = kotlin.run {
-        localDatasource.removeWish(id)
+    override suspend fun delete(id: Long, cloudId: String) = kotlin.run {
+        localDatasource.delete(id)
         if (cloudId.isNotEmpty()) {
             val userId = getWish(id).first().userId
             remoteDatasource.delete(cloudId, userId)
         }
     }
 
-    override suspend fun shareWish(id: Long) = kotlin.run {
+    override suspend fun share(id: Long) = kotlin.run {
         val wish = getWish(id).first()
-        val cloudId = remoteDatasource.insert(wish)
-        localDatasource.shareWish(id, cloudId)
+        val cloudId = remoteDatasource.create(wish.asDto())
+        localDatasource.share(id, cloudId)
     }
 
-    override suspend fun lockWish(id: Long) = kotlin.run {
+    override suspend fun lock(id: Long) = kotlin.run {
         val wish = getWish(id).first()
-        localDatasource.lockWish(id)
+        localDatasource.lock(id)
         remoteDatasource.delete(wish.cloudId, wish.userId)
     }
 }

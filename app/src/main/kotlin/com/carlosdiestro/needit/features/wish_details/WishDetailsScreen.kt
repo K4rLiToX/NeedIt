@@ -35,8 +35,8 @@ fun WishDetailsRoute(
         dataState = dataState,
         onBackClick = onBackClick,
         onUpdateClick = { onUpdateClick(0, dataState.id) },
-        onShareClick = viewModel::uploadWish,
-        onPrivateClick = viewModel::privateWish
+        onShareClick = viewModel::shareWish,
+        onPrivateClick = viewModel::lockWish
     )
 }
 

@@ -9,6 +9,6 @@ class UpdateWishUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(wish: Wish) {
-        repository.updateWish(wish)
+        repository.update(wish)
     }
 }

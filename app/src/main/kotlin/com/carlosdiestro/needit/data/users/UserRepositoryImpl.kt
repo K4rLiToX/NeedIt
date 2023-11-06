@@ -9,5 +9,5 @@ internal class UserRepositoryImpl @Inject constructor(
     private val userRemoteDatasource: UserRemoteDatasource,
 ) : UserRepository {
 
-    override fun upsertUser(user: User) = userRemoteDatasource.upsert(user.asDto())
+    override fun upsert(user: User) = userRemoteDatasource.upsert(user.asDto())
 }

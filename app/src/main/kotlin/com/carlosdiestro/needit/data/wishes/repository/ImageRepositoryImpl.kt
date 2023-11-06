@@ -8,8 +8,8 @@ internal class ImageRepositoryImpl @Inject constructor(
     private val remoteDatasource: ImageRemoteDatasource
 ) : ImageRepository {
 
-    override suspend fun insertImage(bytes: ByteArray, userId: String): String =
-        remoteDatasource.insertImage(bytes, userId)
+    override suspend fun create(bytes: ByteArray, userId: String): String =
+        remoteDatasource.create(bytes, userId)
 
-    override fun deleteImage(path: String) = remoteDatasource.deleteImage(path)
+    override fun delete(path: String) = remoteDatasource.delete(path)
 }

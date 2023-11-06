@@ -3,8 +3,8 @@ package com.carlosdiestro.needit
 import com.carlosdiestro.needit.core.design_system.components.navigation.WishCategory
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.RemoveWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.DeleteWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.CreateWishUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertThrows
@@ -16,16 +16,16 @@ class WishTests {
     private lateinit var repository: FakeWishRepository
     private lateinit var getMyWishes: GetMyWishesUseCase
     private lateinit var getWish: GetWishUseCase
-    private lateinit var upsertWish: InsertWishUseCase
-    private lateinit var removeWish: RemoveWishUseCase
+    private lateinit var upsertWish: CreateWishUseCase
+    private lateinit var removeWish: DeleteWishUseCase
 
     @Before
     fun setup() {
         repository = FakeWishRepository()
         getMyWishes = GetMyWishesUseCase(repository)
         getWish = GetWishUseCase(repository)
-        upsertWish = InsertWishUseCase(repository)
-        removeWish = RemoveWishUseCase(repository)
+        upsertWish = CreateWishUseCase(repository)
+        removeWish = DeleteWishUseCase(repository)
     }
 
     @Test

@@ -1,9 +1,9 @@
 package com.carlosdiestro.needit.data.wishes.datasources
 
-import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.network.wishes.WishDto
 
 interface WishRemoteDatasource {
-    suspend fun insert(wish: Wish): String
+    suspend fun create(wish: WishDto): String
     fun delete(cloudId: String, userId: String)
-    fun update(wish: Wish)
+    fun update(cloudId: String, wish: WishDto)
 }

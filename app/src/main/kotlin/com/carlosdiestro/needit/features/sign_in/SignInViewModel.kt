@@ -24,8 +24,6 @@ internal class SignInViewModel @Inject constructor(
     private var _state: MutableStateFlow<SignInDataState> = MutableStateFlow(SignInDataState())
     val state = _state.asStateFlow()
 
-    val signedInUser = authClient.signedInUser
-
     fun signInAnonymously() {
         viewModelScope.launch {
             val signInResult = authClient.signInAnonymously()

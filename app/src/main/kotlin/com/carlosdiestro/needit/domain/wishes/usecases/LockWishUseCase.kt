@@ -6,5 +6,5 @@ import javax.inject.Inject
 class LockWishUseCase @Inject constructor(
     private val repository: WishRepository
 ) {
-    suspend operator fun invoke(id: Long) = repository.lockWish(id)
+    suspend operator fun invoke(id: Long) = repository.lock(id)
 }

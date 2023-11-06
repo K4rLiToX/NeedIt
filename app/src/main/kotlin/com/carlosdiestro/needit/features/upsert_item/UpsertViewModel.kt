@@ -13,7 +13,7 @@ import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetImageUriUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.InsertWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.CreateWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,11 +26,12 @@ import javax.inject.Inject
 @HiltViewModel
 internal class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
-    private val insertWish: InsertWishUseCase,
+    private val createWish: CreateWishUseCase,
     private val updateWish: UpdateWishUseCase,
     private val getImageUri: GetImageUriUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
     private val category: WishCategoryPlo = (savedStateHandle[argCategory] ?: -1)
         .toWishCategoryPlo()
     private val wishId: Long = savedStateHandle[argWishId] ?: -1L
@@ -161,7 +162,7 @@ internal class UpsertViewModel @Inject constructor(
                     updateWish(updatedWish)
                 }
             } else {
-                insertWish(
+                createWish(
                     imageLocalPath = state.value.imageUrl,
                     title = title,
                     subtitle = subtitle,

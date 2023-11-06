@@ -60,8 +60,8 @@ fun HomeRoute(
         onMenuDismiss = viewModel::clearWishSelection,
         onDeleteClick = viewModel::deleteWish,
         onUpdateClick = { onUpdateClick(0, dataState.selectedWish?.id!!) },
-        onShareClick = viewModel::uploadWish,
-        onPrivateClick = viewModel::privateWish
+        onShareClick = viewModel::shareWish,
+        onPrivateClick = viewModel::lockWish
     )
 }
 

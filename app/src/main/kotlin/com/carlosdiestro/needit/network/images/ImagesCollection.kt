@@ -8,7 +8,7 @@ internal class ImagesCollection @Inject constructor(
     private val storage: FirebaseStorage
 ) {
 
-    suspend fun insertImage(bytes: ByteArray, userId: String): String {
+    suspend fun create(bytes: ByteArray, userId: String): String {
         val name = System.currentTimeMillis()
         val ref = storage.reference.child("$userId/$name.jpg")
 
@@ -21,7 +21,7 @@ internal class ImagesCollection @Inject constructor(
             .toString()
     }
 
-    fun deleteImage(path: String) {
+    fun delete(path: String) {
         storage.reference.child(path).delete()
     }
 }

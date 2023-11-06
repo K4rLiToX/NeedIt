@@ -1,15 +1,16 @@
 package com.carlosdiestro.needit.data.wishes.datasources
 
-import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.database.wishes.WishEntity
 import kotlinx.coroutines.flow.Flow
 
 interface WishLocalDatasource {
-    val wishes: Flow<List<Wish>>
-    val sharedWishes: Flow<List<Wish>>
-    fun getWish(id: Long): Flow<Wish>
-    suspend fun insertWish(wish: Wish): Long
-    suspend fun updateWish(wish: Wish)
-    suspend fun removeWish(id: Long)
-    suspend fun shareWish(id: Long, cloudId: String)
-    suspend fun lockWish(id: Long)
+    val wishes: Flow<List<WishEntity>>
+
+    val sharedWishes: Flow<List<WishEntity>>
+    fun getWish(id: Long): Flow<WishEntity>
+    suspend fun create(wish: WishEntity): Long
+    suspend fun update(wish: WishEntity)
+    suspend fun delete(id: Long)
+    suspend fun share(id: Long, cloudId: String)
+    suspend fun lock(id: Long)
 }

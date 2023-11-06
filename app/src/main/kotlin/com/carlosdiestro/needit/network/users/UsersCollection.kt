@@ -7,9 +7,9 @@ internal class UsersCollection @Inject constructor(
     private val usersCollection: CollectionReference
 ) {
 
-    fun upsert(dto: UserDto) {
+    fun upsert(user: UserDto) {
         usersCollection
-            .document(dto.id)
-            .set(dto)
+            .document(user.id)
+            .set(user)
     }
 }

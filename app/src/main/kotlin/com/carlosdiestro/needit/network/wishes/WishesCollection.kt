@@ -10,7 +10,7 @@ internal class WishesCollection @Inject constructor(
     private val usersCollection: CollectionReference
 ) {
 
-    suspend fun insert(wish: WishDto): String =
+    suspend fun create(wish: WishDto): String =
         usersCollection
             .document(wish.userId)
             .collection(CollectionsPath.userWishes)
@@ -22,7 +22,8 @@ internal class WishesCollection @Inject constructor(
         usersCollection
             .document(userId)
             .collection(CollectionsPath.userWishes)
-            .document(cloudId).delete()
+            .document(cloudId)
+            .delete()
     }
 
     fun update(cloudId: String, wish: WishDto) {

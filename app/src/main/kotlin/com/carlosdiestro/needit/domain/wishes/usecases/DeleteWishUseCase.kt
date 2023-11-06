@@ -5,7 +5,7 @@ import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import javax.inject.Inject
 
-class RemoveWishUseCase @Inject constructor(
+class DeleteWishUseCase @Inject constructor(
     private val wishRepository: WishRepository,
     private val imageRepository: ImageRepository
 ) {
@@ -14,8 +14,8 @@ class RemoveWishUseCase @Inject constructor(
         cloudId: String,
         imageUrl: String
     ) {
-        wishRepository.removeWish(id, cloudId)
-        imageRepository.deleteImage(getPath(imageUrl))
+        wishRepository.delete(id, cloudId)
+        imageRepository.delete(getPath(imageUrl))
     }
 
     private fun getPath(imageUrl: String): String = imageUrl

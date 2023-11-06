@@ -4,8 +4,8 @@ import com.carlosdiestro.needit.data.users.UserRemoteDatasource
 import javax.inject.Inject
 
 internal class UserRemoteDatasourceImpl @Inject constructor(
-    private val usesCollection: UsersCollection
+    private val usersCollection: UsersCollection
 ) : UserRemoteDatasource {
 
-    override fun upsert(dto: UserDto) = usesCollection.upsert(dto)
+    override fun upsert(user: UserDto) = usersCollection.upsert(user)
 }

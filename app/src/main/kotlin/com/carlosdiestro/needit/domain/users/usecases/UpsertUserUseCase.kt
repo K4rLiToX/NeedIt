@@ -11,7 +11,7 @@ class UpsertUserUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(user: User) = kotlin.run {
-        userRepository.upsertUser(user)
+        userRepository.upsert(user)
         preferencesRepository.updateUser(user)
     }
 }

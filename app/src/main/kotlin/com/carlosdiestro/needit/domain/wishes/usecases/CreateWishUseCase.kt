@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
-class InsertWishUseCase @Inject constructor(
+class CreateWishUseCase @Inject constructor(
     private val wishRepository: WishRepository,
     private val imageRepository: ImageRepository,
     private val getUserInfo: GetSignedInUserUseCase,
@@ -57,10 +57,10 @@ class InsertWishUseCase @Inject constructor(
                 color = color,
                 isbn = isbn
             )
-            val finalId = wishRepository.insertWish(wish)
+            val finalId = wishRepository.create(wish)
             val compressedImage = compressImage(imageLocalPath)
-            val cloudImageUrl = imageRepository.insertImage(compressedImage, userId)
-            wishRepository.updateWish(
+            val cloudImageUrl = imageRepository.create(compressedImage, userId)
+            wishRepository.update(
                 wish.copy(id = finalId, imageUrl = cloudImageUrl)
             )
         }

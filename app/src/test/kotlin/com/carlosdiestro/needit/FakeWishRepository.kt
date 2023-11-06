@@ -25,11 +25,11 @@ class FakeWishRepository : WishRepository {
         list.removeIf { it.id == id }
     }
 
-    override suspend fun shareWish(id: Long) {
+    override suspend fun share(id: Long) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun lockWish(id: Long) {
+    override suspend fun lock(id: Long) {
         TODO("Not yet implemented")
     }
 }

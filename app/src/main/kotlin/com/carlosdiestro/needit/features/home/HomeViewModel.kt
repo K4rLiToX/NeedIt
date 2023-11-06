@@ -7,7 +7,7 @@ import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.RemoveWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.DeleteWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,17 +22,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
-    private val getMyWishes: GetMyWishesUseCase,
-    private val removeWish: RemoveWishUseCase,
+    getMyWishes: GetMyWishesUseCase,
+    private val deleteWish: DeleteWishUseCase,
     private val shareWish: ShareWishUseCase,
     private val lockWish: LockWishUseCase
 ) : ViewModel() {
+
     private var _selectedWishId: MutableStateFlow<Long> = MutableStateFlow(-1)
-    private val selectedWishId = _selectedWishId.asStateFlow()
 
     val state: StateFlow<HomeDataState> =
         combine(
-            selectedWishId,
+            _selectedWishId,
             getMyWishes()
         ) { selectedWishId, wishlist ->
             HomeDataState(
@@ -59,7 +59,7 @@ internal class HomeViewModel @Inject constructor(
         }
     }
 
-    fun uploadWish() {
+    fun shareWish() {
         viewModelScope.launch {
             val wish = state.value.selectedWish
             wish?.let {
@@ -69,7 +69,7 @@ internal class HomeViewModel @Inject constructor(
         }
     }
 
-    fun privateWish() {
+    fun lockWish() {
         viewModelScope.launch {
             val wish = state.value.selectedWish
             wish?.let {
@@ -83,7 +83,7 @@ internal class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val wish = state.value.selectedWish
             wish?.let {
-                removeWish(
+                deleteWish(
                     id = it.id,
                     cloudId = it.cloudId,
                     imageUrl = it.imageUrl

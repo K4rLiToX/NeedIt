@@ -13,7 +13,7 @@ internal class FileManagerImpl @Inject constructor(
     private val contentResolver: ContentResolver,
     private val ioDispatcher: CoroutineDispatcher
 ) : FileManager {
-    private val imageFolder: Uri
+    private val folder: Uri
         get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             MediaStore.Images.Media.getContentUri(
                 MediaStore.VOLUME_EXTERNAL
@@ -29,7 +29,7 @@ internal class FileManagerImpl @Inject constructor(
 
     override suspend fun getImageUri(): String = withContext(ioDispatcher) {
         contentResolver.query(
-            imageFolder,
+            folder,
             projection,
             null,
             null,
