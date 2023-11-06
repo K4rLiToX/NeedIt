@@ -7,7 +7,7 @@ import com.carlosdiestro.needit.datastore.models.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class NeedItPreferences @Inject constructor(
+internal class NeedItPreferences @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
 

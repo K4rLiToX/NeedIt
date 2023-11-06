@@ -21,7 +21,7 @@ private const val NEED_IT_PREFERENCES = "need_it_preferences"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataStoreModule {
+internal object DataStoreModule {
 
     @Singleton
     @Provides

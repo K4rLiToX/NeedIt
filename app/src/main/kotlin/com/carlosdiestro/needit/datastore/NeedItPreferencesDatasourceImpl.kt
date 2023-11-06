@@ -6,7 +6,7 @@ import com.carlosdiestro.needit.datastore.models.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class NeedItPreferencesDatasourceImpl @Inject constructor(
+internal class NeedItPreferencesDatasourceImpl @Inject constructor(
     private val preferences: NeedItPreferences
 ) : NeedItPreferencesDatasource {
 
