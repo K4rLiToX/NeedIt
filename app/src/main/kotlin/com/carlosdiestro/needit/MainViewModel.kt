@@ -23,24 +23,31 @@ class MainViewModel @Inject constructor(
         getSignedInUser(),
         getSettings()
     ) { user, settings ->
-        MainState(
-            profilePictureUrl = user.profilePictureUrl,
-            isUserAnonymous = user.isAnonymous,
-            isSignedIn = authClient.signedInUser != null,
-            useSystemScheme = settings.useSystemScheme,
-            isNightMode = settings.isNightMode
+        MainState.Success(
+            state = MainDataState(
+                profilePictureUrl = user.profilePictureUrl,
+                isUserAnonymous = user.isAnonymous,
+                isSignedIn = authClient.signedInUser != null,
+                useSystemScheme = settings.useSystemScheme,
+                isNightMode = settings.isNightMode
+            )
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = MainState(isSignedIn = authClient.signedInUser != null)
+        initialValue = MainState.Loading
     )
 }
 
-data class MainState(
-    val profilePictureUrl: String = "",
-    val isUserAnonymous: Boolean = true,
+sealed interface MainState {
+    data object Loading : MainState
+    data class Success(val state: MainDataState) : MainState
+}
+
+data class MainDataState(
+    val profilePictureUrl: String,
+    val isUserAnonymous: Boolean,
     val isSignedIn: Boolean,
-    val useSystemScheme: Boolean = true,
-    val isNightMode: Boolean = false
+    val useSystemScheme: Boolean,
+    val isNightMode: Boolean
 )

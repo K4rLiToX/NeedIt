@@ -20,15 +20,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.carlosdiestro.needit.core.NeedItApp
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.rememberNeedItAppState
 import com.carlosdiestro.needit.features.camera.navigateToCamera
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -36,15 +44,45 @@ class MainActivity : ComponentActivity() {
     val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        installSplashScreen()
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
-            navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
-        )
+
+        var uiState: MainState by mutableStateOf(MainState.Loading)
+
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.onEach {
+                    uiState = it
+                }.collect()
+            }
+        }
+
+        splashScreen.setKeepOnScreenCondition {
+            when (uiState) {
+                MainState.Loading -> true
+                is MainState.Success -> false
+            }
+        }
+
+        enableEdgeToEdge()
+
         setContent {
-            val state by viewModel.state.collectAsStateWithLifecycle()
-            val darkTheme = shouldUseDarkTheme(state.useSystemScheme, state.isNightMode)
+            val darkTheme = shouldUseDarkTheme(uiState)
+
+            DisposableEffect(darkTheme) {
+                enableEdgeToEdge(
+                    statusBarStyle = SystemBarStyle.auto(
+                        Color.TRANSPARENT,
+                        Color.TRANSPARENT
+                    ) { darkTheme },
+                    navigationBarStyle = SystemBarStyle.auto(
+                        Color.TRANSPARENT,
+                        Color.TRANSPARENT
+                    ) { darkTheme }
+                )
+                onDispose {}
+            }
+
             NeedItTheme(
                 isDarkTheme = darkTheme
             ) {
@@ -97,9 +135,11 @@ fun Activity.openAppSettings() {
 
 @Composable
 private fun shouldUseDarkTheme(
-    useSystemScheme: Boolean,
-    isNightMode: Boolean
-): Boolean {
-    return if (useSystemScheme) isSystemInDarkTheme()
-    else isNightMode
+    uiState: MainState
+): Boolean = when (uiState) {
+    is MainState.Loading -> isSystemInDarkTheme()
+    is MainState.Success -> {
+        if (uiState.state.useSystemScheme) isSystemInDarkTheme()
+        else uiState.state.isNightMode
+    }
 }
