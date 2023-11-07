@@ -70,6 +70,7 @@ dependencies {
 
     // UI
     implementation("androidx.compose.material:material-icons-extended:1.5.3")
+    implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
 
     // Coil Image Loader
     implementation("io.coil-kt:coil-compose:2.4.0")
