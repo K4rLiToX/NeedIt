@@ -69,13 +69,6 @@ class MainActivity : ComponentActivity() {
                             else Unit
                         }
                     )
-//                    val cameraPermissionResultLauncher = rememberLauncherForActivityResult(
-//                        contract = ActivityResultContracts.RequestPermission(),
-//                        onResult = { isGranted ->
-//                            if (isGranted) appState.navController.navigateToCamera()
-//                            else appState.setShowCameraPermissionDialog(true)
-//                        }
-//                    )
                     NeedItApp(
                         appState = appState,
                         viewModel = viewModel,
