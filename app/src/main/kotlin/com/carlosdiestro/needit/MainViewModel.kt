@@ -32,8 +32,7 @@ class MainViewModel @Inject constructor(
         )
 
     val state: StateFlow<MainState> = getSettings()
-        .map {
-                settings ->
+        .map { settings ->
             MainState.Success(
                 value = ThemeConfig(
                     useSystemScheme = settings.useSystemScheme,
