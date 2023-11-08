@@ -58,7 +58,7 @@ internal fun rememberUpsertUiState(
 @Stable
 internal class UpsertUiState(
     val scrollState: ScrollState,
-    val topAppBarState: TopAppBarState
+    private val topAppBarState: TopAppBarState
 ) {
     val scrollBehavior: TopAppBarScrollBehavior
         @Composable get() = TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)

@@ -100,7 +100,6 @@ private fun UpsertScreen(
             NiTopAppBar(
                 title = "",
                 onNavigationClick = onBackClick,
-                topAppBarState = uiState.topAppBarState,
                 scrollBehavior = uiState.scrollBehavior,
                 actions = {
                     NiTextButton(

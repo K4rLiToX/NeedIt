@@ -72,7 +72,6 @@ private fun SettingsScreen(
             NiMediumTopAppBar(
                 titleId = R.string.settings_title,
                 onNavigationClick = onBackClick,
-                topAppBarState = uiState.topAppBarState,
                 scrollBehavior = uiState.scrollBehavior,
                 actions = {}
             )

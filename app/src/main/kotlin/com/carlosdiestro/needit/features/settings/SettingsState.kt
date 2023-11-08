@@ -44,8 +44,8 @@ internal fun rememberSettingsUiState(
 @OptIn(ExperimentalMaterial3Api::class)
 @Stable
 internal class SettingsUiState constructor(
-    val topAppBarState: TopAppBarState,
-    val lazyListState: LazyListState
+    val lazyListState: LazyListState,
+    private val topAppBarState: TopAppBarState
 ) {
     val scrollBehavior: TopAppBarScrollBehavior
         @Composable get() = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(topAppBarState)
