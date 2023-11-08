@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -16,8 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -37,15 +34,18 @@ import com.carlosdiestro.needit.core.design_system.components.lists.WishCategory
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun UpsertRoute(
     onBackClick: () -> Unit,
     onFinish: () -> Unit,
     viewModel: UpsertViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val dataState by viewModel.state.collectAsStateWithLifecycle()
+    val uiState = rememberUpsertUiState()
     UpsertScreen(
-        state = state,
+        dataState = dataState,
+        uiState = uiState,
         title = viewModel.title,
         subtitle = viewModel.subtitle,
         price = viewModel.price,
@@ -72,7 +72,8 @@ internal fun UpsertRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun UpsertScreen(
-    state: UpsertDataState,
+    dataState: UpsertDataState,
+    uiState: UpsertUiState,
     title: String,
     subtitle: String,
     price: String,
@@ -94,16 +95,13 @@ private fun UpsertScreen(
     updateColor: (String) -> Unit,
     updateIsbn: (String) -> Unit
 ) {
-    val scrollState = rememberScrollState()
-    val topAppBarState = rememberTopAppBarState()
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(topAppBarState)
     Scaffold(
         topBar = {
             NiTopAppBar(
                 title = "",
                 onNavigationClick = onBackClick,
-                topAppBarState = topAppBarState,
-                scrollBehavior = scrollBehavior,
+                topAppBarState = uiState.topAppBarState,
+                scrollBehavior = uiState.scrollBehavior,
                 actions = {
                     NiTextButton(
                         labelId = R.string.button_save,
@@ -117,7 +115,7 @@ private fun UpsertScreen(
             )
         },
         modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
+            .nestedScroll(uiState.scrollBehavior.nestedScrollConnection)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingXXL),
@@ -126,15 +124,15 @@ private fun UpsertScreen(
                 .fillMaxSize()
                 .padding(it)
                 .padding(horizontal = MaterialTheme.dimensions.spacingM)
-                .verticalScroll(scrollState)
+                .verticalScroll(uiState.scrollState)
         ) {
-            val isSpecificInformationNeeded = state.category in listOf(
+            val isSpecificInformationNeeded = dataState.category in listOf(
                 WishCategoryPlo.Clothes,
                 WishCategoryPlo.Footwear,
                 WishCategoryPlo.Books
             )
             AsyncImage(
-                model = state.imageUrl,
+                model = dataState.imageUrl,
                 contentDescription = "Photo",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -144,9 +142,9 @@ private fun UpsertScreen(
             )
             CommonInformation(
                 title = title,
-                titleHintId = state.titleHintId,
+                titleHintId = dataState.titleHintId,
                 subtitle = subtitle,
-                subtitleHintId = state.subtitleHintId,
+                subtitleHintId = dataState.subtitleHintId,
                 price = price,
                 updateTitle = updateTitle,
                 updateSubtitle = updateSubtitle,
@@ -154,7 +152,7 @@ private fun UpsertScreen(
             )
             if (isSpecificInformationNeeded) {
                 SpecificInformation(
-                    category = state.category,
+                    category = dataState.category,
                     size = size,
                     color = color,
                     isbn = isbn,
