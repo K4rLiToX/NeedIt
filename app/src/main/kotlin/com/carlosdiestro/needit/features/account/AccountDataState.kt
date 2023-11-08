@@ -9,12 +9,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 
-sealed interface AccountDataState {
+internal sealed interface AccountDataState {
     data object Loading : AccountDataState
     data class Success(val account: Account) : AccountDataState
 }
 
-data class Account(
+internal data class Account(
     val username: String,
     val email: String,
     val profilePictureUrl: String,
@@ -24,7 +24,7 @@ data class Account(
 )
 
 @Composable
-fun rememberAccountDialogState(
+internal fun rememberAccountDialogState(
     context: Context = LocalContext.current
 ): AccountDialogUiState {
     return remember {
@@ -35,7 +35,7 @@ fun rememberAccountDialogState(
 }
 
 @Stable
-class AccountDialogUiState(
+internal class AccountDialogUiState(
     val context: Context
 ) {
 
