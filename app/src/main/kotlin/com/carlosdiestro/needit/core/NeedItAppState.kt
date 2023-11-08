@@ -53,45 +53,19 @@ class NeedItAppState constructor(
     val windowSizeClass: WindowSizeClass,
     val context: Context
 ) {
-    private val routesWithoutStatusBarPadding: List<String> = listOf(
-        detailsRoute,
-        cameraRoute,
-        upsertRoute,
-        settingsRoute
-    )
-
-    private val routesWithoutNavigationBarPadding: List<String> = listOf(
-        detailsRoute
-    )
-
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    val currentDestinationRoute: String
+    private val currentDestinationRoute: String
         @Composable get() = currentDestination?.route ?: ""
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
-    private val topLevelDestinationsWithFab: List<String> = listOf(
-        TopLevelDestination.Home.route,
-        TopLevelDestination.Friends.route
-    )
-    private val topLevelDestinationsRoutes: List<String> = topLevelDestinations.routes()
 
-    val shouldShowFab: Boolean
-        @Composable get() = currentDestinationRoute in topLevelDestinationsWithFab
+    private val topLevelDestinationsRoutes: List<String> = topLevelDestinations.routes()
 
     val shouldShowBottomBar: Boolean
         @Composable get() = isTopLevelDestination()
-
-    var shouldShowCameraPermissionDialog by mutableStateOf(false)
-        private set
-
-    val shouldNotHaveStatusBarPadding: Boolean
-        @Composable get() = currentDestinationRoute in routesWithoutStatusBarPadding
-
-    val shouldNotHaveNavigationBarPadding: Boolean
-        @Composable get() = currentDestinationRoute in routesWithoutNavigationBarPadding
 
     val shouldShowTopBar: Boolean
         @Composable get() = isTopLevelDestination()
@@ -122,10 +96,6 @@ class NeedItAppState constructor(
                 topLevelNavOptions
             )
         }
-    }
-
-    fun setShowCameraPermissionDialog(shouldShow: Boolean) {
-        shouldShowCameraPermissionDialog = shouldShow
     }
 
     @Composable
