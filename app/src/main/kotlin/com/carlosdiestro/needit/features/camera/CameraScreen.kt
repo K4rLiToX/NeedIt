@@ -1,6 +1,5 @@
 package com.carlosdiestro.needit.features.camera
 
-import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
@@ -91,7 +90,6 @@ internal fun CameraRoute(
     )
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CameraScreen(
@@ -143,6 +141,7 @@ private fun CameraScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .padding(bottom = it.calculateBottomPadding())
         ) {
             CameraContent(
                 uiState = uiState,

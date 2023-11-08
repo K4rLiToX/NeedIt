@@ -1,6 +1,13 @@
 package com.carlosdiestro.needit.core
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -54,29 +61,18 @@ fun NeedItApp(
                     currentDestination = appState.currentDestination
                 )
             }
-        }
+        },
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) {
         NeedItNavHost(
             appState = appState,
             isSignedIn = isSignedIn,
             modifier = Modifier
-                .conditional(
-                    condition = appState.shouldNotHaveStatusBarPadding,
-                    ifTrue = {
-                        this
-                    },
-                    ifFalse = {
-                        padding(top = it.calculateTopPadding())
-                    }
-                )
-                .conditional(
-                    condition = appState.shouldNotHaveNavigationBarPadding,
-                    ifTrue = {
-                        this
-                    },
-                    ifFalse = {
-                        padding(bottom = it.calculateBottomPadding())
-                    }
+                .fillMaxSize()
+                .padding(it)
+                .consumeWindowInsets(it)
+                .windowInsetsPadding(
+                    WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)
                 )
         )
     }
