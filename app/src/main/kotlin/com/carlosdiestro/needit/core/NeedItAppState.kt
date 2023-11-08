@@ -18,11 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.TopLevelDestination
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.routes
-import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.home.navigateToHome
-import com.carlosdiestro.needit.features.settings.settingsRoute
-import com.carlosdiestro.needit.features.upsert_item.upsertRoute
-import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
