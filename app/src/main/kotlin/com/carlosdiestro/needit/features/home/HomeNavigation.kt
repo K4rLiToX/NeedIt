@@ -20,14 +20,16 @@ fun NavController.navigateToHomeCleaningBackStack() = navigate(homeRoute) {
 
 fun NavGraphBuilder.homeScreen(
     onItemClick: (Long) -> Unit,
-    onUpdateClick: (Int, Long) -> Unit
+    onUpdateClick: (Int, Long) -> Unit,
+    onCreateClick: () -> Unit
 ) {
     topLevelDestination(
         route = homeRoute
     ) {
         HomeRoute(
             onItemClick = onItemClick,
-            onUpdateClick = onUpdateClick
+            onUpdateClick = onUpdateClick,
+            onCreateClick = onCreateClick
         )
     }
 }

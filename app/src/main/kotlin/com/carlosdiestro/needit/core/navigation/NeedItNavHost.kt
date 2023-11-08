@@ -8,6 +8,7 @@ import com.carlosdiestro.needit.core.design_system.components.animations.noEnter
 import com.carlosdiestro.needit.core.design_system.components.animations.noExitTransition
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.camera.cameraScreen
+import com.carlosdiestro.needit.features.camera.navigateToCamera
 import com.carlosdiestro.needit.features.friends.friendsScreen
 import com.carlosdiestro.needit.features.gifts.giftsScreen
 import com.carlosdiestro.needit.features.home.homeRoute
@@ -44,7 +45,8 @@ fun NeedItNavHost(
         )
         homeScreen(
             onItemClick = navController::navigateToWishDetails,
-            onUpdateClick = navController::navigateToUpsert
+            onUpdateClick = navController::navigateToUpsert,
+            onCreateClick = navController::navigateToCamera
         )
         giftsScreen(
 

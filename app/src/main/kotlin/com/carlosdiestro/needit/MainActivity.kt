@@ -1,19 +1,11 @@
 package com.carlosdiestro.needit
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,7 +26,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.carlosdiestro.needit.core.NeedItApp
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
-import com.carlosdiestro.needit.features.camera.navigateToCamera
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -95,46 +86,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val permissions = arrayOf(
-                        Manifest.permission.CAMERA,
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                            Manifest.permission.READ_MEDIA_IMAGES
-                        else
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                    val multiplePermissionsResultLauncher = rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.RequestMultiplePermissions(),
-                        onResult = { result ->
-                            val areGranted = result.values.reduce { acc, next -> acc && next }
-                            if (areGranted) appState.navController.navigateToCamera()
-                            else Unit
-                        }
-                    )
                     NeedItApp(
                         windowSizeClass = calculateWindowSizeClass(activity = this),
                         isSignedIn = viewModel.isSignedIn,
                         profilePictureUrl = profilePictureUrl,
-                        launchCameraPermissionLauncher = {
-                            multiplePermissionsResultLauncher.launch(
-                                permissions
-                            )
-                        },
-                        isCameraPermissionPermanentlyDeclined = !shouldShowRequestPermissionRationale(
-                            Manifest.permission.CAMERA
-                        ),
-                        onGoToAppSettingsClick = ::openAppSettings
                     )
                 }
             }
         }
     }
-}
-
-fun Activity.openAppSettings() {
-    Intent(
-        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-        Uri.fromParts("package", packageName, null)
-    ).also(::startActivity)
 }
 
 @Composable

@@ -1,22 +1,14 @@
 package com.carlosdiestro.needit.core
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FabPosition
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
-import com.carlosdiestro.needit.core.design_system.components.fab.NiFab
-import com.carlosdiestro.needit.core.design_system.components.menus.CameraPermissionTextProvider
-import com.carlosdiestro.needit.core.design_system.components.menus.PermissionDialog
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
-import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.TopLevelDestination
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
-import com.carlosdiestro.needit.core.design_system.theme.icons
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.features.account.AccountDialogRoute
 import com.carlosdiestro.needit.features.settings.navigateToSettings
@@ -29,11 +21,20 @@ fun NeedItApp(
     appState: NeedItAppState = rememberNeedItAppState(windowSizeClass = windowSizeClass),
     isSignedIn: Boolean,
     profilePictureUrl: String,
-    launchCameraPermissionLauncher: () -> Unit,
-    isCameraPermissionPermanentlyDeclined: Boolean,
-    onGoToAppSettingsClick: () -> Unit
 ) {
-    val currentDestinationRoute = appState.currentDestinationRoute
+    if (appState.shouldShowAccountDialog) {
+        AccountDialogRoute(
+            onDismiss = appState::closeAccountDialog,
+            onSignOutClick = {
+                appState.closeAccountDialog()
+                appState.navController.navigateToSignIn()
+            },
+            onSettingsClick = {
+                appState.closeAccountDialog()
+                appState.navController.navigateToSettings()
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -53,34 +54,7 @@ fun NeedItApp(
                     currentDestination = appState.currentDestination
                 )
             }
-        },
-        floatingActionButton = {
-            if (appState.shouldShowFab) {
-                when (currentDestinationRoute) {
-                    TopLevelDestination.Home.route -> {
-                        NiFab(
-                            icon = MaterialTheme.icons.Add,
-                            onClick = {
-                                if (currentDestinationRoute == TopLevelDestination.Home.route) {
-                                    launchCameraPermissionLauncher()
-                                }
-                            }
-                        )
-                    }
-
-                    TopLevelDestination.Friends.route -> {
-                        NiFab(
-                            icon = MaterialTheme.icons.AddFriend,
-                            onClick = {}
-                        )
-                    }
-
-                    else -> Unit
-                }
-            }
-
-        },
-        floatingActionButtonPosition = FabPosition.End
+        }
     ) {
         NeedItNavHost(
             appState = appState,
@@ -104,37 +78,6 @@ fun NeedItApp(
                         padding(bottom = it.calculateBottomPadding())
                     }
                 )
-        )
-    }
-
-    if (appState.shouldShowCameraPermissionDialog) {
-        PermissionDialog(
-            permissionTextProvider = CameraPermissionTextProvider(),
-            isPermanentlyDeclined = isCameraPermissionPermanentlyDeclined,
-            onDismiss = { appState.setShowCameraPermissionDialog(false) },
-            onRequestClick = {
-                launchCameraPermissionLauncher()
-                appState.setShowCameraPermissionDialog(false)
-            },
-            onGoToAppSettingsClick = {
-                onGoToAppSettingsClick()
-                appState.setShowCameraPermissionDialog(false)
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
-
-    if (appState.shouldShowAccountDialog) {
-        AccountDialogRoute(
-            onDismiss = appState::closeAccountDialog,
-            onSignOutClick = {
-                appState.closeAccountDialog()
-                appState.navController.navigateToSignIn()
-            },
-            onSettingsClick = {
-                appState.closeAccountDialog()
-                appState.navController.navigateToSettings()
-            }
         )
     }
 }

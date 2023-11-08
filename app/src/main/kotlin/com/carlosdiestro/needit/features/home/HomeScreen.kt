@@ -1,5 +1,9 @@
 package com.carlosdiestro.needit.features.home
 
+import android.Manifest
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.components.fab.NiFab
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiLabeledIconButton
 import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
@@ -42,6 +48,7 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 internal fun HomeRoute(
     onItemClick: (Long) -> Unit,
     onUpdateClick: (Int, Long) -> Unit,
+    onCreateClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
@@ -61,7 +68,8 @@ internal fun HomeRoute(
         onDeleteClick = viewModel::deleteWish,
         onUpdateClick = { onUpdateClick(0, dataState.selectedWish?.id!!) },
         onShareClick = viewModel::shareWish,
-        onPrivateClick = viewModel::lockWish
+        onPrivateClick = viewModel::lockWish,
+        onCreateClick = onCreateClick
     )
 }
 
@@ -75,9 +83,34 @@ private fun HomeScreen(
     onDeleteClick: () -> Unit,
     onUpdateClick: () -> Unit,
     onShareClick: () -> Unit,
-    onPrivateClick: () -> Unit
+    onPrivateClick: () -> Unit,
+    onCreateClick: () -> Unit
 ) {
-    Scaffold {
+    val permissions = arrayOf(
+        Manifest.permission.CAMERA,
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            Manifest.permission.READ_MEDIA_IMAGES
+        else
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+    val multiplePermissionsResultLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { result ->
+            val areGranted = result.values.reduce { acc, next -> acc && next }
+            if (areGranted) onCreateClick()
+            else Unit
+        }
+    )
+
+    Scaffold(
+        floatingActionButton = {
+            NiFab(
+                icon = MaterialTheme.icons.Add,
+                onClick = { multiplePermissionsResultLauncher.launch(permissions) }
+            )
+        },
+        floatingActionButtonPosition = FabPosition.End
+    ) {
         if (dataState.noData)
             HomeEmptyState(
                 modifier = Modifier
