@@ -20,17 +20,19 @@ internal class SettingsViewModel @Inject constructor(
     private val updateIsNightModeUseCase: UpdateIsNightModeUseCase
 ) : ViewModel() {
 
-    val state: StateFlow<SettingsDataState> = getSettings()
+    val state: StateFlow<SettingsState> = getSettings()
         .map { settings ->
-            SettingsDataState(
-                useSystemScheme = settings.useSystemScheme,
-                isNightMode = settings.isNightMode
+            SettingsState.Success(
+                value = ThemeConfig(
+                    useSystemScheme = settings.useSystemScheme,
+                    isNightMode = settings.isNightMode
+                )
             )
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = SettingsDataState()
+            initialValue = SettingsState.Loading
         )
 
     fun updateUseSystemScheme() {

@@ -1,6 +1,5 @@
 package com.carlosdiestro.needit.features.settings
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,25 +33,29 @@ internal fun SettingsRoute(
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
     val uiState = rememberSettingsUiState()
-    SettingsScreen(
-        dataState = dataState,
-        uiState = uiState,
-        onBackClick = onBackClick,
-        onVersionClick = onVersionClick,
-        onPrivatePolicyClick = onPrivatePolicyClick,
-        onTermsOfUseClick = onTermsOfUseClick,
-        onUseSystemSchemeClick = viewModel::updateUseSystemScheme,
-        onNightModeClick = viewModel::updateNightMode,
-        onFriendRequestsClick = viewModel::updateFriendRequests,
-        onAdditionToGroupsClick = viewModel::updateAdditionToGroups
-    )
+    when (dataState) {
+        SettingsState.Loading -> Unit
+        is SettingsState.Success -> {
+            SettingsScreen(
+                dataState = dataState,
+                uiState = uiState,
+                onBackClick = onBackClick,
+                onVersionClick = onVersionClick,
+                onPrivatePolicyClick = onPrivatePolicyClick,
+                onTermsOfUseClick = onTermsOfUseClick,
+                onUseSystemSchemeClick = viewModel::updateUseSystemScheme,
+                onNightModeClick = viewModel::updateNightMode,
+                onFriendRequestsClick = viewModel::updateFriendRequests,
+                onAdditionToGroupsClick = viewModel::updateAdditionToGroups
+            )
+        }
+    }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SettingsScreen(
-    dataState: SettingsDataState,
+    dataState: SettingsState,
     uiState: SettingsUiState,
     onBackClick: () -> Unit,
     onVersionClick: () -> Unit,
@@ -63,6 +66,7 @@ private fun SettingsScreen(
     onFriendRequestsClick: () -> Unit,
     onAdditionToGroupsClick: () -> Unit
 ) {
+    val themeConfig = (dataState as SettingsState.Success).value
     Scaffold(
         topBar = {
             NiMediumTopAppBar(
@@ -76,13 +80,12 @@ private fun SettingsScreen(
         modifier = Modifier
             .nestedScroll(uiState.scrollBehavior.nestedScrollConnection)
     ) {
-        println("System Scheme: ${dataState.useSystemScheme}")
         LazyColumn(
             state = uiState.lazyListState,
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.dimensions.spacingL),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = it.calculateTopPadding())
+                .padding(it)
                 .padding(
                     horizontal = MaterialTheme.dimensions.spacingM,
                     vertical = MaterialTheme.dimensions.spacingL
@@ -96,14 +99,14 @@ private fun SettingsScreen(
                 ) {
                     NiLabeledSwitch(
                         labelId = R.string.settings_display_section_use_system_scheme,
-                        checked = dataState.useSystemScheme,
+                        checked = themeConfig.useSystemScheme,
                         onCheckedChange = { onUseSystemSchemeClick() },
                         modifier = Modifier.fillMaxWidth()
                     )
                     NiLabeledSwitch(
                         labelId = R.string.settings_display_section_night_mode,
-                        checked = dataState.isNightMode,
-                        enabled = dataState.isNightModeEnabled,
+                        checked = themeConfig.isNightMode,
+                        enabled = themeConfig.isNightModeEnabled,
                         onCheckedChange = { onNightModeClick() },
                         modifier = Modifier.fillMaxWidth()
                     )

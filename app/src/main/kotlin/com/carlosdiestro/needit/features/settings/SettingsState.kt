@@ -11,7 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 
-internal data class SettingsDataState(
+internal sealed interface SettingsState {
+    data object Loading : SettingsState
+    data class Success(val value: ThemeConfig) : SettingsState
+}
+
+internal data class ThemeConfig(
     val useSystemScheme: Boolean = true,
     val isNightMode: Boolean = false
 ) {
