@@ -6,11 +6,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.carlosdiestro.needit.MainViewModel
 import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
 import com.carlosdiestro.needit.core.design_system.components.fab.NiFab
 import com.carlosdiestro.needit.core.design_system.components.menus.CameraPermissionTextProvider
@@ -27,20 +25,21 @@ import com.carlosdiestro.needit.features.sign_in.navigateToSignIn
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NeedItApp(
-    appState: NeedItAppState,
-    viewModel: MainViewModel,
+    windowSizeClass: WindowSizeClass,
+    appState: NeedItAppState = rememberNeedItAppState(windowSizeClass = windowSizeClass),
+    isSignedIn: Boolean,
+    profilePictureUrl: String,
     launchCameraPermissionLauncher: () -> Unit,
     isCameraPermissionPermanentlyDeclined: Boolean,
     onGoToAppSettingsClick: () -> Unit
 ) {
     val currentDestinationRoute = appState.currentDestinationRoute
-    val state by viewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
             if (appState.shouldShowTopBar) {
                 NiMainTopAppBar(
-                    accountImageUrl = state.profilePictureUrl,
+                    accountImageUrl = profilePictureUrl,
                     onNotificationClick = {},
                     onAccountClick = { appState.openAccountDialog() }
                 )
@@ -85,8 +84,7 @@ fun NeedItApp(
     ) {
         NeedItNavHost(
             appState = appState,
-            isUserAnonymous = state.isUserAnonymous,
-            isSignedIn = state.isSignedIn,
+            isSignedIn = isSignedIn,
             modifier = Modifier
                 .conditional(
                     condition = appState.shouldNotHaveStatusBarPadding,

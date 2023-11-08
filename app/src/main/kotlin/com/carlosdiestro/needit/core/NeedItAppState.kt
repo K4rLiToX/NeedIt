@@ -1,6 +1,7 @@
 package com.carlosdiestro.needit.core
 
 import android.content.Context
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -26,6 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun rememberNeedItAppState(
+    windowSizeClass: WindowSizeClass,
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     context: Context = LocalContext.current
@@ -38,6 +40,7 @@ fun rememberNeedItAppState(
         NeedItAppState(
             navController = navController,
             coroutineScope = coroutineScope,
+            windowSizeClass = windowSizeClass,
             context = context
         )
     }
@@ -47,6 +50,7 @@ fun rememberNeedItAppState(
 class NeedItAppState constructor(
     val navController: NavHostController,
     val coroutineScope: CoroutineScope,
+    val windowSizeClass: WindowSizeClass,
     val context: Context
 ) {
     private val routesWithoutStatusBarPadding: List<String> = listOf(

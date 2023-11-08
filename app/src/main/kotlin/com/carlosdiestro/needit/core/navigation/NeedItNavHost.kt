@@ -24,7 +24,6 @@ import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen
 @Composable
 fun NeedItNavHost(
     appState: NeedItAppState,
-    isUserAnonymous: Boolean,
     isSignedIn: Boolean,
     modifier: Modifier = Modifier
 ) {

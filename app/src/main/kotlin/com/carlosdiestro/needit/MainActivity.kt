@@ -19,6 +19,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -27,11 +29,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.carlosdiestro.needit.core.NeedItApp
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
-import com.carlosdiestro.needit.core.rememberNeedItAppState
 import com.carlosdiestro.needit.features.camera.navigateToCamera
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -43,6 +45,7 @@ class MainActivity : ComponentActivity() {
 
     val viewModel: MainViewModel by viewModels()
 
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -68,6 +71,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val darkTheme = shouldUseDarkTheme(uiState)
+            val profilePictureUrl by viewModel.profilePictureUrl.collectAsStateWithLifecycle()
 
             DisposableEffect(darkTheme) {
                 enableEdgeToEdge(
@@ -91,7 +95,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val appState = rememberNeedItAppState()
                     val permissions = arrayOf(
                         Manifest.permission.CAMERA,
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -108,8 +111,9 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                     NeedItApp(
-                        appState = appState,
-                        viewModel = viewModel,
+                        windowSizeClass = calculateWindowSizeClass(activity = this),
+                        isSignedIn = viewModel.isSignedIn,
+                        profilePictureUrl = profilePictureUrl,
                         launchCameraPermissionLauncher = {
                             multiplePermissionsResultLauncher.launch(
                                 permissions
@@ -139,7 +143,7 @@ private fun shouldUseDarkTheme(
 ): Boolean = when (uiState) {
     is MainState.Loading -> isSystemInDarkTheme()
     is MainState.Success -> {
-        if (uiState.state.useSystemScheme) isSystemInDarkTheme()
-        else uiState.state.isNightMode
+        if (uiState.value.useSystemScheme) isSystemInDarkTheme()
+        else uiState.value.isNightMode
     }
 }
