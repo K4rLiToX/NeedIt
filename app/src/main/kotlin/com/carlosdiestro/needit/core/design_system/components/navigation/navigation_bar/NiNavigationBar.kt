@@ -93,7 +93,7 @@ private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLev
 internal fun NiNavigationBarPreview() {
     NeedItTheme {
         NiNavigationBar(
-            destinations = TopLevelDestination.values().toList(),
+            destinations = TopLevelDestination.entries,
             onNavigateToDestination = {},
             currentDestination = null
         )

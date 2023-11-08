@@ -43,8 +43,8 @@ fun Wish.asPlo(): HomeWishPlo = HomeWishPlo(
     category = this.category.asPlo()
 )
 
-fun WishCategory.asPlo(): WishCategoryPlo = WishCategoryPlo.values()[this.ordinal]
-fun WishCategoryPlo.asDomain(): WishCategory = WishCategory.values()[this.ordinal]
+fun WishCategory.asPlo(): WishCategoryPlo = WishCategoryPlo.entries[this.ordinal]
+fun WishCategoryPlo.asDomain(): WishCategory = WishCategory.entries[this.ordinal]
 
 fun List<Wish>.asPlo(): List<HomeWishPlo> = this.map { it.asPlo() }
 

@@ -160,7 +160,7 @@ private fun CameraScreen(
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingM))
             Actions(
                 uiState = uiState,
-                categories = WishCategoryPlo.values().toList(),
+                categories = WishCategoryPlo.entries,
                 updateCategory = updateCategory,
                 onContinueClick = onContinueClick
             )

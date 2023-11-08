@@ -12,4 +12,4 @@ enum class WishCategory {
     fun toIntValue(): Int = this.ordinal
 }
 
-fun Int.toWishCategory(): WishCategory = WishCategory.values()[this]
+fun Int.toWishCategory(): WishCategory = WishCategory.entries[this]

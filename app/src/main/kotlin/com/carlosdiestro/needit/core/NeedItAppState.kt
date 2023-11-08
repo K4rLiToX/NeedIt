@@ -56,7 +56,7 @@ class NeedItAppState constructor(
     private val currentDestinationRoute: String
         @Composable get() = currentDestination?.route ?: ""
 
-    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
+    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
     private val topLevelDestinationsRoutes: List<String> = topLevelDestinations.routes()
 
