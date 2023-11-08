@@ -52,7 +52,7 @@ internal fun NiDoubleButtonPreview() {
             rightButton = {
                 NiFilledButton(
                     labelId = R.string.button_gift,
-                    leadIcon = MaterialTheme.icons.Gifts,
+                    leadIcon = MaterialTheme.icons.GiftsOutlined,
                     height = NiButtonSpecs.Height.Large,
                     colors = NiButtonSpecs.Color.primary(),
                     onClick = {},

@@ -8,6 +8,8 @@ import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.Sort
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
+import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Redeem
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material.icons.outlined.Celebration
@@ -26,7 +28,6 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PersonAdd
 import androidx.compose.material.icons.outlined.PhotoCamera
-import androidx.compose.material.icons.outlined.Redeem
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Sync
 import androidx.compose.material.icons.outlined.Warning
@@ -38,16 +39,21 @@ import androidx.compose.material.icons.rounded.Checklist
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Deselect
 import androidx.compose.material.icons.rounded.EuroSymbol
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Lens
 import androidx.compose.material.icons.rounded.LockOpen
+import androidx.compose.material.icons.rounded.Redeem
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.MaterialTheme
 import com.carlosdiestro.needit.R
 
 object Icons {
-    val Home = Icons.Outlined.Home
-    val Gifts = Icons.Outlined.Redeem
-    val Friends = Icons.Outlined.Group
+    val HomeOutlined = Icons.Outlined.Home
+    val HomeFilled = Icons.Rounded.Home
+    val GiftsOutlined = Icons.Rounded.Redeem
+    val GiftsFilled = Icons.Filled.Redeem
+    val FriendsOutlined = Icons.Outlined.Group
+    val FriendsFilled = Icons.Filled.Group
     val Profile = Icons.Outlined.AccountCircle
     val Back = Icons.AutoMirrored.Rounded.KeyboardBackspace
     val Sort = Icons.AutoMirrored.Rounded.Sort

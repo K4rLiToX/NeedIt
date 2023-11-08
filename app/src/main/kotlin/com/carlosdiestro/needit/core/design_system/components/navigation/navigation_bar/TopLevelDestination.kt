@@ -16,20 +16,20 @@ enum class TopLevelDestination(
     @StringRes val labelId: Int
 ) {
     Home(
-        selectedIcon = MaterialTheme.icons.Home,
-        unselectedIcon = MaterialTheme.icons.Home,
+        selectedIcon = MaterialTheme.icons.HomeFilled,
+        unselectedIcon = MaterialTheme.icons.HomeOutlined,
         route = homeRoute,
         labelId = R.string.home_title
     ),
     Gifts(
-        selectedIcon = MaterialTheme.icons.Gifts,
-        unselectedIcon = MaterialTheme.icons.Gifts,
+        selectedIcon = MaterialTheme.icons.GiftsFilled,
+        unselectedIcon = MaterialTheme.icons.GiftsOutlined,
         route = giftsRoute,
         labelId = R.string.gifts_title
     ),
     Friends(
-        selectedIcon = MaterialTheme.icons.Friends,
-        unselectedIcon = MaterialTheme.icons.Friends,
+        selectedIcon = MaterialTheme.icons.FriendsFilled,
+        unselectedIcon = MaterialTheme.icons.FriendsOutlined,
         route = friendsRoute,
         labelId = R.string.friends_title
     )

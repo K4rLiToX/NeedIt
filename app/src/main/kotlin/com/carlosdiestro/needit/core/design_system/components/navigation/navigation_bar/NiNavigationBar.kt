@@ -3,6 +3,7 @@ package com.carlosdiestro.needit.core.design_system.components.navigation.naviga
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -47,6 +48,8 @@ fun NiNavigationBar(
                 label = {
                     Text(
                         text = stringResource(id = destination.labelId),
+                        color = if (selected) MaterialTheme.colorScheme.primary else
+                            MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             )
