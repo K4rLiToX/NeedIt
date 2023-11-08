@@ -13,7 +13,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
