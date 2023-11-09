@@ -37,11 +37,10 @@ internal class WishRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun delete(id: Long, cloudId: String) = kotlin.run {
-        localDatasource.delete(id)
-        if (cloudId.isNotEmpty()) {
-            val userId = getWish(id).first().userId
-            remoteDatasource.delete(cloudId, userId)
+    override suspend fun delete(wish: Wish) = kotlin.run {
+        localDatasource.delete(wish.asEntity())
+        if (wish.cloudId.isNotEmpty()) {
+            remoteDatasource.delete(wish.cloudId, wish.userId)
         }
     }
 }

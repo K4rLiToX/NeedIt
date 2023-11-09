@@ -82,13 +82,8 @@ internal class HomeViewModel @Inject constructor(
 
     fun deleteWish() {
         viewModelScope.launch {
-            val wish = state.value.selectedWish
-            wish?.let {
-                deleteWish(
-                    id = it.id,
-                    cloudId = it.cloudId,
-                    imageUrl = it.imageUrl
-                )
+            state.value.selectedWish?.let {
+                deleteWish(it)
             }
         }
     }

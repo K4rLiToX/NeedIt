@@ -9,5 +9,5 @@ interface WishRepository {
     fun getWish(id: Long): Flow<Wish>
     suspend fun create(wish: Wish): Long
     suspend fun update(wish: Wish)
-    suspend fun delete(id: Long, cloudId: String)
+    suspend fun delete(wish: Wish)
 }

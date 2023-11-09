@@ -14,5 +14,5 @@ internal class WishLocalDatasourceImpl @Inject constructor(
     override fun getWish(id: Long): Flow<WishEntity> = dao.getWish(id)
     override suspend fun create(wish: WishEntity): Long = dao.create(wish)
     override suspend fun update(wish: WishEntity) = dao.update(wish)
-    override suspend fun delete(id: Long) = dao.delete(id)
+    override suspend fun delete(wish: WishEntity) = dao.delete(wish)
 }

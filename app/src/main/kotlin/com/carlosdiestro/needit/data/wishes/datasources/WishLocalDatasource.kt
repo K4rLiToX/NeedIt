@@ -10,5 +10,5 @@ interface WishLocalDatasource {
     fun getWish(id: Long): Flow<WishEntity>
     suspend fun create(wish: WishEntity): Long
     suspend fun update(wish: WishEntity)
-    suspend fun delete(id: Long)
+    suspend fun delete(wish: WishEntity)
 }

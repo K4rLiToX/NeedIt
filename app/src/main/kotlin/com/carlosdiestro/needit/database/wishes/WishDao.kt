@@ -1,6 +1,7 @@
 package com.carlosdiestro.needit.database.wishes
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -41,12 +42,6 @@ internal interface WishDao {
     suspend fun update(wish: WishEntity)
 
 
-    @Query(
-        """
-            DELETE 
-            FROM wish_table 
-            WHERE id = :id
-        """
-    )
-    suspend fun delete(id: Long)
+    @Delete
+    suspend fun delete(wish: WishEntity)
 }
