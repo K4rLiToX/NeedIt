@@ -27,7 +27,7 @@ internal class FileManagerImpl @Inject constructor(
             MediaStore.Images.Media.DATA
         )
 
-    override suspend fun getImageUri(): String = withContext(ioDispatcher) {
+    override suspend fun getImageLocalPath(): String = withContext(ioDispatcher) {
         contentResolver.query(
             folder,
             projection,

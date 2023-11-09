@@ -7,5 +7,5 @@ import javax.inject.Inject
 internal class FileManagerRepositoryImpl @Inject constructor(
     private val fileManager: FileManager
 ) : FileManagerRepository {
-    override suspend fun getImageUri(): String = fileManager.getImageUri()
+    override suspend fun getImageLocalPath(): String = fileManager.getImageLocalPath()
 }

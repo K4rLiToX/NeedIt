@@ -12,7 +12,7 @@ import com.carlosdiestro.needit.core.design_system.components.lists.toWishCatego
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.CreateWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.GetImageUriUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.GetImageLocalPathUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +28,7 @@ internal class UpsertViewModel @Inject constructor(
     private val getWish: GetWishUseCase,
     private val createWish: CreateWishUseCase,
     private val updateWish: UpdateWishUseCase,
-    private val getImageUri: GetImageUriUseCase,
+    private val getImageLocalPath: GetImageLocalPathUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -85,7 +85,7 @@ internal class UpsertViewModel @Inject constructor(
             wish?.let {
                 _state.update { currentState ->
                     currentState.copy(
-                        imageUrl = it.imageLocalPath.ifEmpty { it.imageUrl },
+                        imageLocalPath = it.imageLocalPath.ifEmpty { it.imageUrl },
                         category = it.category.asPlo()
                     )
                 }
@@ -104,10 +104,10 @@ internal class UpsertViewModel @Inject constructor(
 
     private fun fetchImageLocalPath() {
         viewModelScope.launch {
-            val uri = getImageUri()
+            val uri = getImageLocalPath()
             _state.update {
                 it.copy(
-                    imageUrl = uri
+                    imageLocalPath = uri
                 )
             }
         }
@@ -163,7 +163,7 @@ internal class UpsertViewModel @Inject constructor(
                 }
             } else {
                 createWish(
-                    imageLocalPath = state.value.imageUrl,
+                    imageLocalPath = state.value.imageLocalPath,
                     title = title,
                     subtitle = subtitle,
                     price = price,

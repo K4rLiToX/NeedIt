@@ -131,7 +131,7 @@ private fun UpsertScreen(
                 WishCategoryPlo.Books
             )
             AsyncImage(
-                model = dataState.imageUrl,
+                model = dataState.imageLocalPath,
                 contentDescription = "Photo",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

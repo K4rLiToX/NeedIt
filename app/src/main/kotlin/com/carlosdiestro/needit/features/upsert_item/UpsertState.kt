@@ -15,7 +15,7 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 
 internal data class UpsertDataState(
-    val imageUrl: String,
+    val imageLocalPath: String,
     val category: WishCategoryPlo,
 ) {
     @get:StringRes
