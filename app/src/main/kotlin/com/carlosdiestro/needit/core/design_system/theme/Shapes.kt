@@ -47,7 +47,7 @@ data class Shapes(
         )
 }
 
-val LocalShapes = staticCompositionLocalOf {
+internal val LocalShapes = staticCompositionLocalOf {
     Shapes()
 }
 

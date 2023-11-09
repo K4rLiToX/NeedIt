@@ -45,8 +45,10 @@ import androidx.compose.material.icons.rounded.LockOpen
 import androidx.compose.material.icons.rounded.Redeem
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Immutable
 import com.carlosdiestro.needit.R
 
+@Immutable
 object Icons {
     val HomeOutlined = Icons.Outlined.Home
     val HomeFilled = Icons.Rounded.Home
