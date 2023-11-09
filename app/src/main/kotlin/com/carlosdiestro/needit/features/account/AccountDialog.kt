@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -47,6 +46,7 @@ import com.carlosdiestro.needit.core.design_system.components.buttons.NiOutlined
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiTextButton
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @Composable
 fun AccountDialogRoute(
@@ -224,7 +224,7 @@ private fun AccountDialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         modifier = modifier
             .padding(horizontal = MaterialTheme.dimensions.spacingM)
-            .clip(RoundedCornerShape(32.dp))
+            .clip(MaterialTheme.shape.large)
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp))
     ) {
         Column {
@@ -337,7 +337,7 @@ private fun AccountDialogAccountHeader(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+            .clip(MaterialTheme.shape.topMedium)
             .background(MaterialTheme.colorScheme.surface)
             .clickable { onAccountInformationClick(!shouldShowAccountExtras) }
             .padding(MaterialTheme.dimensions.spacingM)
@@ -411,7 +411,7 @@ private fun AccountDialogBody(
         modifier = Modifier
             .padding(horizontal = MaterialTheme.dimensions.spacingXS)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
+            .clip(MaterialTheme.shape.bottomMedium)
             .background(MaterialTheme.colorScheme.surface),
         content = content
     )

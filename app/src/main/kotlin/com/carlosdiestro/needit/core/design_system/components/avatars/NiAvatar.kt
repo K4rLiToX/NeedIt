@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @Composable
 fun NiAvatar(
@@ -34,7 +35,7 @@ fun NiAvatar(
         contentScale = ContentScale.Crop,
         fallback = imageVector,
         modifier = modifier
-            .clip(CircleShape)
+            .clip(MaterialTheme.shape.full)
             .size(size)
             .clickable {
                 if (onClick != null) {

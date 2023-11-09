@@ -52,6 +52,7 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.top_app
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBarSpecs
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.needit.core.design_system.theme.shape
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -149,12 +150,7 @@ private fun CameraScreen(
                 onShutterClick = onShutterClick,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(
-                        RoundedCornerShape(
-                            bottomStart = 24.dp,
-                            bottomEnd = 24.dp
-                        )
-                    )
+                    .clip(MaterialTheme.shape.medium)
                     .weight(1F)
             )
             Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingM))
@@ -291,7 +287,7 @@ private fun CameraShutter(
             modifier = Modifier
                 .size(100.dp)
                 .padding(1.dp)
-                .border(2.dp, MaterialTheme.colorScheme.onPrimary, CircleShape)
+                .border(2.dp, MaterialTheme.colorScheme.onPrimary, MaterialTheme.shape.full)
         )
     }
 }

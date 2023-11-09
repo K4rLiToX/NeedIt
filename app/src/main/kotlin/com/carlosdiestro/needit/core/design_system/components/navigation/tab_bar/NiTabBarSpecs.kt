@@ -6,18 +6,15 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.dp
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @Immutable
 object NiTabBarSpecs {
     val TabHeight = 48.dp
     val IndicatorColor: androidx.compose.ui.graphics.Color
         @Composable get() = MaterialTheme.colorScheme.primary
-    val IndicatorShape = RoundedCornerShape(
-        topStart = 100F,
-        topEnd = 100F,
-        bottomStart = 0F,
-        bottomEnd = 0F
-    )
+    val IndicatorShape: RoundedCornerShape
+        @Composable get() = MaterialTheme.shape.topFull
 
     @Immutable
     object Color {

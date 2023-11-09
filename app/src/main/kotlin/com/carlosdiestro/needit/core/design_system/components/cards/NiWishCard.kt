@@ -34,6 +34,7 @@ import com.carlosdiestro.needit.core.design_system.components.extensions.conditi
 import com.carlosdiestro.needit.core.design_system.components.extensions.gradient
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -47,7 +48,7 @@ fun NiWishCard(
     selected: Boolean
 ) {
     Card(
-        shape = RoundedCornerShape(24.dp),
+        shape = MaterialTheme.shape.medium,
         modifier = modifier
             .height(height)
             .fillMaxWidth()
@@ -97,7 +98,7 @@ fun NiWishCard(
     reserved: Boolean
 ) {
     Card(
-        shape = RoundedCornerShape(24.dp),
+        shape = MaterialTheme.shape.medium,
         modifier = modifier
             .height(height)
             .fillMaxWidth()
@@ -159,7 +160,7 @@ internal fun NiWishCardInformation(
                     contentDescription = "",
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
-                        .clip(CircleShape)
+                        .clip(MaterialTheme.shape.full)
                         .background(MaterialTheme.colorScheme.primary)
                 )
             }

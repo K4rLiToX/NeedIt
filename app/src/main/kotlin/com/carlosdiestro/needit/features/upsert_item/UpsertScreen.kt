@@ -33,6 +33,7 @@ import com.carlosdiestro.needit.core.design_system.components.buttons.NiTextButt
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -136,7 +137,7 @@ private fun UpsertScreen(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(24.dp))
+                    .clip(MaterialTheme.shape.medium)
                     .height(221.dp)
             )
             CommonInformation(

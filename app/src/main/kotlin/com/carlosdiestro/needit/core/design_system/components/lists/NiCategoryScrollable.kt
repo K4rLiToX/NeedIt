@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @Composable
 fun NiCategoryScrollable(
@@ -55,7 +56,7 @@ fun NiCategoryScrollable(
                 text = stringResource(id = category.labelId),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(100.dp))
+                    .clip(MaterialTheme.shape.full)
                     .clickable {
                         onCategoryClick(category.ordinal)
                     }

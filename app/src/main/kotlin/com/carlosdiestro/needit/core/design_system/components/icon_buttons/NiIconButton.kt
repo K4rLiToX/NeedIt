@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.core.design_system.theme.NeedItTheme
 import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @Composable
 fun NiIconButton(
@@ -32,7 +33,7 @@ fun NiIconButton(
         onClick = onClick,
         colors = colors,
         modifier = modifier
-            .clip(CircleShape)
+            .clip(MaterialTheme.shape.full)
             .size(buttonSize)
     ) {
         Icon(

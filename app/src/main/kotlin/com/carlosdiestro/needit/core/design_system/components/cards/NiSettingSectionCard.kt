@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @Composable
 fun NiSettingSectionCard(
@@ -25,7 +26,7 @@ fun NiSettingSectionCard(
 ) {
     Column(
         modifier = modifier
-            .clip(RoundedCornerShape((24.dp)))
+            .clip(MaterialTheme.shape.medium)
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
     ) {
         SettingSectionCardHeader(

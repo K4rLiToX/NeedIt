@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,6 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +37,7 @@ fun NiAccountExtraInfoCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
         ),
-        shape = RoundedCornerShape(24.dp),
+        shape = MaterialTheme.shapes.medium,
         onClick = {},
         modifier = modifier
             .padding(MaterialTheme.dimensions.spacingL)
@@ -46,7 +46,7 @@ fun NiAccountExtraInfoCard(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .size(40.dp)
-                .clip(CircleShape)
+                .clip(MaterialTheme.shape.full)
                 .background(MaterialTheme.colorScheme.surface)
         ) {
             Icon(

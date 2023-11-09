@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
+import com.carlosdiestro.needit.core.design_system.theme.shape
 
 @Composable
 fun NiWishInfoCard(
@@ -169,7 +170,7 @@ internal fun NiWishCardInfoDetailsPills(
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.outline,
-                shape = CircleShape
+                shape = MaterialTheme.shape.full
             )
             .padding(
                 horizontal = MaterialTheme.dimensions.spacingL,
@@ -223,7 +224,7 @@ internal fun NiPillTextValue(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .clip(CircleShape)
+            .clip(MaterialTheme.shape.full)
             .widthIn(min = 40.dp)
             .heightIn(min = 40.dp)
             .wrapContentSize()
@@ -246,7 +247,7 @@ internal fun NiPillColorValue(
 ) {
     Box(
         modifier = modifier
-            .clip(CircleShape)
+            .clip(MaterialTheme.shape.full)
             .width(40.dp)
             .height(40.dp)
             .background(Color(color.toColorInt()))
