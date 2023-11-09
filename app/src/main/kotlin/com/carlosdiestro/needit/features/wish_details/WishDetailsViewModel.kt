@@ -4,8 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

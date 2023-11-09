@@ -7,8 +7,7 @@ import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.DeleteWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,8 +22,7 @@ import javax.inject.Inject
 internal class HomeViewModel @Inject constructor(
     getMyWishes: GetMyWishesUseCase,
     private val deleteWish: DeleteWishUseCase,
-    private val shareWish: ShareWishUseCase,
-    private val lockWish: LockWishUseCase
+    private val updateWish: UpdateWishUseCase
 ) : ViewModel() {
 
     private var _selectedWishId: MutableStateFlow<Long> = MutableStateFlow(-1)
@@ -60,21 +58,25 @@ internal class HomeViewModel @Inject constructor(
 
     fun shareWish() {
         viewModelScope.launch {
-            val wish = state.value.selectedWish
-            wish?.let {
-                shareWish(it.id)
-                onSelectedWish(-1)
-            }
+            state.value.selectedWish
+                ?.copy(
+                    isShared = true
+                )
+                ?.also {
+                    updateWish(it)
+                }
         }
     }
 
     fun lockWish() {
         viewModelScope.launch {
-            val wish = state.value.selectedWish
-            wish?.let {
-                lockWish(it.id)
-                onSelectedWish(-1)
-            }
+            state.value.selectedWish
+                ?.copy(
+                    isShared = false
+                )
+                ?.also {
+                    updateWish(it)
+                }
         }
     }
 

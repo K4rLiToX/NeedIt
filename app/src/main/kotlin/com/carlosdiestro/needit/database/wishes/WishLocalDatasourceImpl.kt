@@ -15,6 +15,4 @@ internal class WishLocalDatasourceImpl @Inject constructor(
     override suspend fun create(wish: WishEntity): Long = dao.create(wish)
     override suspend fun update(wish: WishEntity) = dao.update(wish)
     override suspend fun delete(id: Long) = dao.delete(id)
-    override suspend fun share(id: Long, cloudId: String) = dao.share(id, cloudId)
-    override suspend fun lock(id: Long) = dao.lock(id)
 }

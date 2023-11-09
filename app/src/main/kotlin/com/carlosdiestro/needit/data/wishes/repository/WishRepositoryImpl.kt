@@ -27,9 +27,14 @@ internal class WishRepositoryImpl @Inject constructor(
 
     override suspend fun create(wish: Wish): Long = localDatasource.create(wish.asEntity())
 
-    override suspend fun update(wish: Wish) = kotlin.run {
+    override suspend fun update(wish: Wish) {
         localDatasource.update(wish.asEntity())
-        if (wish.isShared) remoteDatasource.update(wish.cloudId, wish.asDto())
+        when {
+            wish.isShared && wish.cloudId.isEmpty() -> remoteDatasource.create(wish.asDto())
+            wish.isShared -> remoteDatasource.update(wish.cloudId, wish.asDto())
+            !wish.isShared && wish.cloudId.isNotEmpty() -> remoteDatasource.delete(wish.cloudId, wish
+                .userId)
+        }
     }
 
     override suspend fun delete(id: Long, cloudId: String) = kotlin.run {
@@ -38,17 +43,5 @@ internal class WishRepositoryImpl @Inject constructor(
             val userId = getWish(id).first().userId
             remoteDatasource.delete(cloudId, userId)
         }
-    }
-
-    override suspend fun share(id: Long) = kotlin.run {
-        val wish = getWish(id).first()
-        val cloudId = remoteDatasource.create(wish.asDto())
-        localDatasource.share(id, cloudId)
-    }
-
-    override suspend fun lock(id: Long) = kotlin.run {
-        val wish = getWish(id).first()
-        localDatasource.lock(id)
-        remoteDatasource.delete(wish.cloudId, wish.userId)
     }
 }

@@ -11,6 +11,4 @@ interface WishLocalDatasource {
     suspend fun create(wish: WishEntity): Long
     suspend fun update(wish: WishEntity)
     suspend fun delete(id: Long)
-    suspend fun share(id: Long, cloudId: String)
-    suspend fun lock(id: Long)
 }

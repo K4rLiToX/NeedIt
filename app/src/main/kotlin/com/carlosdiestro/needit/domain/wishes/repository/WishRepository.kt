@@ -10,6 +10,4 @@ interface WishRepository {
     suspend fun create(wish: Wish): Long
     suspend fun update(wish: Wish)
     suspend fun delete(id: Long, cloudId: String)
-    suspend fun share(id: Long)
-    suspend fun lock(id: Long)
 }
