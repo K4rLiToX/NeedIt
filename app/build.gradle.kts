@@ -4,6 +4,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     id("com.google.gms.google-services")
+    id("androidx.room") version "2.6.0"
 }
 
 android {
@@ -50,6 +51,12 @@ android {
             resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }
     }
+    room {
+        schemaDirectory(path = "$projectDir/schemas")
+    }
+    ksp {
+        arg("room.generateKotlin", "true")
+    }
 }
 
 dependencies {
@@ -66,10 +73,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-util")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3:1.2.0-alpha09")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha10")
 
     // UI
-    implementation("androidx.compose.material:material-icons-extended:1.5.3")
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
     implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
 
     // Coil Image Loader
@@ -84,17 +91,17 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 
     // Navigation
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.4")
-    implementation("androidx.navigation:navigation-compose:2.7.4")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
+    implementation("androidx.navigation:navigation-compose:2.7.5")
 
     // Room Database
-    val roomVersion = "2.5.2"
+    val roomVersion = "2.6.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
 
     // Hilt
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation("com.google.dagger:hilt-android:2.48.1")
     ksp("com.google.dagger:hilt-android-compiler:2.48.1")
 
@@ -104,7 +111,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     // CameraX
-    val cameraVersion = "1.2.3"
+    val cameraVersion = "1.3.0"
     implementation("androidx.camera:camera-camera2:$cameraVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraVersion")
     implementation("androidx.camera:camera-view:$cameraVersion")
