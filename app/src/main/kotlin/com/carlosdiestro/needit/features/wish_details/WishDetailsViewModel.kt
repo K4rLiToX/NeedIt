@@ -3,7 +3,9 @@ package com.carlosdiestro.needit.features.wish_details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,15 +17,17 @@ import javax.inject.Inject
 @HiltViewModel
 internal class WishDetailsViewModel @Inject constructor(
     getWish: GetWishUseCase,
-    private val shareWish: ShareWishUseCase,
-    private val lockWish: LockWishUseCase,
+    private val updateWish: UpdateWishUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val wishId = savedStateHandle[argsWishId] ?: -1L
 
+    private lateinit var wish: Wish
+
     val state: StateFlow<WishDetailsDataState> = getWish(wishId)
         .map { wish ->
+            this.wish = wish
             WishDetailsDataState(
                 id = wish.id,
                 imageUrl = wish.imageLocalPath.ifEmpty { wish.imageUrl },
@@ -45,13 +49,21 @@ internal class WishDetailsViewModel @Inject constructor(
 
     fun shareWish() {
         viewModelScope.launch {
-            shareWish(wishId)
+            updateWish(
+                wish.copy(
+                    isShared = true
+                )
+            )
         }
     }
 
     fun lockWish() {
         viewModelScope.launch {
-            lockWish(wishId)
+            updateWish(
+                wish.copy(
+                    isShared = false
+                )
+            )
         }
     }
 }
