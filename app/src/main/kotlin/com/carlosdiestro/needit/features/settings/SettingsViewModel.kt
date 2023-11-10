@@ -2,9 +2,11 @@ package com.carlosdiestro.needit.features.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.domain.preferences.usecases.GetSettingsUseCase
-import com.carlosdiestro.needit.domain.preferences.usecases.UpdateIsNightModeUseCase
-import com.carlosdiestro.needit.domain.preferences.usecases.UpdateUseSystemSchemeUseCase
+import com.carlosdiestro.needit.ThemeConfigPlo
+import com.carlosdiestro.needit.core.mappers.asDomain
+import com.carlosdiestro.needit.core.mappers.asPlo
+import com.carlosdiestro.needit.domain.preferences.usecases.GetThemeConfigUseCase
+import com.carlosdiestro.needit.domain.preferences.usecases.UpdateThemeConfigUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,18 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
-    getSettings: GetSettingsUseCase,
-    private val updateUseSystemSchemeUseCase: UpdateUseSystemSchemeUseCase,
-    private val updateIsNightModeUseCase: UpdateIsNightModeUseCase
+    getThemeConfig: GetThemeConfigUseCase,
+    private val updateThemeConfig: UpdateThemeConfigUseCase
 ) : ViewModel() {
 
-    val state: StateFlow<SettingsState> = getSettings()
-        .map { settings ->
+    val state: StateFlow<SettingsState> = getThemeConfig()
+        .map { themeConfig ->
             SettingsState.Success(
-                value = ThemeConfig(
-                    useSystemScheme = settings.useSystemScheme,
-                    isNightMode = settings.isNightMode
-                )
+                selectedTheme = themeConfig.asPlo()
             )
         }
         .stateIn(
@@ -35,15 +33,9 @@ internal class SettingsViewModel @Inject constructor(
             initialValue = SettingsState.Loading
         )
 
-    fun updateUseSystemScheme() {
+    fun updateThemeConfig(themeConfig: ThemeConfigPlo) {
         viewModelScope.launch {
-            updateUseSystemSchemeUseCase()
-        }
-    }
-
-    fun updateNightMode() {
-        viewModelScope.launch {
-            updateIsNightModeUseCase()
+            updateThemeConfig(themeConfig.asDomain())
         }
     }
 

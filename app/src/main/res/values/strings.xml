@@ -37,8 +37,10 @@
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_display_section">Color scheme</string>
-    <string name="settings_display_section_use_system_scheme">Use system scheme</string>
-    <string name="settings_display_section_night_mode">Night mode</string>
+    <string name="settings_display_section_theme">Theme</string>
+    <string name="settings_display_section_theme_dialog_light">Light</string>
+    <string name="settings_display_section_theme_dialog_dark">Dark</string>
+    <string name="settings_display_section_theme_dialog_use_system">System default</string>
     <string name="settings_notifications_section">Notifications</string>
     <string name="settings_notifications_section_friend_requests">Friend requests</string>
     <string name="settings_notifications_section_addition_to_groups">Addition to groups</string>
@@ -151,6 +153,7 @@
     <string name="button_manage_account">Manage account</string>
     <string name="button_privacy_policy">Privacy Policy</string>
     <string name="button_terms_of_service">Terms of Service</string>
+    <string name="button_ok">Ok</string>
 
     <!-- Sorting Dialog options -->
     <string name="sorting_dialog_lowest_to_highest">Lowest to highest price</string>

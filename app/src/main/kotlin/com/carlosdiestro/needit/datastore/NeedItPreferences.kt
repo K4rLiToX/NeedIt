@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.carlosdiestro.needit.datastore.models.SettingsPreferences
+import com.carlosdiestro.needit.datastore.models.ThemeConfigPreferences
 import com.carlosdiestro.needit.datastore.models.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -13,13 +13,12 @@ internal class NeedItPreferences @Inject constructor(
 
     val user: Flow<UserPreferences> = dataStore.user
 
-    val settings: Flow<SettingsPreferences> = dataStore.settings
+    val settings: Flow<ThemeConfigPreferences> = dataStore.themeConfig
 
     suspend fun updateUser(user: UserPreferences) = dataStore.updateUser(user)
 
-    suspend fun updateUseSystemScheme() = dataStore.updateUseSystemScheme()
-
-    suspend fun updateIsNightMode() = dataStore.updateIsNightMode()
+    suspend fun updateThemeConfig(themeConfig: ThemeConfigPreferences) =
+        dataStore.updateThemeConfig(themeConfig)
 
     suspend fun clear() = dataStore.clear()
 }

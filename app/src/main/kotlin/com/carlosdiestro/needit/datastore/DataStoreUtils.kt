@@ -4,9 +4,12 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.carlosdiestro.needit.datastore.models.SettingsPreferences
+import com.carlosdiestro.needit.datastore.models.ThemeConfigPreferences
 import com.carlosdiestro.needit.datastore.models.UserPreferences
+import com.carlosdiestro.needit.datastore.models.asPreferences
+import com.carlosdiestro.needit.datastore.models.asValue
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -18,9 +21,8 @@ internal object UserKeys {
     internal val isAnonymous = booleanPreferencesKey("user_is_anonymous")
 }
 
-internal object SettingsKeys {
-    internal val useSystemScheme = booleanPreferencesKey("settings_use_system_scheme")
-    internal val isNightMode = booleanPreferencesKey("settings_is_night_mode")
+internal object ThemeConfigKeys {
+    internal val themeConfig = intPreferencesKey("theme_config")
 }
 
 internal suspend fun DataStore<Preferences>.updateUser(user: UserPreferences) {
@@ -33,15 +35,9 @@ internal suspend fun DataStore<Preferences>.updateUser(user: UserPreferences) {
     }
 }
 
-internal suspend fun DataStore<Preferences>.updateUseSystemScheme() {
+internal suspend fun DataStore<Preferences>.updateThemeConfig(themeConfig: ThemeConfigPreferences) {
     this.edit { prefs ->
-        prefs[SettingsKeys.useSystemScheme] = !prefs.useSystemScheme
-    }
-}
-
-internal suspend fun DataStore<Preferences>.updateIsNightMode() {
-    this.edit { prefs ->
-        prefs[SettingsKeys.isNightMode] = !prefs.isNightMode
+        prefs[ThemeConfigKeys.themeConfig] = themeConfig.asValue()
     }
 }
 
@@ -52,14 +48,14 @@ internal suspend fun DataStore<Preferences>.clear() {
 internal val DataStore<Preferences>.user: Flow<UserPreferences>
     get() = this.data.user
 
-internal val DataStore<Preferences>.settings: Flow<SettingsPreferences>
-    get() = this.data.settings
+internal val DataStore<Preferences>.themeConfig: Flow<ThemeConfigPreferences>
+    get() = this.data.themeConfig
 
 internal val Flow<Preferences>.user: Flow<UserPreferences>
     get() = this.map { it.user }
 
-internal val Flow<Preferences>.settings: Flow<SettingsPreferences>
-    get() = this.map { it.settings }
+internal val Flow<Preferences>.themeConfig: Flow<ThemeConfigPreferences>
+    get() = this.map { it.themeConfig }
 
 internal val Preferences.user: UserPreferences
     get() = UserPreferences(
@@ -70,11 +66,8 @@ internal val Preferences.user: UserPreferences
         isAnonymous = isAnonymous
     )
 
-internal val Preferences.settings: SettingsPreferences
-    get() = SettingsPreferences(
-        useSystemScheme = useSystemScheme,
-        isNightMode = isNightMode
-    )
+internal val Preferences.themeConfig: ThemeConfigPreferences
+    get() = this[ThemeConfigKeys.themeConfig].asPreferences()
 
 internal val Preferences.userId: String
     get() = this[UserKeys.id].orEmpty()
@@ -90,9 +83,3 @@ internal val Preferences.profilePictureUrl: String
 
 internal val Preferences.isAnonymous: Boolean
     get() = this[UserKeys.isAnonymous] ?: true
-
-internal val Preferences.useSystemScheme: Boolean
-    get() = this[SettingsKeys.useSystemScheme] ?: true
-
-internal val Preferences.isNightMode: Boolean
-    get() = this[SettingsKeys.isNightMode] ?: false

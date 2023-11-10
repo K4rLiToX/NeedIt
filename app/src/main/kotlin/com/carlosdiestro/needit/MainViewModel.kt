@@ -1,9 +1,11 @@
 package com.carlosdiestro.needit
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.auth.AuthClient
-import com.carlosdiestro.needit.domain.preferences.usecases.GetSettingsUseCase
+import com.carlosdiestro.needit.core.mappers.asPlo
+import com.carlosdiestro.needit.domain.preferences.usecases.GetThemeConfigUseCase
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    getSettings: GetSettingsUseCase,
+    getThemeConfig: GetThemeConfigUseCase,
     getSignedInUser: GetSignedInUserUseCase,
     authClient: AuthClient
 ) : ViewModel() {
@@ -31,13 +33,10 @@ class MainViewModel @Inject constructor(
             initialValue = ""
         )
 
-    val state: StateFlow<MainState> = getSettings()
-        .map { settings ->
+    val state: StateFlow<MainState> = getThemeConfig()
+        .map { themeConfig ->
             MainState.Success(
-                value = ThemeConfig(
-                    useSystemScheme = settings.useSystemScheme,
-                    isNightMode = settings.isNightMode
-                )
+                value = themeConfig.asPlo()
             )
         }.stateIn(
             scope = viewModelScope,
@@ -48,10 +47,11 @@ class MainViewModel @Inject constructor(
 
 sealed interface MainState {
     data object Loading : MainState
-    data class Success(val value: ThemeConfig) : MainState
+    data class Success(val value: ThemeConfigPlo) : MainState
 }
 
-data class ThemeConfig(
-    val useSystemScheme: Boolean,
-    val isNightMode: Boolean
-)
+enum class ThemeConfigPlo(@StringRes val labelId: Int) {
+    FollowSystem(R.string.settings_display_section_theme_dialog_use_system),
+    Light(R.string.settings_display_section_theme_dialog_light),
+    Dark(R.string.settings_display_section_theme_dialog_dark)
+}

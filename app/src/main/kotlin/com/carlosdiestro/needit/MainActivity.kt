@@ -103,7 +103,10 @@ private fun shouldUseDarkTheme(
 ): Boolean = when (uiState) {
     is MainState.Loading -> isSystemInDarkTheme()
     is MainState.Success -> {
-        if (uiState.value.useSystemScheme) isSystemInDarkTheme()
-        else uiState.value.isNightMode
+        when (uiState.value) {
+            ThemeConfigPlo.FollowSystem -> isSystemInDarkTheme()
+            ThemeConfigPlo.Light -> false
+            ThemeConfigPlo.Dark -> true
+        }
     }
 }

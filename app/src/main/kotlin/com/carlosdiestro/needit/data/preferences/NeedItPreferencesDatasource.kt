@@ -1,14 +1,13 @@
 package com.carlosdiestro.needit.data.preferences
 
-import com.carlosdiestro.needit.datastore.models.SettingsPreferences
+import com.carlosdiestro.needit.datastore.models.ThemeConfigPreferences
 import com.carlosdiestro.needit.datastore.models.UserPreferences
 import kotlinx.coroutines.flow.Flow
 
 interface NeedItPreferencesDatasource {
     val user: Flow<UserPreferences>
-    val settings: Flow<SettingsPreferences>
+    val settings: Flow<ThemeConfigPreferences>
     suspend fun updateUser(user: UserPreferences)
-    suspend fun updateUseSystemScheme()
-    suspend fun updateIsNightMode()
+    suspend fun updateThemeConfig(themeConfig: ThemeConfigPreferences)
     suspend fun clear()
 }

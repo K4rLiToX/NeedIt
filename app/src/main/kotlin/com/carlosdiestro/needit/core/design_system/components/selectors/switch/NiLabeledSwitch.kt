@@ -57,7 +57,7 @@ fun NiLabeledSwitch(
 internal fun NiLabeledSwitchPreview() {
     NeedItTheme {
         NiLabeledSwitch(
-            labelId = R.string.settings_display_section_night_mode,
+            labelId = R.string.settings_notifications_section_addition_to_groups,
             checked = true,
             onCheckedChange = {},
             modifier = Modifier.fillMaxWidth()
