@@ -1,5 +1,9 @@
 package com.carlosdiestro.needit.features.home
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -21,10 +25,19 @@ fun NavController.navigateToHomeCleaningBackStack() = navigate(homeRoute) {
 fun NavGraphBuilder.homeScreen(
     onItemClick: (Long) -> Unit,
     onUpdateClick: (Int, Long) -> Unit,
-    onCreateClick: () -> Unit
+    onCreateClick: () -> Unit,
+    enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,
+    exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition,
+    popEnterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,
+    popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition
+
 ) {
     topLevelDestination(
-        route = homeRoute
+        route = homeRoute,
+        enterTransition = enterTransition,
+        exitTransition = exitTransition,
+        popEnterTransition = popEnterTransition,
+        popExitTransition = popExitTransition
     ) {
         HomeRoute(
             onItemClick = onItemClick,

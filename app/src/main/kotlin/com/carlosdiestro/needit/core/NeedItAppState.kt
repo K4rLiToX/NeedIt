@@ -58,7 +58,7 @@ class NeedItAppState constructor(
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
-    private val topLevelDestinationsRoutes: List<String> = topLevelDestinations.routes()
+    val topLevelDestinationsRoutes: List<String> = topLevelDestinations.routes()
 
     val shouldShowBottomBar: Boolean
         @Composable get() = isTopLevelDestination()
