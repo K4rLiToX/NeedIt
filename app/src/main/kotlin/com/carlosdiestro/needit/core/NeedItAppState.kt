@@ -53,7 +53,7 @@ class NeedItAppState constructor(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    private val currentDestinationRoute: String
+    val currentDestinationRoute: String
         @Composable get() = currentDestination?.route ?: ""
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries

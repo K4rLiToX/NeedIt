@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.core
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -13,6 +14,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.carlosdiestro.needit.core.design_system.components.animations.enterFadeThrough
+import com.carlosdiestro.needit.core.design_system.components.animations.exitFadeThrough
+import com.carlosdiestro.needit.core.design_system.components.animations.exitZSharedAxis
+import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
@@ -42,9 +47,15 @@ fun NeedItApp(
         )
     }
 
+    val currentDestination = appState.currentDestinationRoute
+
     Scaffold(
         topBar = {
-            if (appState.shouldShowTopBar) {
+            AnimatedVisibility(
+                visible = appState.shouldShowTopBar,
+                enter = popEnterZSharedAxis ,
+                exit = exitZSharedAxis,
+            ) {
                 NiMainTopAppBar(
                     accountImageUrl = profilePictureUrl,
                     onNotificationClick = {},
@@ -53,7 +64,11 @@ fun NeedItApp(
             }
         },
         bottomBar = {
-            if (appState.shouldShowBottomBar) {
+            AnimatedVisibility(
+                visible = appState.shouldShowBottomBar,
+                enter = popEnterZSharedAxis,
+                exit = exitZSharedAxis,
+            ) {
                 NiNavigationBar(
                     destinations = appState.topLevelDestinations,
                     onNavigateToDestination = appState::navigateToTopLevelDestination,

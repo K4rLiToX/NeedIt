@@ -23,6 +23,15 @@ val exitZSharedAxis: ExitTransition =
         targetScale = 1.1F
     )
 
+val popExitZSharedAxis: ExitTransition =
+    fadeOut(
+        animationSpec = tween(
+            durationMillis = 100
+        )
+    ) + scaleOut(
+        targetScale = 0.9F
+    )
+
 val exit: ExitTransition =
     fadeOut(
         animationSpec = tween(

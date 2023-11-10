@@ -8,8 +8,10 @@ import com.carlosdiestro.needit.core.design_system.components.animations.enterFa
 import com.carlosdiestro.needit.core.design_system.components.animations.enterNone
 import com.carlosdiestro.needit.core.design_system.components.animations.enterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.exitFadeThrough
-import com.carlosdiestro.needit.core.design_system.components.animations.exitZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.exitNone
+import com.carlosdiestro.needit.core.design_system.components.animations.exitZSharedAxis
+import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
+import com.carlosdiestro.needit.core.design_system.components.animations.popExitZSharedAxis
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.camera.navigateToCamera
@@ -62,7 +64,7 @@ fun NeedItNavHost(
             popEnterTransition = {
                 when (initialState.destination.route) {
                     in appState.topLevelDestinationsRoutes -> enterFadeThrough
-                    else -> enterZSharedAxis
+                    else -> popEnterZSharedAxis
                 }
             },
             popExitTransition = { exitFadeThrough }
@@ -103,7 +105,7 @@ fun NeedItNavHost(
             enterTransition = { enterZSharedAxis },
             exitTransition = { exitNone },
             popEnterTransition = { enterNone },
-            popExitTransition = { exitZSharedAxis }
+            popExitTransition = { popExitZSharedAxis }
         )
 
         settingsScreen(

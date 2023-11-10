@@ -31,6 +31,16 @@ val enterZSharedAxis: EnterTransition =
         )
     )
 
+val popEnterZSharedAxis: EnterTransition =
+    scaleIn(
+        initialScale = 1.2F
+    ) + fadeIn(
+        animationSpec = tween(
+            durationMillis = 200,
+            delayMillis = 100
+        )
+    )
+
 val enter: EnterTransition =
     fadeIn(
         animationSpec = tween(
