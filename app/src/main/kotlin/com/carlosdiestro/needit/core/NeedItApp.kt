@@ -14,8 +14,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.carlosdiestro.needit.core.design_system.components.animations.enterFadeThrough
-import com.carlosdiestro.needit.core.design_system.components.animations.exitFadeThrough
+import com.carlosdiestro.needit.core.design_system.components.animations.enter
+import com.carlosdiestro.needit.core.design_system.components.animations.exit
 import com.carlosdiestro.needit.core.design_system.components.animations.exitZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
@@ -33,7 +33,11 @@ fun NeedItApp(
     isSignedIn: Boolean,
     profilePictureUrl: String,
 ) {
-    if (appState.shouldShowAccountDialog) {
+    AnimatedVisibility(
+        visible = appState.shouldShowAccountDialog,
+        enter = enter,
+        exit = exit
+    ) {
         AccountDialogRoute(
             onDismiss = appState::closeAccountDialog,
             onSignOutClick = {
@@ -51,7 +55,7 @@ fun NeedItApp(
         topBar = {
             AnimatedVisibility(
                 visible = appState.shouldShowTopBar,
-                enter = popEnterZSharedAxis ,
+                enter = popEnterZSharedAxis,
                 exit = exitZSharedAxis,
             ) {
                 NiMainTopAppBar(
