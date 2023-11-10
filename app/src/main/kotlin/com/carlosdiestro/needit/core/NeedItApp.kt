@@ -47,8 +47,6 @@ fun NeedItApp(
         )
     }
 
-    val currentDestination = appState.currentDestinationRoute
-
     Scaffold(
         topBar = {
             AnimatedVisibility(
