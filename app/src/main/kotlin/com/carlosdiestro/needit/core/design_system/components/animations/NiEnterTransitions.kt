@@ -1,65 +1,44 @@
 package com.carlosdiestro.needit.core.design_system.components.animations
 
 import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.ui.graphics.TransformOrigin
 
-val topLevelEnterTransition: EnterTransition =
+val enterNone: EnterTransition = EnterTransition.None
+
+val enterFadeThrough: EnterTransition =
     fadeIn(
         animationSpec = tween(
-            durationMillis = 300,
-            easing = FastOutSlowInEasing
+            durationMillis = 200,
+            delayMillis = 100
         )
     ) + scaleIn(
         animationSpec = tween(
-            durationMillis = 100,
-            easing = FastOutSlowInEasing
-        )
-    )
-
-val forwardFromEndTransition: EnterTransition =
-    slideInHorizontally(
-        animationSpec = tween(
-            durationMillis = 300,
-            easing = FastOutSlowInEasing
+            durationMillis = 200,
+            delayMillis = 100
         ),
-        initialOffsetX = { it * 2 }
-    ) + fadeIn(
-        animationSpec = tween(
-            durationMillis = 300,
-            easing = FastOutSlowInEasing
-        )
+        initialScale = 0.92F
     )
 
-val forwardFromStartTransition: EnterTransition =
-    slideInHorizontally(
-        animationSpec = tween(
-            durationMillis = 300,
-            easing = FastOutSlowInEasing
-        ),
-        initialOffsetX = { -it * 2 }
-    ) + fadeIn(
-        animationSpec = tween(
-            durationMillis = 300,
-            easing = FastOutSlowInEasing
-        )
-    )
-
-val scaleInTransition: EnterTransition =
+val enterZSharedAxis: EnterTransition =
     scaleIn(
-        animationSpec = tween(
-            durationMillis = 100,
-            easing = FastOutSlowInEasing
-        )
+        initialScale = 0.8F
     ) + fadeIn(
         animationSpec = tween(
-            durationMillis = 300,
-            easing = FastOutSlowInEasing
+            durationMillis = 200,
+            delayMillis = 100
         )
     )
 
-val noEnterTransition: EnterTransition = EnterTransition.None
+val enter: EnterTransition =
+    fadeIn(
+        animationSpec = tween(
+            durationMillis = 60
+        )
+    ) + scaleIn(
+        animationSpec = tween(
+            durationMillis = 150
+        ),
+        initialScale = 0.8F
+    )

@@ -9,8 +9,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.carlosdiestro.needit.core.design_system.components.animations.backwardToEndTransition
-import com.carlosdiestro.needit.core.design_system.components.animations.forwardFromEndTransition
 
 const val argsWishId = "wish_id"
 val detailsArgs = listOf(
