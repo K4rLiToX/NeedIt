@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.carlosdiestro.needit.core.design_system.components.animations.enter
 import com.carlosdiestro.needit.core.design_system.components.animations.exit
+import com.carlosdiestro.needit.core.design_system.components.animations.exitSlideDown
+import com.carlosdiestro.needit.core.design_system.components.animations.exitSlideUp
 import com.carlosdiestro.needit.core.design_system.components.animations.exitZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
@@ -56,7 +58,7 @@ fun NeedItApp(
             AnimatedVisibility(
                 visible = appState.shouldShowTopBar,
                 enter = popEnterZSharedAxis,
-                exit = exitZSharedAxis,
+                exit = exitZSharedAxis + exitSlideUp,
             ) {
                 NiMainTopAppBar(
                     accountImageUrl = profilePictureUrl,
@@ -69,7 +71,7 @@ fun NeedItApp(
             AnimatedVisibility(
                 visible = appState.shouldShowBottomBar,
                 enter = popEnterZSharedAxis,
-                exit = exitZSharedAxis,
+                exit = exitZSharedAxis + exitSlideDown,
             ) {
                 NiNavigationBar(
                     destinations = appState.topLevelDestinations,

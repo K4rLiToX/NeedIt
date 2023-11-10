@@ -4,6 +4,9 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.ui.Alignment
 
 val exitNone: ExitTransition = ExitTransition.None
 
@@ -37,4 +40,30 @@ val exit: ExitTransition =
         animationSpec = tween(
             durationMillis = 80
         )
+    )
+
+val exitSlideUp: ExitTransition =
+    slideOutVertically(
+        animationSpec = tween(
+            durationMillis = 100
+        ),
+        targetOffsetY = { -it * 2 }
+    ) + shrinkVertically(
+        animationSpec = tween(
+            durationMillis = 100
+        ),
+        shrinkTowards = Alignment.Top
+    )
+
+val exitSlideDown: ExitTransition =
+    slideOutVertically(
+        animationSpec = tween(
+            durationMillis = 100
+        ),
+        targetOffsetY = { it * 2 }
+    ) + shrinkVertically(
+        animationSpec = tween(
+            durationMillis = 100
+        ),
+        shrinkTowards = Alignment.Bottom
     )
