@@ -1,5 +1,8 @@
 package com.carlosdiestro.needit.core.design_system.components.cards
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
@@ -19,16 +22,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.needit.R
+import com.carlosdiestro.needit.core.design_system.components.animations.enter
+import com.carlosdiestro.needit.core.design_system.components.animations.exit
 import com.carlosdiestro.needit.core.design_system.components.container.NiImageContainer
-import com.carlosdiestro.needit.core.design_system.components.extensions.conditional
 import com.carlosdiestro.needit.core.design_system.components.extensions.gradient
 import com.carlosdiestro.needit.core.design_system.theme.dimensions
 import com.carlosdiestro.needit.core.design_system.theme.icons
@@ -45,6 +51,30 @@ fun NiWishCard(
     shared: Boolean,
     selected: Boolean
 ) {
+    val animatedHorizontalPadding by animateDpAsState(
+        targetValue = if (selected) {
+            31.dp
+        } else {
+            0.dp
+        },
+        label = "padding-horizontal-outer"
+    )
+    val animatedVerticalPadding by animateDpAsState(
+        targetValue = if (selected) {
+            MaterialTheme.dimensions.spacingXXL
+        } else {
+            0.dp
+        },
+        label = "padding-vertical-outer"
+    )
+    val animatedBackground by animateColorAsState(
+        targetValue = if (selected) {
+            MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
+        } else {
+            Color.Transparent
+        },
+        label = "background"
+    )
     Card(
         shape = MaterialTheme.shape.medium,
         modifier = modifier
@@ -56,15 +86,12 @@ fun NiWishCard(
                     onLongClick()
                 }
             )
-            .conditional(
-                condition = selected,
-                ifTrue = {
-                    background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
-                        .padding(
-                            vertical = MaterialTheme.dimensions.spacingXXL,
-                            horizontal = 31.dp
-                        )
-                }
+            .drawBehind {
+                drawRect(animatedBackground)
+            }
+            .padding(
+                vertical = animatedVerticalPadding,
+                horizontal = animatedHorizontalPadding
             )
     ) {
         NiImageContainer(
@@ -136,22 +163,32 @@ internal fun NiWishCardInformation(
     selected: Boolean,
     shared: Boolean
 ) {
+    val animatedPadding by animateDpAsState(
+        targetValue = if (selected) {
+            2.dp
+        } else {
+            MaterialTheme.dimensions.spacingXS
+        },
+        label = "padding-inner"
+    )
     Column(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.End,
         modifier = modifier
-            .conditional(
-                condition = selected,
-                ifTrue = { padding(2.dp) },
-                ifFalse = { padding(MaterialTheme.dimensions.spacingXS) }
-            )
+            .padding(animatedPadding)
     ) {
-        if (selected)
+        AnimatedVisibility(
+            visible = selected,
+            enter = enter,
+            exit = exit,
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1F)
+        ) {
             Row(
                 horizontalArrangement = Arrangement.End,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1F)
             ) {
                 Icon(
                     imageVector = MaterialTheme.icons.Check,
@@ -162,6 +199,8 @@ internal fun NiWishCardInformation(
                         .background(MaterialTheme.colorScheme.primary)
                 )
             }
+        }
+
         if (shared)
             Row(
                 horizontalArrangement = Arrangement.End,
