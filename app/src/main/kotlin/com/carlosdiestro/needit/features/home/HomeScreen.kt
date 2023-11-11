@@ -244,7 +244,7 @@ private fun HomeSuccessState(
                 colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {
                     onUpdateClick()
-                    uiState.closeActionBottomSheet()
+                    onMenuDismiss()
                 }
             )
             NiLabeledIconButton(
@@ -254,6 +254,8 @@ private fun HomeSuccessState(
                 onClick = {
                     if (selectedWish?.isShared == true) onPrivateClick()
                     else onShareClick()
+                    uiState.closeActionBottomSheet()
+                    onMenuDismiss()
                 }
             )
         }
