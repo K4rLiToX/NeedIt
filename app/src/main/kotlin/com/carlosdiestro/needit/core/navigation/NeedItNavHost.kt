@@ -1,5 +1,8 @@
 package com.carlosdiestro.needit.core.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -16,6 +19,8 @@ import com.carlosdiestro.needit.core.design_system.components.animations.popEnte
 import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popExitXSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popExitZSharedAxis
+import com.carlosdiestro.needit.core.design_system.components.animations.enterSlideUp
+import com.carlosdiestro.needit.core.design_system.components.animations.slideDown
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.camera.navigateToCamera
@@ -122,7 +127,7 @@ fun NeedItNavHost(
                 if (initialState.destination.route == cameraRoute) {
                     enterXSharedAxis
                 } else {
-                    enterNone
+                    enterSlideUp
                 }
             },
             exitTransition = { exitNone },
@@ -131,7 +136,7 @@ fun NeedItNavHost(
                 if (targetState.destination.route == cameraRoute) {
                     popExitXSharedAxis
                 } else {
-                    exitNone
+                    slideDown
                 }
             }
         )
@@ -140,8 +145,8 @@ fun NeedItNavHost(
             onBackClick = navController::popBackStack,
             onUpdateClick = navController::navigateToUpsert,
             enterTransition = { enterZSharedAxis },
-            exitTransition = { exitNone },
-            popEnterTransition = { enterNone },
+            exitTransition = { fadeOut(tween()) },
+            popEnterTransition = { fadeIn(tween()) },
             popExitTransition = { popExitZSharedAxis }
         )
 

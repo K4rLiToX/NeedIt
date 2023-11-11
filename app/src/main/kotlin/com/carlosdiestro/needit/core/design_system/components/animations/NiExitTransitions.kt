@@ -60,6 +60,17 @@ val popExitXSharedAxis: ExitTransition =
         )
     )
 
+val slideDown: ExitTransition =
+    slideOutVertically(
+        animationSpec = tween(),
+        targetOffsetY = {
+           it * 2
+        }
+    ) + shrinkVertically(
+        animationSpec = tween(),
+        shrinkTowards = Alignment.Bottom
+    )
+
 val exit: ExitTransition =
     fadeOut(
         animationSpec = tween(
