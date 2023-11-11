@@ -88,6 +88,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NeedItApp(
                         windowSizeClass = calculateWindowSizeClass(activity = this),
+                        darkTheme = darkTheme,
                         isSignedIn = viewModel.isSignedIn,
                         profilePictureUrl = profilePictureUrl,
                     )

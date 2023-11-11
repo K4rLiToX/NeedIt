@@ -17,10 +17,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.IntSize
 
-fun Modifier.gradient(color: Color, endY: Float = 0.0F): Modifier = this.background(
+fun Modifier.gradient(
+    color: Color,
+    startY: Float = Float.POSITIVE_INFINITY,
+    endY: Float = 0.0F
+): Modifier = this.background(
     Brush.verticalGradient(
         listOf(color, Color.Transparent),
-        startY = Float.POSITIVE_INFINITY,
+        startY = startY,
         endY = endY
     )
 )

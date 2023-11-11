@@ -1,14 +1,18 @@
 package com.carlosdiestro.needit.core.navigation
 
+import android.app.Activity
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import com.carlosdiestro.needit.core.NeedItAppState
 import com.carlosdiestro.needit.core.design_system.components.animations.enterFadeThrough
 import com.carlosdiestro.needit.core.design_system.components.animations.enterNone
+import com.carlosdiestro.needit.core.design_system.components.animations.enterSlideUp
 import com.carlosdiestro.needit.core.design_system.components.animations.enterXSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.enterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.exitFadeThrough
@@ -19,7 +23,6 @@ import com.carlosdiestro.needit.core.design_system.components.animations.popEnte
 import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popExitXSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popExitZSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.enterSlideUp
 import com.carlosdiestro.needit.core.design_system.components.animations.slideDown
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.camera.cameraScreen
@@ -35,6 +38,7 @@ import com.carlosdiestro.needit.features.sign_in.signInScreen
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
 import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 import com.carlosdiestro.needit.features.upsert_item.upsertScreen
+import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
 import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen
 
@@ -46,6 +50,11 @@ fun NeedItNavHost(
 ) {
     val navController = appState.navController
     val startDestination = if (isSignedIn) homeRoute else signInRoute
+
+    UpdateStatusBarContentColor(
+        currentRoute = appState.currentDestinationRoute,
+        darkTheme = appState.darkTheme
+    )
 
     NavHost(
         modifier = modifier,
@@ -157,4 +166,18 @@ fun NeedItNavHost(
             onTermsOfUseClick = {}
         )
     }
+}
+
+@Composable
+private fun UpdateStatusBarContentColor(
+    currentRoute: String,
+    darkTheme: Boolean
+) {
+    val view = LocalView.current
+    val window = (view.context as Activity).window
+    WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+        when (currentRoute) {
+            cameraRoute, detailsRoute -> false
+            else -> !darkTheme
+        }
 }

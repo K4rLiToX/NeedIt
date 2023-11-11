@@ -24,19 +24,20 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun rememberNeedItAppState(
     windowSizeClass: WindowSizeClass,
+    darkTheme: Boolean,
     navController: NavHostController = rememberNavController(),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     context: Context = LocalContext.current
 ): NeedItAppState {
     return remember(
         navController,
-        coroutineScope,
-        context
+        coroutineScope
     ) {
         NeedItAppState(
             navController = navController,
             coroutineScope = coroutineScope,
             windowSizeClass = windowSizeClass,
+            darkTheme = darkTheme,
             context = context
         )
     }
@@ -47,13 +48,14 @@ class NeedItAppState constructor(
     val navController: NavHostController,
     val coroutineScope: CoroutineScope,
     val windowSizeClass: WindowSizeClass,
+    val darkTheme: Boolean,
     val context: Context
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
-    private val currentDestinationRoute: String
+    val currentDestinationRoute: String
         @Composable get() = currentDestination?.route ?: ""
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries

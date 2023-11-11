@@ -82,15 +82,15 @@ fun NeedItTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (isDarkTheme) DarkColorScheme else LightColorScheme
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = Color.Transparent.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                !isDarkTheme
-        }
-    }
+//    val view = LocalView.current
+//    if (!view.isInEditMode) {
+//        SideEffect {
+//            val window = (view.context as Activity).window
+//            window.statusBarColor = Color.Transparent.toArgb()
+//            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+//                !isDarkTheme
+//        }
+//    }
 
     MaterialTheme(
         colorScheme = colorScheme,

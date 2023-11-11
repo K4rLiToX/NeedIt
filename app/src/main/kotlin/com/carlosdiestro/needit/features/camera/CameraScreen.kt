@@ -32,6 +32,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -43,6 +44,7 @@ import coil.compose.AsyncImage
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
+import com.carlosdiestro.needit.core.design_system.components.extensions.gradient
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.lists.NiCategoryScrollable
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
@@ -131,7 +133,14 @@ private fun CameraScreen(
                 },
                 navigationIconColor = NiIconButtonSpecs.Color.transparentSecondary(),
                 colors = NiTopAppBarSpecs.Color.neutral(),
-                actions = {}
+                actions = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .gradient(
+                        color = Color.Black,
+                        startY = 0.0F,
+                        endY = Float.POSITIVE_INFINITY
+                    )
             )
         }
     ) {

@@ -10,12 +10,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
 import com.carlosdiestro.needit.core.design_system.components.cards.NiWishInfoCard
 import com.carlosdiestro.needit.core.design_system.components.container.NiImageContainer
+import com.carlosdiestro.needit.core.design_system.components.extensions.gradient
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButton
 import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
@@ -66,7 +68,13 @@ private fun WishDetailsScreen(
                         colors = NiIconButtonSpecs.Color.transparentSecondary(),
                         onClick = {}
                     )
-                }
+                },
+                modifier = Modifier
+                    .gradient(
+                        color = Color.Black,
+                        startY = 0.0F,
+                        endY = Float.POSITIVE_INFINITY
+                    )
             )
         }
     ) {

@@ -31,7 +31,11 @@ import com.carlosdiestro.needit.features.sign_in.navigateToSignIn
 @Composable
 fun NeedItApp(
     windowSizeClass: WindowSizeClass,
-    appState: NeedItAppState = rememberNeedItAppState(windowSizeClass = windowSizeClass),
+    darkTheme: Boolean,
+    appState: NeedItAppState = rememberNeedItAppState(
+        windowSizeClass = windowSizeClass,
+        darkTheme = darkTheme
+    ),
     isSignedIn: Boolean,
     profilePictureUrl: String,
 ) {
