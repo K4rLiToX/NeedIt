@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.ui.Alignment
 
@@ -26,6 +27,18 @@ val exitZSharedAxis: ExitTransition =
         targetScale = 1.1F
     )
 
+val exitXSharedAxis: ExitTransition =
+    slideOutHorizontally(
+        animationSpec = tween(),
+        targetOffsetX = {
+            -30
+        }
+    ) + fadeOut(
+        animationSpec = tween(
+            durationMillis = 100
+        )
+    )
+
 val popExitZSharedAxis: ExitTransition =
     fadeOut(
         animationSpec = tween(
@@ -33,6 +46,18 @@ val popExitZSharedAxis: ExitTransition =
         )
     ) + scaleOut(
         targetScale = 0.9F
+    )
+
+val popExitXSharedAxis: ExitTransition =
+    slideOutHorizontally(
+        animationSpec = tween(),
+        targetOffsetX = {
+            30
+        }
+    ) + fadeOut(
+        animationSpec = tween(
+            durationMillis = 100
+        )
     )
 
 val exit: ExitTransition =

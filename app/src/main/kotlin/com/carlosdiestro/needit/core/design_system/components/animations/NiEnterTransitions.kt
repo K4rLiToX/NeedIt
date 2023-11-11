@@ -4,6 +4,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInHorizontally
 
 val enterNone: EnterTransition = EnterTransition.None
 
@@ -31,9 +32,35 @@ val enterZSharedAxis: EnterTransition =
         )
     )
 
+val enterXSharedAxis: EnterTransition =
+    slideInHorizontally(
+        animationSpec = tween(),
+        initialOffsetX = {
+            30
+        }
+    ) + fadeIn(
+        animationSpec = tween(
+            durationMillis = 200,
+            delayMillis = 100
+        )
+    )
+
 val popEnterZSharedAxis: EnterTransition =
     scaleIn(
         initialScale = 1.2F
+    ) + fadeIn(
+        animationSpec = tween(
+            durationMillis = 200,
+            delayMillis = 100
+        )
+    )
+
+val popEnterXSharedAxis: EnterTransition =
+    slideInHorizontally(
+        animationSpec = tween(),
+        initialOffsetX = {
+            -30
+        }
     ) + fadeIn(
         animationSpec = tween(
             durationMillis = 200,

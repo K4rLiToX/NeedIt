@@ -1,5 +1,9 @@
 package com.carlosdiestro.needit.features.upsert_item
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -29,11 +33,19 @@ fun NavController.navigateToUpsert(
 
 fun NavGraphBuilder.upsertScreen(
     onBackClick: () -> Unit,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
+    enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,
+    exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition,
+    popEnterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,
+    popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition
 ) {
     composable(
         route = upsertRoute,
-        arguments = upsertArgs
+        arguments = upsertArgs,
+        enterTransition = enterTransition,
+        exitTransition = exitTransition,
+        popEnterTransition = popEnterTransition,
+        popExitTransition = popExitTransition
     ) {
         UpsertRoute(
             onBackClick = onBackClick,

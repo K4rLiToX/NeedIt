@@ -6,11 +6,15 @@ import androidx.navigation.compose.NavHost
 import com.carlosdiestro.needit.core.NeedItAppState
 import com.carlosdiestro.needit.core.design_system.components.animations.enterFadeThrough
 import com.carlosdiestro.needit.core.design_system.components.animations.enterNone
+import com.carlosdiestro.needit.core.design_system.components.animations.enterXSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.enterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.exitFadeThrough
 import com.carlosdiestro.needit.core.design_system.components.animations.exitNone
+import com.carlosdiestro.needit.core.design_system.components.animations.exitXSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.exitZSharedAxis
+import com.carlosdiestro.needit.core.design_system.components.animations.popEnterXSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
+import com.carlosdiestro.needit.core.design_system.components.animations.popExitXSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popExitZSharedAxis
 import com.carlosdiestro.needit.features.camera.cameraRoute
 import com.carlosdiestro.needit.features.camera.cameraScreen
@@ -24,6 +28,7 @@ import com.carlosdiestro.needit.features.settings.settingsScreen
 import com.carlosdiestro.needit.features.sign_in.signInRoute
 import com.carlosdiestro.needit.features.sign_in.signInScreen
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
+import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 import com.carlosdiestro.needit.features.upsert_item.upsertScreen
 import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
 import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen
@@ -87,7 +92,23 @@ fun NeedItNavHost(
 
         cameraScreen(
             onBackClick = navController::popBackStack,
-            onContinueClick = navController::navigateToUpsert
+            onContinueClick = navController::navigateToUpsert,
+            enterTransition = { enterZSharedAxis },
+            exitTransition = {
+                if (targetState.destination.route == upsertRoute) {
+                    exitXSharedAxis
+                } else {
+                    exitNone
+                }
+            },
+            popEnterTransition = {
+                if (initialState.destination.route == upsertRoute) {
+                    popEnterXSharedAxis
+                } else {
+                    enterNone
+                }
+            },
+            popExitTransition = { popExitZSharedAxis }
         )
 
         upsertScreen(
@@ -96,6 +117,22 @@ fun NeedItNavHost(
                 val previousScreenRoute = navController.previousBackStackEntry?.destination?.route
                 if (previousScreenRoute == cameraRoute) navController.popBackStack(homeRoute, false)
                 else navController.popBackStack()
+            },
+            enterTransition = {
+                if (initialState.destination.route == cameraRoute) {
+                    enterXSharedAxis
+                } else {
+                    enterNone
+                }
+            },
+            exitTransition = { exitNone },
+            popEnterTransition = { enterNone },
+            popExitTransition = {
+                if (targetState.destination.route == cameraRoute) {
+                    popExitXSharedAxis
+                } else {
+                    exitNone
+                }
             }
         )
 
