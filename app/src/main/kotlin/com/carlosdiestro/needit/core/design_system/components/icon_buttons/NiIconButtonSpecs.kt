@@ -53,7 +53,7 @@ object NiIconButtonSpecs {
         @Composable
         fun transparentSecondary(): IconButtonColors {
             return IconButtonDefaults.iconButtonColors(
-                contentColor = MaterialTheme.colorScheme.onPrimary
+                contentColor = androidx.compose.ui.graphics.Color.White
             )
         }
     }
