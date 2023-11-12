@@ -64,7 +64,7 @@ val slideDown: ExitTransition =
     slideOutVertically(
         animationSpec = tween(),
         targetOffsetY = {
-           it * 2
+            it * 2
         }
     ) + shrinkVertically(
         animationSpec = tween(),
