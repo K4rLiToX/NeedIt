@@ -124,6 +124,7 @@ private fun HomeScreen(
                 selectedWish = dataState.selectedWish,
                 selectedWishActionLabelId = dataState.selectedWishActionLabelId,
                 selectedWishActionIcon = dataState.selectedWishActionIcon,
+                isAnonymous = dataState.isAnonymous,
                 uiState = uiState,
                 onItemClick = onItemClick,
                 onItemLongClick = onItemLongClick,
@@ -165,6 +166,7 @@ private fun HomeSuccessState(
     selectedWish: Wish?,
     @StringRes selectedWishActionLabelId: Int,
     selectedWishActionIcon: ImageVector,
+    isAnonymous: Boolean,
     uiState: HomeUiState,
     onItemClick: (Long) -> Unit,
     onItemLongClick: (Long) -> Unit,
@@ -238,15 +240,17 @@ private fun HomeSuccessState(
                     uiState.openRemoveWishDialog()
                 }
             )
-            NiLabeledIconButton(
-                labelId = R.string.button_update,
-                icon = MaterialTheme.icons.Edit,
-                colors = NiIconButtonSpecs.Color.transparentPrimary(),
-                onClick = {
-                    onUpdateClick()
-                    onMenuDismiss()
-                }
-            )
+            if (!isAnonymous) {
+                NiLabeledIconButton(
+                    labelId = R.string.button_update,
+                    icon = MaterialTheme.icons.Edit,
+                    colors = NiIconButtonSpecs.Color.transparentPrimary(),
+                    onClick = {
+                        onUpdateClick()
+                        onMenuDismiss()
+                    }
+                )
+            }
             NiLabeledIconButton(
                 labelId = selectedWishActionLabelId,
                 icon = selectedWishActionIcon,

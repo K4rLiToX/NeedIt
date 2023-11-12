@@ -97,16 +97,18 @@ private fun WishDetailsScreen(
                     .padding(bottom = MaterialTheme.dimensions.spacingM)
                     .padding(bottom = it.calculateBottomPadding())
             ) {
-                NiFilledButton(
-                    labelId = dataState.actionLabelId,
-                    trailIcon = dataState.actionIcon,
-                    height = NiButtonSpecs.Height.Large,
-                    onClick = {
-                        if (dataState.isShared) onPrivateClick()
-                        else onShareClick()
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (!dataState.isAnonymous) {
+                    NiFilledButton(
+                        labelId = dataState.actionLabelId,
+                        trailIcon = dataState.actionIcon,
+                        height = NiButtonSpecs.Height.Large,
+                        onClick = {
+                            if (dataState.isShared) onPrivateClick()
+                            else onShareClick()
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
     }

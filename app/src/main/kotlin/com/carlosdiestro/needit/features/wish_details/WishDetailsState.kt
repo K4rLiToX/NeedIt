@@ -17,7 +17,8 @@ internal data class WishDetailsDataState(
     val isShared: Boolean = false,
     val size: String? = null,
     val color: String? = null,
-    val isbn: String? = null
+    val isbn: String? = null,
+    val isAnonymous: Boolean = true
 ) {
     val actionIcon: ImageVector
         get() {

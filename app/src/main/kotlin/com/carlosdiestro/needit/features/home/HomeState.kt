@@ -28,7 +28,8 @@ import kotlinx.coroutines.launch
 internal data class HomeDataState(
     val wishes: List<HomeWishPlo> = emptyList(),
     val categories: List<WishCategoryPlo> = emptyList(),
-    val selectedWish: Wish? = null
+    val selectedWish: Wish? = null,
+    val isAnonymous: Boolean = true
 ) {
     val noData: Boolean
         get() = wishes.isEmpty()

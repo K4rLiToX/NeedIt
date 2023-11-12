@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
+import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.DeleteWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
@@ -21,8 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     getMyWishes: GetMyWishesUseCase,
+    getSignedInUser: GetSignedInUserUseCase,
     private val deleteWish: DeleteWishUseCase,
-    private val updateWish: UpdateWishUseCase
+    private val updateWish: UpdateWishUseCase,
 ) : ViewModel() {
 
     private var _selectedWishId: MutableStateFlow<Long> = MutableStateFlow(-1)
@@ -30,12 +32,14 @@ internal class HomeViewModel @Inject constructor(
     val state: StateFlow<HomeDataState> =
         combine(
             _selectedWishId,
-            getMyWishes()
-        ) { selectedWishId, wishlist ->
+            getMyWishes(),
+            getSignedInUser()
+        ) { selectedWishId, wishlist, user ->
             HomeDataState(
                 wishes = wishlist.asPlo(),
                 categories = getCategories(wishlist),
-                selectedWish = wishlist.find { it.id == selectedWishId }
+                selectedWish = wishlist.find { it.id == selectedWishId },
+                isAnonymous = user.isAnonymous
             )
         }
             .stateIn(
