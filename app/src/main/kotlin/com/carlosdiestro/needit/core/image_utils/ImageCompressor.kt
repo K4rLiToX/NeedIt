@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.network.images
+package com.carlosdiestro.needit.core.image_utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

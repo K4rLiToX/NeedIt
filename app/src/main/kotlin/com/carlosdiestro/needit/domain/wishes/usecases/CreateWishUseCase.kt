@@ -19,6 +19,7 @@ class CreateWishUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         imageLocalPath: String,
+        compressedImage: ByteArray,
         title: String,
         subtitle: String,
         price: Double,
@@ -45,7 +46,7 @@ class CreateWishUseCase @Inject constructor(
                 isbn = isbn
             )
             wishRepository.create(wish)
-            val cloudImageUrl = imageRepository.create(imageLocalPath, userId)
+            val cloudImageUrl = imageRepository.create(compressedImage, userId)
             wishRepository.update(
                 wish.copy(imageUrl = cloudImageUrl)
             )

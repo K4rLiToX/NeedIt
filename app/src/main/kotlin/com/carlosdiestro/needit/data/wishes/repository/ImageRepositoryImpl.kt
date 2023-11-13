@@ -11,8 +11,8 @@ internal class ImageRepositoryImpl @Inject constructor(
 ) : ImageRepository {
     override suspend fun getLocalPath(): String = localDatasource.getImageLocalPath()
 
-    override suspend fun create(imageLocalPath: String, userId: String): String =
-        remoteDatasource.create(imageLocalPath, userId)
+    override suspend fun create(bytes: ByteArray, userId: String): String =
+        remoteDatasource.create(bytes, userId)
 
     override fun delete(path: String) = remoteDatasource.delete(path)
 }
