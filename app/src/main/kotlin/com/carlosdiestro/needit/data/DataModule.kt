@@ -1,10 +1,10 @@
 package com.carlosdiestro.needit.data
 
-import com.carlosdiestro.needit.data.preferences.NeedItPreferencesRepositoryImpl
+import com.carlosdiestro.needit.data.theme_config.ThemeConfigRepositoryImpl
 import com.carlosdiestro.needit.data.users.UserRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.ImageRepositoryImpl
 import com.carlosdiestro.needit.data.wishes.repository.WishRepositoryImpl
-import com.carlosdiestro.needit.domain.preferences.repository.NeedItPreferencesRepository
+import com.carlosdiestro.needit.domain.theme_config.repository.ThemeConfigRepository
 import com.carlosdiestro.needit.domain.users.repository.UserRepository
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
@@ -32,5 +32,5 @@ internal interface DataModule {
 
     @Singleton
     @Binds
-    fun bindSettingsRepository(impl: NeedItPreferencesRepositoryImpl): NeedItPreferencesRepository
+    fun bindThemeConfigRepository(impl: ThemeConfigRepositoryImpl): ThemeConfigRepository
 }

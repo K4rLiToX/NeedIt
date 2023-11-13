@@ -25,7 +25,7 @@ internal object ThemeConfigKeys {
     internal val themeConfig = intPreferencesKey("theme_config")
 }
 
-internal suspend fun DataStore<Preferences>.updateUser(user: UserPreferences) {
+internal suspend fun DataStore<Preferences>.upsertUser(user: UserPreferences) {
     this.edit { prefs ->
         prefs[UserKeys.id] = user.id
         prefs[UserKeys.username] = user.username

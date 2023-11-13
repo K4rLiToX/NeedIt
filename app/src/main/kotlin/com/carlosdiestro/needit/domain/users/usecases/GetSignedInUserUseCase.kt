@@ -1,13 +1,13 @@
 package com.carlosdiestro.needit.domain.users.usecases
 
-import com.carlosdiestro.needit.domain.preferences.repository.NeedItPreferencesRepository
 import com.carlosdiestro.needit.domain.users.User
+import com.carlosdiestro.needit.domain.users.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetSignedInUserUseCase @Inject constructor(
-    private val preferencesRepository: NeedItPreferencesRepository
+    private val userRepository: UserRepository
 ) {
 
-    operator fun invoke(): Flow<User> = preferencesRepository.user
+    operator fun invoke(): Flow<User> = userRepository.user
 }

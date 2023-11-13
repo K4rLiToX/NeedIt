@@ -13,9 +13,9 @@ internal class NeedItPreferences @Inject constructor(
 
     val user: Flow<UserPreferences> = dataStore.user
 
-    val settings: Flow<ThemeConfigPreferences> = dataStore.themeConfig
+    val themeConfig: Flow<ThemeConfigPreferences> = dataStore.themeConfig
 
-    suspend fun updateUser(user: UserPreferences) = dataStore.updateUser(user)
+    suspend fun upsertUser(user: UserPreferences) = dataStore.upsertUser(user)
 
     suspend fun updateThemeConfig(themeConfig: ThemeConfigPreferences) =
         dataStore.updateThemeConfig(themeConfig)

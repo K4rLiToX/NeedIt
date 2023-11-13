@@ -6,7 +6,8 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.carlosdiestro.needit.core.di.IoDispatcher
-import com.carlosdiestro.needit.data.preferences.NeedItPreferencesDatasource
+import com.carlosdiestro.needit.data.theme_config.ThemeConfigLocalDatasource
+import com.carlosdiestro.needit.data.users.UserLocalDatasource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,9 +41,11 @@ internal object DataStoreModule {
 
     @Singleton
     @Provides
-    fun providesNeedItPreferencesDatasource(
-        preferences: NeedItPreferences
-    ): NeedItPreferencesDatasource {
-        return NeedItPreferencesDatasourceImpl(preferences)
-    }
+    fun provideUserLocalDatasource(preferences: NeedItPreferences): UserLocalDatasource =
+        UserLocalDatasourceImpl(preferences)
+
+    @Singleton
+    @Provides
+    fun provideThemeConfigDatasource(preferences: NeedItPreferences): ThemeConfigLocalDatasource =
+        ThemeConfigLocalDatasourceImpl(preferences)
 }

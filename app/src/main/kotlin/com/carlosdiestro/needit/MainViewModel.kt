@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.auth.AuthClient
 import com.carlosdiestro.needit.core.mappers.asPlo
-import com.carlosdiestro.needit.domain.preferences.usecases.GetThemeConfigUseCase
+import com.carlosdiestro.needit.domain.theme_config.usecases.GetThemeConfigUseCase
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
