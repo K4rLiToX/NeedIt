@@ -10,7 +10,7 @@ import com.carlosdiestro.needit.network.wishes.WishDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-fun WishEntity.asDomain(): Wish = Wish(
+fun WishEntity.asDomain(): Wish = Wish.create(
     id = this.id ?: -1,
     cloudId = this.cloudId,
     userId = this.userId,

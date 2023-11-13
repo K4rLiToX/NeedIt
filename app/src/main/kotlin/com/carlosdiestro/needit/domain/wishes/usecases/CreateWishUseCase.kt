@@ -40,19 +40,15 @@ class CreateWishUseCase @Inject constructor(
     ) {
         scope.launch {
             val userId = getUserInfo().first().id
-            val wish = Wish(
-                id = -1,
-                cloudId = "",
+            val wish = Wish.create(
                 userId = userId,
                 imageLocalPath = imageLocalPath,
-                imageUrl = "",
                 title = title,
                 subtitle = subtitle,
                 price = if (price.isEmpty()) 0.0 else price.toDouble(),
                 webUrl = webUrl,
                 description = description,
                 category = category.asDomain(),
-                isShared = false,
                 size = size,
                 color = color,
                 isbn = isbn
