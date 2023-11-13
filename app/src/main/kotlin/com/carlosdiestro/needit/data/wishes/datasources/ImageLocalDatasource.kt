@@ -1,5 +1,5 @@
 package com.carlosdiestro.needit.data.wishes.datasources
 
-interface FileManager {
+interface ImageLocalDatasource {
     suspend fun getImageLocalPath(): String
 }

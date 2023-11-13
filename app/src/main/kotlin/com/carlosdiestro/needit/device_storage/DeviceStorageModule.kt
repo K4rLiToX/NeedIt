@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import com.carlosdiestro.needit.core.di.IoDispatcher
-import com.carlosdiestro.needit.data.wishes.datasources.FileManager
+import com.carlosdiestro.needit.data.wishes.datasources.ImageLocalDatasource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,9 +34,14 @@ internal object DeviceStorageModule {
 
     @Provides
     @Singleton
-    fun provideFileManager(
+    fun provideImageStorageDao(
         imageStorage: Uri,
         contentResolver: ContentResolver,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ): FileManager = FileManagerImpl(imageStorage, contentResolver, ioDispatcher)
+    ): ImageStorageDao = ImageStorageDao(imageStorage, contentResolver, ioDispatcher)
+
+    @Provides
+    @Singleton
+    fun provideImageLocalDatasource(dao: ImageStorageDao): ImageLocalDatasource =
+        ImageLocalDatasourceImpl(dao)
 }

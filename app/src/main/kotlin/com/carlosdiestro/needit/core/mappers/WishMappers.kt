@@ -13,7 +13,6 @@ import java.util.UUID
 
 fun WishEntity.asDomain(): Wish = Wish.create(
     id = UUID.fromString(this.id),
-    cloudId = this.cloudId,
     userId = this.userId,
     imageLocalPath = this.imageLocalPath,
     imageUrl = this.imageUrl,
@@ -51,7 +50,6 @@ fun List<Wish>.asPlo(): List<HomeWishPlo> = this.map { it.asPlo() }
 
 fun Wish.asEntity(): WishEntity = WishEntity(
     id = this.id.toString(),
-    cloudId = this.cloudId,
     userId = this.userId,
     imageLocalPath = this.imageLocalPath,
     imageUrl = this.imageUrl,

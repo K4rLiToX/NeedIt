@@ -4,18 +4,17 @@ import android.content.ContentResolver
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
-import com.carlosdiestro.needit.data.wishes.datasources.FileManager
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class FileManagerImpl @Inject constructor(
+class ImageStorageDao @Inject constructor(
     private val imageStorage: Uri,
     private val contentResolver: ContentResolver,
     private val ioDispatcher: CoroutineDispatcher
-) : FileManager {
+) {
 
-    override suspend fun getImageLocalPath(): String = withContext(ioDispatcher) {
+    suspend fun getImagePath(): String = withContext(ioDispatcher) {
         contentResolver.queryImagePath(imageStorage)
     }
 }
@@ -38,4 +37,3 @@ private val Cursor.imagePath: String
     } else {
         Uri.EMPTY.toString()
     }
-
