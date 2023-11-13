@@ -33,7 +33,7 @@ class Wish private constructor(
         size: String? = this.size,
         color: String? = this.color,
         isbn: String? = this.isbn
-    ) : Wish = Wish(
+    ): Wish = Wish(
         id = id,
         userId = userId,
         imageLocalPath = imageLocalPath,
@@ -49,6 +49,7 @@ class Wish private constructor(
         color = color,
         isbn = isbn
     )
+
     companion object {
         fun create(
             id: UUID = UUID.randomUUID(),
