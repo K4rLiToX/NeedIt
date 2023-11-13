@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.files
+package com.carlosdiestro.needit.device_storage
 
 import android.content.ContentResolver
 import android.content.Context
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object FileModule {
+internal object DeviceStorageModule {
     @Provides
     @Singleton
     fun provideContentResolver(@ApplicationContext context: Context): ContentResolver =

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.files
+package com.carlosdiestro.needit.device_storage
 
 import android.content.ContentResolver
 import android.net.Uri
