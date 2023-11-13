@@ -9,9 +9,10 @@ import com.carlosdiestro.needit.domain.wishes.toWishCategory
 import com.carlosdiestro.needit.network.wishes.WishDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.util.UUID
 
 fun WishEntity.asDomain(): Wish = Wish.create(
-    id = this.id ?: -1,
+    id = UUID.fromString(this.id),
     cloudId = this.cloudId,
     userId = this.userId,
     imageLocalPath = this.imageLocalPath,
@@ -37,7 +38,7 @@ fun Flow<List<WishEntity>>.asDomain(): Flow<List<Wish>> = this.map { it.asDomain
 fun Flow<WishEntity>.asDomain(): Flow<Wish> = this.map { it.asDomain() }
 
 fun Wish.asPlo(): HomeWishPlo = HomeWishPlo(
-    id = this.id,
+    id = this.id.toString(),
     imageUrl = this.imageLocalPath.ifEmpty { this.imageUrl },
     shared = this.isShared,
     category = this.category.asPlo()
@@ -49,7 +50,7 @@ fun WishCategoryPlo.asDomain(): WishCategory = WishCategory.entries[this.ordinal
 fun List<Wish>.asPlo(): List<HomeWishPlo> = this.map { it.asPlo() }
 
 fun Wish.asEntity(): WishEntity = WishEntity(
-    id = if (this.id == -1L) null else this.id,
+    id = this.id.toString(),
     cloudId = this.cloudId,
     userId = this.userId,
     imageLocalPath = this.imageLocalPath,
@@ -67,7 +68,7 @@ fun Wish.asEntity(): WishEntity = WishEntity(
 )
 
 fun Wish.asDto(): WishDto = WishDto(
-    id = id,
+    id = id.toString(),
     userId = userId,
     imageUrl = imageUrl,
     price = price,

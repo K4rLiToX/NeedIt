@@ -7,7 +7,7 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.theme.icons
 
 internal data class WishDetailsDataState(
-    val id: Long = -1,
+    val id: String = "",
     val imageUrl: String = "",
     val title: String = "",
     val subtitle: String = "",

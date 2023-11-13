@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "wish_table")
 class WishEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
-    val id: Long?,
+    val id: String,
     @ColumnInfo(name = "cloud_id")
     val cloudId: String = "",
     @ColumnInfo(name = "user_id")

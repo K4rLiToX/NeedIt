@@ -7,10 +7,8 @@ internal class WishRemoteDatasourceImpl @Inject constructor(
     private val wishesCollection: WishesCollection
 ) : WishRemoteDatasource {
 
-    override suspend fun create(wish: WishDto): String = wishesCollection.create(wish)
+    override fun upsert(wish: WishDto) = wishesCollection.upsert(wish)
 
     override fun delete(cloudId: String, userId: String) =
         wishesCollection.delete(cloudId, userId)
-
-    override fun update(cloudId: String, wish: WishDto) = wishesCollection.update(cloudId, wish)
 }

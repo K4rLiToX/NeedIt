@@ -14,7 +14,7 @@ const val argCategory = "category"
 const val argWishId = "wish_id"
 val upsertArgs = listOf(
     navArgument(argCategory) { type = NavType.IntType },
-    navArgument(argWishId) { type = NavType.LongType }
+    navArgument(argWishId) { type = NavType.StringType }
 )
 const val upsertBaseRoute = "upsert"
 
@@ -24,7 +24,7 @@ val upsertRoute = upsertArgs.fold(upsertBaseRoute) { acc, arg ->
 
 fun NavController.navigateToUpsert(
     category: Int,
-    wishId: Long = -1L
+    wishId: String = ""
 ) {
     navigate(
         "$upsertBaseRoute/$category/$wishId"

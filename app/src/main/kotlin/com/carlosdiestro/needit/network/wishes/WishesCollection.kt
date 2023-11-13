@@ -3,20 +3,19 @@ package com.carlosdiestro.needit.network.wishes
 import com.carlosdiestro.needit.network.CollectionsPath
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 internal class WishesCollection @Inject constructor(
     private val usersCollection: CollectionReference
 ) {
 
-    suspend fun create(wish: WishDto): String =
+    fun upsert(wish: WishDto) {
         usersCollection
             .document(wish.userId)
             .collection(CollectionsPath.userWishes)
-            .add(wish)
-            .await()
-            .id
+            .document(wish.id)
+            .set(wish, SetOptions.merge())
+    }
 
     fun delete(cloudId: String, userId: String) {
         usersCollection
@@ -24,13 +23,5 @@ internal class WishesCollection @Inject constructor(
             .collection(CollectionsPath.userWishes)
             .document(cloudId)
             .delete()
-    }
-
-    fun update(cloudId: String, wish: WishDto) {
-        usersCollection
-            .document(wish.userId)
-            .collection(CollectionsPath.userWishes)
-            .document(cloudId)
-            .set(wish, SetOptions.merge())
     }
 }

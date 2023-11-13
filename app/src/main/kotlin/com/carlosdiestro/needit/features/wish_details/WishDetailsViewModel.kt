@@ -34,7 +34,7 @@ internal class WishDetailsViewModel @Inject constructor(
         ) { wish, user ->
             this.wish = wish
             WishDetailsDataState(
-                id = wish.id,
+                id = wish.id.toString(),
                 imageUrl = wish.imageLocalPath.ifEmpty { wish.imageUrl },
                 title = wish.title,
                 subtitle = wish.subtitle,

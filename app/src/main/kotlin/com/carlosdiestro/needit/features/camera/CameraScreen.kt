@@ -64,7 +64,7 @@ import kotlin.coroutines.suspendCoroutine
 @Composable
 internal fun CameraRoute(
     onBackClick: () -> Unit,
-    onContinueClick: (Int, Long) -> Unit,
+    onContinueClick: (Int, String) -> Unit,
     viewModel: CameraViewModel = hiltViewModel()
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
@@ -76,7 +76,7 @@ internal fun CameraRoute(
         onContinueClick = {
             onContinueClick(
                 dataState.category.toIntValue(),
-                -1
+                ""
             )
         },
         onBackToPhotoClick = {

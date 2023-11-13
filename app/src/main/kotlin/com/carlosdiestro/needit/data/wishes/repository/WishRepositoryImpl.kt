@@ -24,24 +24,16 @@ internal class WishRepositoryImpl @Inject constructor(
     override fun getWish(id: Long): Flow<Wish> =
         localDatasource.getWish(id).asDomain()
 
-    override suspend fun create(wish: Wish): Long = localDatasource.create(wish.asEntity())
+    override suspend fun create(wish: Wish) = localDatasource.create(wish.asEntity())
 
     override suspend fun update(wish: Wish) {
         localDatasource.update(wish.asEntity())
-        when {
-            wish.isShared && wish.cloudId.isEmpty() -> remoteDatasource.create(wish.asDto())
-            wish.isShared -> remoteDatasource.update(wish.cloudId, wish.asDto())
-            !wish.isShared && wish.cloudId.isNotEmpty() -> remoteDatasource.delete(
-                wish.cloudId,
-                wish.userId
-            )
-        }
+        if (wish.isShared) remoteDatasource.upsert(wish.asDto())
+        else remoteDatasource.delete(wish.id.toString(), wish.userId)
     }
 
     override suspend fun delete(wish: Wish) = kotlin.run {
         localDatasource.delete(wish.asEntity())
-        if (wish.cloudId.isNotEmpty()) {
-            remoteDatasource.delete(wish.cloudId, wish.userId)
-        }
+        if (wish.isShared) remoteDatasource.delete(wish.id.toString(), wish.userId)
     }
 }

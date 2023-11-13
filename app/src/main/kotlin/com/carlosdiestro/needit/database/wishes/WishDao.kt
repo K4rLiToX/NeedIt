@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 internal interface WishDao {
     @Insert
-    suspend fun create(wish: WishEntity): Long
+    suspend fun create(wish: WishEntity)
 
     @Query(
         """

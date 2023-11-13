@@ -14,7 +14,7 @@ fun NavController.navigateToCamera() = navigate(cameraRoute)
 
 fun NavGraphBuilder.cameraScreen(
     onBackClick: () -> Unit,
-    onContinueClick: (Int, Long) -> Unit,
+    onContinueClick: (Int, String) -> Unit,
     enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,
     exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition,
     popEnterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,

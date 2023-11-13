@@ -53,11 +53,11 @@ class CreateWishUseCase @Inject constructor(
                 color = color,
                 isbn = isbn
             )
-            val finalId = wishRepository.create(wish)
+            wishRepository.create(wish)
             val compressedImage = compressImage(imageLocalPath)
             val cloudImageUrl = imageRepository.create(compressedImage, userId)
             wishRepository.update(
-                wish.copy(id = finalId, imageUrl = cloudImageUrl)
+                wish.copy(imageUrl = cloudImageUrl)
             )
         }
     }

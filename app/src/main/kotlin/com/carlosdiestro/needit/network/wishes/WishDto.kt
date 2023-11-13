@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.network.wishes
 
 data class WishDto(
-    val id: Long,
+    val id: String,
     val userId: String,
     val imageUrl: String,
     val price: Double,

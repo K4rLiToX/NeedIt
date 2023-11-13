@@ -46,8 +46,8 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 internal fun HomeRoute(
-    onItemClick: (Long) -> Unit,
-    onUpdateClick: (Int, Long) -> Unit,
+    onItemClick: (String) -> Unit,
+    onUpdateClick: (Int, String) -> Unit,
     onCreateClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -66,7 +66,7 @@ internal fun HomeRoute(
         onItemLongClick = viewModel::onSelectedWish,
         onMenuDismiss = viewModel::clearWishSelection,
         onDeleteClick = viewModel::deleteWish,
-        onUpdateClick = { onUpdateClick(0, dataState.selectedWish?.id!!) },
+        onUpdateClick = { onUpdateClick(0, dataState.selectedWish?.id.toString()) },
         onShareClick = viewModel::shareWish,
         onPrivateClick = viewModel::lockWish,
         onCreateClick = onCreateClick
@@ -77,8 +77,8 @@ internal fun HomeRoute(
 private fun HomeScreen(
     dataState: HomeDataState,
     uiState: HomeUiState,
-    onItemClick: (Long) -> Unit,
-    onItemLongClick: (Long) -> Unit,
+    onItemClick: (String) -> Unit,
+    onItemLongClick: (String) -> Unit,
     onMenuDismiss: () -> Unit,
     onDeleteClick: () -> Unit,
     onUpdateClick: () -> Unit,
@@ -168,8 +168,8 @@ private fun HomeSuccessState(
     selectedWishActionIcon: ImageVector,
     isAnonymous: Boolean,
     uiState: HomeUiState,
-    onItemClick: (Long) -> Unit,
-    onItemLongClick: (Long) -> Unit,
+    onItemClick: (String) -> Unit,
+    onItemLongClick: (String) -> Unit,
     onMenuDismiss: () -> Unit,
     onDeleteClick: () -> Unit,
     onUpdateClick: () -> Unit,
@@ -217,7 +217,7 @@ private fun HomeSuccessState(
                 },
                 lazyGridState = uiState.lazyGridState,
                 wishes = wishlist,
-                selectedWishId = selectedWish?.id,
+                selectedWishId = selectedWish?.id.toString(),
                 modifier = Modifier.fillMaxSize()
             )
         }

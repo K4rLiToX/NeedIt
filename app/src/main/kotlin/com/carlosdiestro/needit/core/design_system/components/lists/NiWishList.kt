@@ -11,7 +11,7 @@ import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.core.design_system.components.cards.NiWishCard
 
 data class HomeWishPlo(
-    val id: Long,
+    val id: String,
     val imageUrl: String,
     val shared: Boolean,
     val category: WishCategoryPlo
@@ -33,12 +33,12 @@ fun Int.toWishCategoryPlo(): WishCategoryPlo = WishCategoryPlo.entries[this]
 
 @Composable
 fun NiHomeWishList(
-    onItemClick: (Long) -> Unit,
-    onItemLongClick: (Long) -> Unit,
+    onItemClick: (String) -> Unit,
+    onItemLongClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     lazyGridState: LazyGridState,
     wishes: List<HomeWishPlo>,
-    selectedWishId: Long?
+    selectedWishId: String?
 ) {
     LazyVerticalGrid(
         state = lazyGridState,

@@ -23,8 +23,8 @@ fun NavController.navigateToHomeCleaningBackStack() = navigate(homeRoute) {
 }
 
 fun NavGraphBuilder.homeScreen(
-    onItemClick: (Long) -> Unit,
-    onUpdateClick: (Int, Long) -> Unit,
+    onItemClick: (String) -> Unit,
+    onUpdateClick: (Int, String) -> Unit,
     onCreateClick: () -> Unit,
     enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,
     exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition,

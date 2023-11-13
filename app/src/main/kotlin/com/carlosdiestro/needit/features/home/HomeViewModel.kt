@@ -27,7 +27,7 @@ internal class HomeViewModel @Inject constructor(
     private val updateWish: UpdateWishUseCase,
 ) : ViewModel() {
 
-    private var _selectedWishId: MutableStateFlow<Long> = MutableStateFlow(-1)
+    private var _selectedWishId: MutableStateFlow<String> = MutableStateFlow("")
 
     val state: StateFlow<HomeDataState> =
         combine(
@@ -38,7 +38,7 @@ internal class HomeViewModel @Inject constructor(
             HomeDataState(
                 wishes = wishlist.asPlo(),
                 categories = getCategories(wishlist),
-                selectedWish = wishlist.find { it.id == selectedWishId },
+                selectedWish = wishlist.find { it.id.toString() == selectedWishId },
                 isAnonymous = user.isAnonymous
             )
         }
@@ -54,7 +54,7 @@ internal class HomeViewModel @Inject constructor(
             .toSet()
             .sortedBy { it.ordinal }
 
-    fun onSelectedWish(id: Long) {
+    fun onSelectedWish(id: String) {
         _selectedWishId.update {
             id
         }
@@ -93,6 +93,6 @@ internal class HomeViewModel @Inject constructor(
     }
 
     fun clearWishSelection() {
-        onSelectedWish(-1)
+        onSelectedWish("")
     }
 }

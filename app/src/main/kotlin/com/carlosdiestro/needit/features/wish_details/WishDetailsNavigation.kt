@@ -12,7 +12,7 @@ import androidx.navigation.navArgument
 
 const val argsWishId = "wish_id"
 val detailsArgs = listOf(
-    navArgument(argsWishId) { type = NavType.LongType }
+    navArgument(argsWishId) { type = NavType.StringType }
 )
 
 const val detailsBaseRoute = "wish_details"
@@ -22,7 +22,7 @@ val detailsRoute = detailsArgs.fold(detailsBaseRoute) { acc, arg ->
 }
 
 fun NavController.navigateToWishDetails(
-    wishId: Long
+    wishId: String
 ) {
     navigate(
         "$detailsBaseRoute/$wishId"
@@ -31,7 +31,7 @@ fun NavController.navigateToWishDetails(
 
 fun NavGraphBuilder.wishDetailsScreen(
     onBackClick: () -> Unit,
-    onUpdateClick: (Int, Long) -> Unit,
+    onUpdateClick: (Int, String) -> Unit,
     enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,
     exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition,
     popEnterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,

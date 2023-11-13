@@ -8,7 +8,7 @@ interface WishLocalDatasource {
 
     val sharedWishes: Flow<List<WishEntity>>
     fun getWish(id: Long): Flow<WishEntity>
-    suspend fun create(wish: WishEntity): Long
+    suspend fun create(wish: WishEntity)
     suspend fun update(wish: WishEntity)
     suspend fun delete(wish: WishEntity)
 }

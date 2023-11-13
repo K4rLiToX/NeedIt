@@ -1,8 +1,9 @@
 package com.carlosdiestro.needit.domain.wishes
 
+import java.util.UUID
+
 class Wish private constructor(
-    val id: Long,
-    val cloudId: String,
+    val id: UUID,
     val userId: String,
     val imageLocalPath: String,
     val imageUrl: String,
@@ -18,8 +19,7 @@ class Wish private constructor(
     val isbn: String?
 ) {
     fun copy(
-        id: Long = this.id,
-        cloudId: String = this.cloudId,
+        id: UUID = this.id,
         userId: String = this.userId,
         imageLocalPath: String = this.imageLocalPath,
         imageUrl: String = this.imageUrl,
@@ -35,7 +35,6 @@ class Wish private constructor(
         isbn: String? = this.isbn
     ) : Wish = Wish(
         id = id,
-        cloudId = cloudId,
         userId = userId,
         imageLocalPath = imageLocalPath,
         imageUrl = imageUrl,
@@ -52,8 +51,7 @@ class Wish private constructor(
     )
     companion object {
         fun create(
-            id: Long = -1,
-            cloudId: String = "",
+            id: UUID = UUID.randomUUID(),
             userId: String,
             imageLocalPath: String,
             imageUrl: String = "",
@@ -69,7 +67,6 @@ class Wish private constructor(
             isbn: String?
         ): Wish = Wish(
             id = id,
-            cloudId = cloudId,
             userId = userId,
             imageLocalPath = imageLocalPath,
             imageUrl = imageUrl,

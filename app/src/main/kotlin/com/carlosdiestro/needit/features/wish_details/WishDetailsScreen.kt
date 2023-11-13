@@ -28,7 +28,7 @@ import com.carlosdiestro.needit.core.design_system.theme.icons
 @Composable
 internal fun WishDetailsRoute(
     onBackClick: () -> Unit,
-    onUpdateClick: (Int, Long) -> Unit,
+    onUpdateClick: (Int, String) -> Unit,
     viewModel: WishDetailsViewModel = hiltViewModel()
 ) {
     val dataState by viewModel.state.collectAsStateWithLifecycle()
