@@ -1,6 +1,6 @@
 package com.carlosdiestro.needit.data.wishes.datasources
 
-import com.carlosdiestro.needit.database.wishes.WishEntity
+import com.carlosdiestro.needit.framework.database.wishes.WishEntity
 import kotlinx.coroutines.flow.Flow
 
 interface WishLocalDatasource {
