@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.design_system.components.lists.toWishCategoryPlo
+import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.CreateWishUseCase
@@ -166,10 +167,10 @@ internal class UpsertViewModel @Inject constructor(
                     imageLocalPath = state.value.imageLocalPath,
                     title = title,
                     subtitle = subtitle,
-                    price = price,
+                    price = if (price.isEmpty()) 0.0 else price.toDouble(),
                     webUrl = webUrl,
                     description = description,
-                    category = category,
+                    category = category.asDomain(),
                     size = size,
                     color = color,
                     isbn = isbn

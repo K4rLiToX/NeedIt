@@ -1,10 +1,9 @@
 package com.carlosdiestro.needit.domain.wishes.usecases
 
-import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.di.ApplicationScope
-import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.WishCategory
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import kotlinx.coroutines.CoroutineScope
@@ -22,10 +21,10 @@ class CreateWishUseCase @Inject constructor(
         imageLocalPath: String,
         title: String,
         subtitle: String,
-        price: String,
+        price: Double,
         webUrl: String,
         description: String,
-        category: WishCategoryPlo,
+        category: WishCategory,
         size: String?,
         color: String?,
         isbn: String?
@@ -37,10 +36,10 @@ class CreateWishUseCase @Inject constructor(
                 imageLocalPath = imageLocalPath,
                 title = title,
                 subtitle = subtitle,
-                price = if (price.isEmpty()) 0.0 else price.toDouble(),
+                price = price,
                 webUrl = webUrl,
                 description = description,
-                category = category.asDomain(),
+                category = category,
                 size = size,
                 color = color,
                 isbn = isbn
