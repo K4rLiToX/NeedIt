@@ -5,15 +5,17 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 internal class ImagesCollection @Inject constructor(
-    private val storage: FirebaseStorage
+    private val storage: FirebaseStorage,
+    private val imageCompressor: ImageCompressor
 ) {
 
-    suspend fun create(bytes: ByteArray, userId: String): String {
+    suspend fun create(imageLocalPath: String, userId: String): String {
         val name = System.currentTimeMillis()
         val ref = storage.reference.child("$userId/$name.jpg")
+        val compressedImage = imageCompressor.compress(imageLocalPath)
 
         return ref
-            .putBytes(bytes)
+            .putBytes(compressedImage)
             .await()
             .storage
             .downloadUrl

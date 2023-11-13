@@ -1,30 +1,22 @@
 package com.carlosdiestro.needit.domain.wishes.usecases
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.di.ApplicationScope
-import com.carlosdiestro.needit.core.di.DefaultDispatcher
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 class CreateWishUseCase @Inject constructor(
     private val wishRepository: WishRepository,
     private val imageRepository: ImageRepository,
     private val getUserInfo: GetSignedInUserUseCase,
-    @ApplicationScope private val scope: CoroutineScope,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+    @ApplicationScope private val scope: CoroutineScope
 ) {
     suspend operator fun invoke(
         imageLocalPath: String,
@@ -54,29 +46,10 @@ class CreateWishUseCase @Inject constructor(
                 isbn = isbn
             )
             wishRepository.create(wish)
-            val compressedImage = compressImage(imageLocalPath)
-            val cloudImageUrl = imageRepository.create(compressedImage, userId)
+            val cloudImageUrl = imageRepository.create(imageLocalPath, userId)
             wishRepository.update(
                 wish.copy(imageUrl = cloudImageUrl)
             )
         }
-    }
-
-    private suspend fun compressImage(imageLocalPath: String): ByteArray =
-        withContext(defaultDispatcher) {
-            imageLocalPath.toBitmap().compress()
-        }
-
-    private fun String.toBitmap(): Bitmap = BitmapFactory.decodeFile(this).rotate()
-
-    private fun Bitmap.compress(): ByteArray {
-        val baos = ByteArrayOutputStream()
-        this.compress(Bitmap.CompressFormat.JPEG, 50, baos)
-        return baos.toByteArray()
-    }
-
-    private fun Bitmap.rotate(): Bitmap {
-        val matrix = Matrix().apply { postRotate(90F) }
-        return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
     }
 }

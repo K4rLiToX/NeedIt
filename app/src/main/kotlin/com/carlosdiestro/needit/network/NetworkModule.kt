@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.network
 
+import com.carlosdiestro.needit.network.images.ImageCompressor
 import com.carlosdiestro.needit.network.images.ImagesCollection
 import com.carlosdiestro.needit.network.users.UsersCollection
 import com.carlosdiestro.needit.network.wishes.WishesCollection
@@ -38,6 +39,9 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideImageCollection(storage: FirebaseStorage): ImagesCollection =
-        ImagesCollection(storage)
+    fun provideImageCollection(
+        storage: FirebaseStorage,
+        imageCompressor: ImageCompressor
+    ): ImagesCollection =
+        ImagesCollection(storage, imageCompressor)
 }
