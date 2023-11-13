@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ImageStorageDao @Inject constructor(
+internal class ImageStorageDao @Inject constructor(
     private val imageStorage: Uri,
     private val contentResolver: ContentResolver,
     private val ioDispatcher: CoroutineDispatcher
