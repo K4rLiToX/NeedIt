@@ -36,7 +36,7 @@ internal interface WishDao {
             WHERE id = :id
         """
     )
-    fun getWish(id: Long): Flow<WishEntity>
+    fun getWish(id: String): Flow<WishEntity>
 
     @Update
     suspend fun update(wish: WishEntity)

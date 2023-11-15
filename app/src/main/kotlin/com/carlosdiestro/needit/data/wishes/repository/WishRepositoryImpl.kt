@@ -21,7 +21,7 @@ internal class WishRepositoryImpl @Inject constructor(
     override val sharedWishes: Flow<List<Wish>>
         get() = localDatasource.sharedWishes.asDomain()
 
-    override fun getWish(id: Long): Flow<Wish> =
+    override fun getWish(id: String): Flow<Wish> =
         localDatasource.getWish(id).asDomain()
 
     override suspend fun create(wish: Wish) = localDatasource.create(wish.asEntity())
