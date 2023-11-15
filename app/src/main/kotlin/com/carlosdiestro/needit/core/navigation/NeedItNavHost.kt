@@ -38,7 +38,7 @@ import com.carlosdiestro.needit.features.sign_in.signInScreen
 import com.carlosdiestro.needit.features.upsert_item.UpsertDestination
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
 import com.carlosdiestro.needit.features.upsert_item.upsertScreen
-import com.carlosdiestro.needit.features.wish_details.detailsRoute
+import com.carlosdiestro.needit.features.wish_details.WishDetailsDestination
 import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
 import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen
 
@@ -177,7 +177,7 @@ private fun UpdateStatusBarContentColor(
     val window = (view.context as Activity).window
     WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
         when (currentRoute) {
-            cameraRoute, detailsRoute -> false
+            cameraRoute, WishDetailsDestination.route -> false
             else -> !darkTheme
         }
 }

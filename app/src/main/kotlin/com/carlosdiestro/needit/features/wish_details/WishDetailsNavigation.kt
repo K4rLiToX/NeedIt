@@ -3,6 +3,8 @@ package com.carlosdiestro.needit.features.wish_details
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.lifecycle.SavedStateHandle
+import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -10,23 +12,41 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
-const val argsWishId = "wish_id"
-val detailsArgs = listOf(
-    navArgument(argsWishId) { type = NavType.StringType }
-)
+private const val WISH_DETAILS_BASE_ROUTE = "wish_details"
+private const val WISH_DETAILS_ARG_WISH_ID = "wish_id"
 
-const val detailsBaseRoute = "wish_details"
+class WishDetailsDestination {
+    internal class NavArgs(
+        val wishId: String
+    ) {
+        constructor(savedStateHandle: SavedStateHandle) :
+                this(
+                    (savedStateHandle[WISH_DETAILS_ARG_WISH_ID] ?: "none")
+                )
+    }
 
-val detailsRoute = detailsArgs.fold(detailsBaseRoute) { acc, arg ->
-    "$acc/{${arg.name}}"
+    companion object {
+        const val route = "$WISH_DETAILS_BASE_ROUTE/{$WISH_DETAILS_ARG_WISH_ID}"
+        val arguments: List<NamedNavArgument>
+            get() = listOf(
+                navArgument(WISH_DETAILS_ARG_WISH_ID) {
+                    type = NavType.StringType
+                }
+            )
+
+        fun getDestination(
+            wishId: String
+        ): String {
+            return WISH_DETAILS_BASE_ROUTE +
+                    "/{$wishId}"
+        }
+    }
 }
 
 fun NavController.navigateToWishDetails(
     wishId: String
 ) {
-    navigate(
-        "$detailsBaseRoute/$wishId"
-    )
+    navigate(WishDetailsDestination.getDestination(wishId))
 }
 
 fun NavGraphBuilder.wishDetailsScreen(
@@ -38,8 +58,8 @@ fun NavGraphBuilder.wishDetailsScreen(
     popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition
 ) {
     composable(
-        route = detailsRoute,
-        arguments = detailsArgs,
+        route = WishDetailsDestination.route,
+        arguments = WishDetailsDestination.arguments,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,
