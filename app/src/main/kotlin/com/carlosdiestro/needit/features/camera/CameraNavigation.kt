@@ -8,9 +8,18 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
-const val cameraRoute = "camera"
+private const val CAMERA_BASE_ROUTE = "camera"
 
-fun NavController.navigateToCamera() = navigate(cameraRoute)
+object CameraDestination {
+
+    const val route = CAMERA_BASE_ROUTE
+
+    fun getDestination(): String {
+        return CAMERA_BASE_ROUTE
+    }
+}
+
+fun NavController.navigateToCamera() = navigate(CameraDestination.getDestination())
 
 fun NavGraphBuilder.cameraScreen(
     onBackClick: () -> Unit,
@@ -21,7 +30,7 @@ fun NavGraphBuilder.cameraScreen(
     popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition
 ) {
     composable(
-        route = cameraRoute,
+        route = CameraDestination.route,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,

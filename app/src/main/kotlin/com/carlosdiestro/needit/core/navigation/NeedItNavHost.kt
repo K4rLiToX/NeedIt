@@ -24,7 +24,7 @@ import com.carlosdiestro.needit.core.design_system.components.animations.popEnte
 import com.carlosdiestro.needit.core.design_system.components.animations.popExitXSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.popExitZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.animations.slideDown
-import com.carlosdiestro.needit.features.camera.cameraRoute
+import com.carlosdiestro.needit.features.camera.CameraDestination
 import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.camera.navigateToCamera
 import com.carlosdiestro.needit.features.friends.friendsScreen
@@ -129,11 +129,14 @@ fun NeedItNavHost(
             onBackClick = navController::popBackStack,
             onFinish = {
                 val previousScreenRoute = navController.previousBackStackEntry?.destination?.route
-                if (previousScreenRoute == cameraRoute) navController.popBackStack(homeRoute, false)
+                if (previousScreenRoute == CameraDestination.route) navController.popBackStack(
+                    homeRoute,
+                    false
+                )
                 else navController.popBackStack()
             },
             enterTransition = {
-                if (initialState.destination.route == cameraRoute) {
+                if (initialState.destination.route == CameraDestination.route) {
                     enterXSharedAxis
                 } else {
                     enterSlideUp
@@ -142,7 +145,7 @@ fun NeedItNavHost(
             exitTransition = { exitNone },
             popEnterTransition = { enterNone },
             popExitTransition = {
-                if (targetState.destination.route == cameraRoute) {
+                if (targetState.destination.route == CameraDestination.route) {
                     popExitXSharedAxis
                 } else {
                     slideDown
@@ -177,7 +180,7 @@ private fun UpdateStatusBarContentColor(
     val window = (view.context as Activity).window
     WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
         when (currentRoute) {
-            cameraRoute, WishDetailsDestination.route -> false
+            CameraDestination.route, WishDetailsDestination.route -> false
             else -> !darkTheme
         }
 }
