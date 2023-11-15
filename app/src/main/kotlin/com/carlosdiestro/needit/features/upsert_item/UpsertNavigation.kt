@@ -32,7 +32,7 @@ class UpsertDestination {
 
     companion object {
         const val route = "$UPSERT_BASE_ROUTE/{$UPSERT_ARG_CATEGORY}/{$UPSERT_ARG_WISH_ID}"
-        val argumentList: List<NamedNavArgument>
+        val arguments: List<NamedNavArgument>
             get() = listOf(
                 navArgument(UPSERT_ARG_CATEGORY) {
                     type = NavType.IntType
@@ -46,7 +46,7 @@ class UpsertDestination {
             category: Int,
             wishId: String
         ): String {
-            return "$UPSERT_BASE_ROUTE" +
+            return UPSERT_BASE_ROUTE +
                     "/{$category}" +
                     "/{$wishId}"
         }
@@ -70,7 +70,7 @@ fun NavGraphBuilder.upsertScreen(
 ) {
     composable(
         route = UpsertDestination.route,
-        arguments = UpsertDestination.argumentList,
+        arguments = UpsertDestination.arguments,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,
