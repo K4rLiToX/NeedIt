@@ -8,7 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navOptions
 import com.carlosdiestro.needit.core.NeedItAppState
 import com.carlosdiestro.needit.core.design_system.components.animations.enterFadeThrough
 import com.carlosdiestro.needit.core.design_system.components.animations.enterNone
@@ -31,7 +33,7 @@ import com.carlosdiestro.needit.features.friends.friendsScreen
 import com.carlosdiestro.needit.features.gifts.giftsScreen
 import com.carlosdiestro.needit.features.home.HomeDestination
 import com.carlosdiestro.needit.features.home.homeScreen
-import com.carlosdiestro.needit.features.home.navigateToHomeCleaningBackStack
+import com.carlosdiestro.needit.features.home.navigateToHome
 import com.carlosdiestro.needit.features.settings.settingsScreen
 import com.carlosdiestro.needit.features.sign_in.SignInDestination
 import com.carlosdiestro.needit.features.sign_in.signInScreen
@@ -67,7 +69,11 @@ fun NeedItNavHost(
     ) {
         signInScreen(
             onSignInSuccessful = {
-                navController.navigateToHomeCleaningBackStack(popUpTo = SignInDestination.route)
+                navController.navigateToHome(
+                    navOptions = navOptions {
+                        popUpTo(SignInDestination.route) { inclusive = true }
+                    }
+                )
             }
         )
 

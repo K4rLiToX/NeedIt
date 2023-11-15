@@ -24,13 +24,6 @@ fun NavController.navigateToHome(
     navOptions: NavOptions? = null
 ) = navigate(HomeDestination.getDestination(), navOptions)
 
-fun NavController.navigateToHomeCleaningBackStack(popUpTo: String) =
-    navigate(HomeDestination.getDestination()) {
-        popUpTo(popUpTo) {
-            inclusive = true
-        }
-    }
-
 fun NavGraphBuilder.homeScreen(
     onItemClick: (String) -> Unit,
     onUpdateClick: (Int, String) -> Unit,
