@@ -6,6 +6,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import com.carlosdiestro.needit.core.design_system.components.navigation.destinations.topLevelDestination
 
 private const val FRIENDS_BASE_ROUTE = "friends"
@@ -19,7 +20,9 @@ object FriendsDestination {
     }
 }
 
-fun NavController.navigateToFriends() = navigate(FriendsDestination.getDestination())
+fun NavController.navigateToFriends(
+    navOptions: NavOptions? = null
+) = navigate(FriendsDestination.getDestination(), navOptions)
 
 fun NavGraphBuilder.friendsScreen(
     onFriendClick: (String) -> Unit,

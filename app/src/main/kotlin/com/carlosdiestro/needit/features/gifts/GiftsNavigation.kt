@@ -6,6 +6,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
 import com.carlosdiestro.needit.core.design_system.components.navigation.destinations.topLevelDestination
 
 private const val GIFTS_BASE_ROUTE = "gifts"
@@ -19,7 +20,9 @@ object GiftsDestination {
     }
 }
 
-fun NavController.navigateToGifts() = navigate(GiftsDestination.getDestination())
+fun NavController.navigateToGifts(
+    navOptions: NavOptions? = null
+) = navigate(GiftsDestination.getDestination(), navOptions)
 
 fun NavGraphBuilder.giftsScreen(
     enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,

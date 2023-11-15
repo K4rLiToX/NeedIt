@@ -18,6 +18,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.TopLevelDestination
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.routes
+import com.carlosdiestro.needit.features.friends.navigateToFriends
+import com.carlosdiestro.needit.features.gifts.navigateToGifts
 import com.carlosdiestro.needit.features.home.navigateToHome
 import kotlinx.coroutines.CoroutineScope
 
@@ -84,13 +86,11 @@ class NeedItAppState constructor(
                 topLevelNavOptions
             )
 
-            TopLevelDestination.Gifts -> navController.navigate(
-                topLevelDestination.route,
+            TopLevelDestination.Gifts -> navController.navigateToGifts(
                 topLevelNavOptions
             )
 
-            TopLevelDestination.Friends -> navController.navigate(
-                topLevelDestination.route,
+            TopLevelDestination.Friends -> navController.navigateToFriends(
                 topLevelNavOptions
             )
         }
