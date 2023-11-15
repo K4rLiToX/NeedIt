@@ -4,9 +4,18 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
-const val settingsRoute = "settings"
+private const val SETTINGS_BASE_ROUTE = "settings"
 
-fun NavController.navigateToSettings() = navigate(settingsRoute)
+object SettingsDestination {
+
+    const val route = SETTINGS_BASE_ROUTE
+
+    fun getDestination(): String {
+        return SETTINGS_BASE_ROUTE
+    }
+}
+
+fun NavController.navigateToSettings() = navigate(SettingsDestination.getDestination())
 
 fun NavGraphBuilder.settingsScreen(
     onBackClick: () -> Unit,
@@ -15,7 +24,7 @@ fun NavGraphBuilder.settingsScreen(
     onTermsOfUseClick: () -> Unit
 ) {
     composable(
-        route = settingsRoute
+        route = SettingsDestination.route
     ) {
         SettingsRoute(
             onBackClick = onBackClick,
