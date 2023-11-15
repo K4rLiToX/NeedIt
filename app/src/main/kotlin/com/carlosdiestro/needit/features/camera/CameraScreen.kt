@@ -76,7 +76,7 @@ internal fun CameraRoute(
         onContinueClick = {
             onContinueClick(
                 dataState.category.toIntValue(),
-                ""
+                "none"
             )
         },
         onBackToPhotoClick = {

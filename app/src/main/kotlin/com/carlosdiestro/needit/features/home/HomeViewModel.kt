@@ -5,7 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
+import com.carlosdiestro.needit.domain.wishes.Book
+import com.carlosdiestro.needit.domain.wishes.Clothes
+import com.carlosdiestro.needit.domain.wishes.Footwear
+import com.carlosdiestro.needit.domain.wishes.Other
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.WishInformation
 import com.carlosdiestro.needit.domain.wishes.usecases.DeleteWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
@@ -62,25 +67,29 @@ internal class HomeViewModel @Inject constructor(
 
     fun shareWish() {
         viewModelScope.launch {
-            state.value.selectedWish
-                ?.copy(
-                    isShared = true
-                )
-                ?.also {
-                    updateWish(it)
+            state.value.selectedWish?.let {
+                val updatedWish = when (it) {
+                    is Clothes -> it.copy(isShared = true)
+                    is Footwear -> it.copy(isShared = true)
+                    is Book -> it.copy(isShared = true)
+                    is Other -> it.copy(isShared = true)
                 }
+                updateWish(updatedWish)
+            }
         }
     }
 
     fun lockWish() {
         viewModelScope.launch {
-            state.value.selectedWish
-                ?.copy(
-                    isShared = false
-                )
-                ?.also {
-                    updateWish(it)
+            state.value.selectedWish?.let {
+                val updatedWish = when (it) {
+                    is Clothes -> it.copy(isShared = false)
+                    is Footwear -> it.copy(isShared = false)
+                    is Book -> it.copy(isShared = false)
+                    is Other -> it.copy(isShared = false)
                 }
+                updateWish(updatedWish)
+            }
         }
     }
 

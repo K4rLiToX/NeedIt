@@ -12,7 +12,12 @@ import com.carlosdiestro.needit.core.design_system.components.lists.toWishCatego
 import com.carlosdiestro.needit.core.image_utils.ImageCompressor
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asPlo
+import com.carlosdiestro.needit.domain.wishes.Book
+import com.carlosdiestro.needit.domain.wishes.Clothes
+import com.carlosdiestro.needit.domain.wishes.Footwear
+import com.carlosdiestro.needit.domain.wishes.Other
 import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.needit.domain.wishes.WishInformation
 import com.carlosdiestro.needit.domain.wishes.usecases.CreateWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetImageLocalPathUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
@@ -37,7 +42,7 @@ internal class UpsertViewModel @Inject constructor(
 
     private val category: WishCategoryPlo = (savedStateHandle[argCategory] ?: -1)
         .toWishCategoryPlo()
-    private val wishId: Long = savedStateHandle[argWishId] ?: -1L
+    private val wishId: String = savedStateHandle[argWishId] ?: "none"
     private var wish: Wish? = null
 
     private var _state: MutableStateFlow<UpsertDataState> = MutableStateFlow(
@@ -75,7 +80,7 @@ internal class UpsertViewModel @Inject constructor(
 
 
     init {
-        if (wishId != -1L) {
+        if (wishId != "none") {
             fetchWish()
         } else {
             fetchImageLocalPath()
@@ -97,9 +102,20 @@ internal class UpsertViewModel @Inject constructor(
                 updatePrice(it.price.toString())
                 updateWebUrl(it.webUrl)
                 updateDescription(it.description)
-                updateSize(it.size)
-                updateColor(it.color)
-                updateIsbn(it.isbn)
+                when (it) {
+                    is Clothes -> {
+                        updateSize(it.size)
+                        updateColor(it.color)
+                    }
+
+                    is Footwear -> {
+                        updateSize(it.size)
+                        updateColor(it.color)
+                    }
+
+                    is Book -> updateIsbn(it.isbn)
+                    else -> Unit
+                }
             }
 
         }
@@ -150,32 +166,63 @@ internal class UpsertViewModel @Inject constructor(
 
     fun save() {
         viewModelScope.launch {
-            if (wishId != -1L) {
+            if (wishId != "none") {
                 wish?.let {
-                    val updatedWish = it.copy(
-                        title = title,
-                        subtitle = subtitle,
-                        price = if (price.isEmpty()) 0.0 else price.toDouble(),
-                        webUrl = webUrl,
-                        description = description,
-                        size = size,
-                        color = color,
-                        isbn = isbn
-                    )
+                    val updatedWish = when (it) {
+                        is Clothes -> it.copy(
+                            price = if (price.isEmpty()) 0.0 else price.toDouble(),
+                            description = description,
+                            webUrl = webUrl,
+                            title = title,
+                            subtitle = subtitle,
+                            size = size ?: "",
+                            color = color ?: ""
+                        )
+
+                        is Footwear -> it.copy(
+                            price = if (price.isEmpty()) 0.0 else price.toDouble(),
+                            description = description,
+                            webUrl = webUrl,
+                            title = title,
+                            subtitle = subtitle,
+                            size = size ?: "",
+                            color = color ?: ""
+                        )
+
+                        is Book -> it.copy(
+                            price = if (price.isEmpty()) 0.0 else price.toDouble(),
+                            description = description,
+                            webUrl = webUrl,
+                            title = title,
+                            subtitle = subtitle,
+                            isbn = isbn ?: ""
+                        )
+
+                        is Other -> it.copy(
+                            price = if (price.isEmpty()) 0.0 else price.toDouble(),
+                            description = description,
+                            webUrl = webUrl,
+                            title = title,
+                            subtitle = subtitle
+                        )
+                    }
                     updateWish(updatedWish)
                 }
             } else {
                 val imageLocalPath = state.value.imageLocalPath
                 val compressedImage = imageCompressor.compress(imageLocalPath)
-                createWish(
+                val args = WishInformation(
                     imageLocalPath = imageLocalPath,
-                    compressedImage = compressedImage,
-                    title = title,
-                    subtitle = subtitle,
                     price = if (price.isEmpty()) 0.0 else price.toDouble(),
-                    webUrl = webUrl,
                     description = description,
+                    webUrl = webUrl,
                     category = category.asDomain(),
+                    title = title,
+                    subtitle = subtitle
+                )
+                createWish(
+                    args = args,
+                    compressedImage = compressedImage,
                     size = size,
                     color = color,
                     isbn = isbn

@@ -11,7 +11,7 @@ data class WishDto(
     val category: Int,
     val title: String,
     val subtitle: String,
-    val size: String?,
-    val color: String?,
-    val isbn: String?
+    val size: String? = null,
+    val color: String? = null,
+    val isbn: String? = null
 )

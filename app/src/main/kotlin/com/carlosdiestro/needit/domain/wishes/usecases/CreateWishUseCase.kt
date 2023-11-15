@@ -4,6 +4,7 @@ import com.carlosdiestro.needit.core.di.ApplicationScope
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.WishCategory
+import com.carlosdiestro.needit.domain.wishes.WishInformation
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
 import kotlinx.coroutines.CoroutineScope
@@ -18,38 +19,24 @@ class CreateWishUseCase @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope
 ) {
     suspend operator fun invoke(
-        imageLocalPath: String,
+        args: WishInformation,
         compressedImage: ByteArray,
-        title: String,
-        subtitle: String,
-        price: Double,
-        webUrl: String,
-        description: String,
-        category: WishCategory,
         size: String?,
         color: String?,
         isbn: String?
     ) {
         scope.launch {
             val userId = getUserInfo().first().id
-            val wish = Wish.create(
-                userId = userId,
-                imageLocalPath = imageLocalPath,
-                title = title,
-                subtitle = subtitle,
-                price = price,
-                webUrl = webUrl,
-                description = description,
-                category = category,
-                size = size,
-                color = color,
-                isbn = isbn
-            )
-            wishRepository.create(wish)
             val cloudImageUrl = imageRepository.create(compressedImage, userId)
-            wishRepository.update(
-                wish.copy(imageUrl = cloudImageUrl)
-            )
+            val info = args.copy(userId = userId, imageUrl = cloudImageUrl)
+            val wish = when (args.category) {
+                WishCategory.Clothes -> Wish.createClothes(info, size ?: "", color ?: "")
+                WishCategory.Footwear -> Wish.createFootwear(info, size ?: "", color ?: "")
+                WishCategory.Books -> Wish.createBook(info, isbn ?: "")
+                WishCategory.Accessories, WishCategory.Grooming, WishCategory.Tech, WishCategory
+                    .Other -> Wish.createOther(info)
+            }
+            wishRepository.create(wish)
         }
     }
 }
