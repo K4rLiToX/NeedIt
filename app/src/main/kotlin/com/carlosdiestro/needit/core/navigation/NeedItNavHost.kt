@@ -33,7 +33,7 @@ import com.carlosdiestro.needit.features.home.HomeDestination
 import com.carlosdiestro.needit.features.home.homeScreen
 import com.carlosdiestro.needit.features.home.navigateToHomeCleaningBackStack
 import com.carlosdiestro.needit.features.settings.settingsScreen
-import com.carlosdiestro.needit.features.sign_in.signInRoute
+import com.carlosdiestro.needit.features.sign_in.SignInDestination
 import com.carlosdiestro.needit.features.sign_in.signInScreen
 import com.carlosdiestro.needit.features.upsert_item.UpsertDestination
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
@@ -49,7 +49,7 @@ fun NeedItNavHost(
     modifier: Modifier = Modifier
 ) {
     val navController = appState.navController
-    val startDestination = if (isSignedIn) HomeDestination.route else signInRoute
+    val startDestination = if (isSignedIn) HomeDestination.route else SignInDestination.route
 
     UpdateStatusBarContentColor(
         currentRoute = appState.currentDestinationRoute,
@@ -67,7 +67,7 @@ fun NeedItNavHost(
     ) {
         signInScreen(
             onSignInSuccessful = {
-                navController.navigateToHomeCleaningBackStack(popUpTo = signInRoute)
+                navController.navigateToHomeCleaningBackStack(popUpTo = SignInDestination.route)
             }
         )
 

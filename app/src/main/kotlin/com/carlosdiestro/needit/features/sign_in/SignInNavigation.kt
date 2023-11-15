@@ -3,12 +3,20 @@ package com.carlosdiestro.needit.features.sign_in
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.carlosdiestro.needit.features.home.homeRoute
 
-const val signInRoute = "sign_in"
+private const val SIGN_IN_BASE_ROUTE = "sign_in"
 
-fun NavController.navigateToSignIn() = navigate(signInRoute) {
-    popUpTo(homeRoute) {
+object SignInDestination {
+
+    const val route = SIGN_IN_BASE_ROUTE
+
+    fun getDestination(): String {
+        return SIGN_IN_BASE_ROUTE
+    }
+}
+
+fun NavController.navigateToSignIn(popUpTo: String) = navigate(SignInDestination.getDestination()) {
+    popUpTo(popUpTo) {
         inclusive = true
     }
 }
@@ -16,7 +24,7 @@ fun NavController.navigateToSignIn() = navigate(signInRoute) {
 fun NavGraphBuilder.signInScreen(
     onSignInSuccessful: () -> Unit
 ) {
-    composable(route = signInRoute) {
+    composable(route = SignInDestination.route) {
         SignInRoute(
             onSignInSuccessful = onSignInSuccessful
         )

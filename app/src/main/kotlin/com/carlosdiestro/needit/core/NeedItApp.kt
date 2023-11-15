@@ -24,6 +24,7 @@ import com.carlosdiestro.needit.core.design_system.components.navigation.navigat
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.features.account.AccountDialogRoute
+import com.carlosdiestro.needit.features.home.HomeDestination
 import com.carlosdiestro.needit.features.settings.navigateToSettings
 import com.carlosdiestro.needit.features.sign_in.navigateToSignIn
 
@@ -48,7 +49,7 @@ fun NeedItApp(
             onDismiss = appState::closeAccountDialog,
             onSignOutClick = {
                 appState.closeAccountDialog()
-                appState.navController.navigateToSignIn()
+                appState.navController.navigateToSignIn(popUpTo = HomeDestination.route)
             },
             onSettingsClick = {
                 appState.closeAccountDialog()
