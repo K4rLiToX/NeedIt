@@ -29,7 +29,7 @@ import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.camera.navigateToCamera
 import com.carlosdiestro.needit.features.friends.friendsScreen
 import com.carlosdiestro.needit.features.gifts.giftsScreen
-import com.carlosdiestro.needit.features.home.homeRoute
+import com.carlosdiestro.needit.features.home.HomeDestination
 import com.carlosdiestro.needit.features.home.homeScreen
 import com.carlosdiestro.needit.features.home.navigateToHomeCleaningBackStack
 import com.carlosdiestro.needit.features.settings.settingsScreen
@@ -49,7 +49,7 @@ fun NeedItNavHost(
     modifier: Modifier = Modifier
 ) {
     val navController = appState.navController
-    val startDestination = if (isSignedIn) homeRoute else signInRoute
+    val startDestination = if (isSignedIn) HomeDestination.route else signInRoute
 
     UpdateStatusBarContentColor(
         currentRoute = appState.currentDestinationRoute,
@@ -66,7 +66,9 @@ fun NeedItNavHost(
         popExitTransition = { exitNone }
     ) {
         signInScreen(
-            onSignInSuccessful = navController::navigateToHomeCleaningBackStack
+            onSignInSuccessful = {
+                navController.navigateToHomeCleaningBackStack(popUpTo = signInRoute)
+            }
         )
 
         homeScreen(
@@ -130,7 +132,7 @@ fun NeedItNavHost(
             onFinish = {
                 val previousScreenRoute = navController.previousBackStackEntry?.destination?.route
                 if (previousScreenRoute == CameraDestination.route) navController.popBackStack(
-                    homeRoute,
+                    HomeDestination.route,
                     false
                 )
                 else navController.popBackStack()

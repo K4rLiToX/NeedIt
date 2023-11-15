@@ -8,19 +8,28 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import com.carlosdiestro.needit.core.design_system.components.navigation.destinations.topLevelDestination
-import com.carlosdiestro.needit.features.sign_in.signInRoute
 
-const val homeRoute = "home"
+private const val HOME_BASE_ROUTE = "home"
+
+object HomeDestination {
+
+    const val route = HOME_BASE_ROUTE
+
+    fun getDestination(): String {
+        return HOME_BASE_ROUTE
+    }
+}
 
 fun NavController.navigateToHome(
     navOptions: NavOptions? = null
-) = navigate(homeRoute, navOptions)
+) = navigate(HomeDestination.getDestination(), navOptions)
 
-fun NavController.navigateToHomeCleaningBackStack() = navigate(homeRoute) {
-    popUpTo(signInRoute) {
-        inclusive = true
+fun NavController.navigateToHomeCleaningBackStack(popUpTo: String) =
+    navigate(HomeDestination.getDestination()) {
+        popUpTo(popUpTo) {
+            inclusive = true
+        }
     }
-}
 
 fun NavGraphBuilder.homeScreen(
     onItemClick: (String) -> Unit,
@@ -33,7 +42,7 @@ fun NavGraphBuilder.homeScreen(
 
 ) {
     topLevelDestination(
-        route = homeRoute,
+        route = HomeDestination.route,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,
