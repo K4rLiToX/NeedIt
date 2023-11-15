@@ -10,7 +10,8 @@ import com.carlosdiestro.needit.domain.wishes.Footwear
 import com.carlosdiestro.needit.domain.wishes.Other
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +24,8 @@ import javax.inject.Inject
 internal class WishDetailsViewModel @Inject constructor(
     getWish: GetWishUseCase,
     getSignedInUser: GetSignedInUserUseCase,
-    private val updateWish: UpdateWishUseCase,
+    private val shareWish: ShareWishUseCase,
+    private val lockWish: LockWishUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -62,29 +64,13 @@ internal class WishDetailsViewModel @Inject constructor(
 
     fun shareWish() {
         viewModelScope.launch {
-            wish.let {
-                val updatedWish = when (it) {
-                    is Clothes -> it.copy(isShared = true)
-                    is Footwear -> it.copy(isShared = true)
-                    is Book -> it.copy(isShared = true)
-                    is Other -> it.copy(isShared = true)
-                }
-                updateWish(updatedWish)
-            }
+            shareWish(wish)
         }
     }
 
     fun lockWish() {
         viewModelScope.launch {
-            wish.let {
-                val updatedWish = when (it) {
-                    is Clothes -> it.copy(isShared = false)
-                    is Footwear -> it.copy(isShared = false)
-                    is Book -> it.copy(isShared = false)
-                    is Other -> it.copy(isShared = false)
-                }
-                updateWish(updatedWish)
-            }
+            lockWish(wish)
         }
     }
 }

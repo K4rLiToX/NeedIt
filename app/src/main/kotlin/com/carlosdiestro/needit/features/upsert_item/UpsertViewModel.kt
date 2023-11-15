@@ -114,10 +114,9 @@ internal class UpsertViewModel @Inject constructor(
                     }
 
                     is Book -> updateIsbn(it.isbn)
-                    else -> Unit
+                    is Other -> Unit
                 }
             }
-
         }
     }
 
@@ -165,69 +164,48 @@ internal class UpsertViewModel @Inject constructor(
     }
 
     fun save() {
+        if (wishId != "none") update()
+        else create()
+    }
+
+    private fun update() {
         viewModelScope.launch {
-            if (wishId != "none") {
-                wish?.let {
-                    val updatedWish = when (it) {
-                        is Clothes -> it.copy(
-                            price = if (price.isEmpty()) 0.0 else price.toDouble(),
-                            description = description,
-                            webUrl = webUrl,
-                            title = title,
-                            subtitle = subtitle,
-                            size = size ?: "",
-                            color = color ?: ""
-                        )
-
-                        is Footwear -> it.copy(
-                            price = if (price.isEmpty()) 0.0 else price.toDouble(),
-                            description = description,
-                            webUrl = webUrl,
-                            title = title,
-                            subtitle = subtitle,
-                            size = size ?: "",
-                            color = color ?: ""
-                        )
-
-                        is Book -> it.copy(
-                            price = if (price.isEmpty()) 0.0 else price.toDouble(),
-                            description = description,
-                            webUrl = webUrl,
-                            title = title,
-                            subtitle = subtitle,
-                            isbn = isbn ?: ""
-                        )
-
-                        is Other -> it.copy(
-                            price = if (price.isEmpty()) 0.0 else price.toDouble(),
-                            description = description,
-                            webUrl = webUrl,
-                            title = title,
-                            subtitle = subtitle
-                        )
-                    }
-                    updateWish(updatedWish)
-                }
-            } else {
-                val imageLocalPath = state.value.imageLocalPath
-                val compressedImage = imageCompressor.compress(imageLocalPath)
-                val args = WishInformation(
-                    imageLocalPath = imageLocalPath,
+            wish?.let {
+                updateWish(
+                    wish = it,
                     price = if (price.isEmpty()) 0.0 else price.toDouble(),
                     description = description,
                     webUrl = webUrl,
-                    category = category.asDomain(),
                     title = title,
-                    subtitle = subtitle
-                )
-                createWish(
-                    args = args,
-                    compressedImage = compressedImage,
+                    subtitle = subtitle,
                     size = size,
                     color = color,
                     isbn = isbn
                 )
             }
+        }
+    }
+
+    private fun create() {
+        viewModelScope.launch {
+            val imageLocalPath = state.value.imageLocalPath
+            val compressedImage = imageCompressor.compress(imageLocalPath)
+            val args = WishInformation(
+                imageLocalPath = imageLocalPath,
+                price = if (price.isEmpty()) 0.0 else price.toDouble(),
+                description = description,
+                webUrl = webUrl,
+                category = category.asDomain(),
+                title = title,
+                subtitle = subtitle
+            )
+            createWish(
+                args = args,
+                compressedImage = compressedImage,
+                size = size,
+                color = color,
+                isbn = isbn
+            )
         }
     }
 }

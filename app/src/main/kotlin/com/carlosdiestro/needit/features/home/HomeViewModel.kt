@@ -5,14 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
-import com.carlosdiestro.needit.domain.wishes.Book
-import com.carlosdiestro.needit.domain.wishes.Clothes
-import com.carlosdiestro.needit.domain.wishes.Footwear
-import com.carlosdiestro.needit.domain.wishes.Other
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.usecases.DeleteWishUseCase
 import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
+import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,7 +25,8 @@ internal class HomeViewModel @Inject constructor(
     getMyWishes: GetMyWishesUseCase,
     getSignedInUser: GetSignedInUserUseCase,
     private val deleteWish: DeleteWishUseCase,
-    private val updateWish: UpdateWishUseCase,
+    private val shareWish: ShareWishUseCase,
+    private val lockWish: LockWishUseCase
 ) : ViewModel() {
 
     private var _selectedWishId: MutableStateFlow<String> = MutableStateFlow("")
@@ -67,13 +65,7 @@ internal class HomeViewModel @Inject constructor(
     fun shareWish() {
         viewModelScope.launch {
             state.value.selectedWish?.let {
-                val updatedWish = when (it) {
-                    is Clothes -> it.copy(isShared = true)
-                    is Footwear -> it.copy(isShared = true)
-                    is Book -> it.copy(isShared = true)
-                    is Other -> it.copy(isShared = true)
-                }
-                updateWish(updatedWish)
+                shareWish(it)
             }
         }
     }
@@ -81,13 +73,7 @@ internal class HomeViewModel @Inject constructor(
     fun lockWish() {
         viewModelScope.launch {
             state.value.selectedWish?.let {
-                val updatedWish = when (it) {
-                    is Clothes -> it.copy(isShared = false)
-                    is Footwear -> it.copy(isShared = false)
-                    is Book -> it.copy(isShared = false)
-                    is Other -> it.copy(isShared = false)
-                }
-                updateWish(updatedWish)
+                lockWish(it)
             }
         }
     }
