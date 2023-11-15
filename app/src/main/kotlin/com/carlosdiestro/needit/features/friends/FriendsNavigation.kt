@@ -8,9 +8,18 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.carlosdiestro.needit.core.design_system.components.navigation.destinations.topLevelDestination
 
-const val friendsRoute = "friends"
+private const val FRIENDS_BASE_ROUTE = "friends"
 
-fun NavController.navigateToFriends() = navigate(friendsRoute)
+object FriendsDestination {
+
+    const val route = FRIENDS_BASE_ROUTE
+
+    fun getDestination(): String {
+        return FRIENDS_BASE_ROUTE
+    }
+}
+
+fun NavController.navigateToFriends() = navigate(FriendsDestination.getDestination())
 
 fun NavGraphBuilder.friendsScreen(
     onFriendClick: (String) -> Unit,
@@ -20,7 +29,7 @@ fun NavGraphBuilder.friendsScreen(
     popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition
 ) {
     topLevelDestination(
-        route = friendsRoute,
+        route = FriendsDestination.route,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,

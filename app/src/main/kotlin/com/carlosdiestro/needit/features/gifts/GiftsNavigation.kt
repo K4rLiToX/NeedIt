@@ -8,9 +8,18 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.carlosdiestro.needit.core.design_system.components.navigation.destinations.topLevelDestination
 
-const val giftsRoute = "gifts"
+private const val GIFTS_BASE_ROUTE = "gifts"
 
-fun NavController.navigateToGifts() = navigate(giftsRoute)
+object GiftsDestination {
+
+    const val route = GIFTS_BASE_ROUTE
+
+    fun getDestination(): String {
+        return GIFTS_BASE_ROUTE
+    }
+}
+
+fun NavController.navigateToGifts() = navigate(GiftsDestination.getDestination())
 
 fun NavGraphBuilder.giftsScreen(
     enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition,
@@ -19,7 +28,7 @@ fun NavGraphBuilder.giftsScreen(
     popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition
 ) {
     topLevelDestination(
-        route = giftsRoute,
+        route = GiftsDestination.route,
         enterTransition = enterTransition,
         exitTransition = exitTransition,
         popEnterTransition = popEnterTransition,
