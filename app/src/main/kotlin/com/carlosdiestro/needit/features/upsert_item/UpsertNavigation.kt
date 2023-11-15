@@ -18,38 +18,39 @@ private const val UPSERT_BASE_ROUTE = "upsert"
 private const val UPSERT_ARG_CATEGORY = "category"
 private const val UPSERT_ARG_WISH_ID = "wish_id"
 
-class UpsertDestination {
-    internal class NavArgs(
-        val category: WishCategoryPlo,
-        val wishId: String
-    ) {
-        constructor(savedStateHandle: SavedStateHandle) :
-                this(
-                    (savedStateHandle[UPSERT_ARG_CATEGORY] ?: -1).toWishCategoryPlo(),
-                    (savedStateHandle[UPSERT_ARG_WISH_ID] ?: "none")
-                )
+object UpsertDestination {
+
+    const val route = "$UPSERT_BASE_ROUTE/{$UPSERT_ARG_CATEGORY}/{$UPSERT_ARG_WISH_ID}"
+    val arguments: List<NamedNavArgument>
+        get() = listOf(
+            navArgument(UPSERT_ARG_CATEGORY) {
+                type = NavType.IntType
+            },
+            navArgument(UPSERT_ARG_WISH_ID) {
+                type = NavType.StringType
+            }
+        )
+
+    fun getDestination(
+        category: Int,
+        wishId: String
+    ): String {
+        return UPSERT_BASE_ROUTE +
+                "/{$category}" +
+                "/{$wishId}"
     }
+}
 
+internal class UpsertNavArgs private constructor(
+    val category: WishCategoryPlo,
+    val wishId: String
+) {
     companion object {
-        const val route = "$UPSERT_BASE_ROUTE/{$UPSERT_ARG_CATEGORY}/{$UPSERT_ARG_WISH_ID}"
-        val arguments: List<NamedNavArgument>
-            get() = listOf(
-                navArgument(UPSERT_ARG_CATEGORY) {
-                    type = NavType.IntType
-                },
-                navArgument(UPSERT_ARG_WISH_ID) {
-                    type = NavType.StringType
-                }
+        fun fromSavedState(savedStateHandle: SavedStateHandle): UpsertNavArgs =
+            UpsertNavArgs(
+                category = (savedStateHandle[UPSERT_ARG_CATEGORY] ?: -1).toWishCategoryPlo(),
+                wishId = savedStateHandle[UPSERT_ARG_WISH_ID] ?: "none"
             )
-
-        fun getDestination(
-            category: Int,
-            wishId: String
-        ): String {
-            return UPSERT_BASE_ROUTE +
-                    "/{$category}" +
-                    "/{$wishId}"
-        }
     }
 }
 

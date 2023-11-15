@@ -15,31 +15,32 @@ import androidx.navigation.navArgument
 private const val WISH_DETAILS_BASE_ROUTE = "wish_details"
 private const val WISH_DETAILS_ARG_WISH_ID = "wish_id"
 
-class WishDetailsDestination {
-    internal class NavArgs(
-        val wishId: String
-    ) {
-        constructor(savedStateHandle: SavedStateHandle) :
-                this(
-                    (savedStateHandle[WISH_DETAILS_ARG_WISH_ID] ?: "none")
-                )
+object WishDetailsDestination {
+
+    const val route = "$WISH_DETAILS_BASE_ROUTE/{$WISH_DETAILS_ARG_WISH_ID}"
+    val arguments: List<NamedNavArgument>
+        get() = listOf(
+            navArgument(WISH_DETAILS_ARG_WISH_ID) {
+                type = NavType.StringType
+            }
+        )
+
+    fun getDestination(
+        wishId: String
+    ): String {
+        return WISH_DETAILS_BASE_ROUTE +
+                "/{$wishId}"
     }
+}
 
+internal class WishDetailsNavArgs private constructor(
+    val wishId: String
+) {
     companion object {
-        const val route = "$WISH_DETAILS_BASE_ROUTE/{$WISH_DETAILS_ARG_WISH_ID}"
-        val arguments: List<NamedNavArgument>
-            get() = listOf(
-                navArgument(WISH_DETAILS_ARG_WISH_ID) {
-                    type = NavType.StringType
-                }
+        fun fromSavedState(savedStateHandle: SavedStateHandle): WishDetailsNavArgs =
+            WishDetailsNavArgs(
+                wishId = savedStateHandle[WISH_DETAILS_ARG_WISH_ID] ?: "none"
             )
-
-        fun getDestination(
-            wishId: String
-        ): String {
-            return WISH_DETAILS_BASE_ROUTE +
-                    "/{$wishId}"
-        }
     }
 }
 

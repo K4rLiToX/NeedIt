@@ -8,7 +8,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
-import com.carlosdiestro.needit.core.design_system.components.lists.toWishCategoryPlo
 import com.carlosdiestro.needit.core.image_utils.ImageCompressor
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asPlo
@@ -40,7 +39,7 @@ internal class UpsertViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val args = UpsertDestination.NavArgs(savedStateHandle)
+    private val args = UpsertNavArgs.fromSavedState(savedStateHandle)
     private val category: WishCategoryPlo = args.category
     private val wishId: String = args.wishId
 

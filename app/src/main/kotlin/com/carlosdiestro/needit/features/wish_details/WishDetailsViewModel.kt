@@ -29,7 +29,7 @@ internal class WishDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val args = WishDetailsDestination.NavArgs(savedStateHandle)
+    private val args = WishDetailsNavArgs.fromSavedState(savedStateHandle)
     private val wishId = args.wishId
 
     private lateinit var wish: Wish
