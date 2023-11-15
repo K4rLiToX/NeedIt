@@ -35,8 +35,8 @@ import com.carlosdiestro.needit.features.home.navigateToHomeCleaningBackStack
 import com.carlosdiestro.needit.features.settings.settingsScreen
 import com.carlosdiestro.needit.features.sign_in.signInRoute
 import com.carlosdiestro.needit.features.sign_in.signInScreen
+import com.carlosdiestro.needit.features.upsert_item.UpsertDestination
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
-import com.carlosdiestro.needit.features.upsert_item.upsertRoute
 import com.carlosdiestro.needit.features.upsert_item.upsertScreen
 import com.carlosdiestro.needit.features.wish_details.detailsRoute
 import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
@@ -109,14 +109,14 @@ fun NeedItNavHost(
             onContinueClick = navController::navigateToUpsert,
             enterTransition = { enterZSharedAxis },
             exitTransition = {
-                if (targetState.destination.route == upsertRoute) {
+                if (targetState.destination.route == UpsertDestination.route) {
                     exitXSharedAxis
                 } else {
                     exitNone
                 }
             },
             popEnterTransition = {
-                if (initialState.destination.route == upsertRoute) {
+                if (initialState.destination.route == UpsertDestination.route) {
                     popEnterXSharedAxis
                 } else {
                     enterNone

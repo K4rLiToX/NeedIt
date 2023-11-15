@@ -40,9 +40,10 @@ internal class UpsertViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val category: WishCategoryPlo = (savedStateHandle[argCategory] ?: -1)
-        .toWishCategoryPlo()
-    private val wishId: String = savedStateHandle[argWishId] ?: "none"
+    private val args = UpsertDestination.NavArgs(savedStateHandle)
+    private val category: WishCategoryPlo = args.category
+    private val wishId: String = args.wishId
+
     private var wish: Wish? = null
 
     private var _state: MutableStateFlow<UpsertDataState> = MutableStateFlow(
