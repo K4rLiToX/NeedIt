@@ -103,6 +103,7 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
 
 [plugins]
+
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "androidKotlinPlugin" }
@@ -112,3 +113,51 @@ google-play-services = { id = "com.google.gms.google-services", version.ref = "g
 androidx-room = { id = "androidx.room", version.ref = "androidxRoomPlugin" }
 
 [bundles]
+
+compose-ui = [
+    "androidx-compose-ui",
+    "androidx-compose-ui-graphics",
+    "androidx-compose-ui-util",
+    "androidx-compose-ui-tooling-preview",
+    "androidx-compose-material3"
+]
+
+lifecycle = [
+    "androidx-lifecycle-runtime-ktx",
+    "androidx-lifecycle-runtime-compose",
+    "androidx-lifecycle-viewmodel-ktx",
+    "androidx-lifecycle-viewmodel-compose"
+]
+
+navigation = [
+    "androidx-navigation-ui-ktx",
+    "androidx-navigation-compose"
+]
+
+room = [
+    "androidx-room-ktx",
+    "androidx-room-runtime"
+]
+
+camera = [
+    "androidx-camera-camera2",
+    "androidx-camera-lifecycle",
+    "androidx-camera-view"
+]
+
+firebase = [
+    "firebase-auth",
+    "firebase-firestore",
+    "firebase-storage"
+]
+
+compose-test = [
+    "androidx-compose-ui-test-junit4",
+    "androidx-compose-ui-tooling",
+    "androidx-compose-ui-test-manifest",
+]
+
+ui-test = [
+    "androidx-test-ext-junit",
+    "androidx-test-espresso-core"
+]

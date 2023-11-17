@@ -71,11 +71,7 @@ dependencies {
     // Compose
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.util)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
+    implementation(libs.bundles.compose.ui)
 
     // UI
     implementation(libs.androidx.compose.material.icons.extended)
@@ -84,21 +80,14 @@ dependencies {
     // Coil Image Loader
     implementation(libs.coil)
 
-    // Lifecycle
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-
-    // ViewModel
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // Lifecycle & ViewModel
+    implementation(libs.bundles.lifecycle)
 
     // Navigation
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.navigation.compose)
+    implementation(libs.bundles.navigation)
 
     // Room Database
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
+    implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
 
     // Hilt
@@ -112,19 +101,16 @@ dependencies {
     implementation(libs.kotlinx.coroutines.play.services)
 
     // CameraX
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
+    implementation(libs.bundles.camera)
 
     // Splashscreen
     implementation(libs.androidx.core.splashscreen)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore)
-    implementation(libs.firebase.storage)
+    implementation(libs.bundles.firebase)
 
+    // Google
     implementation(libs.play.services.auth)
 
     // Preferences Data Store
@@ -132,12 +118,11 @@ dependencies {
 
     // Compose Test
     androidTestImplementation(composeBom)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    androidTestImplementation(libs.androidx.compose.ui.tooling)
-    androidTestImplementation(libs.androidx.compose.ui.test.manifest)
+    androidTestImplementation(libs.bundles.compose.test)
 
-    // Test
+    // Android Ui Test
+    androidTestImplementation(libs.bundles.ui.test)
+
+    // Unit Test
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
 }
