@@ -31,11 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.carlosdiestro.design_system.components.buttons.NiTextButton
-import com.carlosdiestro.design_system.components.cards.NiSettingSectionCard
-import com.carlosdiestro.design_system.components.cards.NiTitleWithSubtitle
-import com.carlosdiestro.design_system.components.navigation.top_app_bar.NiMediumTopAppBar
-import com.carlosdiestro.design_system.components.selectors.switch.NiLabeledSwitch
+import com.carlosdiestro.design_system.buttons.NiTextButton
+import com.carlosdiestro.design_system.cards.NiSettingSectionCard
+import com.carlosdiestro.design_system.cards.NiTitleWithSubtitle
+import com.carlosdiestro.design_system.navigation.top_app_bar.NiMediumTopAppBar
+import com.carlosdiestro.design_system.selectors.switch.NiLabeledSwitch
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.shape
 import com.carlosdiestro.needit.R

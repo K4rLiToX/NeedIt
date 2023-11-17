@@ -39,10 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.carlosdiestro.design_system.components.avatars.NiAvatar
-import com.carlosdiestro.design_system.components.buttons.NiDoubleButton
-import com.carlosdiestro.design_system.components.buttons.NiOutlinedButton
-import com.carlosdiestro.design_system.components.buttons.NiTextButton
+import com.carlosdiestro.design_system.avatars.NiAvatar
+import com.carlosdiestro.design_system.buttons.NiDoubleButton
+import com.carlosdiestro.design_system.buttons.NiOutlinedButton
+import com.carlosdiestro.design_system.buttons.NiTextButton
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
