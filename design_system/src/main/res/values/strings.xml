@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="item_category_all">All</string>
+    <string name="item_category_clothes">Clothes</string>
+    <string name="item_category_footwear">Footwear</string>
+    <string name="item_category_accessories">Accessories</string>
+    <string name="item_category_books">Books</string>
+    <string name="item_category_grooming">Grooming</string>
+    <string name="item_category_tech">Tech</string>
+    <string name="item_category_other">Other</string>
+
+    <string name="home_title">Wishes</string>
+    <string name="gifts_title">Gifts</string>
+    <string name="friends_title">Friends</string>
+</resources>

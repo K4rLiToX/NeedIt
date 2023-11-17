@@ -14,12 +14,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.carlosdiestro.needit.core.design_system.components.animations.enter
-import com.carlosdiestro.needit.core.design_system.components.animations.exit
-import com.carlosdiestro.needit.core.design_system.components.animations.exitSlideDown
-import com.carlosdiestro.needit.core.design_system.components.animations.exitSlideUp
-import com.carlosdiestro.needit.core.design_system.components.animations.exitZSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
+import com.carlosdiestro.design_system.components.animations.enter
+import com.carlosdiestro.design_system.components.animations.exit
+import com.carlosdiestro.design_system.components.animations.exitSlideDown
+import com.carlosdiestro.design_system.components.animations.exitSlideUp
+import com.carlosdiestro.design_system.components.animations.exitZSharedAxis
+import com.carlosdiestro.design_system.components.animations.popEnterZSharedAxis
 import com.carlosdiestro.needit.core.design_system.components.navigation.navigation_bar.NiNavigationBar
 import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiMainTopAppBar
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
@@ -42,8 +42,8 @@ fun NeedItApp(
 ) {
     AnimatedVisibility(
         visible = appState.shouldShowAccountDialog,
-        enter = enter,
-        exit = exit
+        enter = com.carlosdiestro.design_system.components.animations.enter,
+        exit = com.carlosdiestro.design_system.components.animations.exit
     ) {
         AccountDialogRoute(
             onDismiss = appState::closeAccountDialog,
@@ -62,8 +62,8 @@ fun NeedItApp(
         topBar = {
             AnimatedVisibility(
                 visible = appState.shouldShowTopBar,
-                enter = popEnterZSharedAxis,
-                exit = exitZSharedAxis + exitSlideUp,
+                enter = com.carlosdiestro.design_system.components.animations.popEnterZSharedAxis,
+                exit = com.carlosdiestro.design_system.components.animations.exitZSharedAxis + com.carlosdiestro.design_system.components.animations.exitSlideUp,
             ) {
                 NiMainTopAppBar(
                     accountImageUrl = profilePictureUrl,
@@ -75,8 +75,8 @@ fun NeedItApp(
         bottomBar = {
             AnimatedVisibility(
                 visible = appState.shouldShowBottomBar,
-                enter = popEnterZSharedAxis,
-                exit = exitZSharedAxis + exitSlideDown,
+                enter = com.carlosdiestro.design_system.components.animations.popEnterZSharedAxis,
+                exit = com.carlosdiestro.design_system.components.animations.exitZSharedAxis + com.carlosdiestro.design_system.components.animations.exitSlideDown,
             ) {
                 NiNavigationBar(
                     destinations = appState.topLevelDestinations,
