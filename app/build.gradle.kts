@@ -1,10 +1,11 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
-    id("com.google.gms.google-services")
-    id("androidx.room") version "2.6.0"
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.kotlin)
+    alias(libs.plugins.android.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.play.services)
+    alias(libs.plugins.androidx.room)
 }
 
 android {
