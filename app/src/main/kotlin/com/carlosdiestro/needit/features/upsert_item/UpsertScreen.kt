@@ -30,9 +30,9 @@ import coil.compose.AsyncImage
 import com.carlosdiestro.design_system.buttons.NiTextButton
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.design_system.navigation.top_app_bar.NiTopAppBar
-import com.carlosdiestro.needit.R
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.shape
+import com.carlosdiestro.needit.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

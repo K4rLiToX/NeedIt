@@ -43,10 +43,10 @@ import com.carlosdiestro.design_system.avatars.NiAvatar
 import com.carlosdiestro.design_system.buttons.NiDoubleButton
 import com.carlosdiestro.design_system.buttons.NiOutlinedButton
 import com.carlosdiestro.design_system.buttons.NiTextButton
-import com.carlosdiestro.needit.R
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.design_system.theme.shape
+import com.carlosdiestro.needit.R
 
 @Composable
 fun AccountDialogRoute(

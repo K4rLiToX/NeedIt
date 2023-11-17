@@ -25,9 +25,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.design_system.buttons.NiButtonSpecs
 import com.carlosdiestro.design_system.buttons.NiFilledButton
 import com.carlosdiestro.design_system.buttons.NiOutlinedButton
+import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.auth.UserAuth
-import com.carlosdiestro.design_system.theme.dimensions
 
 @Composable
 internal fun SignInRoute(
