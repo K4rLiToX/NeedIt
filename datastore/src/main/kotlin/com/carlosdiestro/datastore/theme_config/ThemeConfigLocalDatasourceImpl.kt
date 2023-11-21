@@ -1,7 +1,6 @@
-package com.carlosdiestro.needit.framework.datastore
+package com.carlosdiestro.datastore.theme_config
 
-import com.carlosdiestro.needit.data.theme_config.ThemeConfigLocalDatasource
-import com.carlosdiestro.needit.framework.datastore.models.ThemeConfigPreferences
+import com.carlosdiestro.datastore.NeedItPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

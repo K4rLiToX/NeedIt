@@ -1,6 +1,5 @@
-package com.carlosdiestro.needit.data.theme_config
+package com.carlosdiestro.datastore.theme_config
 
-import com.carlosdiestro.needit.framework.datastore.models.ThemeConfigPreferences
 import kotlinx.coroutines.flow.Flow
 
 interface ThemeConfigLocalDatasource {

@@ -1,20 +1,21 @@
-package com.carlosdiestro.needit.framework.datastore
+package com.carlosdiestro.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.carlosdiestro.needit.core.di.IoDispatcher
-import com.carlosdiestro.needit.data.theme_config.ThemeConfigLocalDatasource
-import com.carlosdiestro.needit.data.users.UserLocalDatasource
+import com.carlosdiestro.datastore.theme_config.ThemeConfigLocalDatasource
+import com.carlosdiestro.datastore.theme_config.ThemeConfigLocalDatasourceImpl
+import com.carlosdiestro.datastore.user.UserLocalDatasource
+import com.carlosdiestro.datastore.user.UserLocalDatasourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import javax.inject.Singleton
 
@@ -27,12 +28,11 @@ internal object DataStoreModule {
     @Singleton
     @Provides
     fun providesNeedItPreferences(
-        @ApplicationContext context: Context,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
+        @ApplicationContext context: Context
     ): DataStore<Preferences> {
         return PreferenceDataStoreFactory
             .create(
-                scope = CoroutineScope(SupervisorJob() + ioDispatcher),
+                scope = CoroutineScope(SupervisorJob() + Dispatchers.IO),
                 produceFile = {
                     context.preferencesDataStoreFile(NEED_IT_PREFERENCES)
                 }

@@ -1,7 +1,6 @@
-package com.carlosdiestro.needit.framework.datastore
+package com.carlosdiestro.datastore.user
 
-import com.carlosdiestro.needit.data.users.UserLocalDatasource
-import com.carlosdiestro.needit.framework.datastore.models.UserPreferences
+import com.carlosdiestro.datastore.NeedItPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

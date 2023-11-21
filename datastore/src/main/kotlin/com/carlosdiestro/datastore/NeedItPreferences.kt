@@ -1,9 +1,9 @@
-package com.carlosdiestro.needit.framework.datastore
+package com.carlosdiestro.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.carlosdiestro.needit.framework.datastore.models.ThemeConfigPreferences
-import com.carlosdiestro.needit.framework.datastore.models.UserPreferences
+import com.carlosdiestro.datastore.theme_config.ThemeConfigPreferences
+import com.carlosdiestro.datastore.user.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
