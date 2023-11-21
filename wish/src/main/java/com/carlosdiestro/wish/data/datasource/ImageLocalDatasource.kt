@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.data.wishes.datasources
+package com.carlosdiestro.wish.data.datasource
 
 interface ImageLocalDatasource {
     suspend fun getImageLocalPath(): String

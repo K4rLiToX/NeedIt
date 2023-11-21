@@ -1,11 +1,11 @@
-package com.carlosdiestro.needit.data.wishes.repository
+package com.carlosdiestro.wish.data.repository
 
-import com.carlosdiestro.needit.data.wishes.datasources.ImageLocalDatasource
-import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
-import com.carlosdiestro.remotedatabase.storage.ImageRemoteDatasource
+import com.carlosdiestro.wish.data.datasource.ImageLocalDatasource
+import com.carlosdiestro.wish.data.datasource.ImageRemoteDatasource
+import com.carlosdiestro.wish.domain.repository.ImageRepository
 import javax.inject.Inject
 
-internal class ImageRepositoryImpl @Inject constructor(
+class ImageRepositoryImpl @Inject constructor(
     private val localDatasource: ImageLocalDatasource,
     private val remoteDatasource: ImageRemoteDatasource
 ) : ImageRepository {

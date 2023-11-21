@@ -1,5 +1,6 @@
 package com.carlosdiestro.remotedatabase.storage
 
+import com.carlosdiestro.wish.data.datasource.ImageRemoteDatasource
 import javax.inject.Inject
 
 internal class ImageRemoteDatasourceImpl @Inject constructor(

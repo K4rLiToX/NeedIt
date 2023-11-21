@@ -41,7 +41,7 @@ import com.carlosdiestro.design_system.navigation.tab_bar.NiScrollableTabBar
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.wish.domain.model.Wish
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable

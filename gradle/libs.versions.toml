@@ -41,7 +41,9 @@ androidKotlinPlugin = "1.9.0"
 androidHiltPlugin = "2.48.1"
 kspPlugin = "1.9.0-1.0.13"
 androidxRoomPlugin = "2.6.0"
-org-jetbrains-kotlin-jvm = "1.9.0"
+kotlin-jvm = "1.9.0"
+
+javax-inject = "1"
 
 [libraries]
 
@@ -99,6 +101,8 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
+javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javax-inject" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
@@ -111,7 +115,7 @@ android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "androidKo
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androidHiltPlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
 androidx-room = { id = "androidx.room", version.ref = "androidxRoomPlugin" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-jvm" }
 
 [bundles]
 

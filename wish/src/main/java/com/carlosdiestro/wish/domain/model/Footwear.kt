@@ -1,8 +1,8 @@
-package com.carlosdiestro.needit.domain.wishes
+package com.carlosdiestro.wish.domain.model
 
 import java.util.UUID
 
-class Other private constructor(
+class Footwear private constructor(
     override val id: UUID,
     override val userId: String,
     override val imageLocalPath: String,
@@ -13,7 +13,9 @@ class Other private constructor(
     override val isShared: Boolean,
     override val category: WishCategory,
     override val title: String,
-    override val subtitle: String
+    override val subtitle: String,
+    val size: String,
+    val color: String
 ) : Wish {
     fun copy(
         id: UUID = this.id,
@@ -26,8 +28,10 @@ class Other private constructor(
         isShared: Boolean = this.isShared,
         category: WishCategory = this.category,
         title: String = this.title,
-        subtitle: String = this.subtitle
-    ): Other = Other(
+        subtitle: String = this.subtitle,
+        size: String = this.size,
+        color: String = this.color
+    ): Footwear = Footwear(
         id = id,
         userId = userId,
         imageLocalPath = imageLocalPath,
@@ -38,13 +42,17 @@ class Other private constructor(
         isShared = isShared,
         category = category,
         title = title,
-        subtitle = subtitle
+        subtitle = subtitle,
+        size = size,
+        color = color
     )
 
     companion object {
         fun create(
-            args: WishInformation
-        ): Other = Other(
+            args: WishInformation,
+            size: String,
+            color: String
+        ): Footwear = Footwear(
             id = args.id,
             userId = args.userId,
             imageLocalPath = args.imageLocalPath,
@@ -55,7 +63,9 @@ class Other private constructor(
             isShared = args.isShared,
             category = args.category,
             title = args.title,
-            subtitle = args.subtitle
+            subtitle = args.subtitle,
+            size = size,
+            color = color
         )
     }
 }

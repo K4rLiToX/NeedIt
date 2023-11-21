@@ -1,6 +1,6 @@
-package com.carlosdiestro.needit.domain.wishes.usecases
+package com.carlosdiestro.wish.usecases
 
-import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
+import com.carlosdiestro.wish.domain.repository.ImageRepository
 import javax.inject.Inject
 
 class GetImageLocalPathUseCase @Inject constructor(

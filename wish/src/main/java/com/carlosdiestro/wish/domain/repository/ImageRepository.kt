@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.domain.wishes.repository
+package com.carlosdiestro.wish.domain.repository
 
 interface ImageRepository {
     suspend fun getLocalPath(): String

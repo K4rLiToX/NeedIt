@@ -1,11 +1,11 @@
-package com.carlosdiestro.needit.domain.wishes.usecases
+package com.carlosdiestro.wish.usecases
 
-import com.carlosdiestro.needit.domain.wishes.Book
-import com.carlosdiestro.needit.domain.wishes.Clothes
-import com.carlosdiestro.needit.domain.wishes.Footwear
-import com.carlosdiestro.needit.domain.wishes.Other
-import com.carlosdiestro.needit.domain.wishes.Wish
-import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
+import com.carlosdiestro.wish.domain.model.Book
+import com.carlosdiestro.wish.domain.model.Clothes
+import com.carlosdiestro.wish.domain.model.Footwear
+import com.carlosdiestro.wish.domain.model.Other
+import com.carlosdiestro.wish.domain.model.Wish
+import com.carlosdiestro.wish.domain.repository.WishRepository
 import javax.inject.Inject
 
 class ShareWishUseCase @Inject constructor(

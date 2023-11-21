@@ -1,7 +1,7 @@
-package com.carlosdiestro.needit.domain.wishes.usecases
+package com.carlosdiestro.wish.usecases
 
-import com.carlosdiestro.needit.domain.wishes.Wish
-import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
+import com.carlosdiestro.wish.domain.model.Wish
+import com.carlosdiestro.wish.domain.repository.WishRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

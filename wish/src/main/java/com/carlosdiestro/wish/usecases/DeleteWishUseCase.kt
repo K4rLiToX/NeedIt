@@ -1,9 +1,8 @@
-package com.carlosdiestro.needit.domain.wishes.usecases
+package com.carlosdiestro.wish.usecases
 
-import com.carlosdiestro.needit.domain.wishes.Wish
-import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
-import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
-import okhttp3.HttpUrl.Companion.toHttpUrl
+import com.carlosdiestro.wish.domain.model.Wish
+import com.carlosdiestro.wish.domain.repository.ImageRepository
+import com.carlosdiestro.wish.domain.repository.WishRepository
 import javax.inject.Inject
 
 class DeleteWishUseCase @Inject constructor(
@@ -16,7 +15,6 @@ class DeleteWishUseCase @Inject constructor(
     }
 
     private fun getPath(imageUrl: String): String = imageUrl
-        .toHttpUrl()
-        .pathSegments
+        .split("/")
         .last()
 }

@@ -1,6 +1,6 @@
-package com.carlosdiestro.needit.domain.wishes.repository
+package com.carlosdiestro.wish.domain.repository
 
-import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.wish.domain.model.Wish
 import kotlinx.coroutines.flow.Flow
 
 interface WishRepository {

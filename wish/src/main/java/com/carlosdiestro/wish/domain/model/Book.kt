@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.domain.wishes
+package com.carlosdiestro.wish.domain.model
 
 import java.util.UUID
 

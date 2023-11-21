@@ -8,20 +8,23 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
+import com.carlosdiestro.needit.core.di.ApplicationScope
 import com.carlosdiestro.needit.core.image_utils.ImageCompressor
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asPlo
-import com.carlosdiestro.needit.domain.wishes.Book
-import com.carlosdiestro.needit.domain.wishes.Clothes
-import com.carlosdiestro.needit.domain.wishes.Footwear
-import com.carlosdiestro.needit.domain.wishes.Other
-import com.carlosdiestro.needit.domain.wishes.Wish
-import com.carlosdiestro.needit.domain.wishes.WishInformation
-import com.carlosdiestro.needit.domain.wishes.usecases.CreateWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.GetImageLocalPathUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.GetWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.UpdateWishUseCase
+import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
+import com.carlosdiestro.wish.domain.model.Book
+import com.carlosdiestro.wish.domain.model.Clothes
+import com.carlosdiestro.wish.domain.model.Footwear
+import com.carlosdiestro.wish.domain.model.Other
+import com.carlosdiestro.wish.domain.model.Wish
+import com.carlosdiestro.wish.domain.model.WishInformation
+import com.carlosdiestro.wish.usecases.CreateWishUseCase
+import com.carlosdiestro.wish.usecases.GetImageLocalPathUseCase
+import com.carlosdiestro.wish.usecases.GetWishUseCase
+import com.carlosdiestro.wish.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
@@ -35,7 +38,9 @@ internal class UpsertViewModel @Inject constructor(
     private val createWish: CreateWishUseCase,
     private val updateWish: UpdateWishUseCase,
     private val getImageLocalPath: GetImageLocalPathUseCase,
+    private val getSignedInUser: GetSignedInUserUseCase,
     private val imageCompressor: ImageCompressor,
+    @ApplicationScope private val scope: CoroutineScope,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -187,10 +192,12 @@ internal class UpsertViewModel @Inject constructor(
     }
 
     private fun create() {
-        viewModelScope.launch {
+        viewModelScope.launch(scope.coroutineContext) {
             val imageLocalPath = state.value.imageLocalPath
             val compressedImage = imageCompressor.compress(imageLocalPath)
+            val userId = getSignedInUser().first().id
             val args = WishInformation(
+                userId = userId,
                 imageLocalPath = imageLocalPath,
                 price = if (price.isEmpty()) 0.0 else price.toDouble(),
                 description = description,

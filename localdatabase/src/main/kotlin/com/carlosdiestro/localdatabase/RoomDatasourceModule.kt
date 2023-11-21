@@ -1,6 +1,6 @@
 package com.carlosdiestro.localdatabase
 
-import com.carlosdiestro.localdatabase.wishes.WishLocalDatasource
+import com.carlosdiestro.wish.data.datasource.WishLocalDatasource
 import com.carlosdiestro.localdatabase.wishes.WishLocalDatasourceImpl
 import dagger.Binds
 import dagger.Module

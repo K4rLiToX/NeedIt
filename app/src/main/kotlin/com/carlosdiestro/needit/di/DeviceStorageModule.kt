@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.device_storage
+package com.carlosdiestro.needit.di
 
 import android.content.ContentResolver
 import android.content.Context
@@ -6,7 +6,9 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import com.carlosdiestro.needit.core.di.IoDispatcher
-import com.carlosdiestro.needit.data.wishes.datasources.ImageLocalDatasource
+import com.carlosdiestro.needit.framework.device_storage.ImageLocalDatasourceImpl
+import com.carlosdiestro.needit.framework.device_storage.ImageStorageDao
+import com.carlosdiestro.wish.data.datasource.ImageLocalDatasource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
