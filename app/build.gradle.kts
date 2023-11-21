@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":remotedatabase"))
     implementation(project(":datastore"))
     implementation(project(":auth"))
+    implementation(project(":wish"))
 
     // Core
     implementation(libs.androidx.core.ktx)
