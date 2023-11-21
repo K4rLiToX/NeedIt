@@ -6,8 +6,8 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import com.carlosdiestro.needit.core.di.IoDispatcher
-import com.carlosdiestro.needit.framework.device_storage.ImageLocalDatasourceImpl
-import com.carlosdiestro.needit.framework.device_storage.ImageStorageDao
+import com.carlosdiestro.device_storage.ImageLocalDatasourceImpl
+import com.carlosdiestro.device_storage.ImageStorageDao
 import com.carlosdiestro.wish.data.datasource.ImageLocalDatasource
 import dagger.Module
 import dagger.Provides
@@ -40,7 +40,12 @@ internal object DeviceStorageModule {
         imageStorage: Uri,
         contentResolver: ContentResolver,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ): ImageStorageDao = ImageStorageDao(imageStorage, contentResolver, ioDispatcher)
+    ): ImageStorageDao =
+        ImageStorageDao(
+            imageStorage,
+            contentResolver,
+            ioDispatcher
+        )
 
     @Provides
     @Singleton

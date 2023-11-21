@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.device_storage
+package com.carlosdiestro.device_storage
 
 import android.content.ContentResolver
 import android.database.Cursor
@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class ImageStorageDao @Inject constructor(
+class ImageStorageDao @Inject constructor(
     private val imageStorage: Uri,
     private val contentResolver: ContentResolver,
     private val ioDispatcher: CoroutineDispatcher
