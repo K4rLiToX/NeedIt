@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.database.wishes
+package com.carlosdiestro.localdatabase.wishes
 
 import androidx.room.Dao
 import androidx.room.Delete

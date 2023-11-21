@@ -1,9 +1,9 @@
-package com.carlosdiestro.needit.framework.database
+package com.carlosdiestro.localdatabase
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.carlosdiestro.needit.framework.database.wishes.WishDao
-import com.carlosdiestro.needit.framework.database.wishes.WishEntity
+import com.carlosdiestro.localdatabase.wishes.WishDao
+import com.carlosdiestro.localdatabase.wishes.WishEntity
 
 @Database(
     entities = [WishEntity::class],

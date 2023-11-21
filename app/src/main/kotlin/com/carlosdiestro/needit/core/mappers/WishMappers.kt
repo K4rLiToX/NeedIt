@@ -2,6 +2,7 @@ package com.carlosdiestro.needit.core.mappers
 
 import com.carlosdiestro.design_system.lists.HomeWishPlo
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
+import com.carlosdiestro.localdatabase.wishes.WishEntity
 import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear
@@ -9,7 +10,6 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.WishCategory
 import com.carlosdiestro.needit.domain.wishes.WishInformation
 import com.carlosdiestro.needit.domain.wishes.toWishCategory
-import com.carlosdiestro.needit.framework.database.wishes.WishEntity
 import com.carlosdiestro.needit.framework.network.wishes.WishDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -39,13 +39,16 @@ fun WishEntity.asDomain(): Wish {
     }
 }
 
-fun List<WishEntity>.asDomain(): List<Wish> = this.map { it.asDomain() }
+fun List<WishEntity>.asDomain(): List<Wish> =
+    this.map { it.asDomain() }
 
 @JvmName("flowListWishEntityToDomain")
-fun Flow<List<WishEntity>>.asDomain(): Flow<List<Wish>> = this.map { it.asDomain() }
+fun Flow<List<WishEntity>>.asDomain(): Flow<List<Wish>> =
+    this.map { it.asDomain() }
 
 @JvmName("flowWishEntityToDomain")
-fun Flow<WishEntity>.asDomain(): Flow<Wish> = this.map { it.asDomain() }
+fun Flow<WishEntity>.asDomain(): Flow<Wish> =
+    this.map { it.asDomain() }
 
 fun Wish.asPlo(): HomeWishPlo = HomeWishPlo(
     id = this.id.toString(),
