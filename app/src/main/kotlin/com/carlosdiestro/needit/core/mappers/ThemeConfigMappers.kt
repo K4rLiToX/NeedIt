@@ -1,8 +1,8 @@
 package com.carlosdiestro.needit.core.mappers
 
+import com.carlosdiestro.datastore.theme_config.ThemeConfigPreferences
 import com.carlosdiestro.needit.ThemeConfigPlo
 import com.carlosdiestro.needit.domain.theme_config.ThemeConfig
-import com.carlosdiestro.datastore.theme_config.ThemeConfigPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

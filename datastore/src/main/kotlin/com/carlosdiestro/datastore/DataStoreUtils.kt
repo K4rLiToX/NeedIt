@@ -7,9 +7,9 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.carlosdiestro.datastore.theme_config.ThemeConfigPreferences
-import com.carlosdiestro.datastore.user.UserPreferences
 import com.carlosdiestro.datastore.theme_config.asPreferences
 import com.carlosdiestro.datastore.theme_config.asValue
+import com.carlosdiestro.datastore.user.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
