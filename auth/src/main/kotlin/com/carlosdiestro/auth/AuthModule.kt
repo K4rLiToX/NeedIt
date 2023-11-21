@@ -1,7 +1,6 @@
-package com.carlosdiestro.needit.auth
+package com.carlosdiestro.auth
 
 import android.content.Context
-import com.carlosdiestro.needit.R
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

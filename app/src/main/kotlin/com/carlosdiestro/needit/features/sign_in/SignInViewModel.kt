@@ -3,9 +3,9 @@ package com.carlosdiestro.needit.features.sign_in
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.auth.AuthClient
-import com.carlosdiestro.needit.auth.SignInResult
-import com.carlosdiestro.needit.auth.UserAuth
+import com.carlosdiestro.auth.AuthClient
+import com.carlosdiestro.auth.SignInResult
+import com.carlosdiestro.auth.UserAuth
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.domain.users.usecases.UpsertUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -313,9 +313,9 @@ private fun PhotoPreview(
 }
 
 suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutine { continuation ->
-    ProcessCameraProvider.getInstance(this).also { future ->
-        future.addListener({
-            continuation.resume(future.get())
+    ProcessCameraProvider.getInstance(this).also {
+        it.addListener({
+            continuation.resume(it.get())
         }, executor)
     }
 }

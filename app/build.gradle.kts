@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":localdatabase"))
     implementation(project(":remotedatabase"))
     implementation(project(":datastore"))
+    implementation(project(":auth"))
 
     // Core
     implementation(libs.androidx.core.ktx)
@@ -93,19 +94,13 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.kotlinx.coroutines.guava)
 
     // CameraX
     implementation(libs.bundles.camera)
 
     // Splashscreen
     implementation(libs.androidx.core.splashscreen)
-
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
-
-    // Google
-    implementation(libs.play.services.auth)
 
     // Compose Test
     androidTestImplementation(composeBom)

@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.features.sign_in
 
 import android.content.IntentSender
-import com.carlosdiestro.needit.auth.UserAuth
+import com.carlosdiestro.auth.UserAuth
 
 internal data class SignInDataState(
     val userAuth: UserAuth? = null,
