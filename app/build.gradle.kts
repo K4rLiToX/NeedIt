@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":localdatabase"))
     implementation(project(":remotedatabase"))
     implementation(project(":datastore"))
+    implementation(project(":auth"))
 
     // Core
     implementation(libs.androidx.core.ktx)
@@ -99,13 +100,6 @@ dependencies {
 
     // Splashscreen
     implementation(libs.androidx.core.splashscreen)
-
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.auth)
-
-    // Google
-    implementation(libs.play.services.auth)
 
     // Compose Test
     androidTestImplementation(composeBom)
