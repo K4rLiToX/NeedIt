@@ -11,8 +11,8 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
 
 internal data class UpsertDataState(
     val imageLocalPath: String,

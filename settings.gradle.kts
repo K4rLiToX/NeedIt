@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NeedIt"
 include(":app")
+include(":design_system")

@@ -3,8 +3,8 @@ package com.carlosdiestro.needit.features.wish_details
 import androidx.annotation.StringRes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.core.design_system.theme.icons
 
 internal data class WishDetailsDataState(
     val id: String = "",

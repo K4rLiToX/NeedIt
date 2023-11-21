@@ -13,17 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiButtonSpecs
-import com.carlosdiestro.needit.core.design_system.components.buttons.NiFilledButton
-import com.carlosdiestro.needit.core.design_system.components.cards.NiWishInfoCard
-import com.carlosdiestro.needit.core.design_system.components.container.NiImageContainer
-import com.carlosdiestro.needit.core.design_system.components.extensions.gradient
-import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButton
-import com.carlosdiestro.needit.core.design_system.components.icon_buttons.NiIconButtonSpecs
-import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBar
-import com.carlosdiestro.needit.core.design_system.components.navigation.top_app_bar.NiTopAppBarSpecs
-import com.carlosdiestro.needit.core.design_system.theme.dimensions
-import com.carlosdiestro.needit.core.design_system.theme.icons
+import com.carlosdiestro.design_system.buttons.NiButtonSpecs
+import com.carlosdiestro.design_system.buttons.NiFilledButton
+import com.carlosdiestro.design_system.cards.NiWishInfoCard
+import com.carlosdiestro.design_system.container.NiImageContainer
+import com.carlosdiestro.design_system.extensions.gradient
+import com.carlosdiestro.design_system.icon_buttons.NiIconButton
+import com.carlosdiestro.design_system.icon_buttons.NiIconButtonSpecs
+import com.carlosdiestro.design_system.navigation.top_app_bar.NiTopAppBar
+import com.carlosdiestro.design_system.navigation.top_app_bar.NiTopAppBarSpecs
+import com.carlosdiestro.design_system.theme.dimensions
+import com.carlosdiestro.design_system.theme.icons
 
 @Composable
 internal fun WishDetailsRoute(

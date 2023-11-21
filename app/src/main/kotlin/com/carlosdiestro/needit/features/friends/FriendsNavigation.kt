@@ -7,7 +7,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import com.carlosdiestro.needit.core.design_system.components.navigation.destinations.topLevelDestination
+import com.carlosdiestro.design_system.navigation.destinations.topLevelDestination
 
 private const val FRIENDS_BASE_ROUTE = "friends"
 

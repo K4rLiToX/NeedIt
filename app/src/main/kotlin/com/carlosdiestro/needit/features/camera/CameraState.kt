@@ -23,7 +23,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
-import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

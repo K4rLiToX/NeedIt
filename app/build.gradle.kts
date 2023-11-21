@@ -61,6 +61,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":design_system"))
+
     // Core
     implementation(libs.androidx.core.ktx)
     implementation(platform(libs.kotlin.bom))

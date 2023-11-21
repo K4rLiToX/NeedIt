@@ -11,20 +11,6 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import com.carlosdiestro.needit.core.NeedItAppState
-import com.carlosdiestro.needit.core.design_system.components.animations.enterFadeThrough
-import com.carlosdiestro.needit.core.design_system.components.animations.enterNone
-import com.carlosdiestro.needit.core.design_system.components.animations.enterSlideUp
-import com.carlosdiestro.needit.core.design_system.components.animations.enterXSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.enterZSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.exitFadeThrough
-import com.carlosdiestro.needit.core.design_system.components.animations.exitNone
-import com.carlosdiestro.needit.core.design_system.components.animations.exitXSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.exitZSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.popEnterXSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.popEnterZSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.popExitXSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.popExitZSharedAxis
-import com.carlosdiestro.needit.core.design_system.components.animations.slideDown
 import com.carlosdiestro.needit.features.camera.CameraDestination
 import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.camera.navigateToCamera
@@ -61,10 +47,10 @@ fun NeedItNavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination,
-        enterTransition = { enterNone },
-        exitTransition = { exitNone },
-        popEnterTransition = { enterNone },
-        popExitTransition = { exitNone }
+        enterTransition = { com.carlosdiestro.design_system.animations.enterNone },
+        exitTransition = { com.carlosdiestro.design_system.animations.exitNone },
+        popEnterTransition = { com.carlosdiestro.design_system.animations.enterNone },
+        popExitTransition = { com.carlosdiestro.design_system.animations.exitNone }
     ) {
         signInScreen(
             onSignInSuccessful = {
@@ -80,56 +66,56 @@ fun NeedItNavHost(
             onItemClick = navController::navigateToWishDetails,
             onUpdateClick = navController::navigateToUpsert,
             onCreateClick = navController::navigateToCamera,
-            enterTransition = { enterFadeThrough },
+            enterTransition = { com.carlosdiestro.design_system.animations.enterFadeThrough },
             exitTransition = {
                 when (targetState.destination.route) {
-                    in appState.topLevelDestinationsRoutes -> exitFadeThrough
-                    else -> exitZSharedAxis
+                    in appState.topLevelDestinationsRoutes -> com.carlosdiestro.design_system.animations.exitFadeThrough
+                    else -> com.carlosdiestro.design_system.animations.exitZSharedAxis
                 }
             },
             popEnterTransition = {
                 when (initialState.destination.route) {
-                    in appState.topLevelDestinationsRoutes -> enterFadeThrough
-                    else -> popEnterZSharedAxis
+                    in appState.topLevelDestinationsRoutes -> com.carlosdiestro.design_system.animations.enterFadeThrough
+                    else -> com.carlosdiestro.design_system.animations.popEnterZSharedAxis
                 }
             },
-            popExitTransition = { exitFadeThrough }
+            popExitTransition = { com.carlosdiestro.design_system.animations.exitFadeThrough }
         )
 
         giftsScreen(
-            enterTransition = { enterNone },
-            exitTransition = { exitNone },
-            popEnterTransition = { enterNone },
-            popExitTransition = { exitNone }
+            enterTransition = { com.carlosdiestro.design_system.animations.enterNone },
+            exitTransition = { com.carlosdiestro.design_system.animations.exitNone },
+            popEnterTransition = { com.carlosdiestro.design_system.animations.enterNone },
+            popExitTransition = { com.carlosdiestro.design_system.animations.exitNone }
         )
 
         friendsScreen(
             onFriendClick = {},
-            enterTransition = { enterNone },
-            exitTransition = { exitNone },
-            popEnterTransition = { enterNone },
-            popExitTransition = { exitNone }
+            enterTransition = { com.carlosdiestro.design_system.animations.enterNone },
+            exitTransition = { com.carlosdiestro.design_system.animations.exitNone },
+            popEnterTransition = { com.carlosdiestro.design_system.animations.enterNone },
+            popExitTransition = { com.carlosdiestro.design_system.animations.exitNone }
         )
 
         cameraScreen(
             onBackClick = navController::popBackStack,
             onContinueClick = navController::navigateToUpsert,
-            enterTransition = { enterZSharedAxis },
+            enterTransition = { com.carlosdiestro.design_system.animations.enterZSharedAxis },
             exitTransition = {
                 if (targetState.destination.route == UpsertDestination.route) {
-                    exitXSharedAxis
+                    com.carlosdiestro.design_system.animations.exitXSharedAxis
                 } else {
-                    exitNone
+                    com.carlosdiestro.design_system.animations.exitNone
                 }
             },
             popEnterTransition = {
                 if (initialState.destination.route == UpsertDestination.route) {
-                    popEnterXSharedAxis
+                    com.carlosdiestro.design_system.animations.popEnterXSharedAxis
                 } else {
-                    enterNone
+                    com.carlosdiestro.design_system.animations.enterNone
                 }
             },
-            popExitTransition = { popExitZSharedAxis }
+            popExitTransition = { com.carlosdiestro.design_system.animations.popExitZSharedAxis }
         )
 
         upsertScreen(
@@ -144,18 +130,18 @@ fun NeedItNavHost(
             },
             enterTransition = {
                 if (initialState.destination.route == CameraDestination.route) {
-                    enterXSharedAxis
+                    com.carlosdiestro.design_system.animations.enterXSharedAxis
                 } else {
-                    enterSlideUp
+                    com.carlosdiestro.design_system.animations.enterSlideUp
                 }
             },
-            exitTransition = { exitNone },
-            popEnterTransition = { enterNone },
+            exitTransition = { com.carlosdiestro.design_system.animations.exitNone },
+            popEnterTransition = { com.carlosdiestro.design_system.animations.enterNone },
             popExitTransition = {
                 if (targetState.destination.route == CameraDestination.route) {
-                    popExitXSharedAxis
+                    com.carlosdiestro.design_system.animations.popExitXSharedAxis
                 } else {
-                    slideDown
+                    com.carlosdiestro.design_system.animations.slideDown
                 }
             }
         )
@@ -163,10 +149,10 @@ fun NeedItNavHost(
         wishDetailsScreen(
             onBackClick = navController::popBackStack,
             onUpdateClick = navController::navigateToUpsert,
-            enterTransition = { enterZSharedAxis },
+            enterTransition = { com.carlosdiestro.design_system.animations.enterZSharedAxis },
             exitTransition = { fadeOut(tween()) },
             popEnterTransition = { fadeIn(tween()) },
-            popExitTransition = { popExitZSharedAxis }
+            popExitTransition = { com.carlosdiestro.design_system.animations.popExitZSharedAxis }
         )
 
         settingsScreen(
