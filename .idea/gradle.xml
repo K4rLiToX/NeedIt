@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/design_system" />
             <option value="$PROJECT_DIR$/localdatabase" />
             <option value="$PROJECT_DIR$/remotedatabase" />
+            <option value="$PROJECT_DIR$/wish" />
           </set>
         </option>
       </GradleProjectSettings>

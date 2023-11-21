@@ -2,9 +2,9 @@ package com.carlosdiestro.remotedatabase
 
 import com.carlosdiestro.remotedatabase.firestore.users.UserRemoteDatasource
 import com.carlosdiestro.remotedatabase.firestore.users.UserRemoteDatasourceImpl
-import com.carlosdiestro.remotedatabase.firestore.wishes.WishRemoteDatasource
+import com.carlosdiestro.wish.data.datasource.WishRemoteDatasource
 import com.carlosdiestro.remotedatabase.firestore.wishes.WishRemoteDatasourceImpl
-import com.carlosdiestro.remotedatabase.storage.ImageRemoteDatasource
+import com.carlosdiestro.wish.data.datasource.ImageRemoteDatasource
 import com.carlosdiestro.remotedatabase.storage.ImageRemoteDatasourceImpl
 import dagger.Binds
 import dagger.Module

@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
-import com.carlosdiestro.needit.domain.wishes.Wish
-import com.carlosdiestro.needit.domain.wishes.usecases.DeleteWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.GetMyWishesUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.LockWishUseCase
-import com.carlosdiestro.needit.domain.wishes.usecases.ShareWishUseCase
+import com.carlosdiestro.wish.domain.model.Wish
+import com.carlosdiestro.wish.usecases.DeleteWishUseCase
+import com.carlosdiestro.wish.usecases.GetMyWishesUseCase
+import com.carlosdiestro.wish.usecases.LockWishUseCase
+import com.carlosdiestro.wish.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

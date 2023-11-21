@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.android.kotlin) apply false
     alias(libs.plugins.android.hilt) apply false
     alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
 }
 
 tasks.create<Delete>("clean") {

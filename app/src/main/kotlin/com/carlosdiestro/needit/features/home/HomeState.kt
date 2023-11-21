@@ -21,7 +21,7 @@ import com.carlosdiestro.design_system.lists.HomeWishPlo
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.domain.wishes.Wish
+import com.carlosdiestro.wish.domain.model.Wish
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
