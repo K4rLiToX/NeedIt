@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface DataModule {
+internal interface UserDataModule {
 
     @Singleton
     @Binds
