@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":datastore"))
     implementation(project(":auth"))
     implementation(project(":wish"))
+    implementation(project(":device_storage"))
 
     // Core
     implementation(libs.androidx.core.ktx)

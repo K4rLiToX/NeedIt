@@ -1,9 +1,9 @@
-package com.carlosdiestro.needit.framework.device_storage
+package com.carlosdiestro.device_storage
 
 import com.carlosdiestro.wish.data.datasource.ImageLocalDatasource
 import javax.inject.Inject
 
-internal class ImageLocalDatasourceImpl @Inject constructor(
+class ImageLocalDatasourceImpl @Inject constructor(
     private val dao: ImageStorageDao
 ) : ImageLocalDatasource {
 
