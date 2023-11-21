@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":datastore"))
     implementation(project(":auth"))
     implementation(project(":wish"))
+    implementation(project(":user"))
     implementation(project(":device_storage"))
 
     // Core
