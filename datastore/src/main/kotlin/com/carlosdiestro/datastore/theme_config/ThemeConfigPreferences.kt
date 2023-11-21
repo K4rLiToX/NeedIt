@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.datastore.models
+package com.carlosdiestro.datastore.theme_config
 
 enum class ThemeConfigPreferences {
     FollowSystem,

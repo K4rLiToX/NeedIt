@@ -1,5 +1,6 @@
 package com.carlosdiestro.needit.data.users
 
+import com.carlosdiestro.datastore.user.UserLocalDatasource
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asDto
 import com.carlosdiestro.needit.core.mappers.asPreferences

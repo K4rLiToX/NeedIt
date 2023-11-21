@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.core.mappers
 
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.domain.users.User
-import com.carlosdiestro.needit.framework.datastore.models.UserPreferences
+import com.carlosdiestro.datastore.user.UserPreferences
 import com.carlosdiestro.remotedatabase.firestore.users.UserDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
