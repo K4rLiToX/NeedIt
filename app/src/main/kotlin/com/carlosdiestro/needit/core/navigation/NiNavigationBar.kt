@@ -1,4 +1,4 @@
-package com.carlosdiestro.design_system.navigation.navigation_bar
+package com.carlosdiestro.needit.core.navigation
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.RowScope

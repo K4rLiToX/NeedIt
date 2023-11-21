@@ -1,4 +1,4 @@
-package com.carlosdiestro.design_system.navigation.navigation_bar
+package com.carlosdiestro.needit.core.navigation
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

@@ -1,10 +1,13 @@
-package com.carlosdiestro.design_system.navigation.navigation_bar
+package com.carlosdiestro.needit.core.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.carlosdiestro.design_system.R
 import com.carlosdiestro.design_system.theme.icons
+import com.carlosdiestro.needit.features.friends.FriendsDestination
+import com.carlosdiestro.needit.features.gifts.GiftsDestination
+import com.carlosdiestro.needit.features.home.HomeDestination
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,
@@ -15,19 +18,19 @@ enum class TopLevelDestination(
     Home(
         selectedIcon = MaterialTheme.icons.HomeFilled,
         unselectedIcon = MaterialTheme.icons.HomeOutlined,
-        route = "home",
+        route = HomeDestination.route,
         labelId = R.string.home_title
     ),
     Gifts(
         selectedIcon = MaterialTheme.icons.GiftsFilled,
         unselectedIcon = MaterialTheme.icons.GiftsOutlined,
-        route = "gifts",
+        route = GiftsDestination.route,
         labelId = R.string.gifts_title
     ),
     Friends(
         selectedIcon = MaterialTheme.icons.FriendsFilled,
         unselectedIcon = MaterialTheme.icons.FriendsOutlined,
-        route = "friends",
+        route = FriendsDestination.route,
         labelId = R.string.friends_title
     )
 }
