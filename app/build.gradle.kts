@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":design_system"))
     implementation(project(":localdatabase"))
     implementation(project(":remotedatabase"))
+    implementation(project(":datastore"))
 
     // Core
     implementation(libs.androidx.core.ktx)
@@ -105,9 +106,6 @@ dependencies {
 
     // Google
     implementation(libs.play.services.auth)
-
-    // Preferences Data Store
-    implementation(libs.androidx.datastore.preferences)
 
     // Compose Test
     androidTestImplementation(composeBom)
