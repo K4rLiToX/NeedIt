@@ -3,7 +3,7 @@ package com.carlosdiestro.needit.features.wish_details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
+import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.wish.domain.model.Book
 import com.carlosdiestro.wish.domain.model.Clothes
 import com.carlosdiestro.wish.domain.model.Footwear

@@ -7,8 +7,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.carlosdiestro.datastore.theme_config.ThemeConfigLocalDatasource
 import com.carlosdiestro.datastore.theme_config.ThemeConfigLocalDatasourceImpl
-import com.carlosdiestro.datastore.user.UserLocalDatasource
 import com.carlosdiestro.datastore.user.UserLocalDatasourceImpl
+import com.carlosdiestro.user.data.UserLocalDatasource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +41,7 @@ internal object DataStoreModule {
 
     @Singleton
     @Provides
-    fun provideUserLocalDatasource(preferences: NeedItPreferences): UserLocalDatasource =
+    fun provideUserLocalDatasource(preferences: NeedItPreferences): com.carlosdiestro.user.data.UserLocalDatasource =
         UserLocalDatasourceImpl(preferences)
 
     @Singleton

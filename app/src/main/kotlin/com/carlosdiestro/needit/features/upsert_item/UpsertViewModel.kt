@@ -12,7 +12,7 @@ import com.carlosdiestro.needit.core.di.ApplicationScope
 import com.carlosdiestro.needit.core.image_utils.ImageCompressor
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asPlo
-import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
+import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.wish.domain.model.Book
 import com.carlosdiestro.wish.domain.model.Clothes
 import com.carlosdiestro.wish.domain.model.Footwear

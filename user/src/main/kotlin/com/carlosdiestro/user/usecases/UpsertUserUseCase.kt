@@ -1,7 +1,7 @@
-package com.carlosdiestro.needit.domain.users.usecases
+package com.carlosdiestro.user.usecases
 
-import com.carlosdiestro.needit.domain.users.User
-import com.carlosdiestro.needit.domain.users.repository.UserRepository
+import com.carlosdiestro.user.domain.User
+import com.carlosdiestro.user.domain.UserRepository
 import javax.inject.Inject
 
 class UpsertUserUseCase @Inject constructor(

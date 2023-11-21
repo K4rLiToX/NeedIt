@@ -1,6 +1,6 @@
-package com.carlosdiestro.needit.domain.users.usecases
+package com.carlosdiestro.user.usecases
 
-import com.carlosdiestro.needit.domain.users.repository.UserRepository
+import com.carlosdiestro.user.domain.UserRepository
 import javax.inject.Inject
 
 class CleanSignedInUserUseCase @Inject constructor(

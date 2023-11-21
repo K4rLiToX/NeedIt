@@ -38,6 +38,7 @@ android {
 dependencies {
 
     implementation(project(":wish"))
+    implementation(project(":user"))
 
     implementation(libs.androidx.core.ktx)
 

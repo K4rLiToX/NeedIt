@@ -37,6 +37,8 @@ android {
 
 dependencies {
 
+    implementation(project(":user"))
+
     implementation(libs.androidx.core.ktx)
 
     implementation(libs.dagger.hilt.android)

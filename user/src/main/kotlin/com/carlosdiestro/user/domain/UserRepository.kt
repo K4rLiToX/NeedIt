@@ -1,6 +1,5 @@
-package com.carlosdiestro.needit.domain.users.repository
+package com.carlosdiestro.user.domain
 
-import com.carlosdiestro.needit.domain.users.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

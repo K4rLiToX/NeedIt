@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.domain.users
+package com.carlosdiestro.user.domain
 
 data class User(
     val id: String,
