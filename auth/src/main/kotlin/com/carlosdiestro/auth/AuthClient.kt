@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.auth
+package com.carlosdiestro.auth
 
 import android.content.Intent
 import android.content.IntentSender

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.auth
+package com.carlosdiestro.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CancellationException

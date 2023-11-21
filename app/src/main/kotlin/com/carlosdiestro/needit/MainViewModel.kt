@@ -3,7 +3,7 @@ package com.carlosdiestro.needit
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.auth.AuthClient
+import com.carlosdiestro.auth.AuthClient
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.theme_config.usecases.GetThemeConfigUseCase
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase

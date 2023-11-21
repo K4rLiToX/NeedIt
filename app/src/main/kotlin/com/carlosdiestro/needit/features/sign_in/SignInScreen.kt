@@ -27,7 +27,7 @@ import com.carlosdiestro.design_system.buttons.NiFilledButton
 import com.carlosdiestro.design_system.buttons.NiOutlinedButton
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.auth.UserAuth
+import com.carlosdiestro.auth.UserAuth
 
 @Composable
 internal fun SignInRoute(

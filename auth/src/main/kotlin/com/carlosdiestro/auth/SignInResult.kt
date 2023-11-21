@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.auth
+package com.carlosdiestro.auth
 
 data class SignInResult(
     val data: UserAuth?,

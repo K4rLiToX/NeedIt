@@ -4,7 +4,7 @@ import android.content.Intent
 import android.content.IntentSender
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.auth.AuthClient
+import com.carlosdiestro.auth.AuthClient
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.needit.domain.users.usecases.UpsertUserUseCase
@@ -62,7 +62,7 @@ internal class AccountViewModel @Inject constructor(
         viewModelScope.launch {
             val signInResult = authClient.linkAccount(intent)
             _signInErrorState.update { signInResult.errorMessage }
-            if (signInResult.data != null) upsertUser(signInResult.data.asDomain())
+            if (signInResult.data != null) upsertUser(signInResult.data!!.asDomain())
         }
     }
 
