@@ -7,7 +7,7 @@ import com.carlosdiestro.user.domain.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-internal class UserRepositoryImpl @Inject constructor(
+class UserRepositoryImpl @Inject constructor(
     private val userLocalDatasource: UserLocalDatasource,
     private val userRemoteDatasource: UserRemoteDatasource
 ) : UserRepository {
