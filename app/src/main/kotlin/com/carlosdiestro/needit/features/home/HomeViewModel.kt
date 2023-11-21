@@ -2,7 +2,7 @@ package com.carlosdiestro.needit.features.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.needit.domain.wishes.Wish
@@ -52,7 +52,7 @@ internal class HomeViewModel @Inject constructor(
 
     private fun getCategories(wishes: List<Wish>): List<WishCategoryPlo> =
         wishes
-            .map { it.category.asPlo() }
+            .map<Wish, WishCategoryPlo> { it.category.asPlo() }
             .toSet()
             .sortedBy { it.ordinal }
 

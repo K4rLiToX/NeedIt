@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.core.mappers
 
-import com.carlosdiestro.needit.core.design_system.components.lists.HomeWishPlo
-import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.design_system.lists.HomeWishPlo
+import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.needit.domain.wishes.Book
 import com.carlosdiestro.needit.domain.wishes.Clothes
 import com.carlosdiestro.needit.domain.wishes.Footwear

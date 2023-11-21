@@ -11,8 +11,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.carlosdiestro.needit.core.design_system.components.lists.WishCategoryPlo
-import com.carlosdiestro.needit.core.design_system.components.lists.toWishCategoryPlo
+import com.carlosdiestro.design_system.lists.WishCategoryPlo
+import com.carlosdiestro.design_system.lists.toWishCategoryPlo
 
 private const val UPSERT_BASE_ROUTE = "upsert"
 private const val UPSERT_ARG_CATEGORY = "category"

@@ -17,8 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.carlosdiestro.design_system.components.lists.HomeWishPlo
-import com.carlosdiestro.design_system.components.lists.WishCategoryPlo
+import com.carlosdiestro.design_system.lists.HomeWishPlo
+import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.needit.R
 import com.carlosdiestro.needit.domain.wishes.Wish
