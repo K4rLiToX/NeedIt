@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.network.images
+package com.carlosdiestro.remotedatabase.storage
 
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await

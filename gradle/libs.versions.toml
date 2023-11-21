@@ -144,7 +144,6 @@ camera = [
 ]
 
 firebase = [
-    "firebase-auth",
     "firebase-firestore",
     "firebase-storage"
 ]

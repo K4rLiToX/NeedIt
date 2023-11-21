@@ -1,8 +1,8 @@
-package com.carlosdiestro.needit.framework.network
+package com.carlosdiestro.remotedatabase
 
-import com.carlosdiestro.needit.framework.network.images.ImagesCollection
-import com.carlosdiestro.needit.framework.network.users.UsersCollection
-import com.carlosdiestro.needit.framework.network.wishes.WishesCollection
+import com.carlosdiestro.remotedatabase.firestore.users.UsersCollection
+import com.carlosdiestro.remotedatabase.firestore.wishes.WishesCollection
+import com.carlosdiestro.remotedatabase.storage.ImagesCollection
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal object NetworkModule {
+internal object FirebaseModule {
 
     @Provides
     @Singleton

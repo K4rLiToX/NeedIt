@@ -1,6 +1,5 @@
-package com.carlosdiestro.needit.framework.network.wishes
+package com.carlosdiestro.remotedatabase.firestore.wishes
 
-import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import javax.inject.Inject
 
 internal class WishRemoteDatasourceImpl @Inject constructor(

@@ -1,11 +1,11 @@
-package com.carlosdiestro.needit.framework.network
+package com.carlosdiestro.remotedatabase
 
-import com.carlosdiestro.needit.data.users.UserRemoteDatasource
-import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
-import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
-import com.carlosdiestro.needit.framework.network.images.ImageRemoteDatasourceImpl
-import com.carlosdiestro.needit.framework.network.users.UserRemoteDatasourceImpl
-import com.carlosdiestro.needit.framework.network.wishes.WishRemoteDatasourceImpl
+import com.carlosdiestro.remotedatabase.firestore.users.UserRemoteDatasource
+import com.carlosdiestro.remotedatabase.firestore.users.UserRemoteDatasourceImpl
+import com.carlosdiestro.remotedatabase.firestore.wishes.WishRemoteDatasource
+import com.carlosdiestro.remotedatabase.firestore.wishes.WishRemoteDatasourceImpl
+import com.carlosdiestro.remotedatabase.storage.ImageRemoteDatasource
+import com.carlosdiestro.remotedatabase.storage.ImageRemoteDatasourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.data.wishes.datasources
+package com.carlosdiestro.remotedatabase.storage
 
 interface ImageRemoteDatasource {
     suspend fun create(bytes: ByteArray, userId: String): String

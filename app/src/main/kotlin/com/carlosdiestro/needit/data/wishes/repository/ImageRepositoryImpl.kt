@@ -1,8 +1,8 @@
 package com.carlosdiestro.needit.data.wishes.repository
 
 import com.carlosdiestro.needit.data.wishes.datasources.ImageLocalDatasource
-import com.carlosdiestro.needit.data.wishes.datasources.ImageRemoteDatasource
 import com.carlosdiestro.needit.domain.wishes.repository.ImageRepository
+import com.carlosdiestro.remotedatabase.storage.ImageRemoteDatasource
 import javax.inject.Inject
 
 internal class ImageRepositoryImpl @Inject constructor(

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.network.wishes
+package com.carlosdiestro.remotedatabase.firestore.wishes
 
 data class WishDto(
     val id: String,

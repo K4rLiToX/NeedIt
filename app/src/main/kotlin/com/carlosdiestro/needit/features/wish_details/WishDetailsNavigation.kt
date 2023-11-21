@@ -29,7 +29,7 @@ object WishDetailsDestination {
         wishId: String
     ): String {
         return WISH_DETAILS_BASE_ROUTE +
-                "/{$wishId}"
+                "/$wishId"
     }
 }
 

@@ -4,9 +4,9 @@ import com.carlosdiestro.localdatabase.wishes.WishLocalDatasource
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asDto
 import com.carlosdiestro.needit.core.mappers.asEntity
-import com.carlosdiestro.needit.data.wishes.datasources.WishRemoteDatasource
 import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.repository.WishRepository
+import com.carlosdiestro.remotedatabase.firestore.wishes.WishRemoteDatasource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -56,6 +56,7 @@ dependencies {
 
     implementation(project(":design_system"))
     implementation(project(":localdatabase"))
+    implementation(project(":remotedatabase"))
 
     // Core
     implementation(libs.androidx.core.ktx)
@@ -100,7 +101,7 @@ dependencies {
 
     // Firebase
     implementation(platform(libs.firebase.bom))
-    implementation(libs.bundles.firebase)
+    implementation(libs.firebase.auth)
 
     // Google
     implementation(libs.play.services.auth)
