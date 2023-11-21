@@ -1,8 +1,17 @@
 <resources>
     <string name="app_name">NeedIt</string>
+
+    <!-- Firebase Config -->
     <string name="web_client_id">
         126482328030-lfe2ht8f0fhovq25asbrh3162gthngdf.apps.googleusercontent.com
     </string>
+    <string name="default_web_client_id" translatable="false">126482328030-mu3o3f5hgrmqdqmvq4hq4cd54ncb1qme.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">126482328030</string>
+    <string name="google_api_key" translatable="false">AIzaSyBDeRaAgTqJnwZyV5e1fFyEnXIVlfdIltg</string>
+    <string name="google_app_id" translatable="false">1:126482328030:android:c780951b97fafc4f74954f</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBDeRaAgTqJnwZyV5e1fFyEnXIVlfdIltg</string>
+    <string name="google_storage_bucket" translatable="false">needit-78526.appspot.com</string>
+    <string name="project_id" translatable="false">needit-78526</string>
 
     <!-- Home -->
     <string name="home_title">Wishes</string>

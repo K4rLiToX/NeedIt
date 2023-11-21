@@ -40,7 +40,6 @@ androidPlugin = "8.1.3"
 androidKotlinPlugin = "1.9.0"
 androidHiltPlugin = "2.48.1"
 kspPlugin = "1.9.0-1.0.13"
-googleServicesPlugin = "4.3.15"
 androidxRoomPlugin = "2.6.0"
 
 [libraries]
@@ -109,7 +108,6 @@ android-library = { id = "com.android.library", version.ref = "androidPlugin" }
 android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "androidKotlinPlugin" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androidHiltPlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspPlugin" }
-google-play-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
 androidx-room = { id = "androidx.room", version.ref = "androidxRoomPlugin" }
 
 [bundles]
