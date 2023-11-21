@@ -55,8 +55,8 @@ android {
 dependencies {
 
     implementation(project(":design_system"))
-    implementation(project(":localdatabase"))
-    implementation(project(":remotedatabase"))
+    implementation(project(":local_database"))
+    implementation(project(":remote_database"))
     implementation(project(":datastore"))
     implementation(project(":auth"))
     implementation(project(":wish"))

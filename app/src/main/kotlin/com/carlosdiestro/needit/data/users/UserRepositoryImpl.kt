@@ -6,7 +6,7 @@ import com.carlosdiestro.needit.core.mappers.asDto
 import com.carlosdiestro.needit.core.mappers.asPreferences
 import com.carlosdiestro.needit.domain.users.User
 import com.carlosdiestro.needit.domain.users.repository.UserRepository
-import com.carlosdiestro.remotedatabase.firestore.users.UserRemoteDatasource
+import com.carlosdiestro.remote_database.firestore.users.UserRemoteDatasource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

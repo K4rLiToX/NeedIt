@@ -15,8 +15,8 @@ dependencyResolutionManagement {
 rootProject.name = "NeedIt"
 include(":app")
 include(":design_system")
-include(":localdatabase")
-include(":remotedatabase")
+include(":local_database")
+include(":remote_database")
 include(":datastore")
 include(":auth")
 include(":wish")
