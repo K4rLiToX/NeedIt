@@ -318,12 +318,7 @@ suspend fun Context.getCameraProvider(): ProcessCameraProvider = suspendCoroutin
             continuation.resume(it.get())
         }, executor)
     }
-//    ProcessCameraProvider.getInstance(this).also { future ->
-//        future.addListener({
-//            continuation.resume(future.get())
-//        }, executor)
-//    }
- }
+}
 
 private val Context.executor: Executor
     get() = ContextCompat.getMainExecutor(this)
