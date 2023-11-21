@@ -1,7 +1,7 @@
-package com.carlosdiestro.needit.framework.database
+package com.carlosdiestro.localdatabase
 
-import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
-import com.carlosdiestro.needit.framework.database.wishes.WishLocalDatasourceImpl
+import com.carlosdiestro.localdatabase.wishes.WishLocalDatasource
+import com.carlosdiestro.localdatabase.wishes.WishLocalDatasourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

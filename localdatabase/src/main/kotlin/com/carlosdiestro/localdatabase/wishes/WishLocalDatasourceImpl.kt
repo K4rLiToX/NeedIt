@@ -1,6 +1,5 @@
-package com.carlosdiestro.needit.framework.database.wishes
+package com.carlosdiestro.localdatabase.wishes
 
-import com.carlosdiestro.needit.data.wishes.datasources.WishLocalDatasource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

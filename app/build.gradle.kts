@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.android.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.play.services)
-    alias(libs.plugins.androidx.room)
 }
 
 android {
@@ -52,17 +51,12 @@ android {
             resources.excludes.add("/META-INF/{AL2.0,LGPL2.1}")
         }
     }
-    room {
-        schemaDirectory(path = "$projectDir/schemas")
-    }
-    ksp {
-        arg("room.generateKotlin", "true")
-    }
 }
 
 dependencies {
 
     implementation(project(":design_system"))
+    implementation(project(":localdatabase"))
 
     // Core
     implementation(libs.androidx.core.ktx)
@@ -88,10 +82,6 @@ dependencies {
 
     // Navigation
     implementation(libs.bundles.navigation)
-
-    // Room Database
-    implementation(libs.bundles.room)
-    ksp(libs.androidx.room.compiler)
 
     // Hilt
     implementation(libs.androidx.hilt.navigation.compose)

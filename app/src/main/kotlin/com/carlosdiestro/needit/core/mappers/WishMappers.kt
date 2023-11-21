@@ -9,13 +9,13 @@ import com.carlosdiestro.needit.domain.wishes.Wish
 import com.carlosdiestro.needit.domain.wishes.WishCategory
 import com.carlosdiestro.needit.domain.wishes.WishInformation
 import com.carlosdiestro.needit.domain.wishes.toWishCategory
-import com.carlosdiestro.needit.framework.database.wishes.WishEntity
+import com.carlosdiestro.localdatabase.wishes.WishEntity
 import com.carlosdiestro.needit.framework.network.wishes.WishDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.util.UUID
 
-fun WishEntity.asDomain(): Wish {
+fun com.carlosdiestro.localdatabase.wishes.WishEntity.asDomain(): Wish {
     val args = WishInformation(
         id = UUID.fromString(this.id),
         userId = this.userId,
@@ -39,13 +39,13 @@ fun WishEntity.asDomain(): Wish {
     }
 }
 
-fun List<WishEntity>.asDomain(): List<Wish> = this.map { it.asDomain() }
+fun List<com.carlosdiestro.localdatabase.wishes.WishEntity>.asDomain(): List<Wish> = this.map { it.asDomain() }
 
 @JvmName("flowListWishEntityToDomain")
-fun Flow<List<WishEntity>>.asDomain(): Flow<List<Wish>> = this.map { it.asDomain() }
+fun Flow<List<com.carlosdiestro.localdatabase.wishes.WishEntity>>.asDomain(): Flow<List<Wish>> = this.map { it.asDomain() }
 
 @JvmName("flowWishEntityToDomain")
-fun Flow<WishEntity>.asDomain(): Flow<Wish> = this.map { it.asDomain() }
+fun Flow<com.carlosdiestro.localdatabase.wishes.WishEntity>.asDomain(): Flow<Wish> = this.map { it.asDomain() }
 
 fun Wish.asPlo(): HomeWishPlo = HomeWishPlo(
     id = this.id.toString(),
@@ -59,8 +59,8 @@ fun WishCategoryPlo.asDomain(): WishCategory = WishCategory.entries[this.ordinal
 
 fun List<Wish>.asPlo(): List<HomeWishPlo> = this.map { it.asPlo() }
 
-fun Wish.asEntity(): WishEntity {
-    val entity = WishEntity(
+fun Wish.asEntity(): com.carlosdiestro.localdatabase.wishes.WishEntity {
+    val entity = com.carlosdiestro.localdatabase.wishes.WishEntity(
         id = this.id.toString(),
         userId = this.userId,
         imageLocalPath = this.imageLocalPath,

@@ -1,8 +1,8 @@
-package com.carlosdiestro.needit.framework.database
+package com.carlosdiestro.localdatabase
 
 import android.content.Context
 import androidx.room.Room
-import com.carlosdiestro.needit.framework.database.wishes.WishDao
+import com.carlosdiestro.localdatabase.wishes.WishDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
