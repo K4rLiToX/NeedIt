@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.network.users
+package com.carlosdiestro.remotedatabase.firestore.users
 
 import com.google.firebase.firestore.CollectionReference
 import javax.inject.Inject

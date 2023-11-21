@@ -1,6 +1,5 @@
-package com.carlosdiestro.needit.framework.network.users
+package com.carlosdiestro.remotedatabase.firestore.users
 
-import com.carlosdiestro.needit.data.users.UserRemoteDatasource
 import javax.inject.Inject
 
 internal class UserRemoteDatasourceImpl @Inject constructor(

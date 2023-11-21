@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.network.users
+package com.carlosdiestro.remotedatabase.firestore.users
 
 data class UserDto(
     val id: String,

@@ -36,8 +36,8 @@ object UpsertDestination {
         wishId: String
     ): String {
         return UPSERT_BASE_ROUTE +
-                "/{$category}" +
-                "/{$wishId}"
+                "/$category" +
+                "/$wishId"
     }
 }
 

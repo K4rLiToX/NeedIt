@@ -16,3 +16,4 @@ rootProject.name = "NeedIt"
 include(":app")
 include(":design_system")
 include(":localdatabase")
+include(":remotedatabase")

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.framework.network
+package com.carlosdiestro.remotedatabase
 
 internal object CollectionsPath {
     const val users = "users"

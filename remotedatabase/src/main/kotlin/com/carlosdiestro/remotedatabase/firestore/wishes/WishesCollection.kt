@@ -1,6 +1,6 @@
-package com.carlosdiestro.needit.framework.network.wishes
+package com.carlosdiestro.remotedatabase.firestore.wishes
 
-import com.carlosdiestro.needit.framework.network.CollectionsPath
+import com.carlosdiestro.remotedatabase.CollectionsPath
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
 import javax.inject.Inject

@@ -3,17 +3,18 @@ package com.carlosdiestro.needit.core.mappers
 import com.carlosdiestro.needit.auth.UserAuth
 import com.carlosdiestro.needit.domain.users.User
 import com.carlosdiestro.needit.framework.datastore.models.UserPreferences
-import com.carlosdiestro.needit.framework.network.users.UserDto
+import com.carlosdiestro.remotedatabase.firestore.users.UserDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-fun User.asDto(): UserDto = UserDto(
-    id = id,
-    username = username,
-    email = email,
-    profilePictureUrl = profilePictureUrl,
-    isAnonymous = isAnonymous
-)
+fun User.asDto(): UserDto =
+    UserDto(
+        id = id,
+        username = username,
+        email = email,
+        profilePictureUrl = profilePictureUrl,
+        isAnonymous = isAnonymous
+    )
 
 fun UserAuth.asDomain(): User = User(
     id = userId,
