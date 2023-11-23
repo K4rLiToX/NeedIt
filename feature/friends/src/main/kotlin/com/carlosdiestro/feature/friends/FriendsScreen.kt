@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.friends
+package com.carlosdiestro.feature.friends
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

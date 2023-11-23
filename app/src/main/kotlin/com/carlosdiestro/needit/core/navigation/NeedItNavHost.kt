@@ -14,7 +14,7 @@ import com.carlosdiestro.needit.core.NeedItAppState
 import com.carlosdiestro.needit.features.camera.CameraDestination
 import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.camera.navigateToCamera
-import com.carlosdiestro.needit.features.friends.friendsScreen
+import com.carlosdiestro.feature.friends.friendsScreen
 import com.carlosdiestro.feature.gifts.giftsScreen
 import com.carlosdiestro.feature.home.HomeDestination
 import com.carlosdiestro.feature.home.homeScreen

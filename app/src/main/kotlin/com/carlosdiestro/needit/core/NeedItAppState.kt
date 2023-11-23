@@ -18,7 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.carlosdiestro.needit.core.navigation.TopLevelDestination
 import com.carlosdiestro.needit.core.navigation.routes
-import com.carlosdiestro.needit.features.friends.navigateToFriends
+import com.carlosdiestro.feature.friends.navigateToFriends
 import com.carlosdiestro.feature.gifts.navigateToGifts
 import com.carlosdiestro.feature.home.navigateToHome
 import kotlinx.coroutines.CoroutineScope

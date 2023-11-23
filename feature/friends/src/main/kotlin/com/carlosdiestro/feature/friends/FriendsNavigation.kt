@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.friends
+package com.carlosdiestro.feature.friends
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.friends
+package com.carlosdiestro.feature.friends
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
