@@ -7,7 +7,7 @@ import com.carlosdiestro.design_system.R
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.needit.features.friends.FriendsDestination
 import com.carlosdiestro.needit.features.gifts.GiftsDestination
-import com.carlosdiestro.needit.features.home.HomeDestination
+import com.carlosdiestro.feature.home.HomeDestination
 
 enum class TopLevelDestination(
     val selectedIcon: ImageVector,

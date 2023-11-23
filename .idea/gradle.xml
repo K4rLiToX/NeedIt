@@ -16,6 +16,8 @@
             <option value="$PROJECT_DIR$/datastore" />
             <option value="$PROJECT_DIR$/design_system" />
             <option value="$PROJECT_DIR$/device_storage" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/local_database" />
             <option value="$PROJECT_DIR$/remote_database" />
             <option value="$PROJECT_DIR$/user" />

@@ -10,10 +10,6 @@
     <string name="google_storage_bucket" translatable="false">needit-78526.appspot.com</string>
     <string name="project_id" translatable="false">needit-78526</string>
 
-    <!-- Home -->
-    <string name="home_title">Wishes</string>
-    <string name="home_empty">Seems you haven\'t added any wishes yet!</string>
-
     <!-- Gifts -->
     <string name="gifts_title">Gifts</string>
     <string name="gifts_tab_reservations">Reservations</string>
@@ -171,8 +167,4 @@
     <string name="camera_permission_dialog_description_not_declined">Need It needs access to your camera so that you can take photos of your wishes!</string>
     <string name="upsert_fields_not_filled">There are mandatory fields still empty</string>
 
-    <!-- Delete Dialog -->
-    <string name="delete_dialog_title">Delete item?</string>
-    <string name="delete_dialog_body">Are you sure you want to delete this item? This action
-        cannot be undone</string>
 </resources>

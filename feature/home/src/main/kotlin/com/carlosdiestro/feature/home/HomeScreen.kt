@@ -1,10 +1,9 @@
-package com.carlosdiestro.needit.features.home
+package com.carlosdiestro.feature.home
 
 import android.Manifest
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.design_system.fab.NiFab
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.design_system.icon_buttons.NiLabeledIconButton
 import com.carlosdiestro.design_system.lists.HomeWishPlo
@@ -40,7 +40,6 @@ import com.carlosdiestro.design_system.menus.NiWishActionMenu
 import com.carlosdiestro.design_system.navigation.tab_bar.NiScrollableTabBar
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
-import com.carlosdiestro.needit.R
 import com.carlosdiestro.wish.domain.model.Wish
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -122,7 +121,7 @@ private fun HomeScreen(
                 wishes = dataState.wishes,
                 categories = dataState.categories,
                 selectedWish = dataState.selectedWish,
-                selectedWishActionLabelId = dataState.selectedWishActionLabelId,
+                selectedWishActionLabel = dataState.selectedWishActionLabel,
                 selectedWishActionIcon = dataState.selectedWishActionIcon,
                 isAnonymous = dataState.isAnonymous,
                 uiState = uiState,
@@ -164,7 +163,7 @@ private fun HomeSuccessState(
     wishes: List<HomeWishPlo>,
     categories: List<WishCategoryPlo>,
     selectedWish: Wish?,
-    @StringRes selectedWishActionLabelId: Int,
+    selectedWishActionLabel: String,
     selectedWishActionIcon: ImageVector,
     isAnonymous: Boolean,
     uiState: HomeUiState,
@@ -232,7 +231,7 @@ private fun HomeSuccessState(
             }
         ) {
             NiLabeledIconButton(
-                labelId = R.string.button_remove,
+                label = Localization.Button.Remove,
                 icon = MaterialTheme.icons.Delete,
                 colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {
@@ -242,7 +241,7 @@ private fun HomeSuccessState(
             )
             if (!isAnonymous) {
                 NiLabeledIconButton(
-                    labelId = R.string.button_update,
+                    label = Localization.Button.Update,
                     icon = MaterialTheme.icons.Edit,
                     colors = NiIconButtonSpecs.Color.transparentPrimary(),
                     onClick = {
@@ -252,7 +251,7 @@ private fun HomeSuccessState(
                 )
             }
             NiLabeledIconButton(
-                labelId = selectedWishActionLabelId,
+                label = selectedWishActionLabel,
                 icon = selectedWishActionIcon,
                 colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {
@@ -267,8 +266,8 @@ private fun HomeSuccessState(
 
     if (uiState.shouldShowRemoveWishDialogs) {
         NiDialog(
-            titleId = R.string.delete_dialog_title,
-            bodyId = R.string.delete_dialog_body,
+            title = Localization.DeleteDialog.Title,
+            body = Localization.DeleteDialog.Body,
             onConfirm = {
                 onDeleteClick()
                 uiState.closeRemoveWishDialog()

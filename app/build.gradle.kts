@@ -62,6 +62,7 @@ dependencies {
     implementation(project(":wish"))
     implementation(project(":user"))
     implementation(project(":device_storage"))
+    implementation(project(":feature:home"))
 
     // Core
     implementation(libs.androidx.core.ktx)

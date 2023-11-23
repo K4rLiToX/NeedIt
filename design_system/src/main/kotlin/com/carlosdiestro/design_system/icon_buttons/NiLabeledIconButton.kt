@@ -1,7 +1,6 @@
 package com.carlosdiestro.design_system.icon_buttons
 
 import android.content.res.Configuration
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,17 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.NeedItTheme
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
 
 @Composable
 fun NiLabeledIconButton(
-    @StringRes labelId: Int,
+    label: String,
     icon: ImageVector,
     modifier: Modifier = Modifier,
     colors: IconButtonColors = NiIconButtonSpecs.Color.primary(),
@@ -39,7 +38,7 @@ fun NiLabeledIconButton(
             onClick = onClick
         )
         Text(
-            text = stringResource(id = labelId),
+            text = label,
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center
@@ -56,24 +55,24 @@ internal fun NiLabeledIconButtonsPreview() {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             NiLabeledIconButton(
-                labelId = -1,
+                label = Localization.Button.Remove,
                 icon = MaterialTheme.icons.AddFriend,
                 onClick = {}
             )
             NiLabeledIconButton(
-                labelId = -1,
+                label = Localization.Button.Remove,
                 icon = MaterialTheme.icons.AddFriend,
                 colors = NiIconButtonSpecs.Color.secondary(),
                 onClick = {}
             )
             NiLabeledIconButton(
-                labelId = -1,
+                label = Localization.Button.Remove,
                 icon = MaterialTheme.icons.AddFriend,
                 colors = NiIconButtonSpecs.Color.neutral(),
                 onClick = {}
             )
             NiLabeledIconButton(
-                labelId = -1,
+                label = Localization.Button.Remove,
                 icon = MaterialTheme.icons.AddFriend,
                 colors = NiIconButtonSpecs.Color.transparentPrimary(),
                 onClick = {}

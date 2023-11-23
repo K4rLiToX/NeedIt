@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.home
+package com.carlosdiestro.feature.home
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition

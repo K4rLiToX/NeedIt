@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -37,7 +38,33 @@ fun NiFilledButton(
             .height(height)
     ) {
         NiButtonContent(
-            labelId = labelId,
+            label = stringResource(id = labelId),
+            leadIcon = leadIcon,
+            trailIcon = trailIcon
+        )
+    }
+}
+
+@Composable
+fun NiFilledButton(
+    label: String,
+    modifier: Modifier = Modifier,
+    leadIcon: ImageVector? = null,
+    trailIcon: ImageVector? = null,
+    height: Dp = NiButtonSpecs.Height.Default,
+    colors: ButtonColors = NiButtonSpecs.Color.primary(),
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        colors = colors,
+        enabled = enabled,
+        modifier = modifier
+            .height(height)
+    ) {
+        NiButtonContent(
+            label = label,
             leadIcon = leadIcon,
             trailIcon = trailIcon
         )

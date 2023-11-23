@@ -1,6 +1,5 @@
-package com.carlosdiestro.needit.features.home
+package com.carlosdiestro.feature.home
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -17,10 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.lists.HomeWishPlo
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.design_system.theme.icons
-import com.carlosdiestro.needit.R
 import com.carlosdiestro.wish.domain.model.Wish
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -34,11 +33,11 @@ internal data class HomeDataState(
     val noData: Boolean
         get() = wishes.isEmpty()
 
-    @get:StringRes
-    val selectedWishActionLabelId: Int
+    val selectedWishActionLabel: String
+        @Composable
         get() {
-            return if (selectedWish?.isShared == true) R.string.button_keep_private
-            else R.string.button_share
+            return if (selectedWish?.isShared == true) Localization.Button.KeepPrivate
+            else Localization.Button.Share
         }
     val selectedWishActionIcon: ImageVector
         get() {

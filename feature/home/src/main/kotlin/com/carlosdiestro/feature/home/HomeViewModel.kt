@@ -1,11 +1,12 @@
-package com.carlosdiestro.needit.features.home
+package com.carlosdiestro.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.carlosdiestro.design_system.lists.HomeWishPlo
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
-import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.wish.domain.model.Wish
+import com.carlosdiestro.wish.domain.model.WishCategory
 import com.carlosdiestro.wish.usecases.DeleteWishUseCase
 import com.carlosdiestro.wish.usecases.GetMyWishesUseCase
 import com.carlosdiestro.wish.usecases.LockWishUseCase
@@ -90,3 +91,14 @@ internal class HomeViewModel @Inject constructor(
         onSelectedWish("")
     }
 }
+
+fun Wish.asPlo(): HomeWishPlo = HomeWishPlo(
+    id = this.id.toString(),
+    imageUrl = this.imageLocalPath.ifEmpty { this.imageUrl },
+    shared = this.isShared,
+    category = this.category.asPlo()
+)
+
+fun WishCategory.asPlo(): WishCategoryPlo = WishCategoryPlo.entries[this.ordinal]
+
+fun List<Wish>.asPlo(): List<HomeWishPlo> = this.map { it.asPlo() }
