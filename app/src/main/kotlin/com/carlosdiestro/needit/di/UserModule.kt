@@ -1,7 +1,7 @@
 package com.carlosdiestro.needit.di
 
-import com.carlosdiestro.needit.data.theme_config.ThemeConfigRepositoryImpl
-import com.carlosdiestro.needit.domain.theme_config.repository.ThemeConfigRepository
+import com.carlosdiestro.needit.theme_config.data.ThemeConfigRepositoryImpl
+import com.carlosdiestro.needit.theme_config.domain.repository.ThemeConfigRepository
 import com.carlosdiestro.user.data.UserRepositoryImpl
 import com.carlosdiestro.user.domain.UserRepository
 import dagger.Binds

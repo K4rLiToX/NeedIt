@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.domain.theme_config
+package com.carlosdiestro.needit.theme_config.domain
 
 enum class ThemeConfig {
     FollowSystem,

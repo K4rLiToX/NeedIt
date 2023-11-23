@@ -1,10 +1,10 @@
-package com.carlosdiestro.needit.data.theme_config
+package com.carlosdiestro.needit.theme_config.data
 
 import com.carlosdiestro.datastore.theme_config.ThemeConfigLocalDatasource
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asPreferences
-import com.carlosdiestro.needit.domain.theme_config.ThemeConfig
-import com.carlosdiestro.needit.domain.theme_config.repository.ThemeConfigRepository
+import com.carlosdiestro.needit.theme_config.domain.ThemeConfig
+import com.carlosdiestro.needit.theme_config.domain.repository.ThemeConfigRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

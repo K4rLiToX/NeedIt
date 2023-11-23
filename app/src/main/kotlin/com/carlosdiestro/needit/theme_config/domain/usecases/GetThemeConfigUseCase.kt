@@ -1,7 +1,7 @@
-package com.carlosdiestro.needit.domain.theme_config.usecases
+package com.carlosdiestro.needit.theme_config.domain.usecases
 
-import com.carlosdiestro.needit.domain.theme_config.ThemeConfig
-import com.carlosdiestro.needit.domain.theme_config.repository.ThemeConfigRepository
+import com.carlosdiestro.needit.theme_config.domain.ThemeConfig
+import com.carlosdiestro.needit.theme_config.domain.repository.ThemeConfigRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
