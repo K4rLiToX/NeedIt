@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.gifts
+package com.carlosdiestro.feature.gifts
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -15,7 +15,7 @@ import com.carlosdiestro.needit.features.camera.CameraDestination
 import com.carlosdiestro.needit.features.camera.cameraScreen
 import com.carlosdiestro.needit.features.camera.navigateToCamera
 import com.carlosdiestro.needit.features.friends.friendsScreen
-import com.carlosdiestro.needit.features.gifts.giftsScreen
+import com.carlosdiestro.feature.gifts.giftsScreen
 import com.carlosdiestro.feature.home.HomeDestination
 import com.carlosdiestro.feature.home.homeScreen
 import com.carlosdiestro.feature.home.navigateToHome

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.gifts
+package com.carlosdiestro.feature.gifts
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

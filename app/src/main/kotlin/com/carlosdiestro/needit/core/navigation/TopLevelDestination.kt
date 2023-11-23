@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.carlosdiestro.design_system.R
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.needit.features.friends.FriendsDestination
-import com.carlosdiestro.needit.features.gifts.GiftsDestination
+import com.carlosdiestro.feature.gifts.GiftsDestination
 import com.carlosdiestro.feature.home.HomeDestination
 
 enum class TopLevelDestination(
