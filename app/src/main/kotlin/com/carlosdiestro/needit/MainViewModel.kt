@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.auth.AuthClient
 import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.needit.domain.theme_config.usecases.GetThemeConfigUseCase
-import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
+import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

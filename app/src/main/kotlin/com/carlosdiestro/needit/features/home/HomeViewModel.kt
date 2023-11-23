@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.needit.core.mappers.asPlo
-import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
+import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.wish.domain.model.Wish
 import com.carlosdiestro.wish.usecases.DeleteWishUseCase
 import com.carlosdiestro.wish.usecases.GetMyWishesUseCase

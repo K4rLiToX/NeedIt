@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.auth.AuthClient
 import com.carlosdiestro.needit.core.mappers.asDomain
-import com.carlosdiestro.needit.domain.users.usecases.GetSignedInUserUseCase
-import com.carlosdiestro.needit.domain.users.usecases.UpsertUserUseCase
+import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
+import com.carlosdiestro.user.usecases.UpsertUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
