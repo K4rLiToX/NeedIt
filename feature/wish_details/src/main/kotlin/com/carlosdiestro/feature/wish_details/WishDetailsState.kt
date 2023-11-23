@@ -1,10 +1,10 @@
-package com.carlosdiestro.needit.features.wish_details
+package com.carlosdiestro.feature.wish_details
 
-import androidx.annotation.StringRes
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.icons
-import com.carlosdiestro.needit.R
 
 internal data class WishDetailsDataState(
     val id: String = "",
@@ -26,10 +26,10 @@ internal data class WishDetailsDataState(
             else MaterialTheme.icons.Share
         }
 
-    @get:StringRes
-    val actionLabelId: Int
+    val actionLabel: String
+        @Composable
         get() {
-            return if (isShared) R.string.button_keep_private
-            else R.string.button_share
+            return if (isShared) Localization.Button.KeepPrivate
+            else Localization.Button.Share
         }
 }

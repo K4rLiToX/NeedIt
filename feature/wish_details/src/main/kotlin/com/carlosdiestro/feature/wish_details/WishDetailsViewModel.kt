@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.wish_details
+package com.carlosdiestro.feature.wish_details
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.wish_details
+package com.carlosdiestro.feature.wish_details
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -99,7 +99,7 @@ private fun WishDetailsScreen(
             ) {
                 if (!dataState.isAnonymous) {
                     NiFilledButton(
-                        labelId = dataState.actionLabelId,
+                        label = dataState.actionLabel,
                         trailIcon = dataState.actionIcon,
                         height = NiButtonSpecs.Height.Large,
                         onClick = {

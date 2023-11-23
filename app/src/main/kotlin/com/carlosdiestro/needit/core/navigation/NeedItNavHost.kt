@@ -24,9 +24,9 @@ import com.carlosdiestro.sign_in.signInScreen
 import com.carlosdiestro.feature.upsert_wish.UpsertDestination
 import com.carlosdiestro.feature.upsert_wish.navigateToUpsert
 import com.carlosdiestro.feature.upsert_wish.upsertScreen
-import com.carlosdiestro.needit.features.wish_details.WishDetailsDestination
-import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
-import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen
+import com.carlosdiestro.feature.wish_details.WishDetailsDestination
+import com.carlosdiestro.feature.wish_details.navigateToWishDetails
+import com.carlosdiestro.feature.wish_details.wishDetailsScreen
 
 @Composable
 fun NeedItNavHost(
