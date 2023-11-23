@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/feature/gifts" />
             <option value="$PROJECT_DIR$/feature/home" />
             <option value="$PROJECT_DIR$/feature/sign_in" />
+            <option value="$PROJECT_DIR$/feature/upsert_wish" />
             <option value="$PROJECT_DIR$/local_database" />
             <option value="$PROJECT_DIR$/remote_database" />
             <option value="$PROJECT_DIR$/user" />

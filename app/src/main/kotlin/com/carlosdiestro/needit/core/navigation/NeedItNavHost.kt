@@ -11,7 +11,6 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
 import com.carlosdiestro.needit.core.NeedItAppState
-import com.carlosdiestro.feature.camera.CameraDestination
 import com.carlosdiestro.feature.camera.cameraScreen
 import com.carlosdiestro.feature.camera.navigateToCamera
 import com.carlosdiestro.feature.friends.friendsScreen
@@ -22,9 +21,9 @@ import com.carlosdiestro.feature.home.navigateToHome
 import com.carlosdiestro.needit.features.settings.settingsScreen
 import com.carlosdiestro.sign_in.SignInDestination
 import com.carlosdiestro.sign_in.signInScreen
-import com.carlosdiestro.needit.features.upsert_item.UpsertDestination
-import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
-import com.carlosdiestro.needit.features.upsert_item.upsertScreen
+import com.carlosdiestro.feature.upsert_wish.UpsertDestination
+import com.carlosdiestro.feature.upsert_wish.navigateToUpsert
+import com.carlosdiestro.feature.upsert_wish.upsertScreen
 import com.carlosdiestro.needit.features.wish_details.WishDetailsDestination
 import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
 import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen

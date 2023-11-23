@@ -97,19 +97,6 @@
         all the participant will no longer have access to it and the gift will be unlocked.
     Do you want to continue?</string>
 
-    <!-- Upsert -->
-    <string name="upsert_name_hint">Name</string>
-    <string name="upsert_title_hint">Title</string>
-    <string name="upsert_brand_hint">Brand</string>
-    <string name="upsert_author_hint">Author</string>
-    <string name="upsert_price_hint">Price</string>
-    <string name="upsert_size_hint">Size</string>
-    <string name="upsert_color_hint">Color</string>
-    <string name="upsert_isbn_hint">ISBN</string>
-    <string name="upsert_website_link_hint">Website Url</string>
-    <string name="upsert_description_link">Description</string>
-    <string name="upsert_mandatory_field_message">Mandatory field!</string>
-
     <!-- Item Categories -->
     <string name="item_category_all">All</string>
     <string name="item_category_clothes">Clothes</string>
