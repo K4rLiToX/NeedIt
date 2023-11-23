@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/design_system" />
             <option value="$PROJECT_DIR$/device_storage" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/camera" />
             <option value="$PROJECT_DIR$/feature/friends" />
             <option value="$PROJECT_DIR$/feature/gifts" />
             <option value="$PROJECT_DIR$/feature/home" />

@@ -35,6 +35,11 @@ object Localization {
             @ReadOnlyComposable
             @Composable
             get() = stringResource(id = R.string.button_cancel)
+
+        val Continue: String
+            @ReadOnlyComposable
+            @Composable
+            get() = stringResource(id = R.string.button_continue)
     }
 
     @Immutable

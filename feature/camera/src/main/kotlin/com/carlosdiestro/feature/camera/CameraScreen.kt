@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.camera
+package com.carlosdiestro.feature.camera
 
 import android.content.ContentResolver
 import android.content.ContentValues
@@ -44,6 +44,7 @@ import coil.compose.AsyncImage
 import com.carlosdiestro.design_system.buttons.NiButtonSpecs
 import com.carlosdiestro.design_system.buttons.NiFilledButton
 import com.carlosdiestro.design_system.extensions.gradient
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.design_system.lists.NiCategoryScrollable
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
@@ -52,7 +53,6 @@ import com.carlosdiestro.design_system.navigation.top_app_bar.NiTopAppBarSpecs
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.design_system.theme.shape
-import com.carlosdiestro.needit.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -224,7 +224,7 @@ private fun Actions(
 
         else -> {
             NiFilledButton(
-                labelId = R.string.button_continue,
+                label = Localization.Button.Continue,
                 trailIcon = MaterialTheme.icons.Continue,
                 height = NiButtonSpecs.Height.Large,
                 onClick = onContinueClick,

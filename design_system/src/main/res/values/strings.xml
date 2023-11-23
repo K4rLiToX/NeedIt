@@ -19,6 +19,7 @@
     <string name="button_keep_private">Keep Private</string>
     <string name="button_share">Share</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_continue">Continue</string>
 
     <!-- Delete Dialog -->
     <string name="delete_dialog_title">Delete item?</string>

@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.camera
+package com.carlosdiestro.feature.camera
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

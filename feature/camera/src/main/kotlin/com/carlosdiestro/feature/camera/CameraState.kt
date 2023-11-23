@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.camera
+package com.carlosdiestro.feature.camera
 
 import android.content.Context
 import android.content.res.Configuration
