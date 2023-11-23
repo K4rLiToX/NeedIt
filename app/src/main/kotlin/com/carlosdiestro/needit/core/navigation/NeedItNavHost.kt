@@ -20,8 +20,8 @@ import com.carlosdiestro.feature.home.HomeDestination
 import com.carlosdiestro.feature.home.homeScreen
 import com.carlosdiestro.feature.home.navigateToHome
 import com.carlosdiestro.needit.features.settings.settingsScreen
-import com.carlosdiestro.needit.features.sign_in.SignInDestination
-import com.carlosdiestro.needit.features.sign_in.signInScreen
+import com.carlosdiestro.sign_in.SignInDestination
+import com.carlosdiestro.sign_in.signInScreen
 import com.carlosdiestro.needit.features.upsert_item.UpsertDestination
 import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
 import com.carlosdiestro.needit.features.upsert_item.upsertScreen

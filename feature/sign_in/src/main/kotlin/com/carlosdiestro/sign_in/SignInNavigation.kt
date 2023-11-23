@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.sign_in
+package com.carlosdiestro.sign_in
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

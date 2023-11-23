@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.sign_in
+package com.carlosdiestro.sign_in
 
 import android.app.Activity
 import android.content.Intent
@@ -27,7 +27,7 @@ import com.carlosdiestro.design_system.buttons.NiButtonSpecs
 import com.carlosdiestro.design_system.buttons.NiFilledButton
 import com.carlosdiestro.design_system.buttons.NiOutlinedButton
 import com.carlosdiestro.design_system.theme.dimensions
-import com.carlosdiestro.needit.R
+import com.carlosdiestro.feature.sign_in.R
 
 @Composable
 internal fun SignInRoute(
@@ -107,7 +107,7 @@ private fun SignInScreen(
             )
     ) {
         NiFilledButton(
-            labelId = R.string.button_login,
+            labelId = R.string.button_sign_in,
             onClick = requestGoogleSignInIntent,
             height = NiButtonSpecs.Height.Large,
             modifier = Modifier

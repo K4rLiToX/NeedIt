@@ -125,9 +125,8 @@
     <string name="label_new">New</string>
 
     <!-- Buttons -->
-    <string name="button_login">Login</string>
-    <string name="button_continue_as_guest">Continue as guest</string>
-    <string name="button_logout">Logout</string>
+    <string name="button_sign_out">Sign out</string>
+    <string name="button_sign_in">Sign in</string>
     <string name="button_delete_account">Delete account</string>
     <string name="button_view_all">View all</string>
     <string name="button_remove">Remove</string>

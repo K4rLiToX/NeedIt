@@ -315,8 +315,8 @@ fun AccountDialogAccountAction(
             )
     ) {
         NiOutlinedButton(
-            labelId = if (!isUserAnonymous) R.string.button_logout else R.string
-                .button_login,
+            labelId = if (!isUserAnonymous) R.string.button_sign_out else R.string
+                .button_sign_in,
             onClick = onAccountActionClick,
             modifier = Modifier.fillMaxWidth()
         )
