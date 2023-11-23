@@ -10,7 +10,6 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
-import com.carlosdiestro.needit.core.NeedItAppState
 import com.carlosdiestro.feature.camera.cameraScreen
 import com.carlosdiestro.feature.camera.navigateToCamera
 import com.carlosdiestro.feature.friends.friendsScreen
@@ -18,15 +17,16 @@ import com.carlosdiestro.feature.gifts.giftsScreen
 import com.carlosdiestro.feature.home.HomeDestination
 import com.carlosdiestro.feature.home.homeScreen
 import com.carlosdiestro.feature.home.navigateToHome
-import com.carlosdiestro.needit.features.settings.settingsScreen
-import com.carlosdiestro.sign_in.SignInDestination
-import com.carlosdiestro.sign_in.signInScreen
 import com.carlosdiestro.feature.upsert_wish.UpsertDestination
 import com.carlosdiestro.feature.upsert_wish.navigateToUpsert
 import com.carlosdiestro.feature.upsert_wish.upsertScreen
 import com.carlosdiestro.feature.wish_details.WishDetailsDestination
 import com.carlosdiestro.feature.wish_details.navigateToWishDetails
 import com.carlosdiestro.feature.wish_details.wishDetailsScreen
+import com.carlosdiestro.needit.core.NeedItAppState
+import com.carlosdiestro.needit.features.settings.settingsScreen
+import com.carlosdiestro.sign_in.SignInDestination
+import com.carlosdiestro.sign_in.signInScreen
 
 @Composable
 fun NeedItNavHost(

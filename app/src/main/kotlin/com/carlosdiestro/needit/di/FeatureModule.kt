@@ -16,5 +16,5 @@ object FeatureModule {
     @Singleton
     fun provideImageCompressor(
         @DefaultDispatcher defaultDispatcher: CoroutineDispatcher
-    ) : ImageCompressor = ImageCompressor(defaultDispatcher)
+    ): ImageCompressor = ImageCompressor(defaultDispatcher)
 }
