@@ -41,10 +41,13 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
 
+    // Hilt
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
 
+    // Android Ui Test
+    androidTestImplementation(libs.bundles.ui.test)
+
+    // Unit Test
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.test.espresso.core)
 }

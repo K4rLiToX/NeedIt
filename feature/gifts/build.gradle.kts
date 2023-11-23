@@ -53,7 +53,6 @@ dependencies {
     implementation(libs.bundles.compose.ui)
 
     // UI
-    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.material3.window.sizeclass)
 
     // Lifecycle & ViewModel
