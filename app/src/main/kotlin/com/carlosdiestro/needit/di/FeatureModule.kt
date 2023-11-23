@@ -1,7 +1,6 @@
 package com.carlosdiestro.needit.di
 
 import com.carlosdiestro.feature.upsert_wish.ImageCompressor
-import com.carlosdiestro.needit.core.di.DefaultDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

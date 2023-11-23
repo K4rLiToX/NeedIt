@@ -1,9 +1,5 @@
 package com.carlosdiestro.needit.di
 
-import com.carlosdiestro.needit.data.theme_config.ThemeConfigRepositoryImpl
-import com.carlosdiestro.needit.domain.theme_config.repository.ThemeConfigRepository
-import com.carlosdiestro.user.data.UserRepositoryImpl
-import com.carlosdiestro.user.domain.UserRepository
 import com.carlosdiestro.wish.data.repository.ImageRepositoryImpl
 import com.carlosdiestro.wish.data.repository.WishRepositoryImpl
 import com.carlosdiestro.wish.domain.repository.ImageRepository
@@ -16,11 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface UserDataModule {
-
-    @Singleton
-    @Binds
-    fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
+internal interface WishModule {
 
     @Singleton
     @Binds
@@ -29,8 +21,4 @@ internal interface UserDataModule {
     @Singleton
     @Binds
     fun bindImageRepository(impl: ImageRepositoryImpl): ImageRepository
-
-    @Singleton
-    @Binds
-    fun bindThemeConfigRepository(impl: ThemeConfigRepositoryImpl): ThemeConfigRepository
 }

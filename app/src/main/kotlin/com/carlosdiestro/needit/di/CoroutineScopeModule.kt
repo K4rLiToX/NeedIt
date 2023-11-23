@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.core.di
+package com.carlosdiestro.needit.di
 
 import dagger.Module
 import dagger.Provides
