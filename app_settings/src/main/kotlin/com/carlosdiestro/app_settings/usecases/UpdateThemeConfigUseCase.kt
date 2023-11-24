@@ -1,7 +1,7 @@
-package com.carlosdiestro.needit.theme_config.domain.usecases
+package com.carlosdiestro.app_settings.usecases
 
-import com.carlosdiestro.needit.theme_config.domain.ThemeConfig
-import com.carlosdiestro.needit.theme_config.domain.repository.ThemeConfigRepository
+import com.carlosdiestro.app_settings.domain.ThemeConfig
+import com.carlosdiestro.app_settings.domain.repository.ThemeConfigRepository
 import javax.inject.Inject
 
 class UpdateThemeConfigUseCase @Inject constructor(

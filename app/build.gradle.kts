@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":wish"))
     implementation(project(":user"))
+    implementation(project(":app_settings"))
     implementation(project(":device_storage"))
     implementation(project(":feature:home"))
     implementation(project(":feature:sign_in"))

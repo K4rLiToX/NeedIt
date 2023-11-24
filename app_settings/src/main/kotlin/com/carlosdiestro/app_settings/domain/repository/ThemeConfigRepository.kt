@@ -1,6 +1,6 @@
-package com.carlosdiestro.needit.theme_config.domain.repository
+package com.carlosdiestro.app_settings.domain.repository
 
-import com.carlosdiestro.needit.theme_config.domain.ThemeConfig
+import com.carlosdiestro.app_settings.domain.ThemeConfig
 import kotlinx.coroutines.flow.Flow
 
 interface ThemeConfigRepository {

@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.needit.ThemeConfigPlo
 import com.carlosdiestro.needit.core.mappers.asDomain
 import com.carlosdiestro.needit.core.mappers.asPlo
-import com.carlosdiestro.needit.theme_config.domain.usecases.GetThemeConfigUseCase
-import com.carlosdiestro.needit.theme_config.domain.usecases.UpdateThemeConfigUseCase
+import com.carlosdiestro.app_settings.usecases.GetThemeConfigUseCase
+import com.carlosdiestro.app_settings.usecases.UpdateThemeConfigUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

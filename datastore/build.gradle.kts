@@ -38,6 +38,7 @@ android {
 dependencies {
 
     implementation(project(":user"))
+    implementation(project(":app_settings"))
 
     implementation(libs.androidx.core.ktx)
 
