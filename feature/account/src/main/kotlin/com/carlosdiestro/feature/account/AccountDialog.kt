@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.account
+package com.carlosdiestro.feature.account
 
 import android.app.Activity
 import android.widget.Toast
@@ -46,7 +46,6 @@ import com.carlosdiestro.design_system.buttons.NiTextButton
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.design_system.theme.shape
-import com.carlosdiestro.needit.R
 
 @Composable
 fun AccountDialogRoute(

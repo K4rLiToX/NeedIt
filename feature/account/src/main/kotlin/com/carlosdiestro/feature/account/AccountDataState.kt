@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.account
+package com.carlosdiestro.feature.account
 
 import android.content.Context
 import androidx.compose.runtime.Composable

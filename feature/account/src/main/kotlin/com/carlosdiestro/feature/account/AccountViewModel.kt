@@ -1,11 +1,12 @@
-package com.carlosdiestro.needit.features.account
+package com.carlosdiestro.feature.account
 
 import android.content.Intent
 import android.content.IntentSender
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.auth.AuthClient
-import com.carlosdiestro.needit.core.mappers.asDomain
+import com.carlosdiestro.auth.UserAuth
+import com.carlosdiestro.user.domain.User
 import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.user.usecases.UpsertUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -72,3 +73,11 @@ internal class AccountViewModel @Inject constructor(
         }
     }
 }
+
+fun UserAuth.asDomain(): User = User(
+    id = userId,
+    username = username,
+    email = email,
+    profilePictureUrl = profilePictureUrl.orEmpty(),
+    isAnonymous = isAnonymous
+)

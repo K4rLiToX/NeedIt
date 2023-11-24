@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NeedIt</string>
+
+    <!-- Profile -->
+    <string name="profile_birthday">Birthday</string>
+    <string name="profile_currency">Currency</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+
+    <!-- Send Feedback -->
+    <string name="send_feedback_title">Send feedback</string>
+
+    <!-- Report a bug -->
+    <string name="report_bug_title">Report a bug</string>
+
+    <string name="button_privacy_policy">Privacy Policy</string>
+    <string name="button_terms_of_service">Terms of Service</string>
+    <string name="button_sign_out">Sign out</string>
+    <string name="button_sign_in">Sign in</string>
+</resources>
