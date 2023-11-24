@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/feature/friends" />
             <option value="$PROJECT_DIR$/feature/gifts" />
             <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/settings" />
             <option value="$PROJECT_DIR$/feature/sign_in" />
             <option value="$PROJECT_DIR$/feature/upsert_wish" />
             <option value="$PROJECT_DIR$/feature/wish_details" />

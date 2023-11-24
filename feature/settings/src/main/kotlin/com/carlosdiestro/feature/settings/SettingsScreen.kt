@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.settings
+package com.carlosdiestro.feature.settings
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -38,8 +38,6 @@ import com.carlosdiestro.design_system.navigation.top_app_bar.NiMediumTopAppBar
 import com.carlosdiestro.design_system.selectors.switch.NiLabeledSwitch
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.shape
-import com.carlosdiestro.needit.R
-import com.carlosdiestro.needit.ThemeConfigPlo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

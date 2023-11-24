@@ -24,7 +24,7 @@ import com.carlosdiestro.feature.wish_details.WishDetailsDestination
 import com.carlosdiestro.feature.wish_details.navigateToWishDetails
 import com.carlosdiestro.feature.wish_details.wishDetailsScreen
 import com.carlosdiestro.needit.core.NeedItAppState
-import com.carlosdiestro.needit.features.settings.settingsScreen
+import com.carlosdiestro.feature.settings.settingsScreen
 import com.carlosdiestro.sign_in.SignInDestination
 import com.carlosdiestro.sign_in.signInScreen
 

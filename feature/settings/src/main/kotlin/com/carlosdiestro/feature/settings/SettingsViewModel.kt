@@ -1,10 +1,8 @@
-package com.carlosdiestro.needit.features.settings
+package com.carlosdiestro.feature.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.needit.ThemeConfigPlo
-import com.carlosdiestro.needit.core.mappers.asDomain
-import com.carlosdiestro.needit.core.mappers.asPlo
+import com.carlosdiestro.app_settings.domain.ThemeConfig
 import com.carlosdiestro.app_settings.usecases.GetThemeConfigUseCase
 import com.carlosdiestro.app_settings.usecases.UpdateThemeConfigUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,3 +45,7 @@ internal class SettingsViewModel @Inject constructor(
 
     }
 }
+
+fun ThemeConfig.asPlo(): ThemeConfigPlo = ThemeConfigPlo.entries[this.ordinal]
+
+fun ThemeConfigPlo.asDomain(): ThemeConfig = ThemeConfig.entries[this.ordinal]

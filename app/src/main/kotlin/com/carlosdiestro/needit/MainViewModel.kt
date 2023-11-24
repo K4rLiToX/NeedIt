@@ -1,11 +1,11 @@
 package com.carlosdiestro.needit
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.auth.AuthClient
-import com.carlosdiestro.needit.core.mappers.asPlo
 import com.carlosdiestro.app_settings.usecases.GetThemeConfigUseCase
+import com.carlosdiestro.auth.AuthClient
+import com.carlosdiestro.feature.settings.ThemeConfigPlo
+import com.carlosdiestro.feature.settings.asPlo
 import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -48,10 +48,4 @@ class MainViewModel @Inject constructor(
 sealed interface MainState {
     data object Loading : MainState
     data class Success(val value: ThemeConfigPlo) : MainState
-}
-
-enum class ThemeConfigPlo(@StringRes val labelId: Int) {
-    FollowSystem(R.string.settings_display_section_theme_dialog_use_system),
-    Light(R.string.settings_display_section_theme_dialog_light),
-    Dark(R.string.settings_display_section_theme_dialog_dark)
 }

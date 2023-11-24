@@ -1,4 +1,4 @@
-package com.carlosdiestro.needit.features.settings
+package com.carlosdiestro.feature.settings
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

@@ -25,7 +25,7 @@ import com.carlosdiestro.feature.home.HomeDestination
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.core.navigation.NiNavigationBar
 import com.carlosdiestro.feature.account.AccountDialogRoute
-import com.carlosdiestro.needit.features.settings.navigateToSettings
+import com.carlosdiestro.feature.settings.navigateToSettings
 import com.carlosdiestro.sign_in.navigateToSignIn
 
 @OptIn(ExperimentalMaterial3Api::class)
