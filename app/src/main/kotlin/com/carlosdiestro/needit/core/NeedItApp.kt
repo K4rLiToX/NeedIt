@@ -21,11 +21,11 @@ import com.carlosdiestro.design_system.animations.exitSlideUp
 import com.carlosdiestro.design_system.animations.exitZSharedAxis
 import com.carlosdiestro.design_system.animations.popEnterZSharedAxis
 import com.carlosdiestro.design_system.navigation.top_app_bar.NiMainTopAppBar
+import com.carlosdiestro.feature.account.AccountDialogRoute
 import com.carlosdiestro.feature.home.HomeDestination
+import com.carlosdiestro.feature.settings.navigateToSettings
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
 import com.carlosdiestro.needit.core.navigation.NiNavigationBar
-import com.carlosdiestro.feature.account.AccountDialogRoute
-import com.carlosdiestro.feature.settings.navigateToSettings
 import com.carlosdiestro.sign_in.navigateToSignIn
 
 @OptIn(ExperimentalMaterial3Api::class)
