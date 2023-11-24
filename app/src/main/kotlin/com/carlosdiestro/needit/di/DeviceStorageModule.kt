@@ -7,7 +7,6 @@ import android.os.Build
 import android.provider.MediaStore
 import com.carlosdiestro.device_storage.ImageLocalDatasourceImpl
 import com.carlosdiestro.device_storage.ImageStorageDao
-import com.carlosdiestro.needit.core.di.IoDispatcher
 import com.carlosdiestro.wish.data.datasource.ImageLocalDatasource
 import dagger.Module
 import dagger.Provides

@@ -1,23 +1,22 @@
 package com.carlosdiestro.design_system.menus
 
 import android.content.res.Configuration
-import androidx.annotation.StringRes
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.carlosdiestro.design_system.buttons.NiButtonSpecs
 import com.carlosdiestro.design_system.buttons.NiFilledButton
+import com.carlosdiestro.design_system.i18n.Localization
 
 @Composable
 fun NiDialog(
     modifier: Modifier = Modifier,
-    @StringRes titleId: Int,
-    @StringRes bodyId: Int,
+    title: String,
+    body: String,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -25,21 +24,21 @@ fun NiDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = stringResource(id = titleId),
+                text = title,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center
             )
         },
         text = {
             Text(
-                text = stringResource(id = bodyId),
+                text = body,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
         },
         confirmButton = {
             NiFilledButton(
-                labelId = -1,
+                label = Localization.Button.Remove,
                 colors = NiButtonSpecs.Color.error(),
                 height = NiButtonSpecs.Height.Large,
                 onClick = onConfirm
@@ -47,7 +46,7 @@ fun NiDialog(
         },
         dismissButton = {
             NiFilledButton(
-                labelId = -1,
+                label = Localization.Button.Cancel,
                 colors = NiButtonSpecs.Color.neutral(),
                 height = NiButtonSpecs.Height.Large,
                 onClick = onDismiss
@@ -64,8 +63,8 @@ fun NiDialog(
 internal fun NiDialogPreview() {
     MaterialTheme {
         NiDialog(
-            titleId = -1,
-            bodyId = -1,
+            title = Localization.DeleteDialog.Title,
+            body = Localization.DeleteDialog.Body,
             onDismiss = {},
             onConfirm = {}
         )

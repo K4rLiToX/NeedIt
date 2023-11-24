@@ -10,24 +10,23 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.navOptions
+import com.carlosdiestro.feature.camera.cameraScreen
+import com.carlosdiestro.feature.camera.navigateToCamera
+import com.carlosdiestro.feature.friends.friendsScreen
+import com.carlosdiestro.feature.gifts.giftsScreen
+import com.carlosdiestro.feature.home.HomeDestination
+import com.carlosdiestro.feature.home.homeScreen
+import com.carlosdiestro.feature.home.navigateToHome
+import com.carlosdiestro.feature.settings.settingsScreen
+import com.carlosdiestro.feature.upsert_wish.UpsertDestination
+import com.carlosdiestro.feature.upsert_wish.navigateToUpsert
+import com.carlosdiestro.feature.upsert_wish.upsertScreen
+import com.carlosdiestro.feature.wish_details.WishDetailsDestination
+import com.carlosdiestro.feature.wish_details.navigateToWishDetails
+import com.carlosdiestro.feature.wish_details.wishDetailsScreen
 import com.carlosdiestro.needit.core.NeedItAppState
-import com.carlosdiestro.needit.features.camera.CameraDestination
-import com.carlosdiestro.needit.features.camera.cameraScreen
-import com.carlosdiestro.needit.features.camera.navigateToCamera
-import com.carlosdiestro.needit.features.friends.friendsScreen
-import com.carlosdiestro.needit.features.gifts.giftsScreen
-import com.carlosdiestro.needit.features.home.HomeDestination
-import com.carlosdiestro.needit.features.home.homeScreen
-import com.carlosdiestro.needit.features.home.navigateToHome
-import com.carlosdiestro.needit.features.settings.settingsScreen
-import com.carlosdiestro.needit.features.sign_in.SignInDestination
-import com.carlosdiestro.needit.features.sign_in.signInScreen
-import com.carlosdiestro.needit.features.upsert_item.UpsertDestination
-import com.carlosdiestro.needit.features.upsert_item.navigateToUpsert
-import com.carlosdiestro.needit.features.upsert_item.upsertScreen
-import com.carlosdiestro.needit.features.wish_details.WishDetailsDestination
-import com.carlosdiestro.needit.features.wish_details.navigateToWishDetails
-import com.carlosdiestro.needit.features.wish_details.wishDetailsScreen
+import com.carlosdiestro.sign_in.SignInDestination
+import com.carlosdiestro.sign_in.signInScreen
 
 @Composable
 fun NeedItNavHost(
@@ -122,14 +121,14 @@ fun NeedItNavHost(
             onBackClick = navController::popBackStack,
             onFinish = {
                 val previousScreenRoute = navController.previousBackStackEntry?.destination?.route
-                if (previousScreenRoute == CameraDestination.route) navController.popBackStack(
+                if (previousScreenRoute == com.carlosdiestro.feature.camera.CameraDestination.route) navController.popBackStack(
                     HomeDestination.route,
                     false
                 )
                 else navController.popBackStack()
             },
             enterTransition = {
-                if (initialState.destination.route == CameraDestination.route) {
+                if (initialState.destination.route == com.carlosdiestro.feature.camera.CameraDestination.route) {
                     com.carlosdiestro.design_system.animations.enterXSharedAxis
                 } else {
                     com.carlosdiestro.design_system.animations.enterSlideUp
@@ -138,7 +137,7 @@ fun NeedItNavHost(
             exitTransition = { com.carlosdiestro.design_system.animations.exitNone },
             popEnterTransition = { com.carlosdiestro.design_system.animations.enterNone },
             popExitTransition = {
-                if (targetState.destination.route == CameraDestination.route) {
+                if (targetState.destination.route == com.carlosdiestro.feature.camera.CameraDestination.route) {
                     com.carlosdiestro.design_system.animations.popExitXSharedAxis
                 } else {
                     com.carlosdiestro.design_system.animations.slideDown
@@ -173,7 +172,7 @@ private fun UpdateStatusBarContentColor(
     val window = (view.context as Activity).window
     WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
         when (currentRoute) {
-            CameraDestination.route, WishDetailsDestination.route -> false
+            com.carlosdiestro.feature.camera.CameraDestination.route, WishDetailsDestination.route -> false
             else -> !darkTheme
         }
 }

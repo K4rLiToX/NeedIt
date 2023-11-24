@@ -1,6 +1,5 @@
 package com.carlosdiestro.design_system.buttons
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -9,11 +8,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 
 @Composable
 internal fun NiButtonContent(
-    @StringRes labelId: Int,
+    label: String,
     leadIcon: ImageVector?,
     trailIcon: ImageVector?
 ) {
@@ -26,7 +24,7 @@ internal fun NiButtonContent(
         )
         Spacer(modifier = Modifier.width(NiButtonSpecs.IconSpacing))
     }
-    Text(text = stringResource(id = labelId))
+    Text(text = label)
     if (trailIcon != null) {
         Spacer(modifier = Modifier.width(NiButtonSpecs.IconSpacing))
         Icon(

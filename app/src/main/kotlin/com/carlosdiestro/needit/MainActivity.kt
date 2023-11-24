@@ -25,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.carlosdiestro.design_system.theme.NeedItTheme
+import com.carlosdiestro.feature.settings.ThemeConfigPlo
 import com.carlosdiestro.needit.core.NeedItApp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

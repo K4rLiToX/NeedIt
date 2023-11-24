@@ -61,7 +61,17 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":wish"))
     implementation(project(":user"))
+    implementation(project(":app_settings"))
     implementation(project(":device_storage"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:sign_in"))
+    implementation(project(":feature:gifts"))
+    implementation(project(":feature:friends"))
+    implementation(project(":feature:camera"))
+    implementation(project(":feature:upsert_wish"))
+    implementation(project(":feature:wish_details"))
+    implementation(project(":feature:account"))
+    implementation(project(":feature:settings"))
 
     // Core
     implementation(libs.androidx.core.ktx)
@@ -92,15 +102,6 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.play.services)
-    implementation(libs.kotlinx.coroutines.guava)
-
-    // CameraX
-    implementation(libs.bundles.camera)
 
     // Splashscreen
     implementation(libs.androidx.core.splashscreen)

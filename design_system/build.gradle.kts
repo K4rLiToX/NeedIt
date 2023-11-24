@@ -43,13 +43,17 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
 
+    // Compose
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     implementation(libs.bundles.compose.ui)
 
+    // Ui
     implementation(libs.androidx.compose.material.icons.extended)
+
+    // Coil
     implementation(libs.coil)
 
-    implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.navigation.compose)
+    // Navigation
+    implementation(libs.bundles.navigation)
 }
