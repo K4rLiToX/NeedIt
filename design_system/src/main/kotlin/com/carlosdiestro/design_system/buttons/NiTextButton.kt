@@ -1,7 +1,6 @@
 package com.carlosdiestro.design_system.buttons
 
 import android.content.res.Configuration
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,16 +10,16 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.NeedItTheme
 import com.carlosdiestro.design_system.theme.icons
 
 @Composable
 fun NiTextButton(
-    @StringRes labelId: Int,
+    label: String,
     modifier: Modifier = Modifier,
     leadIcon: ImageVector? = null,
     trailIcon: ImageVector? = null,
@@ -35,7 +34,7 @@ fun NiTextButton(
             .height(height)
     ) {
         NiButtonContent(
-            label = stringResource(id = labelId),
+            label = label,
             leadIcon = leadIcon,
             trailIcon = trailIcon
         )
@@ -62,21 +61,21 @@ internal fun NiTextButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiTextButton(
-            labelId = -1,
+            label = Localization.Button.Ok,
             onClick = {}
         )
         NiTextButton(
-            labelId = -1,
+            label = Localization.Button.Ok,
             leadIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
         )
         NiTextButton(
-            labelId = -1,
+            label = Localization.Button.Ok,
             trailIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
         )
         NiTextButton(
-            labelId = -1,
+            label = Localization.Button.Ok,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
@@ -90,24 +89,24 @@ internal fun NiLargeTextButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiTextButton(
-            labelId = -1,
+            label = Localization.Button.Ok,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiTextButton(
-            labelId = -1,
+            label = Localization.Button.Ok,
             leadIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiTextButton(
-            labelId = -1,
+            label = Localization.Button.Ok,
             trailIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiTextButton(
-            labelId = -1,
+            label = Localization.Button.Ok,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,

@@ -1,6 +1,5 @@
 package com.carlosdiestro.design_system.cards
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -12,7 +11,6 @@ import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.shape
@@ -20,7 +18,7 @@ import com.carlosdiestro.design_system.theme.shape
 @Composable
 fun NiSettingSectionCard(
     modifier: Modifier = Modifier,
-    @StringRes titleId: Int,
+    title: String,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
@@ -29,7 +27,7 @@ fun NiSettingSectionCard(
             .background(MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp))
     ) {
         SettingSectionCardHeader(
-            titleId = titleId,
+            title = title,
             modifier = Modifier.fillMaxWidth()
         )
         content()
@@ -39,10 +37,10 @@ fun NiSettingSectionCard(
 @Composable
 private fun SettingSectionCardHeader(
     modifier: Modifier = Modifier,
-    @StringRes titleId: Int
+    title: String
 ) {
     Text(
-        text = stringResource(id = titleId),
+        text = title,
         style = MaterialTheme.typography.titleMedium,
         color = MaterialTheme.colorScheme.primary,
         modifier = modifier

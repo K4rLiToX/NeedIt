@@ -26,8 +26,8 @@ import com.carlosdiestro.auth.UserAuth
 import com.carlosdiestro.design_system.buttons.NiButtonSpecs
 import com.carlosdiestro.design_system.buttons.NiFilledButton
 import com.carlosdiestro.design_system.buttons.NiOutlinedButton
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.dimensions
-import com.carlosdiestro.feature.sign_in.R
 
 @Composable
 internal fun SignInRoute(
@@ -107,7 +107,7 @@ private fun SignInScreen(
             )
     ) {
         NiFilledButton(
-            labelId = R.string.button_sign_in,
+            label = Localization.Button.SignIn,
             onClick = requestGoogleSignInIntent,
             height = NiButtonSpecs.Height.Large,
             modifier = Modifier
@@ -115,7 +115,7 @@ private fun SignInScreen(
         )
         Spacer(modifier = Modifier.height(MaterialTheme.dimensions.spacingM))
         NiOutlinedButton(
-            labelId = R.string.button_continue_as_guest,
+            label = Localization.Button.ContinueAsGuest,
             onClick = signInAnonymously,
             height = NiButtonSpecs.Height.Large,
             modifier = Modifier

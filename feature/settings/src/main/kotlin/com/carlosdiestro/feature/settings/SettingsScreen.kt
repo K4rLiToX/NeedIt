@@ -34,6 +34,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.carlosdiestro.design_system.buttons.NiTextButton
 import com.carlosdiestro.design_system.cards.NiSettingSectionCard
 import com.carlosdiestro.design_system.cards.NiTitleWithSubtitle
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.navigation.top_app_bar.NiMediumTopAppBar
 import com.carlosdiestro.design_system.selectors.switch.NiLabeledSwitch
 import com.carlosdiestro.design_system.theme.dimensions
@@ -93,7 +94,7 @@ private fun SettingsScreen(
                 .background(MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)),
             title = {
                 Text(
-                    text = stringResource(id = R.string.settings_display_section_theme),
+                    text = Localization.Settings.DisplaySectionTheme,
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -115,7 +116,7 @@ private fun SettingsScreen(
             },
             confirmButton = {
                 NiTextButton(
-                    labelId = R.string.button_ok,
+                    label = Localization.Button.Ok,
                     onClick = uiState::closeThemeDialog
                 )
             }
@@ -125,7 +126,7 @@ private fun SettingsScreen(
     Scaffold(
         topBar = {
             NiMediumTopAppBar(
-                titleId = R.string.settings_title,
+                title = Localization.Settings.Title,
                 onNavigationClick = onBackClick,
                 scrollBehavior = uiState.scrollBehavior,
                 actions = {}
@@ -147,7 +148,7 @@ private fun SettingsScreen(
         ) {
             item {
                 NiSettingSectionCard(
-                    titleId = R.string.settings_display_section,
+                    title = Localization.Settings.DisplaySection,
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
@@ -165,7 +166,7 @@ private fun SettingsScreen(
                             )
                     ) {
                         Text(
-                            text = stringResource(id = R.string.settings_display_section_theme),
+                            text = Localization.Settings.DisplaySectionTheme,
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -180,18 +181,18 @@ private fun SettingsScreen(
             }
             item {
                 NiSettingSectionCard(
-                    titleId = R.string.settings_notifications_section,
+                    title = Localization.Settings.NotificationsSection,
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
                     NiLabeledSwitch(
-                        labelId = R.string.settings_notifications_section_friend_requests,
+                        label = Localization.Settings.NotificationsSectionFriendRequests,
                         checked = true,
                         onCheckedChange = { onFriendRequestsClick() },
                         modifier = Modifier.fillMaxWidth()
                     )
                     NiLabeledSwitch(
-                        labelId = R.string.settings_notifications_section_addition_to_groups,
+                        label = Localization.Settings.NotificationsSectionAdditionToGroups,
                         checked = false,
                         onCheckedChange = { onAdditionToGroupsClick() },
                         modifier = Modifier.fillMaxWidth()
@@ -200,23 +201,23 @@ private fun SettingsScreen(
             }
             item {
                 NiSettingSectionCard(
-                    titleId = R.string.settings_about_section,
+                    title = Localization.Settings.AboutSection,
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
                     NiTitleWithSubtitle(
-                        title = stringResource(id = R.string.settings_about_section_version_and_updates),
+                        title = Localization.Settings.AboutSectionVersionAndUpdates,
                         subtitle = "v1.0.0",
                         onClick = onVersionClick,
                         modifier = Modifier.fillMaxWidth()
                     )
                     NiTitleWithSubtitle(
-                        title = stringResource(id = R.string.settings_about_section_privacy_policy),
+                        title = Localization.Settings.AboutSectionPrivacyPolicy,
                         onClick = onPrivatePolicyClick,
                         modifier = Modifier.fillMaxWidth()
                     )
                     NiTitleWithSubtitle(
-                        title = stringResource(id = R.string.settings_about_section_terms_of_use),
+                        title = Localization.Settings.AboutSectionTermsOfUse,
                         onClick = onTermsOfUseClick,
                         modifier = Modifier.fillMaxWidth()
                     )

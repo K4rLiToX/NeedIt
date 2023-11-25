@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.NeedItTheme
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
@@ -40,7 +41,7 @@ internal fun NiDoubleButtonPreview() {
         NiDoubleButton(
             leftButton = {
                 NiFilledButton(
-                    labelId = -1,
+                    label = Localization.Button.Cancel,
                     leadIcon = MaterialTheme.icons.Group,
                     height = NiButtonSpecs.Height.Large,
                     colors = NiButtonSpecs.Color.secondary(),
@@ -50,7 +51,7 @@ internal fun NiDoubleButtonPreview() {
             },
             rightButton = {
                 NiFilledButton(
-                    labelId = -1,
+                    label = Localization.Button.Accept,
                     leadIcon = MaterialTheme.icons.GiftsOutlined,
                     height = NiButtonSpecs.Height.Large,
                     colors = NiButtonSpecs.Color.primary(),

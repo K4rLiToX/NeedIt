@@ -1,6 +1,5 @@
 package com.carlosdiestro.feature.upsert_wish
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,28 +10,27 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
 
 internal data class UpsertDataState(
     val imageLocalPath: String,
     val category: WishCategoryPlo,
 ) {
-    @get:StringRes
-    val titleHintId: Int
-        get() {
+    val titleHint: String
+        @Composable get() {
             return if (category == WishCategoryPlo.Books)
-                R.string.upsert_title_hint
+                Localization.Upsert.TitleHint
             else
-                R.string.upsert_name_hint
+                Localization.Upsert.NameHint
         }
 
-    @get:StringRes
-    val subtitleHintId: Int
-        get() {
+    val subtitleHint: String
+        @Composable get() {
             return if (category == WishCategoryPlo.Books)
-                R.string.upsert_author_hint
+                Localization.Upsert.AuthorHint
             else
-                R.string.upsert_brand_hint
+                Localization.Upsert.BrandHint
         }
 }
 

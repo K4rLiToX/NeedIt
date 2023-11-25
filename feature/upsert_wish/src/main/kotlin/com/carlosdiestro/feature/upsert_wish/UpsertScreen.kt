@@ -21,13 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.carlosdiestro.design_system.buttons.NiTextButton
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
 import com.carlosdiestro.design_system.navigation.top_app_bar.NiTopAppBar
 import com.carlosdiestro.design_system.theme.dimensions
@@ -102,7 +102,7 @@ private fun UpsertScreen(
                 scrollBehavior = uiState.scrollBehavior,
                 actions = {
                     NiTextButton(
-                        labelId = R.string.button_save,
+                        label = Localization.Button.Save,
                         enabled = saveButtonEnabled,
                         onClick = {
                             onSaveClick()
@@ -140,9 +140,9 @@ private fun UpsertScreen(
             )
             CommonInformation(
                 title = title,
-                titleHintId = dataState.titleHintId,
+                titleHint = dataState.titleHint,
                 subtitle = subtitle,
-                subtitleHintId = dataState.subtitleHintId,
+                subtitleHint = dataState.subtitleHint,
                 price = price,
                 updateTitle = updateTitle,
                 updateSubtitle = updateSubtitle,
@@ -172,9 +172,9 @@ private fun UpsertScreen(
 @Composable
 private fun CommonInformation(
     title: String,
-    titleHintId: Int,
+    titleHint: String,
     subtitle: String,
-    subtitleHintId: Int,
+    subtitleHint: String,
     price: String,
     updateTitle: (String) -> Unit,
     updateSubtitle: (String) -> Unit,
@@ -195,7 +195,7 @@ private fun CommonInformation(
                 onValueChange = updateTitle,
                 label = {
                     Text(
-                        text = stringResource(id = titleHintId),
+                        text = titleHint,
                         style = MaterialTheme.typography.bodySmall
                     )
                 },
@@ -214,7 +214,7 @@ private fun CommonInformation(
                 onValueChange = updateSubtitle,
                 label = {
                     Text(
-                        text = stringResource(id = subtitleHintId),
+                        text = subtitleHint,
                         style = MaterialTheme.typography.bodySmall
                     )
                 },
@@ -226,7 +226,7 @@ private fun CommonInformation(
                 onValueChange = updatePrice,
                 label = {
                     Text(
-                        text = stringResource(id = R.string.upsert_price_hint),
+                        text = Localization.Upsert.PriceHint,
                         style = MaterialTheme.typography.bodySmall
                     )
                 },
@@ -253,7 +253,7 @@ private fun SpecificInformation(
                 onValueChange = updateIsbn,
                 label = {
                     Text(
-                        text = stringResource(id = R.string.upsert_isbn_hint),
+                        text = Localization.Upsert.IsbnHint,
                         style = MaterialTheme.typography.bodySmall
                     )
                 },
@@ -274,7 +274,7 @@ private fun SpecificInformation(
                     onValueChange = updateSize,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.upsert_size_hint),
+                            text = Localization.Upsert.SizeHint,
                             style = MaterialTheme.typography.bodySmall
                         )
                     },
@@ -286,7 +286,7 @@ private fun SpecificInformation(
                     onValueChange = updateColor,
                     label = {
                         Text(
-                            text = stringResource(id = R.string.upsert_color_hint),
+                            text = Localization.Upsert.ColorHint,
                             style = MaterialTheme.typography.bodySmall
                         )
                     },
@@ -316,7 +316,7 @@ private fun AdditionalInformation(
             onValueChange = updateWebUrl,
             label = {
                 Text(
-                    text = stringResource(id = R.string.upsert_website_link_hint),
+                    text = Localization.Upsert.WebHint,
                     style = MaterialTheme.typography.bodySmall
                 )
             },
@@ -331,7 +331,7 @@ private fun AdditionalInformation(
             onValueChange = updateDescription,
             label = {
                 Text(
-                    text = stringResource(id = R.string.upsert_description_link),
+                    text = Localization.Upsert.DescriptionHint,
                     style = MaterialTheme.typography.bodySmall
                 )
             },

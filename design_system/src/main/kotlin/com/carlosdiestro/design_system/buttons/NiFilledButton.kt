@@ -1,7 +1,6 @@
 package com.carlosdiestro.design_system.buttons
 
 import android.content.res.Configuration
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,38 +11,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.NeedItTheme
 import com.carlosdiestro.design_system.theme.icons
-
-@Composable
-fun NiFilledButton(
-    @StringRes labelId: Int,
-    modifier: Modifier = Modifier,
-    leadIcon: ImageVector? = null,
-    trailIcon: ImageVector? = null,
-    height: Dp = NiButtonSpecs.Height.Default,
-    colors: ButtonColors = NiButtonSpecs.Color.primary(),
-    enabled: Boolean = true,
-    onClick: () -> Unit
-) {
-    Button(
-        onClick = onClick,
-        colors = colors,
-        enabled = enabled,
-        modifier = modifier
-            .height(height)
-    ) {
-        NiButtonContent(
-            label = stringResource(id = labelId),
-            leadIcon = leadIcon,
-            trailIcon = trailIcon
-        )
-    }
-}
 
 @Composable
 fun NiFilledButton(
@@ -97,21 +70,21 @@ internal fun NiPrimaryButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
@@ -125,24 +98,24 @@ internal fun NiSecondaryButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             colors = NiButtonSpecs.Color.secondary(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.secondary(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.secondary(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.secondary(),
@@ -157,24 +130,24 @@ internal fun NiNeutralButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             colors = NiButtonSpecs.Color.neutral(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.neutral(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.neutral(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.neutral(),
@@ -189,24 +162,24 @@ internal fun NiErrorButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             colors = NiButtonSpecs.Color.error(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.error(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.error(),
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.error(),
@@ -221,24 +194,24 @@ internal fun NiLargePrimaryButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,
@@ -253,27 +226,27 @@ internal fun NiLargeSecondaryButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             colors = NiButtonSpecs.Color.secondary(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.secondary(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.secondary(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.secondary(),
@@ -289,27 +262,27 @@ internal fun NiLargeNeutralButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             colors = NiButtonSpecs.Color.neutral(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.neutral(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.neutral(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.neutral(),
@@ -325,27 +298,27 @@ internal fun NiLargeErrorButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             colors = NiButtonSpecs.Color.error(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.error(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.error(),
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiFilledButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             colors = NiButtonSpecs.Color.error(),
