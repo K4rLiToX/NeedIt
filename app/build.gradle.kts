@@ -72,6 +72,7 @@ dependencies {
     implementation(project(":feature:wish_details"))
     implementation(project(":feature:account"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:search"))
 
     // Core
     implementation(libs.androidx.core.ktx)

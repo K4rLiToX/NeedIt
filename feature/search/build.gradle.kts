@@ -2,13 +2,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.android.kotlin)
-
     alias(libs.plugins.android.hilt)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.carlosdiestro.feature.friends"
+    namespace = "com.carlosdiestro.feature.search"
     compileSdk = 34
 
     defaultConfig {
@@ -45,7 +44,6 @@ android {
 dependencies {
 
     implementation(project(":user"))
-    implementation(project(":wish"))
     implementation(project(":design_system"))
 
     implementation(libs.androidx.core.ktx)
@@ -60,9 +58,6 @@ dependencies {
 
     // Lifecycle & ViewModel
     implementation(libs.bundles.lifecycle)
-
-    // Navigation
-    implementation(libs.bundles.navigation)
 
     // Hilt
     implementation(libs.androidx.hilt.navigation.compose)

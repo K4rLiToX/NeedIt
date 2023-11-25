@@ -68,7 +68,10 @@ class NeedItAppState constructor(
         @Composable get() = isTopLevelDestination()
 
     val shouldShowTopBar: Boolean
-        @Composable get() = isTopLevelDestination()
+        @Composable get() = isTopLevelDestination() && !shouldShowSearchBar
+
+    val shouldShowSearchBar: Boolean
+        @Composable get() = currentDestinationRoute == TopLevelDestination.Friends.route
 
     var shouldShowAccountDialog by mutableStateOf(false)
         private set
