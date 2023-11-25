@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.carlosdiestro.design_system.R
 
 internal sealed interface SettingsState {
     data object Loading : SettingsState

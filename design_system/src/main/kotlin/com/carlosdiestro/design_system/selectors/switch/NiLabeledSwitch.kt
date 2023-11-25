@@ -1,7 +1,6 @@
 package com.carlosdiestro.design_system.selectors.switch
 
 import android.content.res.Configuration
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,14 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.NeedItTheme
 import com.carlosdiestro.design_system.theme.dimensions
 
 @Composable
 fun NiLabeledSwitch(
-    @StringRes labelId: Int,
+    label: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -36,7 +35,7 @@ fun NiLabeledSwitch(
             )
     ) {
         Text(
-            text = stringResource(id = labelId),
+            text = label,
             style = MaterialTheme.typography.bodyLarge,
             color = if (enabled) MaterialTheme.colorScheme.onSurface else MaterialTheme
                 .colorScheme.onSurfaceVariant
@@ -56,7 +55,7 @@ fun NiLabeledSwitch(
 internal fun NiLabeledSwitchPreview() {
     NeedItTheme {
         NiLabeledSwitch(
-            labelId = -1,
+            label = Localization.Settings.NotificationsSectionFriendRequests,
             checked = true,
             onCheckedChange = {},
             modifier = Modifier.fillMaxWidth()

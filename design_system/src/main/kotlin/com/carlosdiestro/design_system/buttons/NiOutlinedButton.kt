@@ -1,7 +1,6 @@
 package com.carlosdiestro.design_system.buttons
 
 import android.content.res.Configuration
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,16 +10,16 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.NeedItTheme
 import com.carlosdiestro.design_system.theme.icons
 
 @Composable
 fun NiOutlinedButton(
-    @StringRes labelId: Int,
+    label: String,
     modifier: Modifier = Modifier,
     leadIcon: ImageVector? = null,
     trailIcon: ImageVector? = null,
@@ -35,7 +34,7 @@ fun NiOutlinedButton(
             .height(height)
     ) {
         NiButtonContent(
-            label = stringResource(id = labelId),
+            label = label,
             leadIcon = leadIcon,
             trailIcon = trailIcon
         )
@@ -62,21 +61,21 @@ internal fun NiOutlinedButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiOutlinedButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             onClick = {}
         )
         NiOutlinedButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
         )
         NiOutlinedButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
         )
         NiOutlinedButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             onClick = {}
@@ -90,24 +89,24 @@ internal fun NiLargeOutlinedButtons() {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         NiOutlinedButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiOutlinedButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiOutlinedButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             trailIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,
             onClick = {}
         )
         NiOutlinedButton(
-            labelId = -1,
+            label = Localization.Button.Continue,
             leadIcon = MaterialTheme.icons.AddFriend,
             trailIcon = MaterialTheme.icons.AddFriend,
             height = NiButtonSpecs.Height.Large,

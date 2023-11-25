@@ -5,7 +5,6 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -34,7 +33,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +41,7 @@ import com.carlosdiestro.design_system.avatars.NiAvatar
 import com.carlosdiestro.design_system.buttons.NiDoubleButton
 import com.carlosdiestro.design_system.buttons.NiOutlinedButton
 import com.carlosdiestro.design_system.buttons.NiTextButton
+import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
 import com.carlosdiestro.design_system.theme.shape
@@ -139,7 +138,7 @@ private fun AccountDialog(
                 },
                 header = {
                     Text(
-                        text = stringResource(id = R.string.app_name),
+                        text = Localization.AppName,
                         style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -147,13 +146,13 @@ private fun AccountDialog(
                 accountExtras = {
                     AppOption(
                         icon = MaterialTheme.icons.Birthday,
-                        labelId = R.string.profile_birthday,
+                        label = Localization.Account.Birthday,
                         value = dataState.account.birthday,
                         onClick = {}
                     )
                     AppOption(
                         icon = MaterialTheme.icons.Currency,
-                        labelId = R.string.profile_currency,
+                        label = Localization.Account.Currency,
                         value = dataState.account.currency,
                         onClick = {}
                     )
@@ -161,17 +160,17 @@ private fun AccountDialog(
                 appOptions = {
                     AppOption(
                         icon = MaterialTheme.icons.Settings,
-                        labelId = R.string.settings_title,
+                        label = Localization.Settings.Title,
                         onClick = onSettingsClick
                     )
                     AppOption(
                         icon = MaterialTheme.icons.Feedback,
-                        labelId = R.string.send_feedback_title,
+                        label = Localization.SendFeedback.Title,
                         onClick = {}
                     )
                     AppOption(
                         icon = MaterialTheme.icons.Bug,
-                        labelId = R.string.report_bug_title,
+                        label = Localization.ReportABug.Title,
                         onClick = {}
                     )
                 },
@@ -179,13 +178,13 @@ private fun AccountDialog(
                     NiDoubleButton(
                         leftButton = {
                             NiTextButton(
-                                labelId = R.string.button_privacy_policy,
+                                label = Localization.Button.PrivacyPolicy,
                                 onClick = {}
                             )
                         },
                         rightButton = {
                             NiTextButton(
-                                labelId = R.string.button_terms_of_service,
+                                label = Localization.Button.TermsOfService,
                                 onClick = {}
                             )
                         },
@@ -314,8 +313,8 @@ fun AccountDialogAccountAction(
             )
     ) {
         NiOutlinedButton(
-            labelId = if (!isUserAnonymous) R.string.button_sign_out else R.string
-                .button_sign_in,
+            label = if (!isUserAnonymous) Localization.Button.SignOut
+            else Localization.Button.SignIn,
             onClick = onAccountActionClick,
             modifier = Modifier.fillMaxWidth()
         )
@@ -429,7 +428,7 @@ private fun AccountDialogFooter(
 private fun AppOption(
     modifier: Modifier = Modifier,
     icon: ImageVector,
-    @StringRes labelId: Int,
+    label: String,
     value: String = "",
     onClick: () -> Unit
 ) {
@@ -453,7 +452,7 @@ private fun AppOption(
                 contentDescription = ""
             )
             Text(
-                text = stringResource(id = labelId),
+                text = label,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
