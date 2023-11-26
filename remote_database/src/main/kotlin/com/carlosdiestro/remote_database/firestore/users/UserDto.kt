@@ -6,4 +6,6 @@ data class UserDto(
     val email: String,
     val profilePictureUrl: String,
     val isAnonymous: Boolean
-)
+) {
+    constructor() : this("", "", "", "", false)
+}

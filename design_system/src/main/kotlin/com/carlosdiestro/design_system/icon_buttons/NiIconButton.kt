@@ -38,6 +38,8 @@ fun NiIconButton(
         Icon(
             imageVector = icon,
             contentDescription = "",
+            modifier = Modifier
+                .size(20.dp)
         )
     }
 }

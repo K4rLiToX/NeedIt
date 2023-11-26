@@ -2,6 +2,7 @@ package com.carlosdiestro.local_database
 
 import android.content.Context
 import androidx.room.Room
+import com.carlosdiestro.local_database.friends.FriendDao
 import com.carlosdiestro.local_database.wishes.WishDao
 import dagger.Module
 import dagger.Provides
@@ -27,4 +28,8 @@ internal object DatabaseModule {
     @Singleton
     @Provides
     fun provideWishDao(db: NeedItDatabase): WishDao = db.wishDao()
+
+    @Singleton
+    @Provides
+    fun provideFriendDao(db: NeedItDatabase): FriendDao = db.friendDao()
 }

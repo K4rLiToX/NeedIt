@@ -44,6 +44,7 @@ android {
 dependencies {
 
     implementation(project(":user"))
+    implementation(project(":friend"))
     implementation(project(":design_system"))
 
     implementation(libs.androidx.core.ktx)

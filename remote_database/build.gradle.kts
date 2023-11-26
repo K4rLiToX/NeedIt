@@ -39,6 +39,7 @@ dependencies {
 
     implementation(project(":wish"))
     implementation(project(":user"))
+    implementation(project(":friend"))
 
     implementation(libs.androidx.core.ktx)
 

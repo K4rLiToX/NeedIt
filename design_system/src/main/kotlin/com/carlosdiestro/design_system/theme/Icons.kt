@@ -26,7 +26,6 @@ import androidx.compose.material.icons.outlined.LocalShipping
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.PersonAdd
 import androidx.compose.material.icons.outlined.PhotoCamera
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Sync
@@ -43,6 +42,7 @@ import androidx.compose.material.icons.rounded.EuroSymbol
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Lens
 import androidx.compose.material.icons.rounded.LockOpen
+import androidx.compose.material.icons.rounded.PersonAdd
 import androidx.compose.material.icons.rounded.Redeem
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.MaterialTheme
@@ -64,7 +64,7 @@ object Icons {
     val Delete = Icons.Outlined.Delete
     val Edit = Icons.Outlined.Edit
     val Add = Icons.Rounded.Add
-    val AddFriend = Icons.Outlined.PersonAdd
+    val AddFriend = Icons.Rounded.PersonAdd
     val Share = Icons.Outlined.CloudUpload
     val Lock = Icons.Outlined.Lock
     val Link = Icons.Outlined.Link

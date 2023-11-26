@@ -3,6 +3,7 @@ package com.carlosdiestro.feature.search
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
@@ -23,6 +24,8 @@ import com.carlosdiestro.design_system.avatars.NiAvatarSpecs
 import com.carlosdiestro.design_system.i18n.Localization
 import com.carlosdiestro.design_system.icon_buttons.NiIconButton
 import com.carlosdiestro.design_system.icon_buttons.NiIconButtonSpecs
+import com.carlosdiestro.design_system.lists.FollowableUser
+import com.carlosdiestro.design_system.lists.NiFollowableUsersList
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
 
@@ -30,30 +33,46 @@ import com.carlosdiestro.design_system.theme.icons
 fun NiSearchBarRoute(
     accountImageUrl: String?,
     onNotificationClick: () -> Unit,
+    onAccountClick: () -> Unit
+) {
+    NiSearchBar(
+        accountImageUrl = accountImageUrl,
+        onNotificationClick = onNotificationClick,
+        onAccountClick = onAccountClick
+    )
+}
+
+@Composable
+private fun NiSearchBar(
+    accountImageUrl: String?,
+    onNotificationClick: () -> Unit,
     onAccountClick: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val state by viewModel.isSearchBarEnabled.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val query = viewModel.query
+
     NiSearchBar(
-        isSearchBarEnabled = state,
+        state = state,
         accountImageUrl = accountImageUrl,
         query = query,
         onQueryChange = viewModel::onQueryChange,
         onNotificationClick = onNotificationClick,
-        onAccountClick = onAccountClick
+        onAccountClick = onAccountClick,
+        onSendRequestClick = viewModel::onSendRequestClick
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NiSearchBar(
-    isSearchBarEnabled: Boolean,
+    state: SearchDataState,
     accountImageUrl: String?,
     query: String,
     onQueryChange: (String) -> Unit,
     onNotificationClick: () -> Unit,
     onAccountClick: () -> Unit,
+    onSendRequestClick: (FollowableUser) -> Unit
 ) {
     var active by rememberSaveable {
         mutableStateOf(false)
@@ -114,12 +133,17 @@ private fun NiSearchBar(
         colors = SearchBarDefaults.colors(
             containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
         ),
-        enabled = isSearchBarEnabled,
+        enabled = state.isSearchViewEnabled,
         shadowElevation = 0.dp,
         modifier = Modifier
             .padding(horizontal = horizontalPadding)
             .fillMaxWidth()
     ) {
-
+        val lazyListState = rememberLazyListState()
+        NiFollowableUsersList(
+            lazyListState = lazyListState,
+            followableUsers = state.users,
+            onSendRequestClick = onSendRequestClick
+        )
     }
 }
