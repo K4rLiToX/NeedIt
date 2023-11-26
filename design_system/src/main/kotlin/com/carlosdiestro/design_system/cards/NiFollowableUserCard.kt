@@ -1,6 +1,5 @@
 package com.carlosdiestro.design_system.cards
 
-import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
@@ -11,8 +10,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.carlosdiestro.design_system.avatars.NiAvatar
 import com.carlosdiestro.design_system.icon_buttons.NiIconButton
-import com.carlosdiestro.design_system.icon_buttons.NiIconButtonSpecs
 import com.carlosdiestro.design_system.lists.FollowableUser
+import com.carlosdiestro.design_system.lists.FollowableUserStatus
 import com.carlosdiestro.design_system.theme.icons
 
 @Composable
@@ -42,16 +41,16 @@ fun NiFollowableUserCard(
             )
         },
         trailingContent = {
-            if (user.isFriendRequestSent) {
-                Icon(
-                    imageVector = MaterialTheme.icons.Check,
-                    contentDescription = null
-                )
-            } else {
-                NiIconButton(
-                    icon = MaterialTheme.icons.AddFriend,
-                    onClick = onClick
-                )
+            when (user.status) {
+                FollowableUserStatus.Followable, FollowableUserStatus.Pending -> {
+                    NiIconButton(
+                        icon = MaterialTheme.icons.AddFriend,
+                        enabled = user.status == FollowableUserStatus.Followable,
+                        onClick = onClick
+                    )
+                }
+
+                else -> Unit
             }
         },
         modifier = modifier,

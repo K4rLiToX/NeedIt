@@ -23,7 +23,7 @@ internal class FriendRequestsCollection @Inject constructor(
 
     }
 
-    fun getAll(receiverId: String): Flow<List<FriendRequestDto>> = requestsCollection
+    fun getAllReceived(receiverId: String): Flow<List<FriendRequestDto>> = requestsCollection
         .whereEqualTo("receiverId", receiverId)
         .asFlow()
         .asFriendRequestDto()

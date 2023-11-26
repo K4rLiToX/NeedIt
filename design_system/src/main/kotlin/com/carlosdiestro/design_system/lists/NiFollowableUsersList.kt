@@ -2,7 +2,6 @@ package com.carlosdiestro.design_system.lists
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,8 +12,14 @@ data class FollowableUser(
     val username: String,
     val email: String,
     val profilePictureUrl: String,
-    val isFriendRequestSent: Boolean
+    val status: FollowableUserStatus
 )
+
+enum class FollowableUserStatus {
+    Followable,
+    Friends,
+    Pending
+}
 
 @Composable
 fun NiFollowableUsersList(

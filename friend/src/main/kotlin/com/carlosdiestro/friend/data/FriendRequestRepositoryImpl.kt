@@ -6,12 +6,23 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FriendRequestRepositoryImpl @Inject constructor(
+    private val localDatasource: FriendRequestLocalDatasource,
     private val remoteDatasource: FriendRequestRemoteDatasource
 ) : FriendRequestRepository {
-    override fun create(request: FriendRequest) = remoteDatasource.create(request)
+    override suspend fun create(request: FriendRequest) {
+        localDatasource.create(request)
+        remoteDatasource.create(request)
+    }
 
-    override fun delete(request: FriendRequest) = remoteDatasource.delete(request)
+    override suspend fun delete(request: FriendRequest) {
+        localDatasource.delete(request)
+        remoteDatasource.delete(request)
+    }
 
-    override fun getAll(receiverId: String): Flow<List<FriendRequest>> =
-        remoteDatasource.getAll(receiverId)
+    override fun getAllSent(): Flow<List<FriendRequest>> = localDatasource.getAll()
+
+    override fun getAllSentIds(): Flow<List<String>> = localDatasource.getAllIds()
+
+    override fun getAllReceived(receiverId: String): Flow<List<FriendRequest>> =
+        remoteDatasource.getAllReceived(receiverId)
 }

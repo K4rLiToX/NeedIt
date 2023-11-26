@@ -7,4 +7,5 @@ interface FriendLocalDatasource {
     suspend fun upsert(friend: Friend)
     suspend fun delete(friend: Friend)
     fun getAll(): Flow<List<Friend>>
+    fun getAllIds(): Flow<List<String>>
 }

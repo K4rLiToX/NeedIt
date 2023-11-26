@@ -14,7 +14,5 @@ data class FriendEntity(
     @ColumnInfo(name = "email")
     val email: String,
     @ColumnInfo(name = "profile_picture_url")
-    val profilePictureUrl: String,
-    @ColumnInfo(name = "friend_status")
-    val friendStatus: Int
+    val profilePictureUrl: String
 )

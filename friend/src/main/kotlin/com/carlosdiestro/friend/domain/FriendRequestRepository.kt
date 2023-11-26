@@ -3,7 +3,9 @@ package com.carlosdiestro.friend.domain
 import kotlinx.coroutines.flow.Flow
 
 interface FriendRequestRepository {
-    fun create(request: FriendRequest)
-    fun delete(request: FriendRequest)
-    fun getAll(receiverId: String): Flow<List<FriendRequest>>
+    suspend fun create(request: FriendRequest)
+    suspend fun delete(request: FriendRequest)
+    fun getAllSent(): Flow<List<FriendRequest>>
+    fun getAllSentIds(): Flow<List<String>>
+    fun getAllReceived(receiverId: String): Flow<List<FriendRequest>>
 }

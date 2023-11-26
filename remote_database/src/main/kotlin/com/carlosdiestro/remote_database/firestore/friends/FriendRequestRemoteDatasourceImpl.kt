@@ -14,8 +14,8 @@ internal class FriendRequestRemoteDatasourceImpl @Inject constructor(
 
     override fun delete(request: FriendRequest) = friendRequestsCollection.delete(request.asDto())
 
-    override fun getAll(receiverId: String): Flow<List<FriendRequest>> =
-        friendRequestsCollection.getAll(receiverId).asDomain()
+    override fun getAllReceived(receiverId: String): Flow<List<FriendRequest>> =
+        friendRequestsCollection.getAllReceived(receiverId).asDomain()
 }
 
 internal fun FriendRequest.asDto(): FriendRequestDto = FriendRequestDto(

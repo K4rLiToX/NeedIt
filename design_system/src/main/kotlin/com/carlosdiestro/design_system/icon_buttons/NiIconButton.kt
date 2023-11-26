@@ -26,11 +26,13 @@ fun NiIconButton(
     modifier: Modifier = Modifier,
     buttonSize: Dp = NiIconButtonSpecs.Size.Default,
     colors: IconButtonColors = NiIconButtonSpecs.Color.primary(),
+    enabled: Boolean = true,
     onClick: () -> Unit
 ) {
     IconButton(
         onClick = onClick,
         colors = colors,
+        enabled = enabled,
         modifier = modifier
             .clip(MaterialTheme.shape.full)
             .size(buttonSize)

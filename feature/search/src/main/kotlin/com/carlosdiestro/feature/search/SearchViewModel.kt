@@ -6,9 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.design_system.lists.FollowableUser
-import com.carlosdiestro.friend.domain.Friend
-import com.carlosdiestro.friend.domain.FriendStatus
+import com.carlosdiestro.design_system.lists.FollowableUserStatus
 import com.carlosdiestro.friend.usecases.GetFriendsUseCase
+import com.carlosdiestro.friend.usecases.GetSentFriendRequestsUseCase
 import com.carlosdiestro.friend.usecases.SendFriendRequestUseCase
 import com.carlosdiestro.user.domain.User
 import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
@@ -26,14 +26,16 @@ internal class SearchViewModel @Inject constructor(
     getSignedInUser: GetSignedInUserUseCase,
     getUsers: GetUsersUseCase,
     getFriends: GetFriendsUseCase,
+    getSentFriendRequests: GetSentFriendRequestsUseCase,
     private val sendFriendRequest: SendFriendRequestUseCase
 ) : ViewModel() {
 
     val state: StateFlow<SearchDataState> = combine(
         getSignedInUser(),
         getUsers(),
-        getFriends()
-    ) { localUser, users, friends ->
+        getFriends.getIds(),
+        getSentFriendRequests.getIds(),
+    ) { localUser, users, friendIds, friendRequestsIds ->
         signedInUser = localUser
         val followableUsers = users.map { user ->
             FollowableUser(
@@ -41,7 +43,7 @@ internal class SearchViewModel @Inject constructor(
                 username = user.username,
                 email = user.email,
                 profilePictureUrl = user.profilePictureUrl,
-                isFriendRequestSent = friends.map { it.id }.contains(user.id)
+                status = getFollowableUserStatus(user.id, friendIds, friendRequestsIds)
             )
         }
         SearchDataState(
@@ -66,7 +68,7 @@ internal class SearchViewModel @Inject constructor(
     fun onSendRequestClick(followableUser: FollowableUser) {
         viewModelScope.launch {
             sendFriendRequest(
-                friend = followableUser.asFriend(),
+                friendId = followableUser.id,
                 userId = signedInUser.id,
                 username = signedInUser.username,
                 email = signedInUser.email,
@@ -74,12 +76,14 @@ internal class SearchViewModel @Inject constructor(
             )
         }
     }
-}
 
-internal fun FollowableUser.asFriend(): Friend = Friend(
-    id = id,
-    username = username,
-    email = email,
-    profilePictureUrl = profilePictureUrl,
-    friendStatus = FriendStatus.Pending
-)
+    private fun getFollowableUserStatus(
+        userId: String,
+        friendIds: List<String>,
+        friendRequestIds: List<String>
+    ): FollowableUserStatus = when {
+        userId in friendIds -> FollowableUserStatus.Friends
+        userId in friendRequestIds -> FollowableUserStatus.Pending
+        else -> FollowableUserStatus.Followable
+    }
+}

@@ -10,4 +10,5 @@ class GetFriendsUseCase @Inject constructor(
 ) {
 
     operator fun invoke(): Flow<List<Friend>> = repository.getAll()
+    fun getIds(): Flow<List<String>> = repository.getAllIds()
 }
