@@ -1,5 +1,6 @@
 package com.carlosdiestro.remote_database.firestore
 
+import com.carlosdiestro.remote_database.firestore.friends.FriendRequestDto
 import com.carlosdiestro.remote_database.firestore.users.UserDto
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
@@ -19,7 +20,13 @@ internal fun Query.asFlow(): Flow<QuerySnapshot?> = callbackFlow {
 internal fun QuerySnapshot?.asUserDto(): List<UserDto> =
     this?.mapNotNull { it.toObject(UserDto::class.java) } ?: emptyList()
 
+internal fun QuerySnapshot?.asFriendRequestDto(): List<FriendRequestDto> =
+    this?.mapNotNull { it.toObject(FriendRequestDto::class.java) } ?: emptyList()
+
 internal fun Flow<QuerySnapshot?>.asUserDto(): Flow<List<UserDto>> = this.map { it.asUserDto() }
+
+internal fun Flow<QuerySnapshot?>.asFriendRequestDto(): Flow<List<FriendRequestDto>> =
+    this.map { it.asFriendRequestDto() }
 
 
 

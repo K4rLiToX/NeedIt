@@ -1,4 +1,4 @@
-package com.carlosdiestro.friend
+package com.carlosdiestro.friend.usecases
 
 import com.carlosdiestro.friend.domain.Friend
 import com.carlosdiestro.friend.domain.FriendRepository
