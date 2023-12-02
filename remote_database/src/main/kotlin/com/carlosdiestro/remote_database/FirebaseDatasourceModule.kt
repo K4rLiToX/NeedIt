@@ -1,7 +1,9 @@
 package com.carlosdiestro.remote_database
 
 import com.carlosdiestro.friend.data.FriendRequestRemoteDatasource
+import com.carlosdiestro.friend.data.FriendshipRemoteDatasource
 import com.carlosdiestro.remote_database.firestore.friends.FriendRequestRemoteDatasourceImpl
+import com.carlosdiestro.remote_database.firestore.friends.FriendshipRemoteDatasourceImpl
 import com.carlosdiestro.remote_database.firestore.users.UserRemoteDatasourceImpl
 import com.carlosdiestro.remote_database.firestore.wishes.WishRemoteDatasourceImpl
 import com.carlosdiestro.remote_database.storage.ImageRemoteDatasourceImpl
@@ -29,6 +31,10 @@ internal interface FirebaseDatasourceModule {
     @Singleton
     @Binds
     fun bindFriendRequestRemoteDatasource(impl: FriendRequestRemoteDatasourceImpl): FriendRequestRemoteDatasource
+
+    @Singleton
+    @Binds
+    fun bindFriendshipRemoteDatasource(impl: FriendshipRemoteDatasourceImpl): FriendshipRemoteDatasource
 
     @Singleton
     @Binds

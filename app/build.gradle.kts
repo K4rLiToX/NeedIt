@@ -74,6 +74,7 @@ dependencies {
     implementation(project(":feature:account"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:search"))
+    implementation(project(":feature:notifications"))
 
     // Core
     implementation(libs.androidx.core.ktx)

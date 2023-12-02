@@ -23,6 +23,7 @@ import com.carlosdiestro.design_system.animations.popEnterZSharedAxis
 import com.carlosdiestro.design_system.navigation.top_app_bar.NiMainTopAppBar
 import com.carlosdiestro.feature.account.AccountDialogRoute
 import com.carlosdiestro.feature.home.HomeDestination
+import com.carlosdiestro.feature.notifications.navigateToNotifications
 import com.carlosdiestro.feature.search.NiSearchBarRoute
 import com.carlosdiestro.feature.settings.navigateToSettings
 import com.carlosdiestro.needit.core.navigation.NeedItNavHost
@@ -68,7 +69,7 @@ fun NeedItApp(
             ) {
                 NiMainTopAppBar(
                     accountImageUrl = profilePictureUrl,
-                    onNotificationClick = {},
+                    onNotificationClick = appState.navController::navigateToNotifications,
                     onAccountClick = { appState.openAccountDialog() }
                 )
             }
@@ -79,7 +80,7 @@ fun NeedItApp(
             ) {
                 NiSearchBarRoute(
                     accountImageUrl = profilePictureUrl,
-                    onNotificationClick = {},
+                    onNotificationClick = appState.navController::navigateToNotifications,
                     onAccountClick = appState::openAccountDialog,
                 )
             }
