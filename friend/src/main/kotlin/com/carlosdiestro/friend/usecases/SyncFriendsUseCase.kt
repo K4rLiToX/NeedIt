@@ -14,7 +14,6 @@ class SyncFriendsUseCase @Inject constructor(
         getSentFriendRequests(userId = userId, remote = true)
             .first()
             .forEach { request ->
-                println("Leider - Requests: $request")
                 if (request.status == FriendRequestStatus.Accepted) addFriend(request)
                 removeFriendRequest(request)
             }
