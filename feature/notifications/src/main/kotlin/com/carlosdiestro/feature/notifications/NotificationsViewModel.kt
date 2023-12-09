@@ -6,11 +6,9 @@ import com.carlosdiestro.design_system.cards.NotificationPlo
 import com.carlosdiestro.friend.domain.FriendRequest
 import com.carlosdiestro.friend.usecases.AcceptFriendRequestUseCase
 import com.carlosdiestro.friend.usecases.RejectFriendRequestUseCase
-import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -19,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class NotificationsViewModel @Inject constructor(
     notificationsService: NotificationsService,
-    private val getSignedInUser: GetSignedInUserUseCase,
     private val acceptFriendRequest: AcceptFriendRequestUseCase,
     private val rejectFriendRequest: RejectFriendRequestUseCase
 ) : ViewModel() {
@@ -42,13 +39,7 @@ class NotificationsViewModel @Inject constructor(
         viewModelScope.launch {
             val request = friendRequests.find { it.senderId == id }
             request?.let {
-                val signedInUser = getSignedInUser().first()
-                acceptFriendRequest(
-                    request = request,
-                    username = signedInUser.username,
-                    email = signedInUser.email,
-                    profilePictureUrl = signedInUser.profilePictureUrl
-                )
+                acceptFriendRequest(it)
             }
         }
     }

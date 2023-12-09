@@ -2,6 +2,7 @@ package com.carlosdiestro.friend.usecases
 
 import com.carlosdiestro.friend.domain.FriendRequest
 import com.carlosdiestro.friend.domain.FriendRequestRepository
+import com.carlosdiestro.friend.domain.FriendRequestStatus
 import javax.inject.Inject
 
 class SendFriendRequestUseCase @Inject constructor(
@@ -9,7 +10,10 @@ class SendFriendRequestUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        friendId: String,
+        receiverId: String,
+        receiverUsername: String,
+        receiverEmail: String,
+        receiverProfilePictureUrl: String,
         userId: String,
         username: String,
         email: String,
@@ -21,7 +25,11 @@ class SendFriendRequestUseCase @Inject constructor(
                 senderUsername = username,
                 senderEmail = email,
                 senderProfilePictureUrl = profilePictureUrl,
-                receiverId = friendId
+                receiverId = receiverId,
+                receiverUsername = receiverUsername,
+                receiverEmail = receiverEmail,
+                receiverProfilePictureUrl = receiverProfilePictureUrl,
+                status = FriendRequestStatus.Pending
             )
         )
     }

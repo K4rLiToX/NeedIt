@@ -4,5 +4,5 @@ internal object CollectionsPath {
     const val users = "users"
     const val userWishes = "wishes"
     const val friendRequests = "friend_requests"
-    const val friendship = "friendships"
+    const val userFriends = "friends"
 }

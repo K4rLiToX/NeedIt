@@ -11,7 +11,7 @@ class FriendRequestRepositoryImpl @Inject constructor(
 ) : FriendRequestRepository {
     override suspend fun create(request: FriendRequest) {
         localDatasource.create(request)
-        remoteDatasource.create(request)
+        remoteDatasource.upsert(request)
     }
 
     override suspend fun delete(request: FriendRequest) {
@@ -19,7 +19,16 @@ class FriendRequestRepositoryImpl @Inject constructor(
         remoteDatasource.delete(request)
     }
 
-    override fun getAllSent(): Flow<List<FriendRequest>> = localDatasource.getAll()
+    override suspend fun update(request: FriendRequest) {
+        remoteDatasource.upsert(request)
+    }
+
+    override fun getAllSent(userId: String, remote: Boolean): Flow<List<FriendRequest>> =
+        if (remote) {
+            remoteDatasource.getAllSent(userId)
+        } else {
+            localDatasource.getAll()
+        }
 
     override fun getAllSentIds(): Flow<List<String>> = localDatasource.getAllIds()
 

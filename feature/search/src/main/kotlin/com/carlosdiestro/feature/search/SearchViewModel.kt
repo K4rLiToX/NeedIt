@@ -68,7 +68,10 @@ internal class SearchViewModel @Inject constructor(
     fun onSendRequestClick(followableUser: FollowableUser) {
         viewModelScope.launch {
             sendFriendRequest(
-                friendId = followableUser.id,
+                receiverId = followableUser.id,
+                receiverUsername = followableUser.username,
+                receiverEmail = followableUser.email,
+                receiverProfilePictureUrl = followableUser.profilePictureUrl,
                 userId = signedInUser.id,
                 username = signedInUser.username,
                 email = signedInUser.email,

@@ -17,5 +17,11 @@ data class FriendRequestEntity(
     @ColumnInfo(name = "sender_profile_picture_url")
     val senderProfilePictureUrl: String,
     @ColumnInfo(name = "receiver_id")
-    val receiverId: String
+    val receiverId: String,
+    @ColumnInfo(name = "receiver_username")
+    val receiverUsername: String,
+    @ColumnInfo(name = "receiver_email")
+    val receiverEmail: String,
+    @ColumnInfo(name = "receiver_profile_picture_url")
+    val receiverProfilePictureUrl: String
 )

@@ -6,19 +6,23 @@ import com.carlosdiestro.app_settings.usecases.GetThemeConfigUseCase
 import com.carlosdiestro.auth.AuthClient
 import com.carlosdiestro.feature.settings.ThemeConfigPlo
 import com.carlosdiestro.feature.settings.asPlo
+import com.carlosdiestro.friend.usecases.SyncFriendsUseCase
 import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     getThemeConfig: GetThemeConfigUseCase,
-    getSignedInUser: GetSignedInUserUseCase,
-    authClient: AuthClient
+    private val getSignedInUser: GetSignedInUserUseCase,
+    authClient: AuthClient,
+    private val syncFriendsUseCase: SyncFriendsUseCase
 ) : ViewModel() {
 
     val isSignedIn = authClient.signedInUser != null
@@ -43,6 +47,13 @@ class MainViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = MainState.Loading
         )
+
+    fun syncFriends() {
+        viewModelScope.launch {
+            val userId = getSignedInUser().first().id
+            syncFriendsUseCase(userId)
+        }
+    }
 }
 
 sealed interface MainState {

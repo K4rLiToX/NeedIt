@@ -9,6 +9,9 @@ class GetSentFriendRequestsUseCase @Inject constructor(
     private val repository: FriendRequestRepository
 ) {
 
-    operator fun invoke(): Flow<List<FriendRequest>> = repository.getAllSent()
+    operator fun invoke(
+        userId: String = "",
+        remote: Boolean = false
+    ): Flow<List<FriendRequest>> = repository.getAllSent(userId = userId, remote = remote)
     fun getIds(): Flow<List<String>> = repository.getAllSentIds()
 }

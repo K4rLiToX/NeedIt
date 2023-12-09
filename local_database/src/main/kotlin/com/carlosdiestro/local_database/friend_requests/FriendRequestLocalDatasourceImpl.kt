@@ -2,6 +2,7 @@ package com.carlosdiestro.local_database.friend_requests
 
 import com.carlosdiestro.friend.data.FriendRequestLocalDatasource
 import com.carlosdiestro.friend.domain.FriendRequest
+import com.carlosdiestro.friend.domain.FriendRequestStatus
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -24,7 +25,10 @@ internal fun FriendRequest.asEntity(): FriendRequestEntity = FriendRequestEntity
     senderUsername = senderUsername,
     senderEmail = senderEmail,
     senderProfilePictureUrl = senderProfilePictureUrl,
-    receiverId = receiverId
+    receiverId = receiverId,
+    receiverUsername = receiverUsername,
+    receiverEmail = receiverEmail,
+    receiverProfilePictureUrl = receiverProfilePictureUrl
 )
 
 internal fun FriendRequestEntity.asDomain(): FriendRequest = FriendRequest(
@@ -32,7 +36,11 @@ internal fun FriendRequestEntity.asDomain(): FriendRequest = FriendRequest(
     senderUsername = senderUsername,
     senderEmail = senderEmail,
     senderProfilePictureUrl = senderProfilePictureUrl,
-    receiverId = receiverId
+    receiverId = receiverId,
+    receiverUsername = receiverUsername,
+    receiverEmail = receiverEmail,
+    receiverProfilePictureUrl = receiverProfilePictureUrl,
+    status = FriendRequestStatus.Pending
 )
 
 internal fun List<FriendRequestEntity>.asDomain(): List<FriendRequest> = this.map { it.asDomain() }

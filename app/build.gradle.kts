@@ -104,7 +104,9 @@ dependencies {
     // Hilt
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.dagger.hilt.android)
+    implementation(libs.androidx.hilt.common)
     ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     // Splashscreen
     implementation(libs.androidx.core.splashscreen)

@@ -1,7 +1,7 @@
 package com.carlosdiestro.remote_database
 
 import com.carlosdiestro.remote_database.firestore.friends.FriendRequestsCollection
-import com.carlosdiestro.remote_database.firestore.friends.FriendshipCollection
+import com.carlosdiestro.remote_database.firestore.friends.FriendsCollection
 import com.carlosdiestro.remote_database.firestore.users.UsersCollection
 import com.carlosdiestro.remote_database.firestore.wishes.WishesCollection
 import com.carlosdiestro.remote_database.storage.ImagesCollection
@@ -45,8 +45,8 @@ internal object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideFriendshipCollection(firestore: FirebaseFirestore): FriendshipCollection =
-        FriendshipCollection(firestore.collection(CollectionsPath.friendship))
+    fun provideFriendsCollection(firestore: FirebaseFirestore): FriendsCollection =
+        FriendsCollection(firestore.collection(CollectionsPath.users))
 
     @Provides
     @Singleton
