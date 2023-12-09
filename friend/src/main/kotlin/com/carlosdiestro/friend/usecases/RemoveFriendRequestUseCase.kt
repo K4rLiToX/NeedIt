@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class RemoveFriendRequestUseCase @Inject constructor(
     private val friendRequestRepository: FriendRequestRepository
-){
+) {
 
     suspend operator fun invoke(request: FriendRequest) = friendRequestRepository.delete(request)
 }

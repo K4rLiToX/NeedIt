@@ -17,7 +17,7 @@ internal class UsersCollection @Inject constructor(
     }
 
     fun getAll(): Flow<List<UserDto>> = usersCollection
-            .whereEqualTo("anonymous", false)
-            .asFlow()
-            .asUserDto()
+        .whereEqualTo("anonymous", false)
+        .asFlow()
+        .asUserDto()
 }

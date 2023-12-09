@@ -13,5 +13,6 @@ class GetSentFriendRequestsUseCase @Inject constructor(
         userId: String = "",
         remote: Boolean = false
     ): Flow<List<FriendRequest>> = repository.getAllSent(userId = userId, remote = remote)
+
     fun getIds(): Flow<List<String>> = repository.getAllSentIds()
 }
