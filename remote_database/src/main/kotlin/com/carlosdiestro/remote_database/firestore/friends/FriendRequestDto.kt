@@ -14,5 +14,5 @@ data class FriendRequestDto(
     val combinedId: String
         get() = "$receiverId$senderId"
 
-    constructor() : this("", "", "", "", "", "", "", "", 0)
+    constructor() : this("", "", "", "", "", "", "", "", -1)
 }
