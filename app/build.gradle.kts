@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":auth"))
     implementation(project(":wish"))
     implementation(project(":user"))
+    implementation(project(":friend"))
     implementation(project(":app_settings"))
     implementation(project(":device_storage"))
     implementation(project(":feature:home"))
@@ -72,6 +73,8 @@ dependencies {
     implementation(project(":feature:wish_details"))
     implementation(project(":feature:account"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:search"))
+    implementation(project(":feature:notifications"))
 
     // Core
     implementation(libs.androidx.core.ktx)
@@ -101,7 +104,9 @@ dependencies {
     // Hilt
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.dagger.hilt.android)
+    implementation(libs.androidx.hilt.common)
     ksp(libs.dagger.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     // Splashscreen
     implementation(libs.androidx.core.splashscreen)

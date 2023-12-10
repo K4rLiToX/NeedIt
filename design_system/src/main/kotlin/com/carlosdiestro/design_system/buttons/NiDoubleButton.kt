@@ -16,15 +16,16 @@ import com.carlosdiestro.design_system.theme.icons
 
 @Composable
 fun NiDoubleButton(
+    modifier: Modifier = Modifier,
     leftButton: @Composable () -> Unit,
     rightButton: @Composable () -> Unit,
-    modifier: Modifier = Modifier
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.spacedBy(
+        space = MaterialTheme.dimensions.spacingM,
+        alignment = Alignment.CenterHorizontally
+    )
 ) {
     Row(
-        horizontalArrangement = Arrangement.spacedBy(
-            space = MaterialTheme.dimensions.spacingM,
-            alignment = Alignment.CenterHorizontally
-        ),
+        horizontalArrangement = horizontalArrangement,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {

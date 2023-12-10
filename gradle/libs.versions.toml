@@ -19,6 +19,8 @@ room = "2.6.0"
 
 hiltNavigationCompose = "1.1.0"
 hilt = "2.48.1"
+hiltCompiler = "1.1.0"
+hiltCommon = "1.1.0"
 
 coroutines = "1.7.3"
 
@@ -31,6 +33,8 @@ playServicesAuth = "20.7.0"
 
 datastore = "1.0.0"
 
+javax-inject = "1"
+
 junit = "4.13.2"
 androidxJunit = "1.1.5"
 espresso = "3.5.1"
@@ -42,10 +46,6 @@ androidHiltPlugin = "2.48.1"
 kspPlugin = "1.9.0-1.0.13"
 androidxRoomPlugin = "2.6.0"
 kotlin-jvm = "1.9.0"
-
-javax-inject = "1"
-appcompat = "1.6.1"
-material = "1.10.0"
 
 [libraries]
 
@@ -81,6 +81,8 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 dagger-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompiler" }
+androidx-hilt-common = { group = "androidx.hilt", name = "hilt-common", version.ref = "hiltCompiler" }
 
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -108,8 +110,6 @@ javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "j
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 

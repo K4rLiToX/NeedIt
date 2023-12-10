@@ -149,6 +149,11 @@ object Localization {
             id = R.string.notifications_group_addition_message,
             formatArgs = arrayOf(adminName, giftForName)
         )
+
+        val FriendRequestEmpty: String
+            @ReadOnlyComposable
+            @Composable
+            get() = stringResource(id = R.string.notifications_friend_requests_empty)
     }
 
     @Immutable

@@ -17,6 +17,7 @@ import com.carlosdiestro.feature.gifts.giftsScreen
 import com.carlosdiestro.feature.home.HomeDestination
 import com.carlosdiestro.feature.home.homeScreen
 import com.carlosdiestro.feature.home.navigateToHome
+import com.carlosdiestro.feature.notifications.notificationsScreen
 import com.carlosdiestro.feature.settings.settingsScreen
 import com.carlosdiestro.feature.upsert_wish.UpsertDestination
 import com.carlosdiestro.feature.upsert_wish.navigateToUpsert
@@ -159,6 +160,14 @@ fun NeedItNavHost(
             onVersionClick = {},
             onPrivacyPolicyClick = {},
             onTermsOfUseClick = {}
+        )
+
+        notificationsScreen(
+            onBackClick = navController::popBackStack,
+            enterTransition = { com.carlosdiestro.design_system.animations.enterZSharedAxis },
+            exitTransition = { fadeOut(tween()) },
+            popEnterTransition = { fadeIn(tween()) },
+            popExitTransition = { com.carlosdiestro.design_system.animations.popExitZSharedAxis }
         )
     }
 }

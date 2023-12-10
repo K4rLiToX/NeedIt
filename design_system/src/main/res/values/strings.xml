@@ -36,6 +36,7 @@
     <string name="notifications_friend_requests_accepted">You are now friends with %s!</string>
     <string name="notifications_friend_request_rejected">You cannot get along with
         everyone…</string>
+    <string name="notifications_friend_requests_empty">You are all set!</string>
     <string name="notifications_group_addition_message">%s added you to a group gift for %s</string>
 
     <!-- Camera -->

@@ -4,10 +4,8 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="jbr-17" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -23,16 +21,20 @@
             <option value="$PROJECT_DIR$/feature/friends" />
             <option value="$PROJECT_DIR$/feature/gifts" />
             <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/notifications" />
+            <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/settings" />
             <option value="$PROJECT_DIR$/feature/sign_in" />
             <option value="$PROJECT_DIR$/feature/upsert_wish" />
             <option value="$PROJECT_DIR$/feature/wish_details" />
+            <option value="$PROJECT_DIR$/friend" />
             <option value="$PROJECT_DIR$/local_database" />
             <option value="$PROJECT_DIR$/remote_database" />
             <option value="$PROJECT_DIR$/user" />
             <option value="$PROJECT_DIR$/wish" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
