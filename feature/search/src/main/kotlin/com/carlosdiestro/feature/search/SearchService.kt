@@ -25,7 +25,7 @@ class SearchService @Inject constructor(
         val friendIdsFlow = friendRepository.getAll().map { it.map { friend -> friend.id } }
         val friendRequestIdsFlow = friendRequestRepository.getAllSent()
             .map {
-                it.map { request ->  request.receiverId }
+                it.map { request -> request.receiverId }
             }
 
         return combine(
