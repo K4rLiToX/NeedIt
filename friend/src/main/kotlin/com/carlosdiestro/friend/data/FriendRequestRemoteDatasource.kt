@@ -7,5 +7,5 @@ interface FriendRequestRemoteDatasource {
     fun upsert(request: FriendRequest)
     fun delete(request: FriendRequest)
     fun getAllReceived(receiverId: String): Flow<List<FriendRequest>>
-    fun getAllSent(senderId: String): Flow<List<FriendRequest>>
+    suspend fun getAllSent(senderId: String): List<FriendRequest>
 }

@@ -4,6 +4,7 @@ import com.carlosdiestro.remote_database.firestore.asFlow
 import com.carlosdiestro.remote_database.firestore.asWishDto
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -26,7 +27,7 @@ internal class WishesCollection @Inject constructor(
     fun getUserWishes(userId: String): Flow<List<WishDto>> =
         wishesCollection
             .whereEqualTo("userId", userId)
-            .asFlow()
+            .snapshots()
             .asWishDto()
 
     fun getUserWish(wishId: String): Flow<WishDto?> =

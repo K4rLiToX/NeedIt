@@ -3,6 +3,7 @@ package com.carlosdiestro.friend.data
 import com.carlosdiestro.friend.domain.FriendRequest
 import com.carlosdiestro.friend.domain.FriendRequestRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class FriendRequestRepositoryImpl @Inject constructor(
@@ -25,7 +26,7 @@ class FriendRequestRepositoryImpl @Inject constructor(
 
     override fun getAllSent(userId: String, remote: Boolean): Flow<List<FriendRequest>> =
         if (remote) {
-            remoteDatasource.getAllSent(userId)
+            flow { emit(remoteDatasource.getAllSent(userId)) }
         } else {
             localDatasource.getAll()
         }

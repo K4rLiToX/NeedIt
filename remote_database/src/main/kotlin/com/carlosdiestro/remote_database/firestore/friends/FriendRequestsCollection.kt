@@ -1,11 +1,12 @@
 package com.carlosdiestro.remote_database.firestore.friends
 
-import com.carlosdiestro.remote_database.firestore.asFlow
 import com.carlosdiestro.remote_database.firestore.asFriendRequestDto
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 internal class FriendRequestsCollection @Inject constructor(
@@ -28,10 +29,10 @@ internal class FriendRequestsCollection @Inject constructor(
     fun getAllReceived(receiverId: String): Flow<List<FriendRequestDto>> = requestsCollection
         .whereEqualTo("receiverId", receiverId)
         .whereEqualTo("status", 0)
-        .asFlow()
+        .snapshots()
         .asFriendRequestDto()
 
-    fun getAllSent(senderId: String): Flow<List<FriendRequestDto>> = requestsCollection
+    suspend fun getAllSent(senderId: String): List<FriendRequestDto> = requestsCollection
         .where(
             Filter.and(
                 Filter.equalTo("senderId", senderId),
@@ -41,6 +42,7 @@ internal class FriendRequestsCollection @Inject constructor(
                 )
             )
         )
-        .asFlow()
+        .get()
+        .await()
         .asFriendRequestDto()
 }
