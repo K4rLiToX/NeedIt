@@ -15,9 +15,9 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     override val currentUser: Flow<User> = userLocalDatasource.user
-    
+
     override suspend fun getCurrentUser(): User = currentUser.first()
-    
+
     override suspend fun getCurrentUserId(): String = getCurrentUser().id
 
     override suspend fun upsert(user: User) {

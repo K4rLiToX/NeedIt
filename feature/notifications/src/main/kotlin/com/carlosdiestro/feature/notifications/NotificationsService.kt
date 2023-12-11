@@ -5,11 +5,8 @@ import com.carlosdiestro.friend.domain.FriendRepository
 import com.carlosdiestro.friend.domain.FriendRequest
 import com.carlosdiestro.friend.domain.FriendRequestRepository
 import com.carlosdiestro.friend.domain.FriendRequestStatus
-import com.carlosdiestro.friend.usecases.GetReceivedFriendRequestsUseCase
 import com.carlosdiestro.user.domain.UserRepository
-import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
