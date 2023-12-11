@@ -18,6 +18,4 @@ class FriendRepositoryImpl @Inject constructor(
     override suspend fun delete(friend: Friend) = localDataSource.delete(friend)
 
     override fun getAll(): Flow<List<Friend>> = localDataSource.getAll()
-
-    override fun getAllIds(): Flow<List<String>> = localDataSource.getAllIds()
 }

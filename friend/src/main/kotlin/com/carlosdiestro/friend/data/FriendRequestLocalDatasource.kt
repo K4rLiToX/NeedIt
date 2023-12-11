@@ -7,5 +7,4 @@ interface FriendRequestLocalDatasource {
     suspend fun create(request: FriendRequest)
     suspend fun delete(request: FriendRequest)
     fun getAll(): Flow<List<FriendRequest>>
-    fun getAllIds(): Flow<List<String>>
 }

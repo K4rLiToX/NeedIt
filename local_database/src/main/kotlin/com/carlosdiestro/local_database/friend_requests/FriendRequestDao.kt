@@ -22,12 +22,4 @@ interface FriendRequestDao {
         """
     )
     fun getAll(): Flow<List<FriendRequestEntity>>
-
-    @Query(
-        """
-            SELECT receiver_id
-            FROM friend_request_table
-        """
-    )
-    fun getAllIds(): Flow<List<String>>
 }

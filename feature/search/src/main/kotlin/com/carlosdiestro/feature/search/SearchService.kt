@@ -22,8 +22,11 @@ class SearchService @Inject constructor(
 
     fun getFollowableUsers(): Flow<List<FollowableUser>> {
         val usersFlow = userRepository.getAll()
-        val friendIdsFlow = friendRepository.getAllIds()
-        val friendRequestIdsFlow = friendRequestRepository.getAllSentIds()
+        val friendIdsFlow = friendRepository.getAll().map { it.map { friend -> friend.id } }
+        val friendRequestIdsFlow = friendRequestRepository.getAllSent()
+            .map {
+                it.map { request ->  request.receiverId }
+            }
 
         return combine(
             usersFlow,

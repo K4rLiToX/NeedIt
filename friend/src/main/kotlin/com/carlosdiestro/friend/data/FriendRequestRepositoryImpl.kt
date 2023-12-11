@@ -30,8 +30,6 @@ class FriendRequestRepositoryImpl @Inject constructor(
             localDatasource.getAll()
         }
 
-    override fun getAllSentIds(): Flow<List<String>> = localDatasource.getAllIds()
-
     override fun getAllReceived(receiverId: String): Flow<List<FriendRequest>> =
         remoteDatasource.getAllReceived(receiverId)
 }
