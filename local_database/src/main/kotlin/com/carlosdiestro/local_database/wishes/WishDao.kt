@@ -24,15 +24,6 @@ internal interface WishDao {
         """
             SELECT * 
             FROM wish_table 
-            WHERE is_shared = 1
-        """
-    )
-    fun getShared(): Flow<List<WishEntity>>
-
-    @Query(
-        """
-            SELECT * 
-            FROM wish_table 
             WHERE id = :id
         """
     )

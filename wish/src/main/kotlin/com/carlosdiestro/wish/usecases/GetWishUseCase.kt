@@ -8,5 +8,5 @@ import javax.inject.Inject
 class GetWishUseCase @Inject constructor(
     private val repository: WishRepository
 ) {
-    operator fun invoke(id: String): Flow<Wish> = repository.getWish(id)
+    operator fun invoke(id: String): Flow<Wish> = repository.getCurrentUserWish(id)
 }

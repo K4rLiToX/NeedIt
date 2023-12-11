@@ -8,37 +8,25 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
-import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.wish.domain.model.Book
 import com.carlosdiestro.wish.domain.model.Clothes
 import com.carlosdiestro.wish.domain.model.Footwear
 import com.carlosdiestro.wish.domain.model.Other
 import com.carlosdiestro.wish.domain.model.Wish
 import com.carlosdiestro.wish.domain.model.WishCategory
-import com.carlosdiestro.wish.domain.model.WishInformation
-import com.carlosdiestro.wish.usecases.CreateWishUseCase
-import com.carlosdiestro.wish.usecases.GetImageLocalPathUseCase
-import com.carlosdiestro.wish.usecases.GetWishUseCase
-import com.carlosdiestro.wish.usecases.UpdateWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class UpsertViewModel @Inject constructor(
-    private val getWish: GetWishUseCase,
-    private val createWish: CreateWishUseCase,
-    private val updateWish: UpdateWishUseCase,
-    private val getImageLocalPath: GetImageLocalPathUseCase,
-    private val getSignedInUser: GetSignedInUserUseCase,
-    private val imageCompressor: ImageCompressor,
+    private val upsertWishService: UpsertWishService,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -94,7 +82,7 @@ internal class UpsertViewModel @Inject constructor(
 
     private fun fetchWish() {
         viewModelScope.launch {
-            wish = getWish(wishId).first()
+            wish = upsertWishService.getWish(wishId)
             wish?.let {
                 _state.update { currentState ->
                     currentState.copy(
@@ -127,7 +115,7 @@ internal class UpsertViewModel @Inject constructor(
 
     private fun fetchImageLocalPath() {
         viewModelScope.launch {
-            val uri = getImageLocalPath()
+            val uri = upsertWishService.getImageLocalPath()
             _state.update {
                 it.copy(
                     imageLocalPath = uri
@@ -176,7 +164,7 @@ internal class UpsertViewModel @Inject constructor(
     private fun update() {
         viewModelScope.launch {
             wish?.let {
-                updateWish(
+                upsertWishService.update(
                     wish = it,
                     price = if (price.isEmpty()) 0.0 else price.toDouble(),
                     description = description,
@@ -193,22 +181,14 @@ internal class UpsertViewModel @Inject constructor(
 
     private fun create() {
         viewModelScope.launch(scope.coroutineContext) {
-            val imageLocalPath = state.value.imageLocalPath
-            val compressedImage = imageCompressor.compress(imageLocalPath)
-            val userId = getSignedInUser().first().id
-            val args = WishInformation(
-                userId = userId,
-                imageLocalPath = imageLocalPath,
+            upsertWishService.create(
+                imageLocalPath = state.value.imageLocalPath,
                 price = if (price.isEmpty()) 0.0 else price.toDouble(),
                 description = description,
                 webUrl = webUrl,
                 category = category.asDomain(),
                 title = title,
-                subtitle = subtitle
-            )
-            createWish(
-                args = args,
-                compressedImage = compressedImage,
+                subtitle = subtitle,
                 size = size,
                 color = color,
                 isbn = isbn

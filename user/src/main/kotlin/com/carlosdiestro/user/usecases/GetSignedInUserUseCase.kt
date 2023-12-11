@@ -9,5 +9,5 @@ class GetSignedInUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
 
-    operator fun invoke(): Flow<User> = userRepository.user
+    operator fun invoke(): Flow<User> = userRepository.currentUser
 }

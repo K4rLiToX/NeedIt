@@ -12,25 +12,26 @@ class WishRepositoryImpl @Inject constructor(
     private val remoteDatasource: WishRemoteDatasource,
 ) : WishRepository {
 
-    override val wishes: Flow<List<Wish>>
-        get() = localDatasource.wishes
-
-    override val sharedWishes: Flow<List<Wish>>
-        get() = localDatasource.sharedWishes
-
-    override fun getWish(id: String): Flow<Wish> =
-        localDatasource.getWish(id)
-
     override suspend fun create(wish: Wish) = localDatasource.create(wish)
 
     override suspend fun update(wish: Wish) {
         localDatasource.update(wish)
         if (wish.isShared) remoteDatasource.upsert(wish)
-        else remoteDatasource.delete(wish.id.toString(), wish.userId)
+        else remoteDatasource.delete(wish)
     }
 
     override suspend fun delete(wish: Wish) = kotlin.run {
         localDatasource.delete(wish)
-        if (wish.isShared) remoteDatasource.delete(wish.id.toString(), wish.userId)
+        if (wish.isShared) remoteDatasource.delete(wish)
     }
+
+    override fun getCurrentUserWishes(): Flow<List<Wish>> = localDatasource.wishes
+
+    override fun getCurrentUserWish(id: String): Flow<Wish> = localDatasource.getWish(id)
+
+    override fun getFriendWishes(userId: String): Flow<List<Wish>> =
+        remoteDatasource.getUserWishes(userId)
+
+    override fun getFriendWish(id: String): Flow<Wish?> =
+        remoteDatasource.getUserWish(id)
 }

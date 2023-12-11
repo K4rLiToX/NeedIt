@@ -5,8 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface WishLocalDatasource {
     val wishes: Flow<List<Wish>>
-
-    val sharedWishes: Flow<List<Wish>>
     fun getWish(id: String): Flow<Wish>
     suspend fun create(wish: Wish)
     suspend fun update(wish: Wish)

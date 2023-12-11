@@ -3,8 +3,7 @@ package com.carlosdiestro.feature.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.app_settings.domain.ThemeConfig
-import com.carlosdiestro.app_settings.usecases.GetThemeConfigUseCase
-import com.carlosdiestro.app_settings.usecases.UpdateThemeConfigUseCase
+import com.carlosdiestro.app_settings.domain.repository.ThemeConfigRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -15,11 +14,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsViewModel @Inject constructor(
-    getThemeConfig: GetThemeConfigUseCase,
-    private val updateThemeConfig: UpdateThemeConfigUseCase
+    private val themeConfigRepository: ThemeConfigRepository
 ) : ViewModel() {
 
-    val state: StateFlow<SettingsState> = getThemeConfig()
+    val state: StateFlow<SettingsState> = themeConfigRepository.themeConfig
         .map { themeConfig ->
             SettingsState.Success(
                 selectedTheme = themeConfig.asPlo()
@@ -33,7 +31,7 @@ internal class SettingsViewModel @Inject constructor(
 
     fun updateThemeConfig(themeConfig: ThemeConfigPlo) {
         viewModelScope.launch {
-            updateThemeConfig(themeConfig.asDomain())
+            themeConfigRepository.update(themeConfig.asDomain())
         }
     }
 

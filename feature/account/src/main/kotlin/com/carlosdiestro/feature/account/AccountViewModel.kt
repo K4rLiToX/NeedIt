@@ -4,11 +4,8 @@ import android.content.Intent
 import android.content.IntentSender
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.auth.AuthClient
 import com.carlosdiestro.auth.UserAuth
 import com.carlosdiestro.user.domain.User
-import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
-import com.carlosdiestro.user.usecases.UpsertUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,9 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AccountViewModel @Inject constructor(
-    private val authClient: AuthClient,
-    private val upsertUser: UpsertUserUseCase,
-    getSignedInUser: GetSignedInUserUseCase
+    private val accountService: AccountService
 ) : ViewModel() {
 
     private var _googleSignInIntentState: MutableStateFlow<IntentSender?> = MutableStateFlow(null)
@@ -33,7 +28,7 @@ internal class AccountViewModel @Inject constructor(
     private var _signInErrorState: MutableStateFlow<String?> = MutableStateFlow(null)
     val signInErrorState = _signInErrorState.asStateFlow()
 
-    val state: StateFlow<AccountDataState> = getSignedInUser()
+    val state: StateFlow<AccountDataState> = accountService.currentUser
         .map { user ->
             AccountDataState.Success(
                 account = Account(
@@ -54,22 +49,22 @@ internal class AccountViewModel @Inject constructor(
 
     fun requestGoogleSignInIntent() {
         viewModelScope.launch {
-            val intent = authClient.requestGoogleIntent()
+            val intent = accountService.requestGoogleIntent()
             _googleSignInIntentState.update { intent }
         }
     }
 
     fun linkAccount(intent: Intent) {
         viewModelScope.launch {
-            val signInResult = authClient.linkAccount(intent)
+            val signInResult = accountService.linkAccount(intent)
             _signInErrorState.update { signInResult.errorMessage }
-            if (signInResult.data != null) upsertUser(signInResult.data!!.asDomain())
+            if (signInResult.data != null) accountService.upsertUser(signInResult.data!!.asDomain())
         }
     }
 
     fun signOut() {
         viewModelScope.launch {
-            authClient.signOut()
+            accountService.signOut()
         }
     }
 }

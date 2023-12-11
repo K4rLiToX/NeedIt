@@ -3,11 +3,9 @@ package com.carlosdiestro.sign_in
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.auth.AuthClient
 import com.carlosdiestro.auth.SignInResult
 import com.carlosdiestro.auth.UserAuth
 import com.carlosdiestro.user.domain.User
-import com.carlosdiestro.user.usecases.UpsertUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,8 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SignInViewModel @Inject constructor(
-    private val upsertUser: UpsertUserUseCase,
-    private val authClient: AuthClient
+    private val signInService: SignInService
 ) : ViewModel() {
 
     private var _state: MutableStateFlow<SignInDataState> = MutableStateFlow(SignInDataState())
@@ -26,21 +23,21 @@ internal class SignInViewModel @Inject constructor(
 
     fun signInAnonymously() {
         viewModelScope.launch {
-            val signInResult = authClient.signInAnonymously()
+            val signInResult = signInService.signInAnonymously()
             updateState(signInResult)
         }
     }
 
     fun signInWithGoogle(intent: Intent) {
         viewModelScope.launch {
-            val signInResult = authClient.signInWithGoogle(intent)
+            val signInResult = signInService.signInWithGoogle(intent)
             updateState(signInResult)
         }
     }
 
     fun requestGoogleSignInIntent() {
         viewModelScope.launch {
-            val intent = authClient.requestGoogleIntent()
+            val intent = signInService.requestGoogleIntent()
             _state.update {
                 it.copy(
                     googleIntent = intent
@@ -51,7 +48,7 @@ internal class SignInViewModel @Inject constructor(
 
     fun createNewUser(userAuth: UserAuth) {
         viewModelScope.launch {
-            upsertUser(userAuth.asDomain())
+            signInService.create(userAuth.asDomain())
         }
     }
 

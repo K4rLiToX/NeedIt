@@ -6,6 +6,7 @@ import com.carlosdiestro.user.domain.User
 import com.carlosdiestro.user.domain.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -13,7 +14,11 @@ class UserRepositoryImpl @Inject constructor(
     private val userRemoteDatasource: UserRemoteDatasource
 ) : UserRepository {
 
-    override val user: Flow<User> = userLocalDatasource.user
+    override val currentUser: Flow<User> = userLocalDatasource.user
+    
+    override suspend fun getCurrentUser(): User = currentUser.first()
+    
+    override suspend fun getCurrentUserId(): String = getCurrentUser().id
 
     override suspend fun upsert(user: User) {
         userRemoteDatasource.upsert(user)
@@ -21,7 +26,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun getAll(): Flow<List<User>> = combine(
-        user,
+        currentUser,
         userRemoteDatasource.getAll()
     ) { signedInUser, users ->
         users.filter { it.id != signedInUser.id }
