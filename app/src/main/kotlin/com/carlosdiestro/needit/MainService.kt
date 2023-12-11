@@ -36,9 +36,8 @@ class MainService @Inject constructor(
             .forEach { request ->
                 if (request.status == FriendRequestStatus.Accepted) {
                     addFriend(request)
-                } else {
-                    deleteFriendRequest(request)
                 }
+                deleteFriendRequest(request)
             }
     }
 
