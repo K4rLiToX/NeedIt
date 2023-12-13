@@ -1,10 +1,67 @@
 package com.carlosdiestro.feature.friends
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.carlosdiestro.design_system.cards.FriendPlo
+import com.carlosdiestro.design_system.cards.FriendWishPlo
+import com.carlosdiestro.design_system.lists.FriendsWithWishesPlo
+import com.carlosdiestro.friend.domain.Friend
+import com.carlosdiestro.wish.domain.model.Wish
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 internal class FriendsViewModel @Inject constructor(
-) : ViewModel()
+    friendsService: FriendsService
+) : ViewModel() {
+
+    val state: StateFlow<FriendsDataState> = friendsService.getFriendsWithWishes()
+        .map {  friendWithWishes ->
+            FriendsDataState(
+                friendsWithWishes = friendWithWishes.asPlo()
+            )
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = FriendsDataState()
+        )
+
+    fun onWishClick(id: String) {
+
+    }
+
+    fun onWishLongClick(id: String) {
+
+    }
+}
+
+private fun FriendWithWishes.asPlo(): FriendsWithWishesPlo = FriendsWithWishesPlo(
+    friend = this.first.asPlo(),
+    wishes = this.second.asPlo()
+)
+
+private fun List<FriendWithWishes>.asPlo(): List<FriendsWithWishesPlo> = this.map { it.asPlo() }
+
+private fun Friend.asPlo(): FriendPlo = FriendPlo(
+    id = id,
+    username = username,
+    profilePictureUrl = profilePictureUrl
+)
+
+@JvmName("wishAsFriendWishPlo")
+private fun Wish.asPlo(): FriendWishPlo = FriendWishPlo(
+    id = id.toString(),
+    imageUrl = imageUrl,
+    title = title,
+    price = price.toString(),
+    isReserved = false
+)
+
+@JvmName("wishListAsFriendWishPloList")
+private fun List<Wish>.asPlo(): List<FriendWishPlo> = this.map { it.asPlo() }
 
