@@ -10,7 +10,7 @@ import com.carlosdiestro.wish.domain.model.Wish
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -19,12 +19,15 @@ internal class FriendsViewModel @Inject constructor(
     friendsService: FriendsService
 ) : ViewModel() {
 
-    val state: StateFlow<FriendsDataState> = friendsService.getFriendsWithWishes()
-        .map {  friendWithWishes ->
-            FriendsDataState(
-                friendsWithWishes = friendWithWishes.asPlo()
-            )
-        }
+    val state: StateFlow<FriendsDataState> = combine(
+        friendsService.getFriendsWithWishes(),
+        friendsService.isAnonymous
+    ) { friendWithWishes, isAnonymous ->
+        FriendsDataState(
+            friendsWithWishes = friendWithWishes.asPlo(),
+            isAnonymous = isAnonymous
+        )
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),

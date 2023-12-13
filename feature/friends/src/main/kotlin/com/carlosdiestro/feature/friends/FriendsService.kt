@@ -2,6 +2,7 @@ package com.carlosdiestro.feature.friends
 
 import com.carlosdiestro.friend.domain.Friend
 import com.carlosdiestro.friend.domain.FriendRepository
+import com.carlosdiestro.user.domain.UserRepository
 import com.carlosdiestro.wish.domain.model.Wish
 import com.carlosdiestro.wish.domain.repository.WishRepository
 import kotlinx.coroutines.flow.Flow
@@ -15,8 +16,11 @@ typealias FriendWithWishes = Pair<Friend, List<Wish>>
 
 class FriendsService @Inject constructor(
     private val friendRepository: FriendRepository,
-    private val wishRepository: WishRepository
+    private val wishRepository: WishRepository,
+    private val userRepository: UserRepository
 ) {
+
+    val isAnonymous = userRepository.currentUser.map { it.isAnonymous }
 
     fun getFriendsWithWishes(): Flow<List<FriendWithWishes>> = flow {
         val friends = friendRepository.getAll().first()
