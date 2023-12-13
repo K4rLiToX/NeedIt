@@ -35,7 +35,7 @@ internal object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideUsersWishesCollection(firestore: FirebaseFirestore): WishesCollection =
+    fun provideWishesCollection(firestore: FirebaseFirestore): WishesCollection =
         WishesCollection(firestore.collection(CollectionsPath.wishes))
 
     @Provides
