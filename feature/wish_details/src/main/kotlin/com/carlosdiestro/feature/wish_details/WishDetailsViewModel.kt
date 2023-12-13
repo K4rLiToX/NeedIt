@@ -3,15 +3,11 @@ package com.carlosdiestro.feature.wish_details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.wish.domain.model.Book
 import com.carlosdiestro.wish.domain.model.Clothes
 import com.carlosdiestro.wish.domain.model.Footwear
 import com.carlosdiestro.wish.domain.model.Other
 import com.carlosdiestro.wish.domain.model.Wish
-import com.carlosdiestro.wish.usecases.GetWishUseCase
-import com.carlosdiestro.wish.usecases.LockWishUseCase
-import com.carlosdiestro.wish.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,10 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class WishDetailsViewModel @Inject constructor(
-    getWish: GetWishUseCase,
-    getSignedInUser: GetSignedInUserUseCase,
-    private val shareWish: ShareWishUseCase,
-    private val lockWish: LockWishUseCase,
+    private val wishDetailService: WishDetailService,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -36,9 +29,9 @@ internal class WishDetailsViewModel @Inject constructor(
 
     val state: StateFlow<WishDetailsDataState> =
         combine(
-            getWish(wishId),
-            getSignedInUser()
-        ) { wish, user ->
+            wishDetailService.getWish(wishId),
+            wishDetailService.isUserAnonymous
+        ) { wish, isAnonymous ->
             this.wish = wish
             val state = WishDetailsDataState(
                 id = wish.id.toString(),
@@ -49,7 +42,7 @@ internal class WishDetailsViewModel @Inject constructor(
                 description = wish.description,
                 webUrl = wish.webUrl,
                 isShared = wish.isShared,
-                isAnonymous = user.isAnonymous
+                isAnonymous = isAnonymous
             )
             when (wish) {
                 is Clothes -> state.copy(size = wish.size, color = wish.color)
@@ -65,13 +58,13 @@ internal class WishDetailsViewModel @Inject constructor(
 
     fun shareWish() {
         viewModelScope.launch {
-            shareWish(wish)
+            wishDetailService.shareWish(wish)
         }
     }
 
     fun lockWish() {
         viewModelScope.launch {
-            lockWish(wish)
+            wishDetailService.lockWish(wish)
         }
     }
 }

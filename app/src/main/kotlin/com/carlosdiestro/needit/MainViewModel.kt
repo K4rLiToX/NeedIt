@@ -2,16 +2,11 @@ package com.carlosdiestro.needit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlosdiestro.app_settings.usecases.GetThemeConfigUseCase
-import com.carlosdiestro.auth.AuthClient
 import com.carlosdiestro.feature.settings.ThemeConfigPlo
 import com.carlosdiestro.feature.settings.asPlo
-import com.carlosdiestro.friend.usecases.SyncFriendsUseCase
-import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -19,25 +14,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    getThemeConfig: GetThemeConfigUseCase,
-    private val getSignedInUser: GetSignedInUserUseCase,
-    authClient: AuthClient,
-    private val syncFriendsUseCase: SyncFriendsUseCase
+    private val mainService: MainService
 ) : ViewModel() {
 
-    val isSignedIn = authClient.signedInUser != null
+    val isSignedIn = mainService.isSignedIn
 
-    val profilePictureUrl: StateFlow<String> = getSignedInUser()
-        .map { user ->
-            user.profilePictureUrl
-        }
+    val profilePictureUrl: StateFlow<String> = mainService.profilePictureUrl
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = ""
         )
 
-    val state: StateFlow<MainState> = getThemeConfig()
+    val state: StateFlow<MainState> = mainService.themeConfig
         .map { themeConfig ->
             MainState.Success(
                 value = themeConfig.asPlo()
@@ -50,8 +39,7 @@ class MainViewModel @Inject constructor(
 
     fun syncFriends() {
         viewModelScope.launch {
-            val userId = getSignedInUser().first().id
-            syncFriendsUseCase(userId)
+            mainService.syncFriends()
         }
     }
 }

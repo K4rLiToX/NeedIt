@@ -15,8 +15,6 @@ class FriendLocalDatasourceImpl @Inject constructor(
     override suspend fun delete(friend: Friend) = dao.delete(friend.asEntity())
 
     override fun getAll(): Flow<List<Friend>> = dao.getAll().asDomain()
-
-    override fun getAllIds(): Flow<List<String>> = dao.getAllIds()
 }
 
 fun Friend.asEntity(): FriendEntity = FriendEntity(

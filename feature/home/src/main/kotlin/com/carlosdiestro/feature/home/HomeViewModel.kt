@@ -4,13 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.design_system.lists.HomeWishPlo
 import com.carlosdiestro.design_system.lists.WishCategoryPlo
-import com.carlosdiestro.user.usecases.GetSignedInUserUseCase
 import com.carlosdiestro.wish.domain.model.Wish
 import com.carlosdiestro.wish.domain.model.WishCategory
-import com.carlosdiestro.wish.usecases.DeleteWishUseCase
-import com.carlosdiestro.wish.usecases.GetMyWishesUseCase
-import com.carlosdiestro.wish.usecases.LockWishUseCase
-import com.carlosdiestro.wish.usecases.ShareWishUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,11 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
-    getMyWishes: GetMyWishesUseCase,
-    getSignedInUser: GetSignedInUserUseCase,
-    private val deleteWish: DeleteWishUseCase,
-    private val shareWish: ShareWishUseCase,
-    private val lockWish: LockWishUseCase
+    private val homeService: HomeService
 ) : ViewModel() {
 
     private var _selectedWishId: MutableStateFlow<String> = MutableStateFlow("")
@@ -35,14 +26,14 @@ internal class HomeViewModel @Inject constructor(
     val state: StateFlow<HomeDataState> =
         combine(
             _selectedWishId,
-            getMyWishes(),
-            getSignedInUser()
-        ) { selectedWishId, wishlist, user ->
+            homeService.currentUserWishes,
+            homeService.isUserAnonymous
+        ) { selectedWishId, wishlist, isAnonymous ->
             HomeDataState(
                 wishes = wishlist.asPlo(),
-                categories = getCategories(wishlist),
+                categories = homeService.extractCategories(wishlist),
                 selectedWish = wishlist.find { it.id.toString() == selectedWishId },
-                isAnonymous = user.isAnonymous
+                isAnonymous = isAnonymous
             )
         }
             .stateIn(
@@ -50,12 +41,6 @@ internal class HomeViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = HomeDataState()
             )
-
-    private fun getCategories(wishes: List<Wish>): List<WishCategoryPlo> =
-        wishes
-            .map<Wish, WishCategoryPlo> { it.category.asPlo() }
-            .toSet()
-            .sortedBy { it.ordinal }
 
     fun onSelectedWish(id: String) {
         _selectedWishId.update {
@@ -66,7 +51,7 @@ internal class HomeViewModel @Inject constructor(
     fun shareWish() {
         viewModelScope.launch {
             state.value.selectedWish?.let {
-                shareWish(it)
+                homeService.shareWish(it)
             }
         }
     }
@@ -74,7 +59,7 @@ internal class HomeViewModel @Inject constructor(
     fun lockWish() {
         viewModelScope.launch {
             state.value.selectedWish?.let {
-                lockWish(it)
+                homeService.lockWish(it)
             }
         }
     }
@@ -82,7 +67,7 @@ internal class HomeViewModel @Inject constructor(
     fun deleteWish() {
         viewModelScope.launch {
             state.value.selectedWish?.let {
-                deleteWish(it)
+                homeService.deleteWish(it)
             }
         }
     }

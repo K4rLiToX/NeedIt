@@ -18,7 +18,7 @@ internal class FriendRequestRemoteDatasourceImpl @Inject constructor(
     override fun getAllReceived(receiverId: String): Flow<List<FriendRequest>> =
         friendRequestsCollection.getAllReceived(receiverId).asDomain()
 
-    override fun getAllSent(senderId: String): Flow<List<FriendRequest>> =
+    override suspend fun getAllSent(senderId: String): List<FriendRequest> =
         friendRequestsCollection.getAllSent(senderId).asDomain()
 }
 

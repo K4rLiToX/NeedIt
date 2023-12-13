@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlosdiestro.design_system.cards.NotificationPlo
 import com.carlosdiestro.friend.domain.FriendRequest
-import com.carlosdiestro.friend.usecases.AcceptFriendRequestUseCase
-import com.carlosdiestro.friend.usecases.RejectFriendRequestUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,14 +14,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotificationsViewModel @Inject constructor(
-    notificationsService: NotificationsService,
-    private val acceptFriendRequest: AcceptFriendRequestUseCase,
-    private val rejectFriendRequest: RejectFriendRequestUseCase
+    private val notificationsService: NotificationsService
 ) : ViewModel() {
 
     private lateinit var friendRequests: List<FriendRequest>
 
-    val state: StateFlow<NotificationDataState> = notificationsService()
+    val state: StateFlow<NotificationDataState> = notificationsService.getReceivedFriendRequests()
         .map {
             friendRequests = it
             NotificationDataState(
@@ -39,7 +35,7 @@ class NotificationsViewModel @Inject constructor(
         viewModelScope.launch {
             val request = friendRequests.find { it.senderId == id }
             request?.let {
-                acceptFriendRequest(it)
+                notificationsService.accept(it)
             }
         }
     }
@@ -48,7 +44,7 @@ class NotificationsViewModel @Inject constructor(
         viewModelScope.launch {
             val request = friendRequests.find { it.senderId == id }
             request?.let {
-                rejectFriendRequest(it)
+                notificationsService.reject(request)
             }
         }
     }
