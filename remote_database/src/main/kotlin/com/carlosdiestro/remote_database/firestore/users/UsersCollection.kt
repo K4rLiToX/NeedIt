@@ -1,6 +1,6 @@
 package com.carlosdiestro.remote_database.firestore.users
 
-import com.carlosdiestro.remote_database.firestore.asUserDto
+import com.carlosdiestro.remote_database.firestore.asDto
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.snapshots
 import kotlinx.coroutines.flow.Flow
@@ -19,5 +19,5 @@ internal class UsersCollection @Inject constructor(
     fun getAll(): Flow<List<UserDto>> = usersCollection
         .whereEqualTo("anonymous", false)
         .snapshots()
-        .asUserDto()
+        .asDto<UserDto>()
 }

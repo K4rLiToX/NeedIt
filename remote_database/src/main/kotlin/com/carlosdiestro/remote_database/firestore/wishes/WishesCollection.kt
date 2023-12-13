@@ -1,7 +1,7 @@
 package com.carlosdiestro.remote_database.firestore.wishes
 
+import com.carlosdiestro.remote_database.firestore.asDto
 import com.carlosdiestro.remote_database.firestore.asFlow
-import com.carlosdiestro.remote_database.firestore.asWishDto
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.snapshots
@@ -28,7 +28,7 @@ internal class WishesCollection @Inject constructor(
         wishesCollection
             .whereEqualTo("userId", userId)
             .snapshots()
-            .asWishDto()
+            .asDto<WishDto>()
 
     fun getUserWish(wishId: String): Flow<WishDto?> =
         wishesCollection

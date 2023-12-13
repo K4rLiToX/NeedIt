@@ -1,6 +1,6 @@
 package com.carlosdiestro.remote_database.firestore.friends
 
-import com.carlosdiestro.remote_database.firestore.asFriendRequestDto
+import com.carlosdiestro.remote_database.firestore.asDto
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.SetOptions
@@ -30,7 +30,7 @@ internal class FriendRequestsCollection @Inject constructor(
         .whereEqualTo("receiverId", receiverId)
         .whereEqualTo("status", 0)
         .snapshots()
-        .asFriendRequestDto()
+        .asDto<FriendRequestDto>()
 
     suspend fun getAllSent(senderId: String): List<FriendRequestDto> = requestsCollection
         .where(
@@ -44,5 +44,5 @@ internal class FriendRequestsCollection @Inject constructor(
         )
         .get()
         .await()
-        .asFriendRequestDto()
+        .asDto<FriendRequestDto>()
 }
