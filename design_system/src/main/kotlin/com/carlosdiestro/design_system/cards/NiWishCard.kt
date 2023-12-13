@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.carlosdiestro.design_system.animations.enter
 import com.carlosdiestro.design_system.animations.exit
 import com.carlosdiestro.design_system.container.NiImageContainer
+import com.carlosdiestro.design_system.extensions.conditional
 import com.carlosdiestro.design_system.extensions.gradient
 import com.carlosdiestro.design_system.theme.dimensions
 import com.carlosdiestro.design_system.theme.icons
@@ -115,6 +116,7 @@ fun NiWishCard(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
     height: Dp = NiWishCardSpecs.Height,
+    width: Dp = 0.dp,
     imageUrl: String,
     title: String,
     price: String,
@@ -124,7 +126,11 @@ fun NiWishCard(
         shape = MaterialTheme.shape.medium,
         modifier = modifier
             .height(height)
-            .fillMaxWidth()
+            .conditional(
+                condition = width == 0.dp,
+                ifTrue = { this.fillMaxWidth() },
+                ifFalse = { this.width(width) }
+            )
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
@@ -221,7 +227,7 @@ internal fun NiWishCardInformation(
     price: String,
 ) {
     Column(
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
