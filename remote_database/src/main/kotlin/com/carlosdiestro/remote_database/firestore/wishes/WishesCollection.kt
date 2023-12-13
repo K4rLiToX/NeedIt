@@ -24,6 +24,12 @@ internal class WishesCollection @Inject constructor(
             .delete()
     }
 
+    fun getUsersWishes(ids: List<String>): Flow<List<WishDto>> =
+        wishesCollection
+            .whereIn("userId", ids)
+            .snapshots()
+            .asDto<WishDto>()
+
     fun getUserWishes(userId: String): Flow<List<WishDto>> =
         wishesCollection
             .whereEqualTo("userId", userId)

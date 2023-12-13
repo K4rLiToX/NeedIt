@@ -22,6 +22,9 @@ internal class WishRemoteDatasourceImpl @Inject constructor(
     override fun delete(wish: Wish) =
         wishesCollection.delete(wish.asDto())
 
+    override fun getUsersWishes(ids: List<String>): Flow<List<Wish>> =
+        wishesCollection.getUsersWishes(ids).asDomain()
+
     override fun getUserWishes(userId: String): Flow<List<Wish>> =
         wishesCollection.getUserWishes(userId).asDomain()
 
