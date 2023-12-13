@@ -11,7 +11,7 @@ internal inline fun <reified T> QuerySnapshot?.asDto(): List<T> =
     this?.mapNotNull { it.toObject(T::class.java) } ?: emptyList()
 
 internal inline fun <reified T> Flow<QuerySnapshot?>.asDto(): Flow<List<T>> =
-    this.map { it.asDto() }
+    this.map { it.asDto<T>() }
 
 internal inline fun <reified T> DocumentReference.asFlow() = flow {
     val task = get()
