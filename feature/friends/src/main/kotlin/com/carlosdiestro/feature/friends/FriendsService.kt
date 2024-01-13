@@ -17,7 +17,7 @@ typealias FriendWithWishes = Pair<Friend, List<Wish>>
 class FriendsService @Inject constructor(
     private val friendRepository: FriendRepository,
     private val wishRepository: WishRepository,
-    private val userRepository: UserRepository
+    userRepository: UserRepository
 ) {
 
     val isAnonymous = userRepository.currentUser.map { it.isAnonymous }
