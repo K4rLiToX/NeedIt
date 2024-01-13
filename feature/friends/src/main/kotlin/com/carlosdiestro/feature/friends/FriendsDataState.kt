@@ -1,7 +1,10 @@
 package com.carlosdiestro.feature.friends
 
+import com.carlosdiestro.design_system.lists.FriendsWithWishesPlo
+
 internal data class FriendsDataState(
-    val friends: List<String> = emptyList()
+    val friendsWithWishes: List<FriendsWithWishesPlo> = emptyList(),
+    val isAnonymous: Boolean = true
 ) {
-    val showEmptyScreen: Boolean = friends.isEmpty()
+    val showEmptyScreen: Boolean = friendsWithWishes.isEmpty()
 }

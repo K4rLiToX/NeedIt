@@ -14,4 +14,21 @@ data class WishDto(
     val size: String? = null,
     val color: String? = null,
     val isbn: String? = null
-)
+) {
+
+    constructor() : this(
+        "",
+        "",
+        "",
+        0.0,
+        "",
+        "",
+        true,
+        0,
+        "",
+        "",
+        null,
+        null,
+        null
+    )
+}

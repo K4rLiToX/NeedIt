@@ -9,6 +9,7 @@ interface WishRepository {
     suspend fun delete(wish: Wish)
     fun getCurrentUserWishes(): Flow<List<Wish>>
     fun getCurrentUserWish(id: String): Flow<Wish>
+    fun getFriendsWishes(ids: List<String>): Flow<List<Wish>>
     fun getFriendWishes(userId: String): Flow<List<Wish>>
     fun getFriendWish(id: String): Flow<Wish?>
 }

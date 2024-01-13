@@ -29,6 +29,9 @@ class WishRepositoryImpl @Inject constructor(
 
     override fun getCurrentUserWish(id: String): Flow<Wish> = localDatasource.getWish(id)
 
+    override fun getFriendsWishes(ids: List<String>): Flow<List<Wish>> =
+        remoteDatasource.getUsersWishes(ids)
+
     override fun getFriendWishes(userId: String): Flow<List<Wish>> =
         remoteDatasource.getUserWishes(userId)
 
