@@ -28,11 +28,20 @@ class FriendsService @Inject constructor(
         val friendWithWishes = wishRepository.getFriendsWishes(ids).map {
             it.groupBy { wish -> wish.userId }
         }.map {
-            it.keys.map { id ->
-                FriendWithWishes(
-                    friends.find { f -> f.id == id }!!,
-                    it[id]!!
-                )
+            if (it.isEmpty()) {
+                friends.map { f ->
+                    FriendWithWishes(
+                        f,
+                        emptyList()
+                    )
+                }
+            } else {
+                it.keys.map { id ->
+                    FriendWithWishes(
+                        friends.find { f -> f.id == id }!!,
+                        it[id]!!
+                    )
+                }
             }
         }
         emitAll(friendWithWishes)
